@@ -107,6 +107,7 @@ These apply to every element and are not repeated on the component pages.
 | `background` | color | theme role or `#RRGGBB`; only where the element has no container |
 | `borderColor, borderWidth` | color, number | outline around the box |
 | `radius` | number | corner radius |
+| `shadow` | shadow | CSS-style shadow: the box everywhere, the glyphs on `Text`; see [Shadows](guide/shadows.md) |
 | `visible` | bool | removes the element from layout, painting and hit-testing |
 | `template` | bool | marks a hidden row prototype for `ui.Fill` |
 | `flex` | number | share of the parent's leftover main-axis space |

@@ -430,6 +430,8 @@ If        = "if" Value "{" { Member } "}"
             [ "else" "{" { Member } "}" ]
 For       = "for" [ Ident [ "," Ident ] ":=" ] "range" Value "{" { Member } "}"
 Property  = Ident ":" Value [";"]
+Shadow    = ShadowLayer { "," ShadowLayer }
+ShadowLayer = Number Number [ Number [ Number ] ] [ Color | Ident ] [ "inset" ]
 EventHandler = Ident ":" ("bridge" | "data" | "props") "." Ident
                "(" [ Value { "," Value } ] ")"
 Value     = String | Number | Bool | Color | Ident | Map | Call | Expression
@@ -450,7 +452,9 @@ Factor     = Number | Number "%" | String | Bool | Color | Ident
 
 Newlines are not tokens. A member is a property when the identifier is followed
 by `:` and a child element when it is followed by `{`, so `Name: value` and
-`Name { ... }` can be written on one line or across many. A declared type is
+`Name { ... }` can be written on one line or across many. The one exception is
+`shadow`, whose layers end at the line break, because its parts are written as
+juxtaposed tokens rather than one literal. A declared type is
 `Name Type`, with no colon: the colon is what tells a property from a
 declaration. A function call appears either as an event property's whole value
 (the bridge handler) or as the `formatf` builtin inside a `Value`.
@@ -467,6 +471,7 @@ declaration. A function call appears either as an event property's whole value
 | `surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
 | `myBrand` | custom color | any other bare word; the app defines it with `ui.SetCustomColor`, and an undefined one warns and falls back to `onSurface` |
 | `{ base: 8, md: 16 }` | map | responsive value, one entry per breakpoint |
+| `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form, see [Shadows](guide/shadows.md) |
 
 ## Elements
 
@@ -484,6 +489,10 @@ declaration. A function call appears either as an event property's whole value
 | `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), plus `radius` |
 | `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`) |
 | `Text` | no | `text`, `fontSize`, `weight`, `color`, `align`, `wrap`, `role`, `selectable` |
+
+Every element takes the common set, which includes `shadow`: on `Text` it
+shadows the glyphs (CSS `text-shadow`), everywhere else the box (CSS
+`box-shadow`). See [Shadows](guide/shadows.md).
 
 `theme` names a colour scheme. `light` and `dark` are built in; the app adds
 more with `ui.WithTheme(name, theme)`, and an unknown name falls back to light

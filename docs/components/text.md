@@ -13,6 +13,12 @@ Text {
 	wrap: true
 	width: 320
 }
+
+Text {
+	text:   "Headline"
+	role:   "displaySmall"
+	shadow: 0 2 6 onSurfaceVariant
+}
 ```
 
 ## Properties
@@ -27,6 +33,7 @@ Text {
 | `wrap` | bool | wrap at the node width |
 | `role` | string | M3 type-scale role |
 | `selectable` | bool | pointer selection and Ctrl+C |
+| `shadow` | shadow | text-shadow form: an offset copy of the glyphs per layer |
 
 ## From Go
 
@@ -39,5 +46,9 @@ label.Role.Set("headlineMedium")
 body := ui.MustByID[*ui.Text](w, "notes")
 body.Selectable.Set(true)
 ```
+
+On `Text`, `shadow` shadows the glyphs rather than the box, borrowing CSS
+`text-shadow`, so `shadow: -1 0 #000000, 0 1 #000000, 1 0 #000000, 0 -1 #000000`
+outlines the letters. See [Shadows](../guide/shadows.md).
 
 Every element also accepts the [common properties](../components.md#common-properties).
