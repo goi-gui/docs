@@ -1,6 +1,5 @@
 ---
 title: Conditionals
-sidebar_label: if / else
 ---
 
 # Conditionals

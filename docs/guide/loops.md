@@ -1,6 +1,5 @@
 ---
 title: Loops
-sidebar_label: for / range
 ---
 
 # Loops

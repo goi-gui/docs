@@ -12,6 +12,7 @@ const sidebars = {
       items: [
         'guide/conditionals',
         'guide/loops',
+        'guide/reserved',
         'guide/bridge',
         'guide/fragments',
       ],

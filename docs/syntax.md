@@ -228,7 +228,9 @@ Window {
 
 - Conditions may read `app.theme`, `app.dark`, `app.os`, `window.width`,
   `window.height`, `bridge.*`, `props.*` and any `id.prop` that is a bool, and
-  combine them with comparisons, `&&`, `||`, `!` and `?:`.
+  combine them with comparisons, `&&`, `||`, `!` and `?:`. The reserved names
+  and every member they expose are listed in
+  [Reserved names](guide/reserved.md).
 - An arm holds elements and blocks only. An `if` inside a `Text` is an error,
   because a leaf has no children to switch.
 - Blocks nest: an inner `if` shows only where its outer arm also shows.
