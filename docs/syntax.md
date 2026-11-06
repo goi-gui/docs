@@ -4,7 +4,7 @@ A `.goi` file describes a design. Go code attaches behaviour; the file holds no
 logic. A design may be one file or several: a file can import fragments and pass
 them values.
 
-```
+```goi
 // line comment
 /* block comment */
 
@@ -31,12 +31,14 @@ Window {
 A file may start with `import` lines and one `props` block, before its root
 element. An import names the alias first, the way Go writes an import:
 
-```
+```goi
 import Sidebar "./Sidebar.goi"
-``` `props` declares the typed values the fragment expects, the way Go
+```
+
+`props` declares the typed values the fragment expects, the way Go
 declares a field; the fragment reads them as `props.Name`:
 
-```
+```goi
 // Sidebar.goi
 props {
     Title    string
@@ -50,7 +52,7 @@ Column {
 }
 ```
 
-```
+```goi
 // Main.goi
 import Sidebar "./Sidebar.goi"
 
@@ -106,7 +108,7 @@ Window {
 A fragment can take children, not just values. It marks where they go with
 `$children`, and an instance puts its own child elements there:
 
-```
+```goi
 // Card.goi
 Column {
     gap: 5
@@ -114,7 +116,7 @@ Column {
 }
 ```
 
-```
+```goi
 // Main.goi
 import Card "./Card.goi"
 
@@ -146,7 +148,7 @@ A fragment can take more than one group of children, one per slot. Any
 `$name` in member position is a slot; `$children` is the unnamed one that
 plain children go to:
 
-```
+```goi
 // Card.goi
 Column {
     $header
@@ -155,7 +157,7 @@ Column {
 }
 ```
 
-```
+```goi
 // Main.goi
 Card {
     $header { Text { text: "Inbox" } }
@@ -177,7 +179,7 @@ An instance that sets `id` namespaces every id inside the fragment, so one
 fragment can be used any number of times and each copy still carries its own
 behaviour:
 
-```
+```goi
 Column {
     Card { id: first }
     Card { id: second }
@@ -379,7 +381,7 @@ type User struct {
 
 ## Grammar
 
-```
+```text
 File      = { Import | Props | Bridge | Shape } Element EOF
 Import    = "import" String "as" Ident
 Props     = "props" "{" { Decl } "}"
@@ -470,7 +472,7 @@ as tall as its tallest child and `spacing` separates both columns and rows.
 fills the stack, so the first child is often a background. `Positioned` is only
 valid as a direct child of `Stack` and anchors itself instead of filling:
 
-```
+```goi
 Stack {
     width: 360
     height: 200
@@ -549,7 +551,7 @@ Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
 `marginLeft` and `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`
 override one edge and leave the others following `margin`/`padding`:
 
-```
+```goi
 Column  { padding: 16  paddingLeft: 4 }   // 4 left, 16 the other sides
 ```
 
@@ -612,7 +614,7 @@ no meaning in a value that is re-read every frame, so `append`, `make`, `new`,
 `complex`, `real` and `imag` are rejected with a message that names what a value
 may call.
 
-```
+```goi
 Text { text: formatf("%d of %d", len(bridge.Done), len(bridge.Rows)) }
 Rectangle { width: max(120, min(window.width / 3, 480)) }
 ```
@@ -621,7 +623,7 @@ Rectangle { width: max(120, min(window.width / 3, 480)) }
 
 Any property except `id` also accepts a map keyed by breakpoint:
 
-```
+```goi
 Column {
     padding: { base: 8, md: 16 }
     Grid {
@@ -674,7 +676,7 @@ The layout is fixed, and running it twice changes nothing:
 - A declaration's names and types line up in one column, the way gofmt aligns a
   struct:
 
-  ```
+  ```goi
   props {
       Title    string
       LongName int
@@ -683,7 +685,7 @@ The layout is fixed, and running it twice changes nothing:
 
 - An element body holds one property per line, with the values in one column:
 
-  ```
+  ```goi
   Column {
       gap:     10
       padding: 10
