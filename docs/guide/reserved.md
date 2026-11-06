@@ -28,6 +28,7 @@ Rectangle {
 | `app.mode` | `light` / `dark` / `unknown` | the resolved scheme's mood, usable where an enum or a colour role is expected |
 | `app.systemMode` | `light` / `dark` / `unknown` | the desktop's own preference, independent of the theme the app picked |
 | `app.dark` | bool | `true` when the resolved scheme is dark |
+| `app.systemLanguage` | string | the desktop's language as an ISO 639-1 code: `tr`, `en`, `de`; empty when the platform does not report one |
 | `app.os` | string | `runtime.GOOS`: `linux`, `darwin`, `windows`, `freebsd` |
 
 - `app.theme` is the string form of the scheme, so it feeds any string property:
@@ -40,8 +41,10 @@ Rectangle {
   `switch app.mode { case "dark": … }` say the same thing.
 - `app.systemMode` is `unknown` when the platform does not report a preference,
   which is why `app.dark` follows the resolved theme rather than the desktop.
-- All five re-resolve when the app changes the theme, so a value that uses them
-  updates on the next frame with no reload.
+- All five theme members re-resolve when the app changes the theme, so a value
+  that uses them updates on the next frame with no reload.
+- `app.systemLanguage` is read at startup and again when the desktop reports a
+  locale change. It is the language, not the region: `tr-TR` reads `tr`.
 - `app.os` is fixed for the life of the process; use it for the one or two
   places where a platform genuinely differs, not to fork a whole design.
 
@@ -51,10 +54,27 @@ Rectangle {
 |---|---|---|
 | `window.width` | number | the logical client width, updated on every resize |
 | `window.height` | number | the logical client height, updated on every resize |
+| `window.minimized` | bool | whether the window is minimized, as the platform reports it |
+| `window.minimizable` | bool | whether the framework may minimize the window |
+| `window.maximized` | bool | whether the window is maximized, as the platform reports it |
+| `window.maximizable` | bool | whether the framework may maximize the window |
+| `window.resizable` | bool | whether the user may resize the window |
+| `window.fullscreen` | bool | whether the window fills the display |
 
-Both are in logical (density-independent) pixels, the same unit as `width`,
-`padding` and `fontSize`, so no scale factor is needed. They are the client
-area, not the outer frame: the title bar and the window border are not included.
+The two sizes are in logical (density-independent) pixels, the same unit as
+`width`, `padding` and `fontSize`, so no scale factor is needed. They are the
+client area, not the outer frame: the title bar and the window border are not
+included.
+
+The state members are reported by the platform, so they follow the user's own
+actions, not only what the design asked for:
+
+```goi
+Button {
+	label:   window.maximized ? "Restore" : "Maximize"
+	onClick: bridge.ToggleMaximize()
+}
+```
 
 Reach for them when a layout has to react to size rather than to a breakpoint:
 

@@ -1,7 +1,8 @@
 # Window
 
 The root of the tree. It owns the title, the theme, the client area and the
-native window's own chrome: size limits, resize and fullscreen.
+native window's own chrome: size limits, resize, minimize, maximize and
+fullscreen.
 
 [All components](../components.md)
 
@@ -19,7 +20,11 @@ Window {
 	minHeight:     360
 	maxWidth:      1200    // ...nor larger
 	maxHeight:     900
-	disableResize: false   // true: no user resize, and no maximize
+	resizable:     true    // false: no user resize, and no maximize
+	minimizable:   true    // false: the framework refuses minimize requests
+	maximizable:   true    // false: the framework refuses maximize requests
+	minimized:     false   // the live state; the platform reports it back
+	maximized:     false
 	fullscreen:    false   // true: fill the display
 }
 ```
@@ -33,17 +38,47 @@ Window {
 | `titleBar` | enum | `system` (default) or `custom` |
 | `minWidth`, `minHeight` | number | the smallest the user can drag the window |
 | `maxWidth`, `maxHeight` | number | the largest; `-1` (default) means no limit |
-| `disableResize` | bool | `true` turns off the user's resize and the maximize button |
+| `resizable` | bool | `false` turns off the user's resize and the maximize button |
+| `disableResize` | bool | the older spelling: `true` is `resizable: false` |
+| `minimizable` | bool | `false` makes the framework refuse minimize requests |
+| `maximizable` | bool | `false` makes the framework refuse maximize requests |
+| `minimized` | bool | asks the window to minimize; `window.minimized` reports the live state |
+| `maximized` | bool | asks the window to maximize; `window.maximized` reports the live state |
 | `fullscreen` | bool | `true` fills the display |
 
 `minWidth`/`maxWidth` (and their height pair) are common properties, so a child
 can use them to bound its own layout; on `Window` they also constrain the native
 window. The limits are logical pixels, so they follow the display scale.
 
-`disableResize: true` removes the resize edges and the title bar's maximize
-button, and `Window.ToggleMaximize` becomes a no-op. `fullscreen` is a separate
-switch and still works, so a kiosk can ask for a fixed size in windowed mode and
-fill the screen when the user asks for it.
+`resizable: false` removes the resize edges and the title bar's maximize
+button, and `Window.ToggleMaximize` becomes a no-op. `disableResize: true` is
+the same switch read the other way round and still works, so an older design
+needs no edit; when the two disagree, either one saying "off" wins. `fullscreen` is a separate switch and still works, so a kiosk can
+ask for a fixed size in windowed mode and fill the screen when the user asks for
+it.
+
+`minimizable` and `maximizable` gate the framework's own requests: the buttons a
+custom title bar draws with `Window.Minimize` and `Window.ToggleMaximize`, and
+the equivalent `Set…` calls. SDL has no flag for the platform's own title bar
+buttons, so a system-decorated window keeps those; `false` is what a design's
+own chrome follows.
+
+`minimized`, `maximized` and `fullscreen` are requests when written, and live
+state when read. Writing one asks the native window to move to that state; what
+the window actually is comes from the platform, which reports it every frame, so
+a design reads the truth as `window.minimized`, `window.maximized` and
+`window.fullscreen` — those follow the user's title bar and task bar actions
+too, not only the last request. `Minimized()`, `Maximized()` and `Fullscreen()`
+from Go report the same live value, and so do they if a compositor refuses a
+request: the window stays honest about what it is:
+
+```goi
+Button {
+	label: "Restore"
+	visible: window.maximized
+	onClick: bridge.Restore()
+}
+```
 
 A declared `maxWidth`/`maxHeight` also disables maximizing: the maximized size
 would exceed the cap the design asked for, so a maximize from the title bar is
@@ -105,23 +140,37 @@ win.Bind(func(w *ui.Window) error {
 })
 
 // Window controls, usable from any handler in Bind.
-w.Minimize()
+w.Minimize()          // w.SetMinimized(true)
 w.ToggleMaximize()
+w.SetMaximized(true)
 if w.Maximized() {
-	// the window is maximized
+	// the window is maximized, whether Go or the user asked
 }
 w.Close()
 
-// Resize, fullscreen and the size limits are properties, so state lives where
-// every other property does.
-w.Root().DisableResize.Set(true)
-w.Root().Fullscreen.Set(true)
+// Every switch has a getter and a setter.
+w.SetResizable(false)
+w.SetMinimizable(false)
+w.SetMaximizable(false)
+w.SetFullscreen(true)
+resizable := w.Resizable()
+
+// The size limits are properties, so state lives where every other property
+// does.
 w.Root().SetMinWidth(600)
+w.Root().SetMaxWidth(-1)
 
 // A custom scheme, registered under a name the file can select.
 brand := *ui.LightTheme()
 brand.Colors.Primary = 0x00695CFF
 win, _ := app.LoadWindowFile("app.goi", ui.WithTheme("brand", &brand))
+```
+
+The desktop's language is available to both sides as
+`app.systemLanguage` / `Window.SystemLanguage()`:
+
+```goi
+Text { text: app.systemLanguage }   // tr, en, de…
 ```
 
 Every element also accepts the [common properties](../components.md#common-properties).

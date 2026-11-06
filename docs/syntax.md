@@ -477,7 +477,7 @@ declaration. A function call appears either as an event property's whole value
 
 | Element | Children | Properties beyond the common set |
 |---|---|---|
-| `Window` | yes | `title`, `theme` (`light`, `dark`, or a name the app registered), `titleBar` (`system`, `custom`), `disableResize`, `fullscreen` (both bool) |
+| `Window` | yes | `title`, `theme` (`light`, `dark`, or a name the app registered), `titleBar` (`system`, `custom`), `resizable`, `minimizable`, `maximizable`, `minimized`, `maximized`, `fullscreen` (all bool; `disableResize` is the older inverse of `resizable`) |
 | `Column` | yes | `spacing` (`gap`), `align` |
 | `Row` | yes | `spacing` (`gap`), `align` |
 | `TitleBar` | yes | `spacing` (`gap`), `align`; a press that misses its clickable children moves the window |
