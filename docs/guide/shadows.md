@@ -24,6 +24,10 @@ Card {
 A shadow paints outside the element's box, so it never changes layout: no
 sibling moves and no parent grows.
 
+On a component that already has an M3 elevation — a `Button`, a `Card` — an
+explicit `shadow` replaces that elevation instead of drawing on top of it.
+`shadow: none` is the way to remove it.
+
 ## The syntax
 
 One shadow is `x y [blur [spread]] [color] [inset]`, in that order. Only the two
@@ -125,8 +129,9 @@ The model is CSS's, with the parts this framework does not have dropped.
 
 - There is no `spread` for text, and `inset` is a box idea only; both are
   ignored on `Text`.
-- The blur is applied to the glyph atlas directly, so a very large blur is
-  approximated by a small disc of taps rather than a true Gaussian.
+- The text blur is a Gaussian rasterized per glyph and cached in the glyph atlas,
+  so a shadow does not cost extra quads or shader taps. A blur past 40px is
+  capped, because past that the text is unreadable anyway.
 - The colour axis is the theme: a role name follows the scheme, which CSS has no
   notion of.
 - A shadow never affects layout. A parent that clips its children is the only
