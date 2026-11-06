@@ -77,6 +77,34 @@ without rebuilding the window.
 - Ids inside arms are registered like any other id, so two arms cannot declare
   the same one.
 
+## Matching one value: switch
+
+`switch` compares one value against a list of cases, with Go's spelling:
+
+```goi
+Column {
+	switch bridge.job {
+	case "swe", "eee", "fe":
+		Text { text: "Engineer" }
+	case "teacher":
+		Text { text: "Teacher" }
+	default:
+		Text { text: "Something else" }
+	}
+}
+```
+
+The subject is any value expression: a bridge variable, a prop, a reference to
+an `id` property, or something computed (`switch bridge.Count > 9 ? "many" :
+"few"`). A case may hold several values separated by commas.
+
+- The first arm with a matching value wins; `default` shows when none does.
+- At most one `default` is allowed; leaving it out means no arm shows on a miss.
+- A switch is a block, so it holds elements and blocks only, and can sit inside
+  an `if` or a `for`.
+- Every arm is built with the window and only the chosen one is shown, exactly
+  like `if`.
+
 ## Choosing a value instead of an element
 
 When the choice is a value rather than a block, use the ternary form. It works

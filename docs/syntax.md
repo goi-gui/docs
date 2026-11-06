@@ -238,6 +238,32 @@ Window {
   the same one.
 - An `if` inside a `for` body sees the loop variables.
 
+### Switch blocks
+
+`switch` shows the first arm holding a value equal to its subject, written the
+way Go writes it. Cases take a comma-separated list, and `default` shows when
+none matches; like `if`, every arm is built when the window loads and only the
+matching one is shown.
+
+```goi
+Column {
+    switch bridge.job {
+    case "swe", "eee", "fe":
+        Text { text: "Engineer" }
+    case "teacher":
+        Text { text: "Teacher" }
+    default:
+        Text { text: "Something else" }
+    }
+}
+```
+
+- The subject is an ordinary expression, so `switch app.dark ? "dark" : "light"`
+  works; string, number, bool and colour values compare.
+- A switch has at most one `default`, and an arm holds elements and blocks only.
+- It nests inside `if` and `for` bodies, and an inner block sees the loop
+  variables.
+
 ### Loops
 
 `for` repeats a body with Go's range rules:
@@ -254,7 +280,11 @@ Column {
 
 - A slice gives the index and the element (`for i, row := range bridge.rows`).
 - A map gives the key and the value, in sorted key order so a frame is stable.
-- A number counts from zero: `for i := range 5`.
+- A number counts from zero: `for i := range 5`, or `for range 5` when the index
+  is not needed.
+- The count may be an expression or a number from the bridge:
+  `for i := range len(bridge.rows)`, `for i := range 2 * bridge.columns` and
+  `for i := range bridge.count` all work.
 - `for range list` is legal when neither name is needed, and `_` ignores one:
   `for _, row := range bridge.rows`.
 - A single name binds the key, as in Go: `for i := range bridge.rows`.

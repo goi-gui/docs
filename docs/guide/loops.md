@@ -34,6 +34,9 @@ ui.SetData(w, "users", users) // any slice of structs
 | `for range bridge.rows` | neither |
 | `for k, v := range bridge.counts` | key and value of a map, in sorted key order |
 | `for i := range 5` | counts from zero to four |
+| `for range 5` | counts, without the index |
+| `for i := range len(bridge.rows)` | counts to the list's length |
+| `for i := range bridge.count` | counts to a number from Go |
 
 `_` ignores one name, exactly as in Go. A map is walked in sorted key order, so a
 frame is stable.
