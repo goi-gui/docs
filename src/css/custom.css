@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'goi-icons';
+  src: url('../../static/fonts/material-symbols.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+/* The icon table uses the same font goi ships, so every name on the page draws. */
+.goi-icon {
+  font-family: 'goi-icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --ifm-color-primary: #0284c7;
+  --ifm-color-primary-dark: #0277b3;
+  --ifm-color-primary-darker: #0270a9;
+  --ifm-color-primary-darkest: #025c8b;
+  --ifm-color-primary-light: #0291db;
+  --ifm-color-primary-lighter: #0298e5;
+  --ifm-color-primary-lightest: #0ea9f7;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #2dd4f0;
+  --ifm-color-primary-dark: #12cbea;
+  --ifm-color-primary-darker: #11c0dd;
+  --ifm-color-primary-darkest: #0e9fb6;
+  --ifm-color-primary-light: #48d9f2;
+  --ifm-color-primary-lighter: #55dcf3;
+  --ifm-color-primary-lightest: #7ee4f7;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}

@@ -1,0 +1,35 @@
+# Carousel
+
+A horizontally scrolling row of cards.
+
+[All components](../components.md)
+
+## In a `.goi` file
+
+```goi
+Carousel {
+	spacing: 12
+	Card { label: "One" width: 200 height: 120 }
+	Card { label: "Two" width: 200 height: 120 }
+	Card { label: "Three" width: 200 height: 120 }
+}
+```
+
+## Properties
+
+| Property | Type | Notes |
+|---|---|---|
+| `variant` | enum | — (no style variants) |
+| `spacing` | number | gap between children |
+| `gap` | number | alias of `spacing` |
+| `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
+| `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the flow |
+
+## From Go
+
+```go
+carousel := ui.MustByID[*ui.Carousel](w, "carousel")
+carousel.Spacing.Set(16)
+```
+
+Every element also accepts the [common properties](../components.md#common-properties).
