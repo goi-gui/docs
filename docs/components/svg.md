@@ -1,7 +1,8 @@
 # SVG
 
-Draws an SVG file. `currentColor` in the file is replaced by `color`, so one
-icon can follow the theme instead of shipping a coloured copy per state.
+Draws an SVG document. `currentColor` in it is replaced by `color`, so one icon
+can follow the theme instead of shipping a coloured copy per state. The document
+comes from `src` or, from Go, from `SetDataString`/`SetDataBytes`.
 
 [All components](../components.md)
 
@@ -9,32 +10,44 @@ icon can follow the theme instead of shipping a coloured copy per state.
 
 ```goi
 SVG {
-	src:    "assets/logo.svg"
+	src:    "goi://assets/logo.svg"
 	width:  48
 	height: 48
 }
 
 SVG {
 	id:     mark
-	src:    "assets/check.svg"
+	src:    "goi://assets/check.svg"
 	color:  primary
 	width:  24
 	height: 24
 }
 
+// A file on this machine, or one fetched over the network.
 SVG {
-	src:    "https://example.com/icon.svg"
-	color:  secondary
-	width:  32
+	src:   "./icons/star.svg"
+	color: secondary
+	width: 32
 	height: 32
 }
 ```
+
+## Where a `src` points
+
+| Form | Reads |
+|---|---|
+| `goi://assets/icon.svg` | the asset container given to `LoadWindow` |
+| `./icon.svg`, `icon.svg` | the working directory of the process |
+| `/home/me/icon.svg` | that absolute path |
+| `https://…`, `http://…` | the network, in the background |
+
+The rules are the same as for [Image](image.md#where-a-src-points).
 
 ## Properties
 
 | Property | Type | Notes |
 |---|---|---|
-| `src` | string | a path next to the `.goi` file, or an `http`/`https` URL |
+| `src` | string | `goi://` container path, a machine path, or an `http`/`https` URL |
 | `fit` | string | `contain` (default), `cover` or `fill` |
 | `color` | color | replaces the file's `currentColor`; a role name or a hex literal |
 
@@ -76,9 +89,22 @@ What happens to a remote SVG:
 ```go
 icon := ui.MustByID[*ui.SVG](w, "mark")
 icon.Color.Set(0xFF0000FF) // re-rasterized on the next frame
-icon.Src.Set("assets/other.svg")
+icon.Src.Set("goi://assets/other.svg")
 icon.Src.Set("https://example.com/other.svg")
 ```
+
+A document that lives in Go skips `src` entirely. `SetDataString` takes the
+markup, `SetDataBytes` the same bytes an `//go:embed` gives you; `color` still
+applies to the document's `currentColor`.
+
+```go
+icon.SetDataString(`<svg viewBox="0 0 24 24" fill="currentColor">…</svg>`)
+icon.SetDataBytes(starSVG) // //go:embed star.svg
+```
+
+Setting one replaces `src` until the node is rebuilt, and the next set
+re-rasterizes on the following frame. Call them from `Bind`: the document is not
+carried across a hot reload.
 
 `Color.Set` and `Src.Set` are picked up by the frame loop, so an icon can change
 with interaction. A new `Src` re-reads (or re-fetches) the file and re-runs
