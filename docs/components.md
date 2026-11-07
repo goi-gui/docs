@@ -159,7 +159,10 @@ property; Go registers the body with `ui.SetHandler`:
 
 ```goi
 bridge { OnOpen func(id string) }
-Button { label: "Open" onClick: bridge.OnOpen("42") }
+
+Window {
+	Button { label: "Open" onClick: bridge.OnOpen("42") }
+}
 ```
 
 | Design property | Go call | Emitted by |
@@ -251,6 +254,13 @@ A list of unknown length is usually a `for` loop the app feeds with
 `goicheck` and the editor check every field (see [SYNTAX](syntax.md#declarations-values-and-handlers)).
 
 ```goi
+bridge { Tickets []Ticket }
+
+type Ticket {
+    Title  string
+    Unread bool
+}
+
 for _, ticket := range bridge.Tickets {
     ListItem { label: ticket.Title selected: ticket.Unread }
 }

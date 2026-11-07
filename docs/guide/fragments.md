@@ -100,6 +100,11 @@ Row {
 
 import Counter "./Counter.goi"
 
+bridge {
+	Count  int
+	onStep func()
+}
+
 Window {
 	Counter {
 		Count:  bridge.Count
@@ -120,9 +125,13 @@ applied to the fragment root, replacing the fragment's own value of the same
 name:
 
 ```goi
-Sidebar {
-	Title: "Inbox"
-	width: 320        // overrides the fragment's width: 280
+import Sidebar "./Sidebar.goi"
+
+Window {
+	Sidebar {
+		Title: "Inbox"
+		width: 320        // overrides the fragment's width: 280
+	}
 }
 ```
 

@@ -70,6 +70,8 @@ The state members are reported by the platform, so they follow the user's own
 actions, not only what the design asked for:
 
 ```goi
+bridge { ToggleMaximize func() }
+
 Button {
 	label:   window.maximized ? "Restore" : "Maximize"
 	onClick: bridge.ToggleMaximize()
@@ -115,6 +117,11 @@ fired. It is only valid as an argument of a handler call, and only where the
 event actually carries something.
 
 ```goi
+bridge {
+	onToggle func(on bool)
+	onVolume func(level float64)
+}
+
 Switch {
 	label:    "Follow the desktop"
 	onToggle: bridge.onToggle(event)     // event is a bool here

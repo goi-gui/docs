@@ -38,6 +38,14 @@ use:
 and combine them with comparisons, `&&`, `||`, `!` and `?:`:
 
 ```goi
+bridge {
+	Loading bool
+	Count   int
+	job     string
+}
+```
+
+```goi
 if bridge.Count > 0 && !bridge.Loading {
 	Text { text: formatf("%d items", bridge.Count) }
 }

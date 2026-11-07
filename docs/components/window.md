@@ -73,6 +73,8 @@ from Go report the same live value, and so do they if a compositor refuses a
 request: the window stays honest about what it is:
 
 ```goi
+bridge { Restore func() }
+
 Button {
 	label: "Restore"
 	visible: window.maximized
@@ -96,6 +98,8 @@ All six are read on every frame, not just at startup, so an expression or a
 `Set` from Go reaches the platform without a reload:
 
 ```goi
+bridge { MinW float64 }
+
 Window { minWidth: bridge.MinW }   // -1 means no limit here too
 ```
 

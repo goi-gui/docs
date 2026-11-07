@@ -34,6 +34,10 @@ Go writes it:
 
 ```goi
 import Sidebar "./Sidebar.goi"
+
+Window {
+	Sidebar { }
+}
 ```
 
 `props` declares the typed values the fragment expects, the way Go
@@ -250,11 +254,11 @@ matching one is shown.
 
 ```goi
 Column {
-    switch bridge.job {
-    case "swe", "eee", "fe":
-        Text { text: "Engineer" }
-    case "teacher":
-        Text { text: "Teacher" }
+    switch bridge.Error {
+    case "not found":
+        Text { text: "Missing" }
+    case "denied":
+        Text { text: "No access" }
     default:
         Text { text: "Something else" }
     }
@@ -273,9 +277,9 @@ Column {
 
 ```goi
 Column {
-    for i, user := range bridge.users {
-        if user.Age > 17 {
-            Text { text: user.FullName }
+    for i, ticket := range bridge.Tickets {
+        if ticket.Unread {
+            Text { text: formatf("%d. %s", i+1, ticket.Title) }
         }
     }
 }
@@ -638,7 +642,7 @@ leaves the property at its previous value instead of failing the frame.
 
 ```goi
 Text { text: formatf("Count is %d", bridge.Count) }
-Text { text: formatf("%s: %0.2f", props.Title, props.Price) }
+Text { text: formatf("%s: %0.2f", bridge.Error, bridge.Count) }
 ```
 
 The first argument is the format string; every later argument fills one verb.
@@ -671,7 +675,7 @@ no meaning in a value that is re-read every frame, so `append`, `make`, `new`,
 may call.
 
 ```goi
-Text { text: formatf("%d of %d", len(bridge.Done), len(bridge.Rows)) }
+Text { text: formatf("%d of %d", len(bridge.Tickets), bridge.Count) }
 Rectangle { width: max(120, min(window.width / 3, 480)) }
 ```
 

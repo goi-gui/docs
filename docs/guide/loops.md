@@ -8,6 +8,35 @@ title: Loops
 list, a map or a number; behaviour stays in Go.
 
 ```goi
+bridge {
+	users   []user
+	Tickets []Ticket
+	Groups  []group
+	onOpen  func(id string)
+}
+
+type user {
+	FullName string
+	Age      int
+}
+
+type Ticket {
+	ID     string
+	Title  string
+	Unread bool
+}
+
+type group {
+	Title string
+	Rows  []row
+}
+
+type row {
+	Label string
+}
+```
+
+```goi
 Window {
 	Column {
 		for i, user := range bridge.users {
