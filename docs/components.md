@@ -129,7 +129,9 @@ it, so the pointer never looks stuck over a small scroller.
 
 Padding spaces the moving content only: the scrollbar and the scroll shadows
 attach to the element's frame and are not inset by it, so they stay against the
-edge. The scrollbar itself is a draggable thumb: press it and pull, and the
+edge. The end padding (bottom for a vertical area, right for a horizontal one)
+is the gap after the last child, so it appears only once you scroll all the way
+there; at rest the content runs under that edge. The scrollbar itself is a draggable thumb: press it and pull, and the
 content follows the handle 1:1. `autoHideScrollbar` follows the pointer, and
 `scrollShadow` adds a gradient at each edge the content has scrolled away from,
 so it is present at the top once the content moves down and at the bottom until
