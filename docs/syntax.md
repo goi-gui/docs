@@ -499,7 +499,7 @@ declaration. A function call appears either as an event property's whole value
 | `Rectangle` | no | — |
 | `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), plus `radius` |
 | `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`) |
-| `Text` | no | `text`, `fontSize`, `weight`, `color`, `align`, `wrap`, `role`, `selectable` |
+| `Text` | no | `text`, `fontSize`, `weight`, `fontWeight`, `fontStyle`, `decoration`, `decorationStyle`, `decorationThickness`, `decorationColor`, `color`, `align`, `wrap`, `role`, `selectable` |
 
 Every element takes the common set, which includes `shadow`: on `Text` it
 shadows the glyphs (CSS `text-shadow`), everywhere else the box (CSS
@@ -512,6 +512,23 @@ mood, so a custom dark theme still reads as dark in a conditional.
 
 `role` selects a Material 3 type-scale role (`displayLarge` … `labelSmall`) and
 sets size, line height and weight together; `fontSize` and `weight` override it.
+`fontWeight` is the CSS spelling of `weight`: the keywords `normal` (400), `bold`
+(700), and the relative `bolder`/`lighter` that step from the role's weight, or
+any number from 100 to 900.
+
+`fontStyle` is `normal` or `italic`. `decoration` takes `underline`, `overline`
+and `line-through`, written space-separated so they combine; `none` clears it.
+`decorationStyle` picks `solid`, `wavy`, `dotted`, `double` or `dashed`, and
+`decorationThickness`/`decorationColor` override the font-derived stroke:
+
+```goi
+Text {
+    text:            "Wavy warning"
+    decoration:      underline overline
+    decorationStyle: wavy
+    decorationColor: #c62828
+}
+```
 
 `Wrap` runs children left to right and starts a new run when the next child no
 longer fits; `spacing` is both the gap inside a run and the gap between runs.

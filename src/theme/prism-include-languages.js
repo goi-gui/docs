@@ -54,7 +54,7 @@ export default function prismIncludeLanguages(Prism) {
 		},
 		keyword: {
 			pattern:
-				/\b(?:import|props|bridge|data|type|func|if|else|for|range|switch|case|default|inset|none)\b/,
+				/\b(?:import|props|bridge|data|type|func|if|else|for|range|switch|case|default|inset|none|normal|bold|bolder|lighter|italic|underline|overline|line-through)\b/,
 		},
 		boolean: /\b(?:true|false)\b/,
 		// The pure builtins a value may call.
