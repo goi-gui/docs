@@ -28,6 +28,7 @@ Rectangle {
 | `app.mode` | `light` / `dark` / `unknown` | the resolved scheme's mood, usable where an enum or a colour role is expected |
 | `app.systemMode` | `light` / `dark` / `unknown` | the desktop's own preference, independent of the theme the app picked |
 | `app.dark` | bool | `true` when the resolved scheme is dark |
+| `app.language` | string | the active language: `SetLanguage`'s code, or the desktop's when none was set |
 | `app.systemLanguage` | string | the desktop's language as an ISO 639-1 code: `tr`, `en`, `de`; empty when the platform does not report one |
 | `app.os` | string | `runtime.GOOS`: `linux`, `darwin`, `windows`, `freebsd` |
 

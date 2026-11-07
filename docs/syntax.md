@@ -232,7 +232,8 @@ Window {
 }
 ```
 
-- Conditions may read `app.theme`, `app.dark`, `app.os`, `app.systemLanguage`,
+- Conditions may read `app.theme`, `app.dark`, `app.os`, `app.language`,
+  `app.systemLanguage`,
   `window.width`, `window.height`, the `window.*` state flags, `bridge.*`,
   `props.*` and any `id.prop` that is a bool, and combine them with comparisons,
   `&&`, `||`, `!` and `?:`. The reserved names and every member they expose are
@@ -692,6 +693,22 @@ an enum-or-string position; feeding a `number` property is an error. It is
 re-evaluated on every frame, exactly like any other expression, so a
 `ui.SetData` write reaches the text without extra wiring.
 
+### t
+
+`t` reads a translation from the design's `i18n` folder; see
+[Translations](guide/i18n.md):
+
+```goi
+Text { text: t("welcome_message") }
+Text { text: t("settings.theme") }
+Text { text: t("welcome_with_name", "Kaan") }
+```
+
+A nested key uses dots. Later arguments fill the entry's `fmt` verbs exactly
+like `formatf`. A missing key falls back to the fallback language, then to the
+key itself, and the i18n folder is optional: without it every call shows its
+key.
+
 ### Builtins
 
 Go's pure builtins are available in a value:
@@ -699,6 +716,7 @@ Go's pure builtins are available in a value:
 | Call | Result |
 |---|---|
 | `formatf(pattern, …)` | a string built with Go's `fmt` verbs |
+| `t(key, …)` | a translation from the `i18n` catalogs |
 | `len(x)` | the length of a string, a list or a map |
 | `cap(x)` | a list's capacity; a design list has no spare capacity, so this is its length |
 | `min(a, b, …)` | the smallest number or string |

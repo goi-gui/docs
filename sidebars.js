@@ -16,6 +16,7 @@ const sidebars = {
         'guide/reserved',
         'guide/bridge',
         'guide/fragments',
+        'guide/i18n',
       ],
     },
     {

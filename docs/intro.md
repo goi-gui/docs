@@ -72,6 +72,8 @@ runs. The label follows the value without a manual repaint.
 - [Bridge](guide/bridge.md) — passing values and handlers from Go.
 - [Fragments](guide/fragments.md) — splitting a design across files with props,
   children and named slots.
+- [Translations](guide/i18n.md) — `t(...)` from JSON catalogs in an `i18n`
+  folder, with a language switch from Go.
 - [Components](components.md) — every element, grouped by purpose, with a
   `.goi` example and its properties.
 - [Icons](icons.md) — every Material Symbols name the renderer can draw.
