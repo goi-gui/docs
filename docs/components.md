@@ -113,12 +113,37 @@ These apply to every element and are not repeated on the component pages.
 | `flex` | number | share of the parent's leftover main-axis space |
 | `alignSelf` | enum | `start`, `center`, `end`, `stretch`; overrides the parent's `crossAxisAlign` |
 | `scroll` | bool | scroll when content overflows the box |
+| `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
+| `hideScrollbar` | bool | removes the scrollbar entirely |
+| `autoHideScrollbar` | bool | `true` (default) shows the bar only while the pointer is over the area or it scrolled in the last two seconds; `false` keeps it up |
+| `scrollShadow` | bool | fades an edge when there is content scrolled away from it |
+| `scrollShadowColor` | color | colour of that edge gradient; defaults to the scheme's shadow colour |
 
 A scrolling element takes a gesture along its own axis only: a notched wheel
 scrolls vertically and **Shift + wheel** scrolls a sideways element, while a
 touchpad's two-finger swipe needs no modifier and keeps whichever axis the hand
 moved. A gesture that reaches the end of a child carries on into the page above
 it, so the pointer never looks stuck over a small scroller.
+
+The scrollbar itself is a draggable thumb: press it and pull, and the content
+follows the handle 1:1. `autoHideScrollbar` follows the pointer, and
+`scrollShadow` adds a gradient at each edge the content has scrolled away from,
+so it is present at the top once the content moves down and at the bottom until
+the end is reached:
+
+```goi
+Column {
+	scroll:            true
+	scrollShadow:      true
+	hideScrollbar:     false
+	autoHideScrollbar: true
+}
+```
+
+`opacity` multiplies the alpha of the element and everything under it. There is
+no offscreen pass, so two overlapping children inside a translucent container
+still show through each other; for a card or a fading list the difference does
+not show.
 
 `marginTop`, `marginRight`, `marginBottom`, `marginLeft` (and the same four for
 `padding`) override one edge and leave the others following `margin`/`padding`:

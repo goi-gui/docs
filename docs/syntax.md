@@ -621,7 +621,9 @@ instead.
 Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
 `minHeight`, `maxHeight`, `margin`, `padding`, `background`, `borderColor`,
 `borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
-`template`. `marginTop`, `marginRight`, `marginBottom`, `marginLeft` and
+`opacity`, `hideScrollbar`, `autoHideScrollbar`, `scrollShadow`,
+`scrollShadowColor`, `template`. `marginTop`, `marginRight`, `marginBottom`,
+`marginLeft` and
 `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` override one edge
 and leave the others following `margin`/`padding`:
 
@@ -634,6 +636,13 @@ adds `spaceBetween`, `spaceAround` and `spaceEvenly` along the flow. `alignSelf`
 uses the four cross-axis values and overrides the parent's `crossAxisAlign` for
 one child. `Text` has its own `align` (`start`, `center`, `end`) for the text
 inside its box.
+
+`opacity` takes `0` to `1`, or a percentage such as `50%`, and fades the
+element with everything under it. The scrollbar properties apply to any element
+that scrolls: `hideScrollbar` removes the bar, `autoHideScrollbar` (default
+`true`) shows it only while the pointer is over the area or it scrolled in the
+last two seconds, and `scrollShadow` adds a gradient at each edge the content
+has scrolled away from, tinted by `scrollShadowColor`.
 
 `width` and `height` default to `-1`, meaning automatic. `visible: false`
 removes the element from layout, painting and hit-testing entirely; it works on
@@ -648,6 +657,9 @@ string, a bool or an enum can be conditional too. A reference reads another
 element's property by id (`id.property`), so the value follows that element
 automatically. Operators are `+ - * /`, comparisons `== != < <= > >=`, `&& ||
 !`, a conditional `cond ? a : b` and parentheses, with the usual precedence.
+Percentages resolve only for `width`, `height` (against the parent's space) and
+`opacity` (against the 0..1 range).
+
 `+` adds two numbers and joins anything else as text, so `bridge.Price *
 float64(bridge.Count)` is arithmetic while `"n: " + bridge.Count` is a string.
 `-`, `*` and `/` are numeric only. A type mismatch, division by zero or a reference cycle
