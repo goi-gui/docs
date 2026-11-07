@@ -622,7 +622,7 @@ instead.
 Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
 `minHeight`, `maxHeight`, `margin`, `padding`, `background`, `borderColor`,
 `borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
-`opacity`, `hideScrollbar`, `autoHideScrollbar`, `scrollbarWidth`,
+`opacity`, `zIndex`, `hideScrollbar`, `autoHideScrollbar`, `scrollbarWidth`,
 `scrollbarColor`, `scrollShadow`, `scrollShadowColor`, `template`. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
@@ -639,7 +639,11 @@ one child. `Text` has its own `align` (`start`, `center`, `end`) for the text
 inside its box.
 
 `opacity` takes `0` to `1`, or a percentage such as `50%`, and fades the
-element with everything under it. The scrollbar properties apply to any element
+element with everything under it. `zIndex` restacks an element among its
+siblings the way CSS does: a higher value paints later, so it lands on top, and
+equal values keep document order. Negative values go under siblings at the
+default `0`. It only changes paint order, never layout, so two siblings can
+overlap without affecting the flow. The scrollbar properties apply to any element
 that scrolls: `hideScrollbar` removes the bar, `autoHideScrollbar` (default
 `true`) shows it only while the pointer is over the area or it scrolled in the
 last two seconds, `scrollbarWidth` sets its thickness (4 by default),

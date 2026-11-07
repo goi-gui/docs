@@ -114,6 +114,7 @@ These apply to every element and are not repeated on the component pages.
 | `alignSelf` | enum | `start`, `center`, `end`, `stretch`; overrides the parent's `crossAxisAlign` |
 | `scroll` | bool | scroll when content overflows the box |
 | `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
+| `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected |
 | `hideScrollbar` | bool | removes the scrollbar entirely |
 | `autoHideScrollbar` | bool | `true` (default) shows the bar only while the pointer is over the area or it scrolled in the last two seconds; `false` keeps it up |
 | `scrollbarWidth` | number | bar thickness in dp; 4 by default |
