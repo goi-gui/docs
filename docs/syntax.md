@@ -621,11 +621,11 @@ instead.
 Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
 `minHeight`, `maxHeight`, `margin`, `padding`, `background`, `borderColor`,
 `borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
-`opacity`, `hideScrollbar`, `autoHideScrollbar`, `scrollbarWidth`, `scrollShadow`,
-`scrollShadowColor`, `template`. `marginTop`, `marginRight`, `marginBottom`,
-`marginLeft` and
-`paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` override one edge
-and leave the others following `margin`/`padding`:
+`opacity`, `hideScrollbar`, `autoHideScrollbar`, `scrollbarWidth`,
+`scrollbarColor`, `scrollShadow`, `scrollShadowColor`, `template`. `marginTop`,
+`marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
+`paddingBottom`, `paddingLeft` override one edge and leave the others following
+`margin`/`padding`:
 
 ```goi
 Column  { padding: 16  paddingLeft: 4 }   // 4 left, 16 the other sides
@@ -641,9 +641,9 @@ inside its box.
 element with everything under it. The scrollbar properties apply to any element
 that scrolls: `hideScrollbar` removes the bar, `autoHideScrollbar` (default
 `true`) shows it only while the pointer is over the area or it scrolled in the
-last two seconds, `scrollbarWidth` sets its thickness (4 by default), and
-`scrollShadow` adds a gradient at each edge the content has scrolled away from,
-tinted by `scrollShadowColor`.
+last two seconds, `scrollbarWidth` sets its thickness (4 by default),
+`scrollbarColor` its colour, and `scrollShadow` adds a gradient at each edge the
+content has scrolled away from, tinted by `scrollShadowColor`.
 
 `width` and `height` default to `-1`, meaning automatic. `visible: false`
 removes the element from layout, painting and hit-testing entirely; it works on

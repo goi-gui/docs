@@ -117,6 +117,7 @@ These apply to every element and are not repeated on the component pages.
 | `hideScrollbar` | bool | removes the scrollbar entirely |
 | `autoHideScrollbar` | bool | `true` (default) shows the bar only while the pointer is over the area or it scrolled in the last two seconds; `false` keeps it up |
 | `scrollbarWidth` | number | bar thickness in dp; 4 by default |
+| `scrollbarColor` | color | bar colour; defaults to the theme's muted onSurfaceVariant |
 | `scrollShadow` | bool | fades an edge when there is content scrolled away from it |
 | `scrollShadowColor` | color | colour of that edge gradient; defaults to the scheme's shadow colour |
 
@@ -139,6 +140,7 @@ Column {
 	hideScrollbar:     false
 	autoHideScrollbar: true
 	scrollbarWidth:    6
+	scrollbarColor:    #6750a4
 }
 ```
 
