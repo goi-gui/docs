@@ -53,7 +53,7 @@ const sidebars = {
           type: 'category',
           label: "Containment",
           collapsed: true,
-          items: ["components/card", "components/dialog", "components/bottomsheet", "components/sidesheet", "components/divider", "components/list", "components/listitem", "components/menu", "components/menuitem", "components/tooltip", "components/snackbar"],
+          items: ["components/card", "components/dialog", "components/bottomsheet", "components/sidesheet", "components/divider", "components/list", "components/listitem", "components/menu", "components/menuitem", "components/tooltip", "components/snackbar", "components/table"],
         },
         {
           type: 'category',

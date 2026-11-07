@@ -61,6 +61,7 @@ components. They all share one property set and one way of being driven from Go.
 - [MenuItem](components/menuitem.md) — One row in a menu.
 - [Tooltip](components/tooltip.md) — A short hint attached to a control.
 - [Snackbar](components/snackbar.md) — A short, transient message at the bottom of the screen.
+- [Table](components/table.md) — A sortable data grid with declared columns and rows, selectable and sortable from a design or from Go.
 
 ## Navigation
 
