@@ -102,7 +102,8 @@ Window {
   instance's `id:` as that value, so instance-id scoping is off for it. Declare
   a different prop name when the instance needs its ids namespaced.
 - A fragment's root may be any element; only the file a program loads must be a
-  `Window`. A file that declares props is reported as a fragment by `goicheck`.
+  `Window`. A file that declares props or a slot is reported as a fragment by
+  `goicheck`, and so is a file that another file in its folder imports.
 - `props.Name` is only valid inside the file that declares it. The entry file has
   nothing to fill it in, so it is an error there; a name the block does not
   declare is an error too, with a "did you mean" hint.
@@ -145,7 +146,8 @@ Window {
 - A slot may sit anywhere in the fragment body, including inside another
   fragment call, which is how a fragment forwards its children.
 - Like a file with props, a file with `$children` is a fragment: `goicheck` and
-  the language server do not require it to be a `Window`.
+  the language server do not require it to be a `Window`. A file a sibling
+  imports is treated the same way even without props or a slot.
 
 ### Named slots
 

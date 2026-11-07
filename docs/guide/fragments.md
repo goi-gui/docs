@@ -10,8 +10,9 @@ one. It can take values, handlers and children from the file that uses it, so a
 design stays small without copying the same block of elements around.
 
 A file that declares `props`, or uses `$children` or a named slot, is a fragment.
-The file a program loads must still be a `Window`; a fragment's root may be any
-element.
+So is a file another design imports, even when it declares neither: a page split
+out of a window is a fragment by how it is used. The file a program loads must
+still be a `Window`; a fragment's root may be any element.
 
 ## Defining a fragment
 
