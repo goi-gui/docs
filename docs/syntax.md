@@ -623,7 +623,8 @@ instead.
 Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
 `minHeight`, `maxHeight`, `margin`, `padding`, `background`, `borderColor`,
 `borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
-`opacity`, `zIndex`, `hideScrollbar`, `autoHideScrollbar`, `scrollbarWidth`,
+`opacity`, `zIndex`, `cursor`, `hideScrollbar`, `autoHideScrollbar`,
+`scrollbarWidth`,
 `scrollbarColor`, `scrollShadow`, `scrollShadowColor`, `template`. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
@@ -653,6 +654,10 @@ content has scrolled away from, tinted by `scrollShadowColor`. Padding spaces
 only the moving content: the bar and the shadows stay against the frame, and
 content slides under the padding, so the start padding leaves the view once you
 scroll and the end padding appears after the last child at the end.
+
+`cursor` takes any CSS cursor name (`pointer`, `text`, `grab`, `not-allowed`,
+`col-resize`, `wait`, `none`, …). A child inherits it until a descendant writes
+its own; `auto` restores the framework's shape for that element.
 
 `width` and `height` default to `-1`, meaning automatic. `visible: false`
 removes the element from layout, painting and hit-testing entirely; it works on

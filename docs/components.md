@@ -115,6 +115,7 @@ These apply to every element and are not repeated on the component pages.
 | `scroll` | bool | scroll when content overflows the box |
 | `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
 | `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected |
+| `cursor` | enum | pointer shape, named the way CSS names it: `pointer`, `text`, `move`, `grab`, `not-allowed`, the resize arrows, `wait`, `none`, … |
 | `hideScrollbar` | bool | removes the scrollbar entirely |
 | `autoHideScrollbar` | bool | `true` (default) shows the bar only while the pointer is over the area or it scrolled in the last two seconds; `false` keeps it up |
 | `scrollbarWidth` | number | bar thickness in dp; 4 by default |
@@ -149,6 +150,26 @@ Column {
 	scrollbarColor:    #6750a4
 }
 ```
+
+`cursor` takes any CSS cursor value, so a draggable card can say `cursor: grab`
+and a disabled control `not-allowed`:
+
+```goi
+Card {
+	cursor: grab
+}
+
+Button {
+	cursor: not-allowed
+	disabled: true
+}
+```
+
+A child inherits the nearest declared cursor, and `cursor: auto` asks for the
+framework's own shape again (an I-beam over text, a hand over anything
+clickable). Values the platform has no system shape for, such as `zoom-in`,
+fall back to the arrow, which is what a browser does. `cursor: none` hides the
+pointer for a design that draws its own.
 
 `opacity` multiplies the alpha of the element and everything under it. There is
 no offscreen pass, so two overlapping children inside a translucent container
