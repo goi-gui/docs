@@ -128,12 +128,13 @@ touchpad's two-finger swipe needs no modifier and keeps whichever axis the hand
 moved. A gesture that reaches the end of a child carries on into the page above
 it, so the pointer never looks stuck over a small scroller.
 
-Padding spaces the moving content only: the scrollbar and the scroll shadows
-attach to the element's frame and are not inset by it, so they stay against the
-edge. The end padding (bottom for a vertical area, right for a horizontal one)
-is the gap after the last child, so it appears only once you scroll all the way
-there; at rest the content runs under that edge. The scrollbar itself is a draggable thumb: press it and pull, and the
-content follows the handle 1:1. `autoHideScrollbar` follows the pointer, and
+Padding spaces the moving content only. Nothing keeps a fixed inset at any
+edge: the scrollbar and the scroll shadows attach to the element's frame, and
+content slides under the padding as you scroll. The padding is the gap at the
+start (above the first child) and at the end (below the last one), so the end
+padding appears only once you scroll all the way there, and the start padding
+scrolls away as soon as you leave the top. The scrollbar itself is a draggable
+thumb: press it and pull, and the content follows the handle 1:1. `autoHideScrollbar` follows the pointer, and
 `scrollShadow` adds a gradient at each edge the content has scrolled away from,
 so it is present at the top once the content moves down and at the bottom until
 the end is reached:

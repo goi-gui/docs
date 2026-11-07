@@ -650,8 +650,9 @@ that scrolls: `hideScrollbar` removes the bar, `autoHideScrollbar` (default
 last two seconds, `scrollbarWidth` sets its thickness (4 by default),
 `scrollbarColor` its colour, and `scrollShadow` adds a gradient at each edge the
 content has scrolled away from, tinted by `scrollShadowColor`. Padding spaces
-only the moving content; the bar and the shadows stay against the frame, and
-the end padding appears only after the last child at the end of the scroll.
+only the moving content: the bar and the shadows stay against the frame, and
+content slides under the padding, so the start padding leaves the view once you
+scroll and the end padding appears after the last child at the end.
 
 `width` and `height` default to `-1`, meaning automatic. `visible: false`
 removes the element from layout, painting and hit-testing entirely; it works on
