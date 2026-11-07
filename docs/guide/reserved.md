@@ -1,6 +1,6 @@
 ---
 title: Reserved names
-sidebar_label: app / window
+sidebar_label: Reserved Names
 ---
 
 # Reserved names
