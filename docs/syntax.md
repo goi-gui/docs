@@ -28,8 +28,9 @@ Window {
 
 ## Splitting a design across files
 
-A file may start with `import` lines and one `props` block, before its root
-element. An import names the alias first, the way Go writes an import:
+A file may start with its `import` lines, one `props` block and its
+declarations, before its root element. An import names the alias first, the way
+Go writes it:
 
 ```goi
 import Sidebar "./Sidebar.goi"
@@ -226,11 +227,11 @@ Window {
 }
 ```
 
-- Conditions may read `app.theme`, `app.dark`, `app.os`, `window.width`,
-  `window.height`, `bridge.*`, `props.*` and any `id.prop` that is a bool, and
-  combine them with comparisons, `&&`, `||`, `!` and `?:`. The reserved names
-  and every member they expose are listed in
-  [Reserved names](guide/reserved.md).
+- Conditions may read `app.theme`, `app.dark`, `app.os`, `app.systemLanguage`,
+  `window.width`, `window.height`, the `window.*` state flags, `bridge.*`,
+  `props.*` and any `id.prop` that is a bool, and combine them with comparisons,
+  `&&`, `||`, `!` and `?:`. The reserved names and every member they expose are
+  listed in [Reserved names](guide/reserved.md).
 - An arm holds elements and blocks only. An `if` inside a `Text` is an error,
   because a leaf has no children to switch.
 - Blocks nest: an inner `if` shows only where its outer arm also shows.
@@ -373,7 +374,9 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   `onSelect` an index. `onClick` carries no scalar value.
 - **Events.** Every element accepts `onClick`. Components also accept
   `onToggle`, `onChange`, `onEdit`, `onSubmit` and `onSelect` where they emit
-  them. The value is always a bridge call; a literal is rejected.
+  them. The value is always a handler call — `bridge.Name(...)` in a design,
+  `props.Name(...)` inside the fragment that declares it; a literal is
+  rejected.
 - **Any file may declare them.** A fragment owns its own `bridge { ... }` block
   and the types its loops walk; the declarations merge into the one design the
   app sees, so `ui.SetData(w, "Rows", …)` feeds a list a fragment drew.
@@ -415,7 +418,7 @@ type User struct {
 
 ```text
 File      = { Import | Props | Bridge | Shape } Element EOF
-Import    = "import" String "as" Ident
+Import    = "import" Ident String [";"]
 Props     = "props" "{" { Decl } "}"
 Bridge    = ("bridge" | "data") "{" { Decl } "}"
 Shape     = ("type" | "data") Ident "{" { Decl } "}"
@@ -424,13 +427,16 @@ Type      = Primitive | "[]" Type | "map" "[" Ident "]" Type
           | "func" "(" [ Ident Type { "," Ident Type } ] ")"
 Primitive = "bool" | "string" | "color" | Go numeric types | Ident
 Element   = Ident "{" { Member } "}"
-Member    = Property | Element | If | For | "$" Ident [ "{" { Member } "}" ]
+Member    = Property | Element | If | For | Switch
+          | "$" Ident [ "{" { Member } "}" ]
 If        = "if" Value "{" { Member } "}"
             { "else" "if" Value "{" { Member } "}" }
             [ "else" "{" { Member } "}" ]
 For       = "for" [ Ident [ "," Ident ] ":=" ] "range" Value "{" { Member } "}"
-Property  = Ident ":" Value [";"]
-Shadow    = ShadowLayer { "," ShadowLayer }
+Switch    = "switch" Value "{" { "case" Value { "," Value } ":" { Member } }
+            [ "default" ":" { Member } ] "}"
+Property  = Ident ":" ( Value | EventHandler ) [";"]
+Shadow    = "none" | ShadowLayer { "," ShadowLayer }
 ShadowLayer = Number Number [ Number [ Number ] ] [ Color | Ident ] [ "inset" ]
 EventHandler = Ident ":" ("bridge" | "data" | "props") "." Ident
                "(" [ Value { "," Value } ] ")"
@@ -471,20 +477,21 @@ declaration. A function call appears either as an event property's whole value
 | `surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
 | `myBrand` | custom color | any other bare word; the app defines it with `ui.SetCustomColor`, and an undefined one warns and falls back to `onSurface` |
 | `{ base: 8, md: 16 }` | map | responsive value, one entry per breakpoint |
-| `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form, see [Shadows](guide/shadows.md) |
+| `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form; `none` clears it, see [Shadows](guide/shadows.md) |
 
 ## Elements
 
 | Element | Children | Properties beyond the common set |
 |---|---|---|
 | `Window` | yes | `title`, `theme` (`light`, `dark`, or a name the app registered), `titleBar` (`system`, `custom`), `resizable`, `minimizable`, `maximizable`, `minimized`, `maximized`, `fullscreen` (all bool; `disableResize` is the older inverse of `resizable`) |
-| `Column` | yes | `spacing` (`gap`), `align` |
-| `Row` | yes | `spacing` (`gap`), `align` |
-| `TitleBar` | yes | `spacing` (`gap`), `align`; a press that misses its clickable children moves the window |
-| `Stack` | yes | `align` |
+| `Column` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
+| `Row` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
+| `TitleBar` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign`; a press that misses its clickable children moves the window |
+| `Stack` | yes | `crossAxisAlign`, `mainAxisAlign` |
+| `ClipRRect` | yes | `crossAxisAlign`, `mainAxisAlign`; clips its children to its rounded box |
 | `Positioned` | yes | `left`, `top`, `right`, `bottom`, `translateX`, `translateY` |
-| `Wrap` | yes | `spacing` (`gap`), `align` |
-| `Grid` | yes | `columns`, `spacing` (`gap`), `align` |
+| `Wrap` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
+| `Grid` | yes | `columns`, `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
 | `Rectangle` | no | — |
 | `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), plus `radius` |
 | `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`) |
@@ -527,7 +534,8 @@ Stack {
 ```
 
 `left`, `top`, `right` and `bottom` default to `-1`, meaning auto. An
-unanchored axis follows the Stack's `align`. Setting both opposite edges
+unanchored horizontal axis follows the Stack's `crossAxisAlign`, and the
+vertical one its `mainAxisAlign`. Setting both opposite edges
 without a declared `width`/`height` stretches the box between them; an explicit
 size wins over the fill. A box with no offsets hugs its child. Positioned
 children still count toward a Stack's auto size (their anchored extent), so a
@@ -543,12 +551,14 @@ separate package. Containers take children; the rest are leaves:
 `SideSheet`, `Divider`, `List`, `ListItem`, `Menu`, `MenuItem`, `Snackbar`,
 `TopAppBar`, `NavigationBar`, `NavigationRail`, `NavigationDrawer`,
 `NavigationItem`, `Tabs`, `Tab`, `LinearProgress`, `CircularProgress`,
-`LoadingIndicator`, `DatePicker`, `TimePicker`, `Carousel`, `Toolbar`.
+`LoadingIndicator`, `DatePicker`, `TimePicker`, `Carousel`, `Toolbar`,
+`TextArea`, `Code`.
 
 They share one vocabulary: `label`, `supporting`, `text`, `placeholder`, `icon`,
 `trailingIcon` (icon names are Material Symbols ligatures such as `home`),
 `variant`, `size`, `disabled`, `checked`, `selected`, `expanded`, `value`,
-`min`, `max`, `step`. Each kind accepts only the subset that makes sense for it;
+`min`, `max`, `step`, `language`, `showCopy`. Each kind accepts only the subset
+that makes sense for it;
 `internal/componentdef` is the single table that the schema and the node tree
 both read, so an element can never validate without existing.
 
@@ -577,9 +587,10 @@ the page list.
 
 Containers that lay children out (`ButtonGroup`, `Toolbar`, `Carousel`, `Tabs`,
 `NavigationBar`, `NavigationRail`, `NavigationDrawer`, `List`, `Menu`, `Card`,
-`Dialog`, `BottomSheet`, `SideSheet`, `DatePicker`, `TimePicker`) also accept
-`spacing`, `gap` and `align`. `gap` is the same cell as `spacing`, under the name
-a layout reader expects.
+`Dialog`, `BottomSheet`, `SideSheet`, `DatePicker`, `TimePicker`, `FABMenu`) also
+accept
+`spacing`, `gap`, `crossAxisAlign` and `mainAxisAlign`. `gap` is the same cell
+as `spacing`, under the name a layout reader expects.
 
 `Positioned` also takes `translateX` and `translateY`, which shift the anchored
 box without changing its anchors. They exist for enter/exit animation: `left`
@@ -587,17 +598,21 @@ and `top` reserve `-1` for "auto", so a slide off screen animates the translate
 instead.
 
 Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
-`margin`, `padding`, `background`, `borderColor`, `borderWidth`, `radius`,
-`visible`, `flex`, `alignSelf`. `marginTop`, `marginRight`, `marginBottom`,
-`marginLeft` and `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft`
-override one edge and leave the others following `margin`/`padding`:
+`minHeight`, `maxHeight`, `margin`, `padding`, `background`, `borderColor`,
+`borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
+`template`. `marginTop`, `marginRight`, `marginBottom`, `marginLeft` and
+`paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` override one edge
+and leave the others following `margin`/`padding`:
 
 ```goi
 Column  { padding: 16  paddingLeft: 4 }   // 4 left, 16 the other sides
 ```
 
-`align` is one of `start`, `center`, `end`, `stretch`. `alignSelf` uses the same
-values and overrides the parent's `align` for one child.
+`crossAxisAlign` is one of `start`, `center`, `end`, `stretch`; `mainAxisAlign`
+adds `spaceBetween`, `spaceAround` and `spaceEvenly` along the flow. `alignSelf`
+uses the four cross-axis values and overrides the parent's `crossAxisAlign` for
+one child. `Text` has its own `align` (`start`, `center`, `end`) for the text
+inside its box.
 
 `width` and `height` default to `-1`, meaning automatic. `visible: false`
 removes the element from layout, painting and hit-testing entirely; it works on
@@ -756,7 +771,8 @@ mid-typing never reflows it.
 
 - Exactly one root element, and it must be `Window` — unless the file declares
   `props`, which makes it a fragment that an `import` pulls in.
-- `id` must match `[a-z][A-Za-z0-9_]*` and be unique within the file.
+- `id` must match `[a-z][A-Za-z0-9_]*` (or `a.b`, which is what an instance
+  gives a fragment's ids) and be unique within the file.
 - `Positioned` must be a direct child of `Stack`.
 - Unknown element, unknown property, wrong literal type, unknown enum value,
   unknown or repeated breakpoint, nested map, responsive `id` and duplicate ids
