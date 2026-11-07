@@ -167,9 +167,13 @@ Button {
 
 A child inherits the nearest declared cursor, and `cursor: auto` asks for the
 framework's own shape again (an I-beam over text, a hand over anything
-clickable). Values the platform has no system shape for, such as `zoom-in`,
-fall back to the arrow, which is what a browser does. `cursor: none` hides the
-pointer for a design that draws its own.
+clickable). Hyphenated names are written bare, the way CSS writes them.
+
+Values the platform has no system shape for fall back to the closest one:
+`zoom-in`, `zoom-out`, `help`, `copy`, `alias` and `context-menu` show the
+arrow, `vertical-text` the I-beam, and `grab`, `grabbing` and `all-scroll` the
+move cursor, because SDL has no open hand. `cursor: none` hides the pointer for
+a design that draws its own.
 
 `opacity` multiplies the alpha of the element and everything under it. There is
 no offscreen pass, so two overlapping children inside a translucent container
