@@ -69,7 +69,8 @@ Go fills it with `ui.SetData(w, "people", rows)`; the table rebuilds its rows.
 
 ## Columns
 
-A column with a `width` keeps it; a column without one shares the leftover
+A column with a `width` keeps it; a percentage (`width: 25%`) takes that share
+of the table's content width, and a column without one shares the leftover
 space, never below 80dp. The last flexible column absorbs the rounding so the
 row always fills the table.
 
@@ -131,7 +132,7 @@ every row.
 |---|---|---|
 | `label` | string | header text |
 | `key` | string | name Go sorts by |
-| `width` | number | fixed width; omit to share the leftover space |
+| `width` | number | fixed width in dp, or a percentage of the table's content width (`25%`); omit to share the leftover space |
 | `align` | enum | `start`, `center`, `end` |
 | `numeric` | bool | right-align by default and sort by number |
 | `sortable` | bool | clickable header with an arrow |
