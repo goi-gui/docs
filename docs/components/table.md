@@ -88,8 +88,31 @@ arrow, which points up for ascending and down for descending.
 
 Clicking a sortable header sorts ascending; clicking it again reverses. The
 order is stable, so equal values keep declaration order. Sorting reorders the
-rows only — no other layout changes — and a selected row keeps its meaning,
-because `selectedRow` counts the rows as they are shown.
+rows only — no other layout changes — and a selection keeps its meaning, because
+selection counts the rows as they are shown.
+
+## Selection
+
+`selectable` decides what a press on a row does:
+
+- `single` (default) keeps at most one row. Clicking another row moves the
+  selection; clicking the selected row again drops it.
+- `multiple` toggles each row, so a click adds it and a second click removes it.
+  In this mode the rows' own `selected` flags are the state, and a design can
+  seed it directly:
+
+  ```goi
+  TableRow { selected: true
+  	TableCell { text: "Kaan" }
+  	TableCell { text: "Engineer" }
+  }
+  ```
+
+- `none` makes cells inert: no press, no selection and no pointer cursor. A
+  sortable header still sorts.
+
+Indices are display indices, so a selection stays on the row the reader sees
+after a sort. The `OnSelect` event reports the row that was toggled.
 
 ## From Go
 
@@ -100,14 +123,17 @@ table.OnSort(func(s ui.SortOrder) {
 	// s.Column, s.Key, s.Ascending
 })
 table.OnSelect(func(row int) {
-	name := table.CellText(row, 0)
+	// the row that was toggled; read the set with SelectedRows
 })
 
-table.SortBy("age", false)      // by a column key
-table.Sort(2, true)             // by index
-table.SetSelectedRow(0)         // -1 clears
-table.SetCell(1, 0, "Grace")    // row, column, text
-table.RowCount()                // rows as shown
+table.SortBy("age", false)        // by a column key
+table.Sort(2, true)               // by index
+table.SetSelectedRow(0)           // one row; -1 clears
+table.SetSelectedRows(0, 2)       // multiple mode keeps both, single keeps the last
+table.SelectedRows()              // []int of selected display indices
+table.ToggleRow(1)                // what a click does, mode included
+table.SetCell(1, 0, "Grace")      // row, column, text
+table.RowCount()                  // rows as shown
 ```
 
 `SetCell` writes the cell node directly, which is useful for an inline edit;
@@ -125,7 +151,8 @@ every row.
 | `headerHeight` | number | header height in dp; 40 by default |
 | `sortColumn` | number | sorted column index, `-1` (default) for declaration order |
 | `sortAscending` | bool | `true` by default |
-| `selectedRow` | number | selected row index, `-1` (default) for none |
+| `selectable` | enum | `single` (default), `multiple`, `none`; see [Selection](#selection) |
+| `selectedRow` | number | selected row index, `-1` (default) for none; seeds single mode |
 
 ### `TableColumn`
 
@@ -142,7 +169,7 @@ every row.
 
 | Property | Type | Notes |
 |---|---|---|
-| `selected` | bool | the painted selection; `Table.selectedRow` drives it |
+| `selected` | bool | this row's selection flag; in `multiple` mode it is the state a design can seed |
 | `disabled` | bool | dims the row's text |
 
 ### `TableCell`
