@@ -59,6 +59,7 @@ path straight through.
 | `src` | string | `goi://` container path, a machine path, or an `http`/`https` URL |
 | `fit` | string | `cover`, `contain` or `fill` |
 | `paused` | bool | holds a GIF or APNG where it is; `false` by default |
+| `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
 
 A local path is read and decoded while the window is built, so the first frame
 already has it; the decoded bitmap is cached by `src`, so a reload does not read
@@ -86,8 +87,7 @@ What happens to a remote image:
 A `GIF` or an animated `PNG` (APNG) plays without any Go code. Frames are
 decoded once, when the file loads, and composited to full-size pictures, so
 playing is a pixel swap rather than per-frame decoding. The element keeps its
-declared size, `fit` applies to every frame, and the animation loops as the file
-says.
+declared size, and `fit` applies to every frame.
 
 - A GIF honours its frame delays, transparency and disposal method, so a
   sub-frame that clears does not drag the previous one along.
@@ -96,15 +96,38 @@ says.
   than 128 MiB, is held on its first frame instead: a remote file is untrusted
   and must not be able to exhaust memory.
 
-`paused: true` in the design starts the animation held, so a still screenshot
-or a reduced-motion build can show one frame; `Image.Paused` is the same switch
-from Go. The frame it stopped on stays on screen. `SetImage` replaces the
-animation with the bitmap it is given.
+`loop` is `true` by default, so an animation repeats forever; `loop: false`
+plays one pass and holds the last frame, whatever loop count the file declares.
+`paused: true` starts held, which a still screenshot or a reduced-motion build
+wants. `SetImage` replaces the animation with the bitmap it is given.
+
+### Transport
+
+`play`, `pause` and `stop` are the same three moves everywhere:
+
+| Method | Effect |
+|---|---|
+| `play()` | resumes, or replays from the first frame after `stop()` or a finished one-shot |
+| `pause()` | holds the current frame |
+| `stop()` | rewinds to the first frame and pauses there |
+
+From Go they are methods on the node; from a design, an event can call them on
+an element by id, with no Go handler at all:
+
+```goi
+Image { id: gif src: "goi://pulse.gif" }
+
+Button { label: "Play"  onClick: gif.play() }
+Button { label: "Pause" onClick: gif.pause() }
+Button { label: "Stop"  onClick: gif.stop() }
+```
 
 ```go
 spin := ui.MustByID[*ui.Image](w, "spinner")
-spin.Paused.Set(true)   // hold the current frame
-spin.Paused.Set(false)  // carry on
+spin.Paused.Set(true)   // the property, for a switch
+spin.Pause()            // the method, for a one-off
+spin.Play()
+spin.Stop()
 ```
 
 ## From Go

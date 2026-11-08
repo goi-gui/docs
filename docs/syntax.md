@@ -383,6 +383,10 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   them. The value is always a handler call — `bridge.Name(...)` in a design,
   `props.Name(...)` inside the fragment that declares it; a literal is
   rejected.
+- **A call on an id.** An event may drive an animated element directly instead
+  of going through Go: `onClick: spin.pause()`. An `Image` or `SVG` answers
+  `play()`, `pause()` and `stop()`, and they take no arguments. Anything else
+  is a checker error.
 - **Any file may declare them.** A fragment owns its own `bridge { ... }` block
   and the types its loops walk; the declarations merge into the one design the
   app sees, so `ui.SetData(w, "Rows", …)` feeds a list a fragment drew.

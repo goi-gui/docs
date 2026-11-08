@@ -51,6 +51,7 @@ The rules are the same as for [Image](image.md#where-a-src-points).
 | `fit` | string | `contain` (default), `cover` or `fill` |
 | `color` | color | replaces the file's `currentColor`; a role name or a hex literal |
 | `paused` | bool | holds a SMIL animation where it is; `false` by default |
+| `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
 
 The file is parsed and rasterized with the SVG's own `viewBox` aspect, at most
 1024 px on the long edge, so `fit` behaves the same as on [Image](image.md). If
@@ -106,13 +107,27 @@ a parse and a raster about thirty times a second. Keep animated SVGs small (an
 icon, a spinner); a full-screen animated illustration wants a pre-rendered
 sequence.
 
-From Go, `Paused` stops and resumes the clock — `paused: true` in the design does
-the same at load:
+`loop` is `true` by default; `loop: false` plays each animation once and holds
+its last frame, whatever `repeatCount` the file declares. `paused: true` starts
+held.
+
+### Transport
+
+An animated SVG answers the same `play()`, `pause()` and `stop()` as an
+[Image](image.md#transport). From a design an event calls them by id, from Go
+they are methods on the node:
+
+```goi
+SVG { id: spinner src: "goi://spinner.svg" }
+
+Button { label: "Pause" onClick: spinner.pause() }
+```
 
 ```go
 spin := ui.MustByID[*ui.SVG](w, "spinner")
-spin.Paused.Set(true)
-spin.Paused.Set(false)
+spin.Pause()
+spin.Play()
+spin.Stop()
 ```
 
 ## From Go
