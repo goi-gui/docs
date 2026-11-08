@@ -192,7 +192,7 @@ column's. The usual child is a single `Text`, but a `Chip`, a `Switch` or a smal
 
 | Property | Type | Notes |
 |---|---|---|
-| `value` | string | the string sorting reads; may differ from what is drawn |
+| `value` | string, number or bool | the sort key; a number sorts by magnitude, text by its letters |
 | `icon` | string | optional Material Symbols glyph drawn before the children |
 | `align` | enum | overrides the column's alignment for the cell's content |
 
@@ -206,7 +206,9 @@ TableCell {
 }
 ```
 
-A numeric column parses the number out of `value`, the same way it parses the
-visible text elsewhere.
+`value` takes any simple literal: `"Kaan"`, `42`, `7.5` or `true`. Two numeric
+values compare as numbers whether or not the column says `numeric`, so `9` sorts
+before `42`; anything else compares as text. A column marked `numeric` still
+parses the number out of a string, so `"1,200"` orders as 1200.
 
 Every element also accepts the [common properties](../components.md#common-properties).
