@@ -1,8 +1,8 @@
 # Table
 
 A sortable data grid: `TableColumn` children declare the columns, `TableRow`
-children hold one `TableCell` per column. The header sorts on click, a click on
-a row selects it, and Go can do both through the same API.
+children hold one `TableCell` per column. The header sorts on click, `selectable`
+lets a click pick rows, and Go can do both through the same API.
 
 [All components](../components.md)
 
@@ -10,9 +10,10 @@ a row selects it, and Go can do both through the same API.
 
 ```goi
 Table {
-	id:      people
-	width:   100%
-	striped: true
+	id:         people
+	width:      100%
+	striped:    true
+	selectable: single
 
 	TableColumn { key: "name" label: "Name" width: 200 sortable: true }
 	TableColumn { key: "role" label: "Role" sortable: true }
@@ -95,8 +96,10 @@ selection counts the rows as they are shown.
 
 `selectable` decides what a press on a row does:
 
-- `single` (default) keeps at most one row. Clicking another row moves the
-  selection; clicking the selected row again drops it.
+- `none` (default) makes cells inert: no press, no selection and no pointer
+  cursor. A sortable header still sorts.
+- `single` keeps at most one row. Clicking another row moves the selection;
+  clicking the selected row again drops it.
 - `multiple` toggles each row, so a click adds it and a second click removes it.
   In this mode the rows' own `selected` flags are the state, and a design can
   seed it directly:
@@ -107,9 +110,6 @@ selection counts the rows as they are shown.
   	TableCell { text: "Engineer" }
   }
   ```
-
-- `none` makes cells inert: no press, no selection and no pointer cursor. A
-  sortable header still sorts.
 
 Indices are display indices, so a selection stays on the row the reader sees
 after a sort. The `OnSelect` event reports the row that was toggled.
@@ -151,7 +151,7 @@ every row.
 | `headerHeight` | number | header height in dp; 40 by default |
 | `sortColumn` | number | sorted column index, `-1` (default) for declaration order |
 | `sortAscending` | bool | `true` by default |
-| `selectable` | enum | `single` (default), `multiple`, `none`; see [Selection](#selection) |
+| `selectable` | enum | `none` (default), `single`, `multiple`; see [Selection](#selection) |
 | `selectedRow` | number | selected row index, `-1` (default) for none; seeds single mode |
 
 ### `TableColumn`
