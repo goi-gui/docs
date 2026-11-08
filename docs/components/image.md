@@ -2,8 +2,8 @@
 
 Draws a decoded bitmap. `src` names a file in the design's asset container
 (`goi://`), a file on the machine, or an `http`/`https` URL; either way the
-element takes part in layout immediately. Go can also hand it a bitmap directly
-with `SetImage`, which needs no file at all.
+element takes part in layout immediately. A GIF or APNG plays on its own. Go can
+also hand it a bitmap directly with `SetImage`, which needs no file at all.
 
 [All components](../components.md)
 
@@ -79,6 +79,30 @@ What happens to a remote image:
   `App.Post`, so a large JPEG cannot drop a frame.
 - A fetch that lands after a hot reload fills in the new nodes; the tree is
   searched by `src` when the data arrives rather than holding old pointers.
+
+## Animation
+
+A `GIF` or an animated `PNG` (APNG) plays without any Go code. Frames are
+decoded once, when the file loads, and composited to full-size pictures, so
+playing is a pixel swap rather than per-frame decoding. The element keeps its
+declared size, `fit` applies to every frame, and the animation loops as the file
+says.
+
+- A GIF honours its frame delays, transparency and disposal method, so a
+  sub-frame that clears does not drag the previous one along.
+- An APNG honours its blend and dispose operations the same way.
+- An animation with more than 512 frames, or one whose frames add up to more
+  than 128 MiB, is held on its first frame instead: a remote file is untrusted
+  and must not be able to exhaust memory.
+
+From Go, `Paused` stops and resumes the clock; the frame it stopped on stays on
+screen. `SetImage` replaces the animation with the bitmap it is given.
+
+```go
+spin := ui.MustByID[*ui.Image](w, "spinner")
+spin.Paused = true   // hold the current frame
+spin.Paused = false  // carry on
+```
 
 ## From Go
 
