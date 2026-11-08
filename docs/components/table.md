@@ -81,6 +81,9 @@ separates the columns; `plain` keeps its open look.
 sorts by the number inside the text, so `"1,200"` and `"12 items"` order
 correctly.
 
+`icon` draws a Material Symbols glyph before the header label, as one aligned
+pair; a column with an icon and no label draws the glyph alone.
+
 `key` names the column for Go: `table.SortBy("age", false)` needs no index.
 `sortable: true` makes the header clickable and gives it a pointer cursor and an
 arrow, which points up for ascending and down for descending.
@@ -159,6 +162,7 @@ every row.
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | header text |
+| `icon` | string | Material Symbols glyph drawn before the label; alone when there is no label |
 | `key` | string | name Go sorts by |
 | `width` | number | fixed width in dp, or a percentage of the table's content width (`25%`); omit to share the leftover space |
 | `align` | enum | `start`, `center`, `end` |
