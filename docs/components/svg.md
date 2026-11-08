@@ -50,6 +50,7 @@ The rules are the same as for [Image](image.md#where-a-src-points).
 | `src` | string | `goi://` container path, a machine path, or an `http`/`https` URL |
 | `fit` | string | `contain` (default), `cover` or `fill` |
 | `color` | color | replaces the file's `currentColor`; a role name or a hex literal |
+| `paused` | bool | holds a SMIL animation where it is; `false` by default |
 
 The file is parsed and rasterized with the SVG's own `viewBox` aspect, at most
 1024 px on the long edge, so `fit` behaves the same as on [Image](image.md). If
@@ -83,6 +84,36 @@ What happens to a remote SVG:
   the node is marked for layout because the `viewBox` may have changed its size.
 - A fetch that lands after a hot reload fills in the new nodes; the tree is
   searched by `src` when the data arrives rather than holding old pointers.
+
+## Animation
+
+A document that declares a SMIL animation plays on its own. The supported subset
+is the one an animated icon actually uses:
+
+- `<animate>` on an attribute — numbers and colours interpolate between
+  `values`, or between `from` and `to`, with `keyTimes` when given.
+- `<animateTransform>` for `translate`, `scale`, `rotate` and `skew`, whose
+  arguments interpolate the same way.
+
+`dur`, `begin`, `repeatCount` and the `fill`/`opacity`/`transform` attributes are
+read. `repeatCount="indefinite"` loops forever; a finite count holds its last
+frame. Everything else — `begin` lists, key splines, additive animation, path
+morphing, `<set>` — is ignored, so such a file simply draws its first frame
+instead of failing.
+
+An animated file is re-rasterized, not transformed on the GPU, so playback costs
+a parse and a raster about thirty times a second. Keep animated SVGs small (an
+icon, a spinner); a full-screen animated illustration wants a pre-rendered
+sequence.
+
+From Go, `Paused` stops and resumes the clock — `paused: true` in the design does
+the same at load:
+
+```go
+spin := ui.MustByID[*ui.SVG](w, "spinner")
+spin.Paused.Set(true)
+spin.Paused.Set(false)
+```
 
 ## From Go
 

@@ -58,6 +58,7 @@ path straight through.
 |---|---|---|
 | `src` | string | `goi://` container path, a machine path, or an `http`/`https` URL |
 | `fit` | string | `cover`, `contain` or `fill` |
+| `paused` | bool | holds a GIF or APNG where it is; `false` by default |
 
 A local path is read and decoded while the window is built, so the first frame
 already has it; the decoded bitmap is cached by `src`, so a reload does not read
@@ -95,13 +96,15 @@ says.
   than 128 MiB, is held on its first frame instead: a remote file is untrusted
   and must not be able to exhaust memory.
 
-From Go, `Paused` stops and resumes the clock; the frame it stopped on stays on
-screen. `SetImage` replaces the animation with the bitmap it is given.
+`paused: true` in the design starts the animation held, so a still screenshot
+or a reduced-motion build can show one frame; `Image.Paused` is the same switch
+from Go. The frame it stopped on stays on screen. `SetImage` replaces the
+animation with the bitmap it is given.
 
 ```go
 spin := ui.MustByID[*ui.Image](w, "spinner")
-spin.Paused = true   // hold the current frame
-spin.Paused = false  // carry on
+spin.Paused.Set(true)   // hold the current frame
+spin.Paused.Set(false)  // carry on
 ```
 
 ## From Go
