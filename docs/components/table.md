@@ -72,7 +72,8 @@ Go fills it with `ui.SetData(w, "people", rows)`; the table rebuilds its rows.
 A column with a `width` keeps it; a percentage (`width: 25%`) takes that share
 of the table's content width, and a column without one shares the leftover
 space, never below 80dp. The last flexible column absorbs the rounding so the
-row always fills the table.
+row always fills the table. In the `outlined` and `filled` variants a 1dp rule
+separates the columns; `plain` keeps its open look.
 
 `align` places the header and every cell in the column (`start`, `center`,
 `end`), and a cell may override it. `numeric: true` right-aligns by default and
