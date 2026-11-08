@@ -1,8 +1,10 @@
 # Table
 
 A sortable data grid: `TableColumn` children declare the columns, `TableRow`
-children hold one `TableCell` per column. The header sorts on click, `selectable`
-lets a click pick rows, and Go can do both through the same API.
+children hold one `TableCell` per column. A cell's children are what a reader
+sees, so it can hold a `Text`, a `Chip`, an icon-bearing row or any other
+component; its `value` is the string sorting reads. The header sorts on click,
+`selectable` lets a click pick rows, and Go can do both through the same API.
 
 [All components](../components.md)
 
@@ -20,15 +22,15 @@ Table {
 	TableColumn { key: "age" label: "Age" width: 80 align: end numeric: true sortable: true }
 
 	TableRow {
-		TableCell { text: "Kaan" }
-		TableCell { text: "Engineer" }
-		TableCell { text: "31" }
+		TableCell { value: "Kaan" Text { text: "Kaan" } }
+		TableCell { value: "Engineer" Text { text: "Engineer" } }
+		TableCell { value: "31" Text { text: "31" } }
 	}
 
 	TableRow {
-		TableCell { text: "Ada" }
-		TableCell { text: "Mathematician" }
-		TableCell { text: "36" }
+		TableCell { value: "Ada" Text { text: "Ada" } }
+		TableCell { value: "Mathematician" Text { text: "Mathematician" } }
+		TableCell { value: "36" Text { text: "36" } }
 	}
 }
 ```
@@ -57,9 +59,13 @@ Window {
 
 		for i, p := range bridge.people {
 			TableRow {
-				TableCell { text: p.name }
-				TableCell { text: p.role }
-				TableCell { text: formatf("%d", p.age) }
+				TableCell { value: p.name Text { text: p.name } }
+				TableCell { value: p.role Text { text: p.role } }
+				TableCell {
+					value: formatf("%d", p.age)
+					align: end
+					Text { text: formatf("%d", p.age) }
+				}
 			}
 		}
 	}
@@ -109,8 +115,8 @@ selection counts the rows as they are shown.
 
   ```goi
   TableRow { selected: true
-  	TableCell { text: "Kaan" }
-  	TableCell { text: "Engineer" }
+  	TableCell { value: "Kaan" Text { text: "Kaan" } }
+  	TableCell { value: "Engineer" Text { text: "Engineer" } }
   }
   ```
 
@@ -135,13 +141,14 @@ table.SetSelectedRow(0)           // one row; -1 clears
 table.SetSelectedRows(0, 2)       // multiple mode keeps both, single keeps the last
 table.SelectedRows()              // []int of selected display indices
 table.ToggleRow(1)                // what a click does, mode included
-table.SetCell(1, 0, "Grace")      // row, column, text
+table.SetCellValue(1, 0, "Grace") // row, column, value
+table.CellValue(1, 0)             // the value sorting reads
 table.RowCount()                  // rows as shown
 ```
 
-`SetCell` writes the cell node directly, which is useful for an inline edit;
-changing the bridge data and rebuilding the loop is the usual way to replace
-every row.
+`SetCellValue` sets the cell's `value` and, when its content is a `Text`, the
+text as well, which is useful for an inline edit; changing the bridge data and
+rebuilding the loop is the usual way to replace every row.
 
 ## Properties
 
@@ -178,10 +185,28 @@ every row.
 
 ### `TableCell`
 
+A cell takes children: whatever it holds is what the row shows, laid out as one
+run inside the cell's 16dp inset and aligned by the cell's `align` or the
+column's. The usual child is a single `Text`, but a `Chip`, a `Switch` or a small
+`Row` works the same way.
+
 | Property | Type | Notes |
 |---|---|---|
-| `text` | string | the value |
-| `icon` | string | drawn when `text` is empty |
-| `align` | enum | overrides the column's alignment |
+| `value` | string | the string sorting reads; may differ from what is drawn |
+| `icon` | string | optional Material Symbols glyph drawn before the children |
+| `align` | enum | overrides the column's alignment for the cell's content |
+
+`value` is what `sortColumn`, `Table.Sort` and `SortBy` compare, so a column of
+formatted dates can still sort by ISO text:
+
+```goi
+TableCell {
+	value: "2026-11-08"
+	Text { text: "8 Nov 2026" }
+}
+```
+
+A numeric column parses the number out of `value`, the same way it parses the
+visible text elsewhere.
 
 Every element also accepts the [common properties](../components.md#common-properties).
