@@ -8,9 +8,9 @@ A text field shaped as a search input, with a leading search glyph.
 
 ```goi
 SearchBar {
-	label: "Search"
+	label:       "Search"
 	placeholder: "Search components"
-	width: 360
+	width:       360
 }
 ```
 

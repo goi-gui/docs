@@ -8,9 +8,9 @@ The bar at the top of a screen: a leading icon, a title and a trailing icon.
 
 ```goi
 TopAppBar {
-	id: appbar
-	label: "Inbox"
-	icon: menu
+	id:           appbar
+	label:        "Inbox"
+	icon:         menu
 	trailingIcon: search
 }
 ```

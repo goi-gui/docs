@@ -7,7 +7,11 @@ A calendar surface for picking a date.
 ## In a `.goi` file
 
 ```goi
-DatePicker { id: date label: "Select date" text: "2026-11-02" }
+DatePicker {
+	id:    date
+	label: "Select date"
+	text:  "2026-11-02"
+}
 ```
 
 ## Properties

@@ -9,20 +9,29 @@ them values.
 /* block comment */
 
 Window {
-    id: main
-    title: "Counter"
-    width: 480
-    height: 320
-    background: #1b1d22
+	id:         main
+	title:      "Counter"
+	width:      480
+	height:     320
+	background: #1b1d22
 
-    Column {
-        padding: 16
-        spacing: 8
-        crossAxisAlign: center
+	Column {
+		padding:        16
+		spacing:        8
+		crossAxisAlign: center
 
-        Text   { id: label text: "0" role: displayLarge }
-        Button { id: inc   label: "Increase" icon: add }
-    }
+		Text {
+			id:   label
+			text: "0"
+			role: displayLarge
+		}
+
+		Button {
+			id:    inc
+			label: "Increase"
+			icon:  add
+		}
+	}
 }
 ```
 
@@ -36,7 +45,7 @@ Go writes it:
 import Sidebar "./Sidebar.goi"
 
 Window {
-	Sidebar { }
+	Sidebar {}
 }
 ```
 
@@ -45,29 +54,39 @@ declares a field; the fragment reads them as `props.Name`:
 
 ```goi
 // Sidebar.goi
+
 props {
-    Title    string
-    Subtitle string
+	Title    string
+	Subtitle string
 }
 
 Column {
-    width: 280
-    Text { text: props.Title role: "titleLarge" }
-    Text { text: props.Subtitle role: "bodySmall" }
+	width: 280
+
+	Text {
+		text: props.Title
+		role: "titleLarge"
+	}
+
+	Text {
+		text: props.Subtitle
+		role: "bodySmall"
+	}
 }
 ```
 
 ```goi
 // Main.goi
+
 import Sidebar "./Sidebar.goi"
 
 Window {
-    Column {
-        Sidebar {
-            Title: "Inbox"
-            width: 300
-        }
-    }
+	Column {
+		Sidebar {
+			Title: "Inbox"
+			width: 300
+		}
+	}
 }
 ```
 
@@ -116,22 +135,31 @@ A fragment can take children, not just values. It marks where they go with
 
 ```goi
 // Card.goi
+
 Column {
-    gap: 5
-    $children
+	gap: 5
+
+	$children {}
 }
 ```
 
 ```goi
 // Main.goi
+
 import Card "./Card.goi"
 
 Window {
-    Card {
-        width: 300
-        Text { text: "selam" }
-        Button { label: "Tamam" }
-    }
+	Card {
+		width: 300
+
+		Text {
+			text: "selam"
+		}
+
+		Button {
+			label: "Tamam"
+		}
+	}
 }
 ```
 
@@ -156,19 +184,35 @@ plain children go to:
 
 ```goi
 // Card.goi
+
 Column {
-    $header
-    $children
-    $footer
+	$header {}
+
+	$children {}
+
+	$footer {}
 }
 ```
 
 ```goi
 // Main.goi
+
 Card {
-    $header { Text { text: "Inbox" } }
-    Text { text: "The body" }        // goes to $children
-    $footer { Button { label: "OK" } }
+	$header {
+		Text {
+			text: "Inbox"
+		}
+	}
+
+	Text {
+		text: "The body" // goes to $children
+	}
+
+	$footer {
+		Button {
+			label: "OK"
+		}
+	}
 }
 ```
 
@@ -187,8 +231,13 @@ behaviour:
 
 ```goi
 Column {
-    Card { id: first }
-    Card { id: second }
+	Card {
+		id: first
+	}
+
+	Card {
+		id: second
+	}
 }
 ```
 
@@ -220,15 +269,21 @@ hides.
 
 ```goi
 Window {
-    Column {
-        if app.dark {
-            Text { text: "Dark" }
-        } else if window.width > 900 {
-            Text { text: "Wide" }
-        } else {
-            Text { text: "Light" }
-        }
-    }
+	Column {
+		if app.dark {
+			Text {
+				text: "Dark"
+			}
+		} else if window.width > 900 {
+			Text {
+				text: "Wide"
+			}
+		} else {
+			Text {
+				text: "Light"
+			}
+		}
+	}
 }
 ```
 
@@ -256,14 +311,20 @@ matching one is shown.
 
 ```goi
 Column {
-    switch bridge.Error {
-    case "not found":
-        Text { text: "Missing" }
-    case "denied":
-        Text { text: "No access" }
-    default:
-        Text { text: "Something else" }
-    }
+	switch bridge.Error {
+	case "not found":
+		Text {
+			text: "Missing"
+		}
+	case "denied":
+		Text {
+			text: "No access"
+		}
+	default:
+		Text {
+			text: "Something else"
+		}
+	}
 }
 ```
 
@@ -279,11 +340,13 @@ Column {
 
 ```goi
 Column {
-    for i, ticket := range bridge.Tickets {
-        if ticket.Unread {
-            Text { text: formatf("%d. %s", i+1, ticket.Title) }
-        }
-    }
+	for i, ticket := range bridge.Tickets {
+		if ticket.Unread {
+			Text {
+				text: formatf("%d. %s", i + 1, ticket.Title)
+			}
+		}
+	}
 }
 ```
 
@@ -328,21 +391,26 @@ type Ticket {
 
 ```goi
 Window {
-    Column {
-        if bridge.Loading {
-            Text { text: "Loading…" }
-        } else {
-            Text { text: formatf("%d tickets", bridge.Count) }
-            for _, ticket := range bridge.Tickets {
-                ListItem {
-                    label: ticket.Title
-                    supporting: ticket.Requester
-                    selected: ticket.Unread
-                    onClick: bridge.OnOpen(ticket.ID)
-                }
-            }
-        }
-    }
+	Column {
+		if bridge.Loading {
+			Text {
+				text: "Loading…"
+			}
+		} else {
+			Text {
+				text: formatf("%d tickets", bridge.Count)
+			}
+
+			for _, ticket := range bridge.Tickets {
+				ListItem {
+					label:      ticket.Title
+					supporting: ticket.Requester
+					selected:   ticket.Unread
+					onClick:    bridge.OnOpen(ticket.ID)
+				}
+			}
+		}
+	}
 }
 ```
 
@@ -483,9 +551,85 @@ declaration. A function call appears either as an event property's whole value
 | `hello` | identifier | used for enums and `id`; also accepted where a string is expected |
 | `480`, `32.5`, `-1` | number | one numeric type everywhere (`float64`) |
 | `true`, `false` | bool | |
-| `#rgb`, `#rrggbb`, `#rrggbbaa` | color | alpha defaults to `ff`; `"#rrggbb"` quoted also works |
+| `#rgb`, `#rgba`, `#rrggbb`, `#rrggbbaa` | color | alpha defaults to `ff`; `"#rrggbb"` quoted also works |
+| `white`, `rebeccapurple` | color | any of the 148 CSS colour names, written bare or quoted |
+| `"rgb(42, 123, 155)"`, `"rgba(42, 123, 155, .5)"` | color | CSS `rgb()`/`rgba()`; the modern `rgb(42 123 155 / 50%)` form works too |
+| `"hsl(200 40% 50%)"` | color | CSS `hsl()`/`hsla()` |
+| `"linear-gradient(90deg, red, blue 60%)"` | color | CSS gradient fill; `background` only, see [Colours and gradients](#colours-and-gradients) |
 | `surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
 | `myBrand` | custom color | any other bare word; the app defines it with `ui.SetCustomColor`, and an undefined one warns and falls back to `onSurface` |
+
+## Colours and gradients
+
+A colour is written the way CSS writes it. A role follows the scheme; a literal
+does not:
+
+```goi
+Column {
+	Text {
+		text:  "named"
+		color: white
+	}
+
+	Text {
+		text:  "quoted"
+		color: "red"
+	}
+
+	Text {
+		text:  "rgb"
+		color: "rgb(42, 123, 155)"
+	}
+
+	Text {
+		text:  "hsl"
+		color: "hsl(200 40% 50%)"
+	}
+
+	Text {
+		text:  "role"
+		color: primary
+	}
+}
+```
+
+The checker accepts the full CSS list: the 148 names (`white`, `black`,
+`rebeccapurple`, `darkslategray`, …), `rgb()`/`rgba()` in both the comma and the
+`/ alpha` spelling, `hsl()`/`hsla()`, and every hex form. A name the Material
+scheme already owns (`primary`, `onSurface`) is still a role, so the theme wins;
+a CSS keyword such as `white` is a literal and stays white in either scheme.
+
+A gradient is a colour value, and it fills a box, so `background` is where it
+goes:
+
+```goi
+Column {
+	background: "linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)"
+}
+
+Column {
+	background: "radial-gradient(circle, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)"
+}
+```
+
+- `linear-gradient(angle, stops…)`: the angle is in degrees, `0deg` pointing up
+  and `90deg` right, as in CSS. Direction words work too: `to right`,
+  `to bottom left`. The default is `to bottom`.
+- `radial-gradient(size, stops…)`: the shape goes out from the box's centre to
+  its farthest corner. `circle`, `ellipse` and `closest-side` are accepted and the
+  element's own box is the circle.
+- Every stop may carry a position (`0%`, `50%`, `100%`, or a `0`–`1` number). A
+  stop without one is spread evenly between its neighbours, and the ends default
+  to 0% and 100%.
+- The box keeps its `radius` and its border, which are drawn on top of the fill.
+- A gradient is a whole value: write it quoted, since the commas inside belong to
+  the gradient, not to `.goi`.
+- Only `background` takes one. A gradient on `color` or `borderColor` is a checker
+  error rather than a silently empty fill, because a gradient is a box, not a
+  stroke or a glyph colour.
+
+A theme role inside a gradient is not resolved; use a literal there, because the
+stop list is parsed once from the string.
 | `{ base: 8, md: 16 }` | map | responsive value, one entry per breakpoint |
 | `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form; `none` clears it, see [Shadows](guide/shadows.md) |
 
@@ -529,10 +673,10 @@ and `line-through`, written space-separated so they combine; `none` clears it.
 
 ```goi
 Text {
-    text:            "Wavy warning"
-    decoration:      underline overline
-    decorationStyle: wavy
-    decorationColor: #c62828
+	text:            "Wavy warning"
+	decoration:      underline overline
+	decorationStyle: wavy
+	decorationColor: #c62828
 }
 ```
 
@@ -549,14 +693,33 @@ valid as a direct child of `Stack` and anchors itself instead of filling:
 
 ```goi
 Stack {
-    width: 360
-    height: 200
-    background: #E8DEF8
-    radius: 16
+	width:      360
+	height:     200
+	background: #e8def8
+	radius:     16
 
-    Positioned { left: 16 top: 16 width: 180 height: 88 }   // top-left corner
-    Positioned { right: 16 bottom: 16 Chip { label: "New" } } // bottom-right
-    Positioned { left: 0 right: 0 top: 0 height: 48 }       // across the top
+	Positioned {
+		left:   16 // top-left corner
+		top:    16
+		width:  180
+		height: 88
+	}
+
+	Positioned {
+		right:  16 // bottom-right
+		bottom: 16
+
+		Chip {
+			label: "New"
+		}
+	}
+
+	Positioned {
+		left:   0 // across the top
+		right:  0
+		top:    0
+		height: 48
+	}
 }
 ```
 
@@ -635,7 +798,10 @@ Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
 `margin`/`padding`:
 
 ```goi
-Column  { padding: 16  paddingLeft: 4 }   // 4 left, 16 the other sides
+Column {
+	padding:     16 // 4 left, 16 the other sides
+	paddingLeft: 4
+}
 ```
 
 `crossAxisAlign` is one of `start`, `center`, `end`, `stretch`; `mainAxisAlign`
@@ -750,12 +916,19 @@ Any property except `id` also accepts a map keyed by breakpoint:
 
 ```goi
 Column {
-    padding: { base: 8, md: 16 }
-    Grid {
-        columns: { base: 1, md: 2, lg: 3 }
-        Card { label: "One" }
-        Card { label: "Two" }
-    }
+	padding: { base: 8, md: 16 }
+
+	Grid {
+		columns: { base: 1, md: 2, lg: 3 }
+
+		Card {
+			label: "One"
+		}
+
+		Card {
+			label: "Two"
+		}
+	}
 }
 ```
 
@@ -811,17 +984,17 @@ The layout is fixed, and running it twice changes nothing:
 - An element body holds one property per line, with the values in one column:
 
   ```goi
-  Column {
-      gap:     10
-      padding: 10
+Column {
+	gap:     10
+	padding: 10
 
-      Text {
-          text: "example"
-      }
+	Text {
+		text: "example"
+	}
 
-      Text {}
-  }
-  ```
+	Text {}
+}
+```
 
 - A property run and the children after it are separated by one blank line, and
   so are two children. The closing brace follows the last member with no blank

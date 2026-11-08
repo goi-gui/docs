@@ -7,7 +7,11 @@ A clock dial for picking a time.
 ## In a `.goi` file
 
 ```goi
-TimePicker { id: time label: "Select time" text: "10:30" }
+TimePicker {
+	id:    time
+	label: "Select time"
+	text:  "10:30"
+}
 ```
 
 ## Properties

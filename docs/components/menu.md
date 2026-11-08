@@ -8,9 +8,20 @@ A popup list of `MenuItem`s.
 
 ```goi
 Menu {
-	MenuItem { label: "Cut" icon: content_cut }
-	MenuItem { label: "Copy" icon: content_copy }
-	MenuItem { label: "Paste" icon: content_paste }
+	MenuItem {
+		label: "Cut"
+		icon:  content_cut
+	}
+
+	MenuItem {
+		label: "Copy"
+		icon:  content_copy
+	}
+
+	MenuItem {
+		label: "Paste"
+		icon:  content_paste
+	}
 }
 ```
 

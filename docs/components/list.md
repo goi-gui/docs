@@ -8,10 +8,18 @@ A vertical container for `ListItem`s and `MenuItem`s.
 
 ```goi
 List {
-	id: results
+	id:      results
 	spacing: 4
-	ListItem { label: "Inbox" icon: inbox }
-	ListItem { label: "Drafts" icon: draft }
+
+	ListItem {
+		label: "Inbox"
+		icon:  inbox
+	}
+
+	ListItem {
+		label: "Drafts"
+		icon:  draft
+	}
 }
 ```
 
@@ -20,7 +28,11 @@ For rows that come from Go, keep one hidden prototype and fill from a slice:
 ```goi
 List {
 	id: results
-	ListItem { template: true label: "Item" }
+
+	ListItem {
+		template: true
+		label:    "Item"
+	}
 }
 ```
 

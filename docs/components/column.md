@@ -8,11 +8,19 @@ Stacks children vertically, top to bottom.
 
 ```goi
 Column {
-	spacing: 12
-	padding: 16
+	spacing:        12
+	padding:        16
 	crossAxisAlign: stretch
-	Text { text: "Title" role: "titleMedium" }
-	Text { text: "Body" role: "bodyMedium" }
+
+	Text {
+		text: "Title"
+		role: "titleMedium"
+	}
+
+	Text {
+		text: "Body"
+		role: "bodyMedium"
+	}
 }
 ```
 
@@ -32,9 +40,13 @@ A column is also the usual list: mark one row `template: true` and let
 
 ```goi
 Column {
-	id: list
+	id:      list
 	spacing: 8
-	ListItem { template: true label: "Item" }
+
+	ListItem {
+		template: true
+		label:    "Item"
+	}
 }
 ```
 

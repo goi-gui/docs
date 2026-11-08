@@ -9,8 +9,17 @@ A modal drawer that lists the same destinations as the rail and bar.
 ```goi
 NavigationDrawer {
 	label: "Categories"
-	NavigationItem { label: "Home" icon: home selected: true }
-	NavigationItem { label: "Search" icon: search }
+
+	NavigationItem {
+		label:    "Home"
+		icon:     home
+		selected: true
+	}
+
+	NavigationItem {
+		label: "Search"
+		icon:  search
+	}
 }
 ```
 

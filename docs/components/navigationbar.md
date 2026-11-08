@@ -8,11 +8,24 @@ The bottom navigation bar for the compact window class.
 
 ```goi
 NavigationBar {
-	id: navbar
+	id:      navbar
 	visible: { base: true, sm: false }
-	NavigationItem { label: "Home" icon: home selected: true }
-	NavigationItem { label: "Search" icon: search }
-	NavigationItem { label: "Profile" icon: person }
+
+	NavigationItem {
+		label:    "Home"
+		icon:     home
+		selected: true
+	}
+
+	NavigationItem {
+		label: "Search"
+		icon:  search
+	}
+
+	NavigationItem {
+		label: "Profile"
+		icon:  person
+	}
 }
 ```
 

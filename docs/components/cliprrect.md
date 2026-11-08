@@ -9,9 +9,13 @@ Cuts its children to a rounded box.
 ```goi
 ClipRRect {
 	radius: 24
-	width: 96
+	width:  96
 	height: 96
-	Image { src: "avatar.jpg" fit: cover }
+
+	Image {
+		src: "avatar.jpg"
+		fit: cover
+	}
 }
 ```
 

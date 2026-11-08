@@ -17,20 +17,78 @@ Table {
 	striped:    true
 	selectable: single
 
-	TableColumn { key: "name" label: "Name" width: 200 sortable: true }
-	TableColumn { key: "role" label: "Role" sortable: true }
-	TableColumn { key: "age" label: "Age" width: 80 align: end numeric: true sortable: true }
+	TableColumn {
+		key:      "name"
+		label:    "Name"
+		width:    200
+		sortable: true
+	}
 
-	TableRow {
-		TableCell { value: "Kaan" Text { text: "Kaan" } }
-		TableCell { value: "Engineer" Text { text: "Engineer" } }
-		TableCell { value: "31" Text { text: "31" } }
+	TableColumn {
+		key:      "role"
+		label:    "Role"
+		sortable: true
+	}
+
+	TableColumn {
+		key:      "age"
+		label:    "Age"
+		width:    80
+		align:    end
+		numeric:  true
+		sortable: true
 	}
 
 	TableRow {
-		TableCell { value: "Ada" Text { text: "Ada" } }
-		TableCell { value: "Mathematician" Text { text: "Mathematician" } }
-		TableCell { value: "36" Text { text: "36" } }
+		TableCell {
+			value: "Kaan"
+
+			Text {
+				text: "Kaan"
+			}
+		}
+
+		TableCell {
+			value: "Engineer"
+
+			Text {
+				text: "Engineer"
+			}
+		}
+
+		TableCell {
+			value: "31"
+
+			Text {
+				text: "31"
+			}
+		}
+	}
+
+	TableRow {
+		TableCell {
+			value: "Ada"
+
+			Text {
+				text: "Ada"
+			}
+		}
+
+		TableCell {
+			value: "Mathematician"
+
+			Text {
+				text: "Mathematician"
+			}
+		}
+
+		TableCell {
+			value: "36"
+
+			Text {
+				text: "36"
+			}
+		}
 	}
 }
 ```
@@ -53,18 +111,49 @@ Window {
 	Table {
 		id: people
 
-		TableColumn { key: "name" label: "Name" sortable: true }
-		TableColumn { key: "role" label: "Role" }
-		TableColumn { key: "age" label: "Age" width: 80 numeric: true }
+		TableColumn {
+			key:      "name"
+			label:    "Name"
+			sortable: true
+		}
+
+		TableColumn {
+			key:   "role"
+			label: "Role"
+		}
+
+		TableColumn {
+			key:     "age"
+			label:   "Age"
+			width:   80
+			numeric: true
+		}
 
 		for i, p := range bridge.people {
 			TableRow {
-				TableCell { value: p.name Text { text: p.name } }
-				TableCell { value: p.role Text { text: p.role } }
+				TableCell {
+					value: p.name
+
+					Text {
+						text: p.name
+					}
+				}
+
+				TableCell {
+					value: p.role
+
+					Text {
+						text: p.role
+					}
+				}
+
 				TableCell {
 					value: formatf("%d", p.age)
 					align: end
-					Text { text: formatf("%d", p.age) }
+
+					Text {
+						text: formatf("%d", p.age)
+					}
 				}
 			}
 		}
@@ -114,11 +203,26 @@ selection counts the rows as they are shown.
   seed it directly:
 
   ```goi
-  TableRow { selected: true
-  	TableCell { value: "Kaan" Text { text: "Kaan" } }
-  	TableCell { value: "Engineer" Text { text: "Engineer" } }
-  }
-  ```
+TableRow {
+	selected: true
+
+	TableCell {
+		value: "Kaan"
+
+		Text {
+			text: "Kaan"
+		}
+	}
+
+	TableCell {
+		value: "Engineer"
+
+		Text {
+			text: "Engineer"
+		}
+	}
+}
+```
 
 Indices are display indices, so a selection stays on the row the reader sees
 after a sort. The `OnSelect` event reports the row that was toggled.
@@ -202,7 +306,10 @@ formatted dates can still sort by ISO text:
 ```goi
 TableCell {
 	value: "2026-11-08"
-	Text { text: "8 Nov 2026" }
+
+	Text {
+		text: "8 Nov 2026"
+	}
 }
 ```
 

@@ -8,11 +8,19 @@ A FAB that expands into a column of actions.
 
 ```goi
 FABMenu {
-	id: actions
-	icon: add
+	id:       actions
+	icon:     add
 	expanded: false
-	FAB { icon: edit variant: small }
-	FAB { icon: photo variant: small }
+
+	FAB {
+		icon:    edit
+		variant: small
+	}
+
+	FAB {
+		icon:    photo
+		variant: small
+	}
 }
 ```
 

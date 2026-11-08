@@ -25,9 +25,9 @@ props {
 }
 
 Column {
-	width:     280
-	padding:   12
-	spacing:   6
+	width:      280
+	padding:    12
+	spacing:    6
 	background: surfaceContainer
 
 	Text {
@@ -62,7 +62,9 @@ Window {
 			Subtitle: "12 unread"
 		}
 
-		Column { flex: 1 }
+		Column {
+			flex: 1
+		}
 	}
 }
 ```
@@ -91,8 +93,15 @@ props {
 
 Row {
 	spacing: 8
-	Text { text: formatf("%d", props.Count) }
-	Button { label: "+" onClick: props.OnStep() }
+
+	Text {
+		text: formatf("%d", props.Count)
+	}
+
+	Button {
+		label:   "+"
+		onClick: props.OnStep()
+	}
 }
 ```
 
@@ -131,7 +140,7 @@ import Sidebar "./Sidebar.goi"
 Window {
 	Sidebar {
 		Title: "Inbox"
-		width: 320        // overrides the fragment's width: 280
+		width: 320 // overrides the fragment's width: 280
 	}
 }
 ```
@@ -148,7 +157,8 @@ A fragment marks where children go with `$children`:
 
 Column {
 	gap: 5
-	$children
+
+	$children {}
 }
 ```
 
@@ -160,8 +170,14 @@ import Card "./Card.goi"
 Window {
 	Card {
 		width: 300
-		Text { text: "selam" }
-		Button { label: "Tamam" }
+
+		Text {
+			text: "selam"
+		}
+
+		Button {
+			label: "Tamam"
+		}
 	}
 }
 ```
@@ -184,9 +200,11 @@ plain children go to:
 // Card.goi
 
 Column {
-	$header
-	$children
-	$footer
+	$header {}
+
+	$children {}
+
+	$footer {}
 }
 ```
 
@@ -194,9 +212,21 @@ Column {
 // Main.goi
 
 Card {
-	$header { Text { text: "Inbox" } }
-	Text { text: "The body" }        // goes to $children
-	$footer { Button { label: "OK" } }
+	$header {
+		Text {
+			text: "Inbox"
+		}
+	}
+
+	Text {
+		text: "The body" // goes to $children
+	}
+
+	$footer {
+		Button {
+			label: "OK"
+		}
+	}
 }
 ```
 
@@ -212,8 +242,13 @@ fragment can be used any number of times and each copy keeps its own behaviour:
 
 ```goi
 Column {
-	Card { id: first }
-	Card { id: second }
+	Card {
+		id: first
+	}
+
+	Card {
+		id: second
+	}
 }
 ```
 

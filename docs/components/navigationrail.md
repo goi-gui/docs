@@ -8,14 +8,33 @@ The side navigation rail for medium and expanded windows.
 
 ```goi
 NavigationRail {
-	id: rail
-	visible: { base: false, sm: true }
+	id:            rail
+	visible:       { base: false, sm: true }
 	paddingBottom: 16
-	NavigationItem { label: "Home" icon: home selected: true }
-	NavigationItem { label: "Search" icon: search }
+
+	NavigationItem {
+		label:    "Home"
+		icon:     home
+		selected: true
+	}
+
+	NavigationItem {
+		label: "Search"
+		icon:  search
+	}
+
 	// A rail's own actions sit at the bottom, under the destinations.
-	Rectangle { flex: 1 }
-	Switch { id: theme width: 52 alignSelf: center iconOn: dark_mode iconOff: light_mode }
+	Rectangle {
+		flex: 1
+	}
+
+	Switch {
+		id:        theme
+		width:     52
+		alignSelf: center
+		iconOn:    dark_mode
+		iconOff:   light_mode
+	}
 }
 ```
 

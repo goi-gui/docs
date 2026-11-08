@@ -186,8 +186,8 @@ not show.
 
 ```goi
 Column {
-	padding: 16
-	paddingLeft: 4        // 4 on the left, 16 on the other three sides
+	padding:     16
+	paddingLeft: 4 // 4 on the left, 16 on the other three sides
 }
 ```
 
@@ -219,10 +219,15 @@ A design declares its handlers in a `bridge` block and calls them from an event
 property; Go registers the body with `ui.SetHandler`:
 
 ```goi
-bridge { OnOpen func(id string) }
+bridge {
+	OnOpen func(id string)
+}
 
 Window {
-	Button { label: "Open" onClick: bridge.OnOpen("42") }
+	Button {
+		label:   "Open"
+		onClick: bridge.OnOpen("42")
+	}
 }
 ```
 
@@ -254,7 +259,9 @@ app.LoadWindowFile("app.goi", ui.WithTheme("brand", &brand))
 ```
 
 ```goi
-Window { theme: brand }
+Window {
+	theme: brand
+}
 ```
 
 `ui.LightTheme()`/`ui.DarkTheme()` return a copy you can edit; `ui.Theme` and

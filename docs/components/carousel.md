@@ -9,9 +9,24 @@ A horizontally scrolling row of cards.
 ```goi
 Carousel {
 	spacing: 12
-	Card { label: "One" width: 200 height: 120 }
-	Card { label: "Two" width: 200 height: 120 }
-	Card { label: "Three" width: 200 height: 120 }
+
+	Card {
+		label:  "One"
+		width:  200
+		height: 120
+	}
+
+	Card {
+		label:  "Two"
+		width:  200
+		height: 120
+	}
+
+	Card {
+		label:  "Three"
+		width:  200
+		height: 120
+	}
 }
 ```
 

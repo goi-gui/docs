@@ -104,7 +104,7 @@ Rectangle {
 	height:     120
 	radius:     16
 	background: surfaceContainerHigh
-	shadow:     0 1 2 #00000026, 0 8 24 4 #0000001F, 0 0 0 1 primary
+	shadow:     0 1 2 #00000026, 0 8 24 4 #0000001f, 0 0 0 1 primary
 }
 ```
 

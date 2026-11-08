@@ -9,8 +9,16 @@ A row of related buttons that share one shape and one gap.
 ```goi
 ButtonGroup {
 	spacing: 8
-	Button { label: "Day" variant: outlined }
-	Button { label: "Week" variant: outlined }
+
+	Button {
+		label:   "Day"
+		variant: outlined
+	}
+
+	Button {
+		label:   "Week"
+		variant: outlined
+	}
 }
 ```
 

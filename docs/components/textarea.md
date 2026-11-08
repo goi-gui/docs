@@ -8,12 +8,12 @@ A multiline text field.
 
 ```goi
 TextArea {
-	id: notes
-	label: "Notes"
+	id:          notes
+	label:       "Notes"
 	placeholder: "Enter starts a new line"
-	text: "first line\nsecond line"
-	width: 360
-	height: 140
+	text:        "first line\nsecond line"
+	width:       360
+	height:      140
 }
 ```
 

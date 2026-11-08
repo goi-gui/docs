@@ -9,10 +9,22 @@ A horizontal strip of compact controls.
 ```goi
 Toolbar {
 	spacing: 4
-	IconButton { icon: format_bold }
-	IconButton { icon: format_italic }
-	Divider { variant: vertical }
-	IconButton { icon: format_underlined }
+
+	IconButton {
+		icon: format_bold
+	}
+
+	IconButton {
+		icon: format_italic
+	}
+
+	Divider {
+		variant: vertical
+	}
+
+	IconButton {
+		icon: format_underlined
+	}
 }
 ```
 

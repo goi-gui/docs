@@ -71,7 +71,9 @@ The state members are reported by the platform, so they follow the user's own
 actions, not only what the design asked for:
 
 ```goi
-bridge { ToggleMaximize func() }
+bridge {
+	ToggleMaximize func()
+}
 
 Button {
 	label:   window.maximized ? "Restore" : "Maximize"

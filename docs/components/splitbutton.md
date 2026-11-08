@@ -8,8 +8,8 @@ A primary action with an attached menu trigger.
 
 ```goi
 SplitButton {
-	label: "Split"
-	icon: add
+	label:    "Split"
+	icon:     add
 	expanded: false
 }
 ```

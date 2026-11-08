@@ -61,7 +61,10 @@ size; a declared `width` or `height` overrides it.
 `color` is a normal colour property, which means a Material role works:
 
 ```goi
-SVG { src: "assets/check.svg" color: onSurfaceVariant }
+SVG {
+	src:   "assets/check.svg"
+	color: onSurfaceVariant
+}
 ```
 
 When the scheme changes, the role resolves and the icon is rasterized again. A

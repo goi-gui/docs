@@ -9,9 +9,19 @@ Overlays children on top of each other, last child on top. It is the base for di
 ```goi
 Stack {
 	flex: 1
-	Rectangle { background: surfaceContainer radius: 16 }
-	Positioned { right: 12 bottom: 12
-		FAB { icon: edit }
+
+	Rectangle {
+		background: surfaceContainer
+		radius:     16
+	}
+
+	Positioned {
+		right:  12
+		bottom: 12
+
+		FAB {
+			icon: edit
+		}
 	}
 }
 ```

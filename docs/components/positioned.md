@@ -9,11 +9,24 @@ Anchors a child inside a Stack. Only valid as a direct child of `Stack`.
 ```goi
 Stack {
 	height: 200
-	Positioned { left: 16 top: 16
-		Card { label: "Top left" width: 160 }
+
+	Positioned {
+		left: 16
+		top:  16
+
+		Card {
+			label: "Top left"
+			width: 160
+		}
 	}
-	Positioned { right: 16 bottom: 16
-		Chip { label: "Bottom right" }
+
+	Positioned {
+		right:  16
+		bottom: 16
+
+		Chip {
+			label: "Bottom right"
+		}
 	}
 }
 ```

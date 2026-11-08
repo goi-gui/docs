@@ -7,7 +7,11 @@ A surface anchored to a side edge, for settings or detail.
 ## In a `.goi` file
 
 ```goi
-SideSheet { label: "Filters" width: 320 height: 480 }
+SideSheet {
+	label:  "Filters"
+	width:  320
+	height: 480
+}
 ```
 
 ## Properties

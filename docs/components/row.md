@@ -8,10 +8,17 @@ Places children left to right.
 
 ```goi
 Row {
-	spacing: 8
+	spacing:        8
 	crossAxisAlign: center
-	Button { label: "Save" }
-	Button { label: "Cancel" variant: text }
+
+	Button {
+		label: "Save"
+	}
+
+	Button {
+		label:   "Cancel"
+		variant: text
+	}
 }
 ```
 

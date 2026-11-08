@@ -9,7 +9,7 @@ A syntax-highlighted code block.
 ```goi
 Code {
 	language: go
-	text: "fmt.Println(\"hello\")\nreturn nil"
+	text:     "fmt.Println(\"hello\")\nreturn nil"
 }
 ```
 

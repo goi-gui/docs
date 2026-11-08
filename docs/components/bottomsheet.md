@@ -7,7 +7,11 @@ A surface anchored to the bottom edge.
 ## In a `.goi` file
 
 ```goi
-BottomSheet { label: "Share" width: 320 height: 160 }
+BottomSheet {
+	label:  "Share"
+	width:  320
+	height: 160
+}
 ```
 
 ## Properties

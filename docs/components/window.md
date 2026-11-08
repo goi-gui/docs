@@ -10,22 +10,22 @@ fullscreen.
 
 ```goi
 Window {
-	id:            main
-	title:         "My app"
-	theme:         light   // light | dark | a name the app registered
-	titleBar:      system  // system | custom
-	width:         900
-	height:        600
-	minWidth:      420     // the window cannot be dragged smaller
-	minHeight:     360
-	maxWidth:      1200    // ...nor larger
-	maxHeight:     900
-	resizable:     true    // false: no user resize, and no maximize
-	minimizable:   true    // false: the framework refuses minimize requests
-	maximizable:   true    // false: the framework refuses maximize requests
-	minimized:     false   // the live state; the platform reports it back
-	maximized:     false
-	fullscreen:    false   // true: fill the display
+	id:          main
+	title:       "My app"
+	theme:       light // light | dark | a name the app registered
+	titleBar:    system // system | custom
+	width:       900
+	height:      600
+	minWidth:    420 // the window cannot be dragged smaller
+	minHeight:   360
+	maxWidth:    1200 // ...nor larger
+	maxHeight:   900
+	resizable:   true // false: no user resize, and no maximize
+	minimizable: true // false: the framework refuses minimize requests
+	maximizable: true // false: the framework refuses maximize requests
+	minimized:   false // the live state; the platform reports it back
+	maximized:   false
+	fullscreen:  false // true: fill the display
 }
 ```
 
@@ -73,10 +73,12 @@ from Go report the same live value, and so do they if a compositor refuses a
 request: the window stays honest about what it is:
 
 ```goi
-bridge { Restore func() }
+bridge {
+	Restore func()
+}
 
 Button {
-	label: "Restore"
+	label:   "Restore"
 	visible: window.maximized
 	onClick: bridge.Restore()
 }
@@ -98,9 +100,13 @@ All six are read on every frame, not just at startup, so an expression or a
 `Set` from Go reaches the platform without a reload:
 
 ```goi
-bridge { MinW float64 }
+bridge {
+	MinW float64
+}
 
-Window { minWidth: bridge.MinW }   // -1 means no limit here too
+Window {
+	minWidth: bridge.MinW // -1 means no limit here too
+}
 ```
 
 ```go
@@ -174,7 +180,9 @@ The desktop's language is available to both sides as
 `app.systemLanguage` / `Window.SystemLanguage()`:
 
 ```goi
-Text { text: app.systemLanguage }   // tr, en, de…
+Text {
+	text: app.systemLanguage // tr, en, de…
+}
 ```
 
 Every element also accepts the [common properties](../components.md#common-properties).

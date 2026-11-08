@@ -46,7 +46,9 @@ func bind(w *ui.Window) error {
 ```goi
 Window {
 	Column {
-		Text { text: formatf("%d open", bridge.Count) }
+		Text {
+			text: formatf("%d open", bridge.Count)
+		}
 
 		for _, ticket := range bridge.Tickets {
 			ListItem {

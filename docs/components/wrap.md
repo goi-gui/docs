@@ -9,9 +9,18 @@ Flows children left to right and starts a new run when the next child does not f
 ```goi
 Wrap {
 	spacing: 8
-	Chip { label: "One" }
-	Chip { label: "Two" }
-	Chip { label: "Three" }
+
+	Chip {
+		label: "One"
+	}
+
+	Chip {
+		label: "Two"
+	}
+
+	Chip {
+		label: "Three"
+	}
 }
 ```
 

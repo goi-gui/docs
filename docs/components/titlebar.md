@@ -13,16 +13,34 @@ Window {
 	titleBar: custom
 
 	TitleBar {
-		height: 44
-		padding: 8
-		spacing: 8
+		height:         44
+		padding:        8
+		spacing:        8
 		crossAxisAlign: center
 
-		Text { text: "My app" role: titleMedium }
-		Rectangle { flex: 1 }
-		IconButton { id: minimize icon: minimize }
-		IconButton { id: maximize icon: maximize }
-		IconButton { id: close icon: close }
+		Text {
+			text: "My app"
+			role: titleMedium
+		}
+
+		Rectangle {
+			flex: 1
+		}
+
+		IconButton {
+			id:   minimize
+			icon: minimize
+		}
+
+		IconButton {
+			id:   maximize
+			icon: maximize
+		}
+
+		IconButton {
+			id:   close
+			icon: close
+		}
 	}
 }
 ```

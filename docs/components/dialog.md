@@ -8,10 +8,10 @@ A modal surface for a decision or a short form.
 
 ```goi
 Dialog {
-	label: "Reset settings?"
+	label:      "Reset settings?"
 	supporting: "This cannot be undone."
-	width: 280
-	height: 168
+	width:      280
+	height:     168
 }
 ```
 

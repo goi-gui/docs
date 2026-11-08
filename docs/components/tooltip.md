@@ -7,7 +7,10 @@ A short hint attached to a control.
 ## In a `.goi` file
 
 ```goi
-Tooltip { label: "Saves to your library" width: 200 }
+Tooltip {
+	label: "Saves to your library"
+	width: 200
+}
 ```
 
 ## Properties

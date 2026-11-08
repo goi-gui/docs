@@ -12,11 +12,17 @@ and only the matching arm is shown.
 Window {
 	Column {
 		if app.dark {
-			Text { text: "Dark" }
+			Text {
+				text: "Dark"
+			}
 		} else if window.width > 900 {
-			Text { text: "Wide" }
+			Text {
+				text: "Wide"
+			}
 		} else {
-			Text { text: "Light" }
+			Text {
+				text: "Light"
+			}
 		}
 	}
 }
@@ -58,10 +64,15 @@ checkbox is a fully reactive condition without any extra wiring:
 
 ```goi
 Column {
-	Checkbox { id: detailed label: "Show details" }
+	Checkbox {
+		id:    detailed
+		label: "Show details"
+	}
 
 	if detailed.checked {
-		Text { text: "Extra detail" }
+		Text {
+			text: "Extra detail"
+		}
 	}
 }
 ```
@@ -92,11 +103,17 @@ without rebuilding the window.
 Column {
 	switch bridge.job {
 	case "swe", "eee", "fe":
-		Text { text: "Engineer" }
+		Text {
+			text: "Engineer"
+		}
 	case "teacher":
-		Text { text: "Teacher" }
+		Text {
+			text: "Teacher"
+		}
 	default:
-		Text { text: "Something else" }
+		Text {
+			text: "Something else"
+		}
 	}
 }
 ```

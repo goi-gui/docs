@@ -7,7 +7,10 @@ A binary choice with an optional label.
 ## In a `.goi` file
 
 ```goi
-Checkbox { label: "Remember me" checked: true }
+Checkbox {
+	label:   "Remember me"
+	checked: true
+}
 ```
 
 ## Properties

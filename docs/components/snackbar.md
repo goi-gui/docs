@@ -7,7 +7,10 @@ A short, transient message at the bottom of the screen.
 ## In a `.goi` file
 
 ```goi
-Snackbar { label: "Saved to your library" width: 320 }
+Snackbar {
+	label: "Saved to your library"
+	width: 320
+}
 ```
 
 ## Properties

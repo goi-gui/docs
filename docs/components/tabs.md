@@ -8,9 +8,18 @@ A tab bar that groups `Tab` children.
 
 ```goi
 Tabs {
-	Tab { label: "Overview" selected: true }
-	Tab { label: "Specs" }
-	Tab { label: "Details" }
+	Tab {
+		label:    "Overview"
+		selected: true
+	}
+
+	Tab {
+		label: "Specs"
+	}
+
+	Tab {
+		label: "Details"
+	}
 }
 ```
 

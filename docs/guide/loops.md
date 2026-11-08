@@ -41,7 +41,9 @@ Window {
 	Column {
 		for i, user := range bridge.users {
 			Row {
-				Text { text: formatf("%d. %s", i+1, user.FullName) }
+				Text {
+					text: formatf("%d. %s", i + 1, user.FullName)
+				}
 			}
 		}
 	}
@@ -122,7 +124,11 @@ by hand, use a hidden prototype and `ui.Fill`:
 ```goi
 List {
 	id: results
-	ListItem { template: true label: "Item" }
+
+	ListItem {
+		template: true
+		label:    "Item"
+	}
 }
 ```
 

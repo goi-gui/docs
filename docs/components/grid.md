@@ -10,9 +10,18 @@ Places children in a fixed number of equal-width columns.
 Grid {
 	columns: 3
 	spacing: 12
-	Card { label: "One" }
-	Card { label: "Two" }
-	Card { label: "Three" }
+
+	Card {
+		label: "One"
+	}
+
+	Card {
+		label: "Two"
+	}
+
+	Card {
+		label: "Three"
+	}
 }
 ```
 
