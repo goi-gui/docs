@@ -25,7 +25,7 @@ Text {
 	fontStyle:       italic
 	decoration:      underline
 	decorationStyle: wavy
-	decorationColor: primary
+	decorationColor: theme.primary
 }
 ```
 

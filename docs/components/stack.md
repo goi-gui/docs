@@ -11,7 +11,7 @@ Stack {
 	flex: 1
 
 	Rectangle {
-		background: surfaceContainer
+		background: theme.surfaceContainer
 		radius:     16
 	}
 

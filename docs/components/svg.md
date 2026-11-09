@@ -18,7 +18,7 @@ SVG {
 SVG {
 	id:     mark
 	src:    "goi://assets/check.svg"
-	color:  primary
+	color: theme.primary
 	width:  24
 	height: 24
 }
@@ -26,7 +26,7 @@ SVG {
 // A file on this machine, or one fetched over the network.
 SVG {
 	src:   "./icons/star.svg"
-	color: secondary
+	color: theme.secondary
 	width: 32
 	height: 32
 }
@@ -63,7 +63,7 @@ size; a declared `width` or `height` overrides it.
 ```goi
 SVG {
 	src:   "assets/check.svg"
-	color: onSurfaceVariant
+	color: theme.onSurfaceVariant
 }
 ```
 

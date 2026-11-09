@@ -74,7 +74,7 @@ shadow matching the box it belongs to without repeating the radius.
 Rectangle {
 	width:  200
 	height: 100
-	background: surfaceContainerHigh
+	background: theme.surfaceContainerHigh
 	radius: 16
 	shadow: 0 8 24 4 #00000033
 }
@@ -82,7 +82,7 @@ Rectangle {
 Rectangle {
 	width:  200
 	height: 100
-	background: primary
+	background: theme.primary
 	radius: 16
 	// A hard ring, like a focus outline, plus a pressed-in panel.
 	shadow: 0 0 0 3 #FF0000, 0 4 12 #000000 inset
@@ -103,7 +103,7 @@ Rectangle {
 	width:      240
 	height:     120
 	radius:     16
-	background: surfaceContainerHigh
+	background: theme.surfaceContainerHigh
 	shadow:     0 1 2 #00000026, 0 8 24 4 #0000001f, 0 0 0 1 primary
 }
 ```

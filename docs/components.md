@@ -117,6 +117,7 @@ These apply to every element and are not repeated on the component pages.
 | `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
 | `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected |
 | `cursor` | enum | pointer shape, named the way CSS names it: `pointer`, `text`, `move`, `grab`, `not-allowed`, the resize arrows, `wait`, `none`, … |
+| `rotate` | rotate | CSS `rotate`: `45deg`, `0.25turn`, `x 90deg`, `1 1 1 90deg`; turns the element and its subtree |
 | `hideScrollbar` | bool | removes the scrollbar entirely |
 | `autoHideScrollbar` | bool | `true` (default) shows the bar only while the pointer is over the area or it scrolled in the last two seconds; `false` keeps it up |
 | `scrollbarWidth` | number | bar thickness in dp; 4 by default |
@@ -275,7 +276,8 @@ follows the desktop setting, and `Window.SystemMode()` reports it from Go as a
 
 ### Custom colours
 
-An app can name its own colours and use them exactly where a role goes:
+An app can name its own colours and use them under `customColor.`, exactly where
+a role goes:
 
 ```go
 win.SetCustomColors(map[string]uint32{
@@ -286,8 +288,8 @@ win.SetCustomColor("myBrand", 0x53268AFF) // or one at a time
 ```
 
 ```goi
-Rectangle { background: myBrand }
-Text { color: otherColor }
+Rectangle { background: customColor.myBrand }
+Text { color: customColor.otherColor }
 ```
 
 A name resolves on every frame, so setting it again recolours every element that
@@ -295,12 +297,12 @@ uses it, with no reload. Two rules keep the vocabulary honest:
 
 - A name the Material scheme already owns (`primary`, `onSurface`, …) is
   **reserved**: the call logs an error and does nothing, so a design that says
-  `primary` keeps following the theme.
+  `theme.primary` keeps following the theme.
 - A name a design uses but nothing defines logs a **warning** once (with a "did
   you mean" hint) and draws the scheme's `onSurface` until it is defined.
 
 A custom name must be a `.goi` identifier: a letter or `_`, then letters, digits
-or `_`.
+or `_`. See [Custom colours](guide/custom-colors.md) for the full rules.
 
 ## Finding elements from Go
 

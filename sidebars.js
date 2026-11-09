@@ -17,6 +17,12 @@ const sidebars = {
         'guide/bridge',
         'guide/fragments',
         'guide/i18n',
+        {
+          type: 'category',
+          label: 'Colour and motion',
+          collapsed: true,
+          items: ['guide/colours', 'guide/theming', 'guide/custom-colors', 'guide/rotate', 'guide/tweens'],
+        },
       ],
     },
     {

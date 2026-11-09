@@ -34,7 +34,7 @@ Image {
 	width: 240
 	height: 135
 	radius: 12
-	background: surfaceContainerHighest
+	background: theme.surfaceContainerHighest
 }
 ```
 

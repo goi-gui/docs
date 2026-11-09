@@ -556,10 +556,16 @@ declaration. A function call appears either as an event property's whole value
 | `"rgb(42, 123, 155)"`, `"rgba(42, 123, 155, .5)"` | color | CSS `rgb()`/`rgba()`; the modern `rgb(42 123 155 / 50%)` form works too |
 | `"hsl(200 40% 50%)"` | color | CSS `hsl()`/`hsla()` |
 | `"linear-gradient(90deg, red, blue 60%)"` | color | CSS gradient fill; `background` only, see [Colours and gradients](#colours-and-gradients) |
-| `surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
-| `myBrand` | custom color | any other bare word; the app defines it with `ui.SetCustomColor`, and an undefined one warns and falls back to `onSurface` |
+| `theme.surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
+| `customColor.myBrand` | custom color | a name the app defines with `ui.SetCustomColor`; an undefined one warns and falls back to `onSurface` |
+| `90deg`, `x 90deg`, `1 1 1 90deg` | rotate | the `rotate` property only: CSS form, see [Rotate](#rotate) |
 
 ## Colours and gradients
+
+A colour has four forms: a theme role (`theme.primary`), a CSS literal (a name,
+a function or a hex value), or an app-defined name (`customColor.brand`). The
+first follows light and dark; the rest are fixed.
+
 
 A colour is written the way CSS writes it. A role follows the scheme; a literal
 does not:
@@ -588,7 +594,7 @@ Column {
 
 	Text {
 		text:  "role"
-		color: primary
+		color: theme.primary
 	}
 }
 ```
@@ -627,6 +633,32 @@ Column {
 - Only `background` takes one. A gradient on `color` or `borderColor` is a checker
   error rather than a silently empty fill, because a gradient is a box, not a
   stroke or a glyph colour.
+
+### Rotate
+
+`rotate` is CSS `rotate`: it turns the element and everything under it about the
+element's own centre. Layout ignores it, so the box keeps its place and its
+siblings do not move.
+
+```goi
+Column { rotate: none }          // the default
+Column { rotate: 90deg }
+Column { rotate: 0.25turn }
+Column { rotate: 1.57rad }
+Column { rotate: x 90deg }       // about the x axis
+Column { rotate: y 0.25turn }
+Column { rotate: z 1.57rad }
+Column { rotate: 1 1 1 90deg }   // about a vector
+```
+
+- An angle may use `deg`, `rad`, `turn` or `grad`; goifmt writes it back in
+  degrees, which is the same value.
+- The keyword `none` clears it.
+- A turn about a non-z axis is a three-dimensional rotation. The renderer is
+  two-dimensional, so only the z axis (the angle-only and `z` forms) shows as a
+  turn; an x, y or vector rotation is stored but not projected.
+- Nested rotations compose: an inner 45° inside an outer 90° turns 135°, and the
+  inner pivot follows the outer frame.
 
 A theme role inside a gradient is not resolved; use a literal there, because the
 stop list is parsed once from the string.
