@@ -286,6 +286,24 @@ rebuilding the loop is the usual way to replace every row.
 |---|---|---|
 | `selected` | bool | this row's selection flag; in `multiple` mode it is the state a design can seed |
 | `disabled` | bool | dims the row's text |
+| `background` | colour | the row's own fill, drawn over the table's stripes and selection band |
+
+A row's `background` is the common colour property, but it is worth naming here
+because a table paints its own bands underneath: a row that sets it keeps that
+colour whether the table is `striped`, the row is `selected`, or both. A colour
+role or a gradient both work, so a highlighted row does not need a wrapper
+`Rectangle`:
+
+```goi
+TableRow {
+	background: theme.secondaryContainer
+
+	TableCell {
+		value: "Build passed"
+		Text { text: "Build passed" }
+	}
+}
+```
 
 ### `TableCell`
 
