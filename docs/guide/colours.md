@@ -48,6 +48,24 @@ Column {
 }
 ```
 
+## In an expression
+
+A role keeps working when an expression picks it, so a conditional row can be
+highlighted with the scheme's colour and still follow light/dark:
+
+```goi
+for i, row := range bridge.rows {
+	TableRow {
+		background: i == 0 ? theme.primary : ""
+		...
+	}
+}
+```
+
+The empty string means "no colour", which is what the other arm needs: without
+it the first arm's colour would stay on every row. `customColor.brand`, a
+gradient and a CSS keyword all work in an arm too.
+
 ## CSS names
 
 All 148 CSS colour names work, bare or quoted. The list is the CSS Color Module
