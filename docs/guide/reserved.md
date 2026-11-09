@@ -24,7 +24,7 @@ Rectangle {
 
 | Member | Type | Reads |
 |---|---|---|
-| `app.theme` | string | the resolved scheme's name: `light`, `dark`, or a name the app registered with `ui.WithTheme` |
+| `app.theme` | string | the resolved scheme's name: `light`, `dark`, or a name the app defined with `Window.DefineTheme` |
 | `app.mode` | `light` / `dark` / `unknown` | the resolved scheme's mood, usable where an enum or a colour role is expected |
 | `app.systemMode` | `light` / `dark` / `unknown` | the desktop's own preference, independent of the theme the app picked |
 | `app.dark` | bool | `true` when the resolved scheme is dark |

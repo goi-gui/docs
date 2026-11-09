@@ -170,10 +170,15 @@ resizable := w.Resizable()
 w.Root().SetMinWidth(600)
 w.Root().SetMaxWidth(-1)
 
-// A custom scheme, registered under a name the file can select.
+// A custom scheme, defined under its Name for the file to select.
 brand := *ui.LightTheme()
+brand.Name = "brand"
 brand.Colors.Primary = 0x00695CFF
-win, _ := app.LoadWindowFile("app.goi", ui.WithTheme("brand", &brand))
+win, _ := app.LoadWindowFile("app.goi")
+win.DefineTheme(&brand)
+
+// Or a whole scheme from one seed colour.
+win.DefineTheme(ui.NewThemeFromSeed(0x6750A4FF, true)) // darkFromSeed
 ```
 
 The desktop's language is available to both sides as

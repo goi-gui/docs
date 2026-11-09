@@ -61,10 +61,12 @@ A role name is what `theme.<role>` takes, and the whole list completes after
 
 ## Building a scheme
 
-Start from a built-in one, change the roles the brand owns, and register it:
+Start from a built-in one, change the roles the brand owns, and define it on the
+window. A scheme is registered under its own `Name`, so Go and the design share
+one spelling:
 
 ```go
-brand := ui.LightTheme()          // a copy; the built-in one stays intact
+brand := ui.LightTheme() // a copy; the built-in one stays intact
 brand.Name = "brand"
 brand.Colors.Primary = 0x411F89FF
 brand.Colors.OnPrimary = 0xFFFFFFFF
@@ -74,10 +76,8 @@ brand.Colors.Surface = 0xFFFBFEFF
 brand.Colors.OnSurface = 0x1C1B1FFF
 
 app, _ := ui.NewApp()
-win, _ := app.LoadWindow(fs, "main.goi",
-	ui.WithTheme("brand", brand),
-	ui.WithSize(900, 700),
-)
+win, _ := app.LoadWindow(fs, "main.goi", ui.WithSize(900, 700))
+win.DefineTheme(brand)
 ```
 
 Then the design names it:
@@ -88,27 +88,60 @@ Window {
 }
 ```
 
-`WithTheme` registers a name; a registered name replaces a built-in one of the
-same name, so `WithTheme("dark", myDark)` is how an app overrides dark mode.
+`DefineTheme` may run after `LoadWindow` — inside `Bind` is the usual place — and
+a design may name the scheme before it exists. The frame after the call resolves
+the name, so no reload is needed. Defining the same name again replaces it, which
+is how a live accent colour reaches the design.
 
-A scheme carries its mood in `Theme.Dark`. That is what `app.dark` and
-`app.mode` read, so a hand-built dark scheme reads as dark even if its colours
-are unusual.
+A scheme carries its mood in `Theme.Dark`. That is what `app.dark` and `app.mode`
+read, so a hand-built dark scheme reads as dark even if its colours are unusual.
+
+## From a seed colour
+
+`NewThemeFromSeed` builds a whole scheme from one colour, in either mood. The
+seed sets the hue; every role's tone follows Material 3:
+
+```go
+seed := uint32(0x6750A4FF) // 0xRRGGBBAA, the same form a role uses
+
+win.DefineTheme(ui.NewThemeFromSeed(seed, false)) // named lightFromSeed
+win.DefineTheme(ui.NewThemeFromSeed(seed, true))  // named darkFromSeed
+```
+
+The names are fixed by the mood, so the design selects one without any string
+plumbing:
+
+```goi
+Window {
+	theme: lightFromSeed
+}
+```
+
+- `primary` is the seed's hue at a moderate chroma, `secondary` the same hue at
+  a lower one, `tertiary` sits 60° around the wheel, and the neutrals keep a
+  trace of the seed.
+- A muted seed gives a muted scheme; the chroma is clamped so a nearly grey seed
+  cannot produce a saturated hue.
+- The palette is derived in CIELCh rather than Material's HCT, so the result is
+  close to a Material scheme without a CAM16 implementation. A tone that would
+  leave sRGB has its chroma lowered until it fits, which keeps every role
+  readable.
+- Defining a seed scheme again with a new seed replaces it in place, so a colour
+  picker can re-theme a running app.
+
+See the `seed` example for a light/dark switch and three seeds.
 
 ## A light and a dark scheme together
 
-Register one name per mood and switch between them when the OS does:
+Define one name per mood and switch between them when the OS does:
 
 ```go
-app, _ := ui.NewApp()
-win, _ := app.LoadWindow(fs, "main.goi",
-	ui.WithTheme("brandLight", brandLight),
-	ui.WithTheme("brandDark", brandDark),
-)
+win.DefineTheme(brandLight) // Theme.Name = "brandLight", Dark = false
+win.DefineTheme(brandDark)  // Theme.Name = "brandDark",  Dark = true
 ```
 
 `theme: app.systemMode` cannot know which of the two to pick, so an app that
-registers two takes the switch itself:
+defines two takes the switch itself:
 
 ```go
 win.Bind(func(w *ui.Window) error {

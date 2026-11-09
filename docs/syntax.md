@@ -688,8 +688,10 @@ shadows the glyphs (CSS `text-shadow`), everywhere else the box (CSS
 `box-shadow`). See [Shadows](guide/shadows.md).
 
 `theme` names a colour scheme. `light` and `dark` are built in; the app adds
-more with `ui.WithTheme(name, theme)`, and an unknown name falls back to light
-with a diagnostic on `App.OnError`. `app.dark` reports the resolved scheme's
+more with `Window.DefineTheme(theme)`, keyed by `Theme.Name`, and
+`ui.NewThemeFromSeed(color, dark)` builds one from a single seed colour. A
+design may name a scheme before it is defined; an unknown name falls back to
+light and logs a warning once. `app.dark` reports the resolved scheme's
 mood, so a custom dark theme still reads as dark in a conditional.
 
 `role` selects a Material 3 type-scale role (`displayLarge` … `labelSmall`) and
@@ -1061,9 +1063,10 @@ mid-typing never reflows it.
 No bindings and no handler bodies — a design declares a handler's name and
 parameters, but the body is always Go. A list from Go is a `bridge` variable the
 app sets; `ui.Fill` covers a list built by hand.
-Theming covers the built-in light and dark Material 3 schemes plus any palette
-the app registers with `ui.WithTheme`; Material You dynamic colour is not
-exposed yet.
+Theming covers the built-in light and dark Material 3 schemes, any palette the
+app defines with `Window.DefineTheme`, and a whole scheme derived from one seed
+colour with `ui.NewThemeFromSeed`; the seed derivation follows Material's tonal
+palette in CIELCh, not Material You's HCT.
 
 `Window.theme` picks the scheme and every colour a component draws comes from it,
 so set it from Go (`win.Root().Theme.Set("dark")`) and the whole window follows.

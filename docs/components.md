@@ -249,14 +249,16 @@ it, with the instance deciding which bridge handler that is. See
 
 ## Themes
 
-`theme` names a colour scheme. `light` and `dark` are built in; the app registers
-more by name:
+`theme` names a colour scheme. `light` and `dark` are built in; the app defines
+more on the window, under the scheme's own `Name`:
 
 ```go
 brand := *ui.LightTheme()
 brand.Name = "brand"
 brand.Colors.Primary = 0x00695CFF
-app.LoadWindowFile("app.goi", ui.WithTheme("brand", &brand))
+
+win, _ := app.LoadWindowFile("app.goi")
+win.DefineTheme(&brand)
 ```
 
 ```goi
@@ -266,8 +268,10 @@ Window {
 ```
 
 `ui.LightTheme()`/`ui.DarkTheme()` return a copy you can edit; `ui.Theme` and
-`ui.Colors` are the exported types. An unknown name falls back to light and
-reports through `App.OnError`.
+`ui.Colors` are the exported types. `ui.NewThemeFromSeed(color, dark)` builds a
+whole scheme from one seed colour, named `lightFromSeed` or `darkFromSeed`. A
+design may name a scheme before `DefineTheme` runs; an unknown name falls back to
+light and logs a warning once.
 
 `app.mode` (design) and `Window.Mode()` (Go) report the resolved scheme's mood as
 `light` or `dark`, so a registered dark theme reads as dark. `theme: app.systemMode`
