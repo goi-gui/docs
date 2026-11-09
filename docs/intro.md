@@ -88,3 +88,28 @@ go get github.com/goi-gui/goi/ui
 
 The WebGPU renderer and the SDL3 window layer live behind the `ui` package.
 Only `ui` is imported by an application.
+
+### Platform requirements
+
+goi runs on Linux (Wayland and X11), Windows and macOS. The window layer is
+cgo over SDL3, so a build needs a C compiler, `pkg-config` and SDL3's
+development files; everything above it is pure Go.
+
+```sh
+# Linux
+sudo apt install libsdl3-dev            # or build SDL3 from source
+go build -ldflags=-linkmode=internal ./...
+
+# macOS
+brew install sdl3
+go build ./...
+
+# Windows (MSYS2 MINGW64 shell)
+pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-pkgconf mingw-w64-x86_64-SDL3
+go build ./...
+```
+
+The same binary asks SDL which video driver it got and draws through Vulkan
+(Wayland, X11), Direct3D 12 (Windows) or Metal (macOS); no GPU SDK is needed
+beyond the driver. `-ldflags=-linkmode=internal` is Linux-only, because goffi's
+dynamic imports and the cgo SDL shim cannot share the external linker.
