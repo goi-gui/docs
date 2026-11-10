@@ -72,7 +72,8 @@ colour's alpha becomes the drawing opacity, because SVG hex colours have no
 alpha channel.
 
 A local path is read and rasterized while the window is built, so the first frame
-already has it. A remote `src` is fetched in the background exactly like an
+already has it; a `src` written as an expression is picked up once the expression
+pass has given it a value, and a `src` changed from Go rasters again. A remote `src` is fetched in the background exactly like an
 `Image`: the node lays out at its declared size straight away and paints a faint
 wash that breathes until the file lands. Nothing waits for the network — a slow
 host cannot hold up the first frame or a hot reload.

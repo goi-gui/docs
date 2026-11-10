@@ -63,7 +63,9 @@ path straight through.
 
 A local path is read and decoded while the window is built, so the first frame
 already has it; the decoded bitmap is cached by `src`, so a reload does not read
-it again. A remote `src` is fetched in the background: the node lays out at
+it again. A `src` written as an expression is read once the expression pass has
+given it a value, so a row built by `for … range` shows its picture too, and an
+app that changes `src` from Go swaps the bitmap without a reload. A remote `src` is fetched in the background: the node lays out at
 its declared size straight away and paints a faint wash that breathes until the
 bitmap lands. Nothing else waits for the network — a slow host cannot hold up the
 window's first frame or a hot reload, and a broken URL leaves a coloured
