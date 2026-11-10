@@ -15,9 +15,22 @@ this list and what the renderer can draw cannot drift. A name that is not here
 draws nothing. The language server completes these names in an icon property.
 
 ```goi
-Button { label: "Save" icon: check }
-Switch { label: "Dark mode" iconOn: dark_mode iconOff: light_mode }
-ListItem { label: "Inbox" icon: inbox trailingIcon: chevron_right }
+Button {
+	label: "Save"
+	icon:  check
+}
+
+Switch {
+	label:   "Dark mode"
+	iconOn:  dark_mode
+	iconOff: light_mode
+}
+
+ListItem {
+	label:        "Inbox"
+	icon:         inbox
+	trailingIcon: chevron_right
+}
 ```
 
 **Tip:** the page is long — use your browser's find (Ctrl+F / Cmd+F) to jump

@@ -7,10 +7,27 @@ An editable single-line field with a floating label.
 ## In a `.goi` file
 
 ```goi
-TextField { label: "Email" width: 320 }
-TextField { label: "Name" text: "Ada" variant: outlined }
-TextField { label: "Email" placeholder: "you@example.com" icon: mail }
-TextField { label: "Notes" supporting: "Shown under the field" }
+TextField {
+	label: "Email"
+	width: 320
+}
+
+TextField {
+	label:   "Name"
+	text:    "Ada"
+	variant: outlined
+}
+
+TextField {
+	label:       "Email"
+	placeholder: "you@example.com"
+	icon:        mail
+}
+
+TextField {
+	label:      "Notes"
+	supporting: "Shown under the field"
+}
 ```
 
 ## Properties

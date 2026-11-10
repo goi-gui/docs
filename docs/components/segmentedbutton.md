@@ -7,9 +7,24 @@ A horizontal set of segments. Contiguous siblings form one group.
 ## In a `.goi` file
 
 ```goi
-SegmentedButton { label: "Day" width: 84 variant: single }
-SegmentedButton { label: "Week" width: 84 variant: single selected: true }
-SegmentedButton { label: "Month" width: 96 variant: single }
+SegmentedButton {
+	label:   "Day"
+	width:   84
+	variant: single
+}
+
+SegmentedButton {
+	label:    "Week"
+	width:    84
+	variant:  single
+	selected: true
+}
+
+SegmentedButton {
+	label:   "Month"
+	width:   96
+	variant: single
+}
 ```
 
 ## Properties

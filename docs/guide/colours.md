@@ -57,7 +57,10 @@ highlighted with the scheme's colour and still follow light/dark:
 for i, row := range bridge.rows {
 	TableRow {
 		background: i == 0 ? theme.primary : ""
-		...
+
+		TableCell {
+			value: row.title
+		}
 	}
 }
 ```
@@ -82,10 +85,25 @@ it costs nothing: no Material role is spelled like a CSS keyword.
 either spelling:
 
 ```goi
-Text { text: "legacy" color: "rgb(42, 123, 155)" }
-Text { text: "modern" color: "rgb(42 123 155 / 50%)" }
-Text { text: "alpha"  color: "rgba(42, 123, 155, 0.5)" }
-Text { text: "hue"    color: "hsl(200 40% 50%)" }
+Text {
+	text:  "legacy"
+	color: "rgb(42, 123, 155)"
+}
+
+Text {
+	text:  "modern"
+	color: "rgb(42 123 155 / 50%)"
+}
+
+Text {
+	text:  "alpha"
+	color: "rgba(42, 123, 155, 0.5)"
+}
+
+Text {
+	text:  "hue"
+	color: "hsl(200 40% 50%)"
+}
 ```
 
 A function is quoted, because `.goi` would otherwise read the parentheses as an

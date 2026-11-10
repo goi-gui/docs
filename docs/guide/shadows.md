@@ -11,12 +11,12 @@ wherever it sits.
 
 ```goi
 Text {
-	text: "Example"
+	text:   "Example"
 	shadow: 2 2 5 #000000
 }
 
 Card {
-	label: "Raised"
+	label:  "Raised"
 	shadow: 0 4 12 2 #00000026
 }
 ```
@@ -52,12 +52,12 @@ blur outlines the letters, and four hard copies in a ring fake a border.
 
 ```goi
 Text {
-	text: "Soft"
+	text:   "Soft"
 	shadow: 1 1 3 onSurfaceVariant
 }
 
 Text {
-	text: "Outlined"
+	text:   "Outlined"
 	shadow: -1 0 #000000, 0 1 #000000, 1 0 #000000, 0 -1 #000000
 }
 ```
@@ -72,20 +72,20 @@ shadow matching the box it belongs to without repeating the radius.
 
 ```goi
 Rectangle {
-	width:  200
-	height: 100
+	width:      200
+	height:     100
 	background: theme.surfaceContainerHigh
-	radius: 16
-	shadow: 0 8 24 4 #00000033
+	radius:     16
+	shadow:     0 8 24 4 #00000033
 }
 
 Rectangle {
-	width:  200
-	height: 100
+	width:      200
+	height:     100
 	background: theme.primary
-	radius: 16
+	radius:     16
 	// A hard ring, like a focus outline, plus a pressed-in panel.
-	shadow: 0 0 0 3 #FF0000, 0 4 12 #000000 inset
+	shadow:     0 0 0 3 #ff0000, 0 4 12 #000000 inset
 }
 ```
 

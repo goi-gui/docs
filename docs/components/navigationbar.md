@@ -9,7 +9,10 @@ The bottom navigation bar for the compact window class.
 ```goi
 NavigationBar {
 	id:      navbar
-	visible: responsive { base: true sm: false }
+	visible: responsive {
+		base: true
+		sm: false
+	}
 
 	NavigationItem {
 		label:    "Home"

@@ -7,9 +7,18 @@ One option in a set where exactly one is chosen.
 ## In a `.goi` file
 
 ```goi
-RadioButton { label: "Small" checked: true }
-RadioButton { label: "Medium" }
-RadioButton { label: "Large" }
+RadioButton {
+	label:   "Small"
+	checked: true
+}
+
+RadioButton {
+	label: "Medium"
+}
+
+RadioButton {
+	label: "Large"
+}
 ```
 
 ## Properties

@@ -328,7 +328,10 @@ TableRow {
 
 	TableCell {
 		value: "Build passed"
-		Text { text: "Build passed" }
+
+		Text {
+			text: "Build passed"
+		}
 	}
 }
 ```

@@ -11,12 +11,14 @@ that describe the running program — the resolved theme and the client area —
 a design can follow the scheme and the window size instead of hard-coding them.
 
 ```goi
-Text { text: app.dark ? "Dark" : "Light" }
+Text {
+	text: app.dark ? "Dark" : "Light"
+}
 
 Rectangle {
-	width:       max(120, min(window.width / 3, 480))
-	height:      2
-	background:  app.dark ? primary : secondary
+	width:      max(120, min(window.width / 3, 480))
+	height:     2
+	background: app.dark ? primary : secondary
 }
 ```
 
@@ -98,8 +100,8 @@ every frame.
 Text {
 	width: responsive {
 		base: 280
-		md:   420
-		lg:   560
+		md: 420
+		lg: 560
 	}
 }
 ```
@@ -129,14 +131,18 @@ bridge {
 	onVolume func(level float64)
 }
 
-Switch {
-	label:    "Follow the desktop"
-	onToggle: bridge.onToggle(event)     // event is a bool here
-}
+Window {
+	Column {
+		Switch {
+			label:    "Follow the desktop"
+			onToggle: bridge.onToggle(event) // event is a bool here
+		}
 
-Slider {
-	value:    0.4
-	onChange: bridge.onVolume(event)     // event is a number here
+		Slider {
+			value:    0.4
+			onChange: bridge.onVolume(event) // event is a number here
+		}
+	}
 }
 ```
 

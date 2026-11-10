@@ -5,8 +5,14 @@ colour roles plus a type scale. One design serves light and dark because it name
 roles, never hex values, for anything that should adapt.
 
 ```goi
-Text { text: "Hello" color: theme.primary }
-Rectangle { background: theme.surfaceContainerHigh }
+Text {
+	text:  "Hello"
+	color: theme.primary
+}
+
+Rectangle {
+	background: theme.surfaceContainerHigh
+}
 ```
 
 A role is a name, not a value. When the scheme changes, the same design redraws
@@ -25,15 +31,15 @@ A design picks one of three ways:
 
 ```goi
 Window {
-	theme: light           // always light
+	theme: light // always light
 }
 
 Window {
-	theme: dark            // always dark
+	theme: dark // always dark
 }
 
 Window {
-	theme: app.systemMode  // follow the desktop setting
+	theme: app.systemMode // follow the desktop setting
 }
 ```
 

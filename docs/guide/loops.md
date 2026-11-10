@@ -149,9 +149,14 @@ when its own list is set:
 ```goi
 for _, group := range bridge.Groups {
 	Column {
-		Text { text: group.Title }
+		Text {
+			text: group.Title
+		}
+
 		for _, row := range group.Rows {
-			Text { text: row.Label }
+			Text {
+				text: row.Label
+			}
 		}
 	}
 }

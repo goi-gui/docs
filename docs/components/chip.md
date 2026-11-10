@@ -7,11 +7,31 @@ A compact, rounded element for filters, inputs, suggestions and tags.
 ## In a `.goi` file
 
 ```goi
-Chip { label: "Assist" icon: event }
-Chip { label: "Filter" variant: filter selected: true }
-Chip { label: "Input" variant: input }
-Chip { label: "Suggestion" variant: suggestion }
-Chip { label: "Tag" trailingIcon: close }
+Chip {
+	label: "Assist"
+	icon:  event
+}
+
+Chip {
+	label:    "Filter"
+	variant:  filter
+	selected: true
+}
+
+Chip {
+	label:   "Input"
+	variant: input
+}
+
+Chip {
+	label:   "Suggestion"
+	variant: suggestion
+}
+
+Chip {
+	label:        "Tag"
+	trailingIcon: close
+}
 ```
 
 ## Properties

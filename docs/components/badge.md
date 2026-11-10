@@ -7,9 +7,15 @@ A small count or status dot, usually overlaid on an icon with `Positioned` or `S
 ## In a `.goi` file
 
 ```goi
-Badge { }
-Badge { label: "12" }
-Badge { label: "99+" }
+Badge {}
+
+Badge {
+	label: "12"
+}
+
+Badge {
+	label: "99+"
+}
 ```
 
 ## Properties

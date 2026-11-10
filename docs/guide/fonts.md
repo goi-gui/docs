@@ -44,7 +44,9 @@ Window {
 	fontFamily: "Inter"
 
 	Column {
-		Text { text: "Everything here is Inter" }
+		Text {
+			text: "Everything here is Inter"
+		}
 	}
 }
 ```

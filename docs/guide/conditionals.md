@@ -53,7 +53,9 @@ bridge {
 
 ```goi
 if bridge.Count > 0 && !bridge.Loading {
-	Text { text: formatf("%d items", bridge.Count) }
+	Text {
+		text: formatf("%d items", bridge.Count)
+	}
 }
 ```
 
@@ -143,3 +145,38 @@ Button {
 
 The two branches of `?:` must have compatible types: both strings, both numbers,
 both colours, or both bools.
+
+## Choosing between more than two values
+
+`conditional` is the value form of a `switch`: each line is `value: condition`,
+and the first condition that holds picks the value.
+
+```goi
+Column {
+	gap: conditional {
+		10: !bridge.isWide
+		20: bridge.isWide
+	}
+}
+```
+
+```goi
+for i, l := range bridge.results {
+	Text {
+		text: conditional {
+			"✅": l == "W"
+			"🏁": l == "D"
+			"❌": l == "L"
+		}
+	}
+}
+```
+
+- The first true condition wins and the rest are never evaluated.
+- When no condition holds, the property keeps the value it already had, the way
+  a `switch` with no matching case changes nothing.
+- Any property takes one, and each value is checked against that property's type.
+- Like an `if`, it re-evaluates every frame, so a bridge field or a Go-set
+  property changes it without a reload.
+
+[Conditional values](../syntax.md#conditional-values) has the full form.

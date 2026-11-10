@@ -8,12 +8,17 @@ A Material 3 surface that groups related content.
 
 ```goi
 Card {
-	label: "Elevated"
+	label:      "Elevated"
 	supporting: "Surface container low"
-	variant: elevated
-	width: 240
+	variant:    elevated
+	width:      240
 }
-Card { variant: filled width: 240 height: 88 }
+
+Card {
+	variant: filled
+	width:   240
+	height:  88
+}
 ```
 
 ## Properties

@@ -9,16 +9,16 @@ A plain colored box. It has no component behaviour, so it is the cheapest backgr
 ```goi
 Rectangle {
 	background: theme.primary
-	radius: 8
-	height: 4
+	radius:     8
+	height:     4
 }
 
 Rectangle {
-	width:  200
-	height: 100
+	width:      200
+	height:     100
 	background: theme.surfaceContainerHigh
-	radius: 16
-	shadow: 0 8 24 4 #00000033
+	radius:     16
+	shadow:     0 8 24 4 #00000033
 }
 ```
 

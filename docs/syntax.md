@@ -372,20 +372,20 @@ block. `data { ... }` is the original spelling and still works; `type` and
 
 ```goi
 bridge {
-    Loading bool
-    Error   string
-    Count   int
-    Tickets []Ticket
-    OnOpen  func(id string)
-    OnFilter func(query string, limit uint)
+	Loading  bool
+	Error    string
+	Count    int
+	Tickets  []Ticket
+	OnOpen   func(id string)
+	OnFilter func(query string, limit uint)
 }
 
 // The shape of one row. A list names the type it holds.
 type Ticket {
-    ID        string
-    Title     string
-    Requester string
-    Unread    bool
+	ID        string
+	Title     string
+	Requester string
+	Unread    bool
 }
 ```
 
@@ -559,13 +559,15 @@ declaration. A function call appears either as an event property's whole value
 | `theme.surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
 | `customColor.myBrand` | custom color | a name the app defines with `ui.SetCustomColor`; an undefined one warns and falls back to `onSurface` |
 | `90deg`, `x 90deg`, `1 1 1 90deg` | rotate | the `rotate` property only: CSS form, see [Rotate](#rotate) |
+| `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form; `none` clears it, see [Shadows](guide/shadows.md) |
+| `responsive { base: 8 md: 16 }` | modifier | responsive value, one entry per breakpoint; see [Responsive values](#responsive-values) |
+| `conditional { 10: bridge.isWide }` | modifier | first true condition picks the value; see [Conditional values](#conditional-values) |
 
 ## Colours and gradients
 
 A colour has four forms: a theme role (`theme.primary`), a CSS literal (a name,
 a function or a hex value), or an app-defined name (`customColor.brand`). The
 first follows light and dark; the rest are fixed.
-
 
 A colour is written the way CSS writes it. A role follows the scheme; a literal
 does not:
@@ -633,38 +635,43 @@ Column {
 - Only `background` takes one. A gradient on `color` or `borderColor` is a checker
   error rather than a silently empty fill, because a gradient is a box, not a
   stroke or a glyph colour.
+- A theme role inside a gradient is not resolved; use a literal there, because the
+  stop list is parsed once from the string.
 
-### Rotate
+## Rotate
 
 `rotate` is CSS `rotate`: it turns the element and everything under it about the
 element's own centre. Layout ignores it, so the box keeps its place and its
 siblings do not move.
 
 ```goi
-Column { rotate: none }          // the default
-Column { rotate: 90deg }
-Column { rotate: 0.25turn }
-Column { rotate: 1.57rad }
-Column { rotate: x 90deg }       // about the x axis
-Column { rotate: y 0.25turn }
-Column { rotate: z 1.57rad }
-Column { rotate: 1 1 1 90deg }   // about a vector
+Column {
+	rotate: none // the default
+}
+
+Column {
+	rotate: 90deg // an angle alone turns about the z axis
+}
+
+Column {
+	rotate: x 90deg // about the x axis
+}
+
+Column {
+	rotate: 1 1 1 90deg // about a vector
+}
 ```
 
-- An angle may use `deg`, `rad`, `turn` or `grad`; goifmt writes it back in
-  degrees, which is the same value.
+An angle may be written as `deg`, `rad`, `turn` or `grad`; they are the same
+value and goifmt writes it back in degrees (`0.25turn` is `90deg`, `1.57rad` is
+`89.95437deg`).
+
 - The keyword `none` clears it.
 - A turn about a non-z axis is a three-dimensional rotation. The renderer is
   two-dimensional, so only the z axis (the angle-only and `z` forms) shows as a
   turn; an x, y or vector rotation is stored but not projected.
 - Nested rotations compose: an inner 45° inside an outer 90° turns 135°, and the
   inner pivot follows the outer frame.
-
-A theme role inside a gradient is not resolved; use a literal there, because the
-stop list is parsed once from the string.
-| `responsive { base: 8 md: 16 }` | modifier | responsive value, one entry per breakpoint |
-| `conditional { 10: bridge.isWide }` | modifier | first true condition picks the value |
-| `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form; `none` clears it, see [Shadows](guide/shadows.md) |
 
 ## Elements
 
@@ -878,8 +885,8 @@ corner rounds only itself:
 ```goi
 Rectangle {
 	radius:           8
-	radiusTop:        24   // both top corners
-	radiusBottomLeft: 0    // this one corner only
+	radiusTop:        24 // both top corners
+	radiusBottomLeft: 0 // this one corner only
 }
 ```
 
@@ -920,8 +927,14 @@ Window {
 	fontFamily: "Inter"
 
 	Column {
-		Text { text: "Inter, from the window" }
-		Text { text: "Roboto again" fontFamily: "Roboto" }
+		Text {
+			text: "Inter, from the window"
+		}
+
+		Text {
+			text:       "Roboto again"
+			fontFamily: "Roboto"
+		}
 	}
 }
 ```
@@ -949,8 +962,13 @@ leaves the property at its previous value instead of failing the frame.
 `formatf` builds a string with Go's `fmt` verbs:
 
 ```goi
-Text { text: formatf("Count is %d", bridge.Count) }
-Text { text: formatf("%s: %0.2f", bridge.Error, bridge.Count) }
+Text {
+	text: formatf("Count is %d", bridge.Count)
+}
+
+Text {
+	text: formatf("%s: %0.2f", bridge.Error, bridge.Count)
+}
 ```
 
 The first argument is the format string; every later argument fills one verb.
@@ -969,9 +987,17 @@ re-evaluated on every frame, exactly like any other expression, so a
 [Translations](guide/i18n.md):
 
 ```goi
-Text { text: t("welcome_message") }
-Text { text: t("settings.theme") }
-Text { text: t("welcome_with_name", "Kaan") }
+Text {
+	text: t("welcome_message")
+}
+
+Text {
+	text: t("settings.theme")
+}
+
+Text {
+	text: t("welcome_with_name", "Kaan")
+}
 ```
 
 A nested key uses dots. Later arguments fill the entry's `fmt` verbs exactly
@@ -1000,8 +1026,13 @@ no meaning in a value that is re-read every frame, so `append`, `make`, `new`,
 may call.
 
 ```goi
-Text { text: formatf("%d of %d", len(bridge.Tickets), bridge.Count) }
-Rectangle { width: max(120, min(window.width / 3, 480)) }
+Text {
+	text: formatf("%d of %d", len(bridge.Tickets), bridge.Count)
+}
+
+Rectangle {
+	width: max(120, min(window.width / 3, 480))
+}
 ```
 
 ## Responsive values
@@ -1012,14 +1043,14 @@ A property can follow the window width with the `responsive` modifier:
 Column {
 	padding: responsive {
 		base: 8
-		md:   16
+		md: 16
 	}
 
 	Grid {
 		columns: responsive {
 			base: 1
-			md:   2
-			lg:   3
+			md: 2
+			lg: 3
 		}
 
 		Card {
@@ -1123,10 +1154,10 @@ The layout is fixed, and running it twice changes nothing:
   struct:
 
   ```goi
-  props {
-      Title    string
-      LongName int
-  }
+props {
+	Title    string
+	LongName int
+}
   ```
 
 - An element body holds one property per line, with the values in one column:

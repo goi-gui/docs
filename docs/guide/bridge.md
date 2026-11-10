@@ -101,8 +101,19 @@ bridge {
 	onOpen func(id string, limit uint)
 }
 
-Button { label: "+" onClick: bridge.onInc() }
-ListItem { label: "42" onClick: bridge.onOpen("42", 10) }
+Window {
+	Column {
+		Button {
+			label:   "+"
+			onClick: bridge.onInc()
+		}
+
+		ListItem {
+			label:   "42"
+			onClick: bridge.onOpen("42", 10)
+		}
+	}
+}
 ```
 
 ```go

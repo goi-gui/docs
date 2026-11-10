@@ -7,9 +7,22 @@ One row in a list: leading icon, label, optional supporting line, trailing affor
 ## In a `.goi` file
 
 ```goi
-ListItem { label: "Inbox" icon: inbox }
-ListItem { label: "Two lines" supporting: "Supporting text" icon: photo }
-ListItem { label: "Selected" icon: star selected: true }
+ListItem {
+	label: "Inbox"
+	icon:  inbox
+}
+
+ListItem {
+	label:      "Two lines"
+	supporting: "Supporting text"
+	icon:       photo
+}
+
+ListItem {
+	label:    "Selected"
+	icon:     star
+	selected: true
+}
 ```
 
 ## Properties

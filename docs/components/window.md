@@ -191,3 +191,16 @@ Text {
 ```
 
 Every element also accepts the [common properties](../components.md#common-properties).
+
+## A window-wide font
+
+`fontFamily` on the window is inherited by every element under it:
+
+```goi
+Window {
+	fontFamily: "Inter"
+}
+```
+
+The family has to be registered first with `App.LoadFont`; see
+[Fonts](../guide/fonts.md).

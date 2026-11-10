@@ -8,13 +8,43 @@ fills out from a center value, and a range with two handles.
 ## In a `.goi` file
 
 ```goi
-Slider { value: 0.4 min: 0 max: 1 width: 320 }
-Slider { value: 40 min: 0 max: 100 step: 10 }
+Slider {
+	value: 0.4
+	min:   0
+	max:   1
+	width: 320
+}
 
-Slider { variant: centered value: 0.7 min: 0 max: 1 }     // fills out from 0.5
-Slider { variant: centered center: 0.25 value: 0.7 min: 0 max: 1 }
+Slider {
+	value: 40
+	min:   0
+	max:   100
+	step:  10
+}
 
-Slider { variant: range value: 20 end: 70 min: 0 max: 100 step: 5 }
+Slider {
+	variant: centered // fills out from 0.5
+	value:   0.7
+	min:     0
+	max:     1
+}
+
+Slider {
+	variant: centered
+	center:  0.25
+	value:   0.7
+	min:     0
+	max:     1
+}
+
+Slider {
+	variant: range
+	value:   20
+	end:     70
+	min:     0
+	max:     100
+	step:    5
+}
 ```
 
 ## Shapes

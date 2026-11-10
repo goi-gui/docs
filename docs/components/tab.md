@@ -7,8 +7,15 @@ One tab in a tab bar.
 ## In a `.goi` file
 
 ```goi
-Tab { label: "Overview" selected: true }
-Tab { label: "Specs" icon: tune }
+Tab {
+	label:    "Overview"
+	selected: true
+}
+
+Tab {
+	label: "Specs"
+	icon:  tune
+}
 ```
 
 ## Properties

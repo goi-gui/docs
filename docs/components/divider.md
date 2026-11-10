@@ -7,8 +7,11 @@ A one-pixel rule between content.
 ## In a `.goi` file
 
 ```goi
-Divider { }
-Divider { variant: vertical }
+Divider {}
+
+Divider {
+	variant: vertical
+}
 ```
 
 ## Properties

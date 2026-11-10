@@ -7,8 +7,16 @@ One row in a menu.
 ## In a `.goi` file
 
 ```goi
-MenuItem { label: "Cut" icon: content_cut }
-MenuItem { label: "Delete" icon: delete disabled: true }
+MenuItem {
+	label: "Cut"
+	icon:  content_cut
+}
+
+MenuItem {
+	label:    "Delete"
+	icon:     delete
+	disabled: true
+}
 ```
 
 ## Properties

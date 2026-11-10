@@ -7,9 +7,22 @@ A single on/off control with an optional label and optional glyph in the thumb.
 ## In a `.goi` file
 
 ```goi
-Switch { label: "Dark mode" checked: true }
-Switch { label: "Notifications" iconOn: check iconOff: close }
-Switch { label: "Theme" iconOn: dark_mode iconOff: light_mode }
+Switch {
+	label:   "Dark mode"
+	checked: true
+}
+
+Switch {
+	label:   "Notifications"
+	iconOn:  check
+	iconOff: close
+}
+
+Switch {
+	label:   "Theme"
+	iconOn:  dark_mode
+	iconOff: light_mode
+}
 ```
 
 ## Properties

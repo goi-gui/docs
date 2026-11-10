@@ -102,17 +102,17 @@ These apply to every element and are not repeated on the component pages.
 | `minWidth, maxWidth` | number | bounds for the resolved width; `SetMinWidth`/`SetMaxWidth` from Go |
 | `minHeight, maxHeight` | number | bounds for the resolved height; `SetMinHeight`/`SetMaxHeight` from Go |
 | `margin` | number | outer spacing on all sides |
-| `marginTop/Right/Bottom/Left` | number | per-side override; unset follows `margin` |
+| `marginTop`, `marginRight`, `marginBottom`, `marginLeft` | number | per-side override; unset follows `margin` |
 | `padding` | number | inner spacing on all sides |
-| `paddingTop/Right/Bottom/Left` | number | per-side override; unset follows `padding` |
+| `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` | number | per-side override; unset follows `padding` |
 | `background` | color | theme role or `#RRGGBB`; only where the element has no container |
-| `borderColor, borderWidth` | color, number | outline around the box |
-| `borderTopWidth/RightWidth/BottomWidth/LeftWidth` | number | per-side override; unset follows `borderWidth` |
-| `borderTopColor/RightColor/BottomColor/LeftColor` | color | per-side override; unset follows `borderColor` |
+| `borderColor`, `borderWidth` | color, number | outline around the box |
+| `borderTopWidth`, `borderRightWidth`, `borderBottomWidth`, `borderLeftWidth` | number | per-side override; unset follows `borderWidth` |
+| `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor` | color | per-side override; unset follows `borderColor` |
 | `radius` | number | corner radius on all four corners |
-| `radiusTop/Right/Bottom/Left` | number | rounds both corners on that side; unset follows `radius` |
-| `radiusTopLeft/TopRight/BottomRight/BottomLeft` | number | rounds one corner; unset follows the side, then `radius` |
-| `fontFamily` | string | a family the app registered with `app.LoadFont`; children inherit it, and an unset element uses Roboto |
+| `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft` | number | rounds both corners on that side; unset follows `radius` |
+| `radiusTopLeft`, `radiusTopRight`, `radiusBottomRight`, `radiusBottomLeft` | number | rounds one corner; unset follows the side, then `radius` |
+| `fontFamily` | string | a family the app registered with `app.LoadFont`, inherited by children; see [Fonts](guide/fonts.md) |
 | `shadow` | shadow | CSS-style shadow: the box everywhere, the glyphs on `Text`; see [Shadows](guide/shadows.md) |
 | `visible` | bool | removes the element from layout, painting and hit-testing |
 | `template` | bool | marks a hidden row prototype for `ui.Fill` |
@@ -167,7 +167,7 @@ Card {
 }
 
 Button {
-	cursor: not-allowed
+	cursor:   not-allowed
 	disabled: true
 }
 ```
@@ -297,8 +297,13 @@ win.SetCustomColor("myBrand", 0x53268AFF) // or one at a time
 ```
 
 ```goi
-Rectangle { background: customColor.myBrand }
-Text { color: customColor.otherColor }
+Rectangle {
+	background: customColor.myBrand
+}
+
+Text {
+	color: customColor.otherColor
+}
 ```
 
 A name resolves on every frame, so setting it again recolours every element that
@@ -333,15 +338,24 @@ A list of unknown length is usually a `for` loop the app feeds with
 `goicheck` and the editor check every field (see [SYNTAX](syntax.md#declarations-values-and-handlers)).
 
 ```goi
-bridge { Tickets []Ticket }
-
-type Ticket {
-    Title  string
-    Unread bool
+bridge {
+	Tickets []Ticket
 }
 
-for _, ticket := range bridge.Tickets {
-    ListItem { label: ticket.Title selected: ticket.Unread }
+type Ticket {
+	Title  string
+	Unread bool
+}
+
+Window {
+	Column {
+		for _, ticket := range bridge.Tickets {
+			ListItem {
+				label:    ticket.Title
+				selected: ticket.Unread
+			}
+		}
+	}
 }
 ```
 

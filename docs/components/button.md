@@ -7,12 +7,35 @@ The ordinary Material 3 button. Five variants share one element.
 ## In a `.goi` file
 
 ```goi
-Button { label: "Filled" }
-Button { label: "Tonal" variant: tonal }
-Button { label: "Outlined" variant: outlined }
-Button { label: "Text" variant: text }
-Button { label: "Elevated" variant: elevated }
-Button { label: "Save" icon: check variant: filled }
+Button {
+	label: "Filled"
+}
+
+Button {
+	label:   "Tonal"
+	variant: tonal
+}
+
+Button {
+	label:   "Outlined"
+	variant: outlined
+}
+
+Button {
+	label:   "Text"
+	variant: text
+}
+
+Button {
+	label:   "Elevated"
+	variant: elevated
+}
+
+Button {
+	label:   "Save"
+	icon:    check
+	variant: filled
+}
 ```
 
 ## Properties

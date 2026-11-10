@@ -9,7 +9,10 @@ The side navigation rail for medium and expanded windows.
 ```goi
 NavigationRail {
 	id:            rail
-	visible:       responsive { base: false sm: true }
+	visible:       responsive {
+		base: false
+		sm: true
+	}
 	paddingBottom: 16
 
 	NavigationItem {

@@ -18,16 +18,16 @@ SVG {
 SVG {
 	id:     mark
 	src:    "goi://assets/check.svg"
-	color: theme.primary
+	color:  theme.primary
 	width:  24
 	height: 24
 }
 
 // A file on this machine, or one fetched over the network.
 SVG {
-	src:   "./icons/star.svg"
-	color: theme.secondary
-	width: 32
+	src:    "./icons/star.svg"
+	color:  theme.secondary
+	width:  32
 	height: 32
 }
 ```
@@ -122,9 +122,15 @@ An animated SVG answers the same `play()`, `pause()` and `stop()` as an
 they are methods on the node:
 
 ```goi
-SVG { id: spinner src: "goi://spinner.svg" }
+SVG {
+	id:  spinner
+	src: "goi://spinner.svg"
+}
 
-Button { label: "Pause" onClick: spinner.pause() }
+Button {
+	label:   "Pause"
+	onClick: spinner.pause()
+}
 ```
 
 ```go

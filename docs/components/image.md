@@ -13,27 +13,27 @@ also hand it a bitmap directly with `SetImage`, which needs no file at all.
 // A file inside the design's container: the fs.FS passed to LoadWindow, so an
 // embed.FS in a release build and ui.DirFS while developing.
 Image {
-	src:  "goi://assets/cover.png"
-	fit:  cover
-	width: 240
+	src:    "goi://assets/cover.png"
+	fit:    cover
+	width:  240
 	height: 135
 	radius: 12
 }
 
 // A file on this machine, relative to the working directory or absolute.
 Image {
-	src:  "./photos/me.jpg"
-	fit:  contain
-	width: 240
+	src:    "./photos/me.jpg"
+	fit:    contain
+	width:  240
 	height: 135
 }
 
 Image {
-	src: "https://picsum.photos/600/400"
-	fit: cover
-	width: 240
-	height: 135
-	radius: 12
+	src:        "https://picsum.photos/600/400"
+	fit:        cover
+	width:      240
+	height:     135
+	radius:     12
 	background: theme.surfaceContainerHighest
 }
 ```
@@ -117,11 +117,25 @@ From Go they are methods on the node; from a design, an event can call them on
 an element by id, with no Go handler at all:
 
 ```goi
-Image { id: gif src: "goi://pulse.gif" }
+Image {
+	id:  gif
+	src: "goi://pulse.gif"
+}
 
-Button { label: "Play"  onClick: gif.play() }
-Button { label: "Pause" onClick: gif.pause() }
-Button { label: "Stop"  onClick: gif.stop() }
+Button {
+	label:   "Play"
+	onClick: gif.play()
+}
+
+Button {
+	label:   "Pause"
+	onClick: gif.pause()
+}
+
+Button {
+	label:   "Stop"
+	onClick: gif.stop()
+}
 ```
 
 ```go

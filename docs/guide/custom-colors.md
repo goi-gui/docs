@@ -14,8 +14,15 @@ win.SetCustomColors(map[string]uint32{
 ```
 
 ```goi
-Text { text: "ship it" color: customColor.brand }
-Icon { icon: check_circle color: customColor.success }
+Text {
+	text:  "ship it"
+	color: customColor.brand
+}
+
+Icon {
+	icon:  check_circle
+	color: customColor.success
+}
 ```
 
 ## One at a time

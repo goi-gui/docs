@@ -7,10 +7,25 @@ A square button that holds only an icon.
 ## In a `.goi` file
 
 ```goi
-IconButton { icon: favorite }
-IconButton { icon: favorite variant: filled selected: true }
-IconButton { icon: favorite variant: tonal }
-IconButton { icon: favorite variant: outlined }
+IconButton {
+	icon: favorite
+}
+
+IconButton {
+	icon:     favorite
+	variant:  filled
+	selected: true
+}
+
+IconButton {
+	icon:    favorite
+	variant: tonal
+}
+
+IconButton {
+	icon:    favorite
+	variant: outlined
+}
 ```
 
 ## Properties

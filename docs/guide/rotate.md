@@ -5,21 +5,33 @@ Turns the element and everything under it about its own centre, the way CSS
 move, and a clipped parent still clips the turned content.
 
 ```goi
-Column { rotate: none }          // default
-Column { rotate: 90deg }
-Column { rotate: 0.25turn }
-Column { rotate: 1.57rad }
-Column { rotate: 100grad }
+Column {
+	rotate: none // the default
+}
 
-Column { rotate: x 90deg }       // about the x axis
-Column { rotate: y 0.25turn }
-Column { rotate: z 1.57rad }
+Column {
+	rotate: 90deg // an angle alone turns about the z axis
+}
 
-Column { rotate: 1 1 1 90deg }   // about a vector
+Column {
+	rotate: x 90deg // about the x axis
+}
+
+Column {
+	rotate: 1 1 1 90deg // about a vector
+}
 ```
 
-- An angle may use `deg`, `rad`, `turn` or `grad`. `goifmt` writes it back in
-  degrees, which is the same value.
+An angle may be written four ways; they are the same value, and `goifmt` writes
+it back in degrees.
+
+| Written | Same as |
+|---|---|
+| `90deg` | 90 degrees |
+| `0.25turn` | one quarter turn |
+| `1.57rad` | 1.57 radians, about 90 degrees |
+| `100grad` | 100 gradians |
+
 - A vector form is exactly three numbers and an angle; `1 1 90deg` is a typo and
   the parser reports it.
 - Nested rotations compose: an inner 45° inside an outer 90° turns 135°, and the

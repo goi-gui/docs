@@ -7,8 +7,14 @@ The M3 indeterminate loading shape.
 ## In a `.goi` file
 
 ```goi
-LoadingIndicator { width: 48 height: 48 }
-LoadingIndicator { size: small }
+LoadingIndicator {
+	width:  48
+	height: 48
+}
+
+LoadingIndicator {
+	size: small
+}
 ```
 
 ## Properties

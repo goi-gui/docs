@@ -7,8 +7,15 @@ A horizontal progress bar.
 ## In a `.goi` file
 
 ```goi
-LinearProgress { value: 0.65 }
-LinearProgress { value: 30 min: 0 max: 100 }
+LinearProgress {
+	value: 0.65
+}
+
+LinearProgress {
+	value: 30
+	min:   0
+	max:   100
+}
 ```
 
 ## Properties

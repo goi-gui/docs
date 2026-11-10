@@ -7,9 +7,22 @@ One destination in a navigation bar, rail or drawer.
 ## In a `.goi` file
 
 ```goi
-NavigationItem { label: "Home" icon: home selected: true }
-NavigationItem { label: "Search" icon: search }
-NavigationItem { label: "Locked" icon: lock disabled: true }
+NavigationItem {
+	label:    "Home"
+	icon:     home
+	selected: true
+}
+
+NavigationItem {
+	label: "Search"
+	icon:  search
+}
+
+NavigationItem {
+	label:    "Locked"
+	icon:     lock
+	disabled: true
+}
 ```
 
 ## Properties

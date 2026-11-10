@@ -7,9 +7,20 @@ The floating action button: the primary action of a page.
 ## In a `.goi` file
 
 ```goi
-FAB { icon: add }
-FAB { icon: edit label: "Compose" variant: extended }
-FAB { icon: add variant: small }
+FAB {
+	icon: add
+}
+
+FAB {
+	icon:    edit
+	label:   "Compose"
+	variant: extended
+}
+
+FAB {
+	icon:    add
+	variant: small
+}
 ```
 
 ## Properties

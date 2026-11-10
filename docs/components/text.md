@@ -8,9 +8,9 @@ One run of text at a Material 3 type-scale role.
 
 ```goi
 Text {
-	text: "Body copy"
-	role: "bodyMedium"
-	wrap: true
+	text:  "Body copy"
+	role:  "bodyMedium"
+	wrap:  true
 	width: 320
 }
 
@@ -37,8 +37,13 @@ system font, no fallback chain and no network: a smiley, a skin tone, a flag or 
 family sequence all keep their shape and stay on the line.
 
 ```goi
-Text { text: "Deployed 🚀 in 2 minutes 🎉" }
-Text { text: "Family 👨‍👩‍👧‍👦 · flag 🇯🇵 · thumb 👍🏽" }
+Text {
+	text: "Deployed 🚀 in 2 minutes 🎉"
+}
+
+Text {
+	text: "Family 👨‍👩‍👧‍👦 · flag 🇯🇵 · thumb 👍🏽"
+}
 ```
 
 A rune Roboto has no glyph for is shaped with the emoji face, which is why a line
@@ -69,6 +74,7 @@ still cover the older emoji.
 | `decorationColor` | color | stroke colour; defaults to the text colour |
 | `selectable` | bool | pointer selection and Ctrl+C |
 | `shadow` | shadow | text-shadow form: an offset copy of the glyphs per layer |
+| `fontFamily` | string | a family the app registered with `app.LoadFont`; inherited, see [Fonts](../guide/fonts.md) |
 
 ## From Go
 
@@ -93,5 +99,28 @@ applies to all of them.
 On `Text`, `shadow` shadows the glyphs rather than the box, borrowing CSS
 `text-shadow`, so `shadow: -1 0 #000000, 0 1 #000000, 1 0 #000000, 0 -1 #000000`
 outlines the letters. See [Shadows](../guide/shadows.md).
+
+## A custom font
+
+Roboto is embedded; anything else is a file the app hands over, named in the
+design:
+
+```go
+if err := app.LoadFont("Inter", interTTF); err != nil {
+	return err
+}
+```
+
+```goi
+Text {
+	text:       "Example"
+	fontFamily: "Inter"
+}
+```
+
+Set it on the `Window` instead and every element inherits it. Measurement, wrapping
+and drawing all use the same face, so a wide custom font changes layout as it
+should, and an unknown name falls back to Roboto. [Fonts](../guide/fonts.md) has
+the details.
 
 Every element also accepts the [common properties](../components.md#common-properties).
