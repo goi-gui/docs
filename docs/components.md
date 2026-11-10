@@ -107,7 +107,12 @@ These apply to every element and are not repeated on the component pages.
 | `paddingTop/Right/Bottom/Left` | number | per-side override; unset follows `padding` |
 | `background` | color | theme role or `#RRGGBB`; only where the element has no container |
 | `borderColor, borderWidth` | color, number | outline around the box |
-| `radius` | number | corner radius |
+| `borderTopWidth/RightWidth/BottomWidth/LeftWidth` | number | per-side override; unset follows `borderWidth` |
+| `borderTopColor/RightColor/BottomColor/LeftColor` | color | per-side override; unset follows `borderColor` |
+| `radius` | number | corner radius on all four corners |
+| `radiusTop/Right/Bottom/Left` | number | rounds both corners on that side; unset follows `radius` |
+| `radiusTopLeft/TopRight/BottomRight/BottomLeft` | number | rounds one corner; unset follows the side, then `radius` |
+| `fontFamily` | string | a family the app registered with `app.LoadFont`; children inherit it, and an unset element uses Roboto |
 | `shadow` | shadow | CSS-style shadow: the box everywhere, the glyphs on `Text`; see [Shadows](guide/shadows.md) |
 | `visible` | bool | removes the element from layout, painting and hit-testing |
 | `template` | bool | marks a hidden row prototype for `ui.Fill` |

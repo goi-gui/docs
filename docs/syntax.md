@@ -870,6 +870,65 @@ every element, Material components included, and accepts a responsive value like
 any other property (`visible: responsive { base: true md: false }`). From Go,
 `SetVisible(false)` on any node does the same at runtime.
 
+## Corners and borders
+
+`radius` rounds all four corners. A side rounds both corners on that side, and a
+corner rounds only itself:
+
+```goi
+Rectangle {
+	radius:           8
+	radiusTop:        24   // both top corners
+	radiusBottomLeft: 0    // this one corner only
+}
+```
+
+Specificity runs from the general to the narrow one: `radius`, then
+`radiusTop`/`radiusRight`/`radiusBottom`/`radiusLeft`, then
+`radiusTopLeft`/`radiusTopRight`/`radiusBottomRight`/`radiusBottomLeft`. A
+narrower property wins whatever the order in the file, so the example above is
+24 at the top right, 0 at the bottom left, and 8 at the other two. Where two
+sides meet, the horizontal one wins: `radiusTop: 24` with `radiusLeft: 4` puts 4
+on the top-left corner.
+
+A border works the same way one step down:
+
+```goi
+Rectangle {
+	borderWidth:       1
+	borderColor:       outlineVariant
+	borderTopWidth:    2
+	borderBottomColor: primary
+}
+```
+
+`borderTopWidth`, `borderRightWidth`, `borderBottomWidth` and
+`borderLeftWidth` override `borderWidth` for one side, and the matching
+`…Color` properties override `borderColor`. An uneven border is drawn as four
+bands, and layout insets content by each side's own width. Four equal sides stay
+one rounded shape; an uneven border is rounded only when all four corners share
+a radius.
+
+## Fonts
+
+`fontFamily` names a family the app registered with `App.LoadFont`; an element
+without one inherits its nearest ancestor's, and the window is the last place it
+can come from:
+
+```goi
+Window {
+	fontFamily: "Inter"
+
+	Column {
+		Text { text: "Inter, from the window" }
+		Text { text: "Roboto again" fontFamily: "Roboto" }
+	}
+}
+```
+
+A name nobody registered falls back to Roboto, so a design is still readable
+when the app forgot the font. [Fonts](guide/fonts.md) covers the Go side.
+
 ## Expressions and percentages
 
 Every property accepts an expression, not just the numeric ones: a color, a
