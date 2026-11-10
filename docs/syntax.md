@@ -662,7 +662,8 @@ Column { rotate: 1 1 1 90deg }   // about a vector
 
 A theme role inside a gradient is not resolved; use a literal there, because the
 stop list is parsed once from the string.
-| `{ base: 8, md: 16 }` | map | responsive value, one entry per breakpoint |
+| `responsive { base: 8 md: 16 }` | modifier | responsive value, one entry per breakpoint |
+| `conditional { 10: bridge.isWide }` | modifier | first true condition picks the value |
 | `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form; `none` clears it, see [Shadows](guide/shadows.md) |
 
 ## Elements
@@ -865,8 +866,8 @@ its own; `auto` restores the framework's shape for that element.
 
 `width` and `height` default to `-1`, meaning automatic. `visible: false`
 removes the element from layout, painting and hit-testing entirely; it works on
-every element, Material components included, and accepts a breakpoint map like
-any other property (`visible: { base: true, md: false }`). From Go,
+every element, Material components included, and accepts a responsive value like
+any other property (`visible: responsive { base: true md: false }`). From Go,
 `SetVisible(false)` on any node does the same at runtime.
 
 ## Expressions and percentages
@@ -946,14 +947,21 @@ Rectangle { width: max(120, min(window.width / 3, 480)) }
 
 ## Responsive values
 
-Any property except `id` also accepts a map keyed by breakpoint:
+A property can follow the window width with the `responsive` modifier:
 
 ```goi
 Column {
-	padding: { base: 8, md: 16 }
+	padding: responsive {
+		base: 8
+		md:   16
+	}
 
 	Grid {
-		columns: { base: 1, md: 2, lg: 3 }
+		columns: responsive {
+			base: 1
+			md:   2
+			lg:   3
+		}
 
 		Card {
 			label: "One"
@@ -966,6 +974,10 @@ Column {
 }
 ```
 
+A one-line block is accepted too: `padding: responsive { base: 8 md: 16 }`.
+The entries need no commas. `goifmt` rewrites a block to the multi-line form,
+one breakpoint per line.
+
 Breakpoints are min-widths in logical pixels, like Tailwind. The entry with the
 largest minimum that is not above the window width wins.
 
@@ -977,17 +989,60 @@ largest minimum that is not above the window width wins.
 | `lg` | 1024 |
 | `xl` | 1280 |
 
-`{ base: 1, md: 2, lg: 3 }` is therefore 1 below 768, 2 from 768 and 3 from
-1024. The `base` entry, when present, is applied as soon as the file is loaded,
-so it also sizes the initial window when used on `Window.width`.
+The block above is therefore 1 column below 768, 2 from 768 and 3 from 1024.
+The `base` entry, when present, is applied as soon as the file is loaded, so it
+also sizes the initial window when used on `Window.width`.
 
 `base` is optional. Without it the property keeps its normal default below the
 lowest tier that is present. `id` cannot be responsive and a tier cannot contain
-another map.
+another modifier.
 
-The tree stores the map; the frame loop rewrites those properties before layout
-whenever the window width changes. The file owns a responsive property: a value
-set from Go with `Prop.Set` is replaced on the next frame.
+The tree stores the tiers; the frame loop rewrites those properties before
+layout whenever the window width changes. The file owns a responsive property: a
+value set from Go with `Prop.Set` is replaced on the next frame.
+
+`responsive { … }` is the spelling to write. The older brace map
+`padding: { base: 8, md: 16 }` still parses, so an existing design keeps
+working; `goifmt` converts it to the modifier form.
+
+## Conditional values
+
+`conditional` picks the first value whose condition is true, and ignores the
+ones after it:
+
+```goi
+Column {
+	gap: conditional {
+		10: !bridge.isWide
+		20: bridge.isWide
+	}
+}
+```
+
+Each line is `value: condition`, and the condition is any bool expression:
+a bridge field, a property reference, a comparison. A `for … range` row can use
+the loop variable the same way:
+
+```goi
+for i, l := range team.lastFiveResults {
+	Text {
+		text: conditional {
+			"✅": l == "W"
+			"🏁": l == "D"
+			"❌": l == "L"
+		}
+	}
+}
+```
+
+The values are checked against the property, so `gap` takes numbers above and
+`text` takes strings. When no condition holds the property keeps the value it
+had, the way a `switch` with no matching case changes nothing. Like a
+responsive value, a conditional property is re-evaluated every frame, and a
+value set from Go is not overwritten.
+
+Nothing nests: a conditional value or a breakpoint value cannot be another
+modifier.
 
 ## Formatting
 
@@ -1051,7 +1106,7 @@ mid-typing never reflows it.
   gives a fragment's ids) and be unique within the file.
 - `Positioned` must be a direct child of `Stack`.
 - Unknown element, unknown property, wrong literal type, unknown enum value,
-  unknown or repeated breakpoint, nested map, responsive `id` and duplicate ids
+  unknown or repeated breakpoint, nested modifier, responsive `id` and duplicate ids
   are errors, each reported with `file:line:col`, the offending line and a
   caret. A small edit distance adds a "did you mean" hint. A handler call is
   checked the same way: the name must be declared in `bridge`, and the argument

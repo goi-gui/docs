@@ -90,13 +90,17 @@ Rectangle {
 }
 ```
 
-For the ordinary responsive case, the breakpoint map is the better tool: it
+For the ordinary responsive case, the `responsive` modifier is the better tool: it
 re-lays out only when a breakpoint is crossed, while an expression re-evaluates
 every frame.
 
 ```goi
 Text {
-	width: { base: 280, md: 420, lg: 560 }
+	width: responsive {
+		base: 280
+		md:   420
+		lg:   560
+	}
 }
 ```
 

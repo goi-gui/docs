@@ -183,6 +183,33 @@ pair; a column with an icon and no label draws the glyph alone.
 `sortable: true` makes the header clickable and gives it a pointer cursor and an
 arrow, which points up for ascending and down for descending.
 
+## Scrolling
+
+`scroll: true` makes a table with a fixed height or a narrower frame usable: the
+rows run under the bottom edge and the columns past the right edge, and a wheel,
+a drag or the scrollbar moves them. Both directions work at once, so a wide
+table keeps its column widths instead of squeezing them to fit.
+
+The stripes, the row separators and the column rules belong to the content:
+they move with the rows and columns and are clipped to the table's frame, while
+the outer border stays put.
+
+```goi
+Table {
+	width:        100%
+	height:       window.height / 2
+	scroll:       true
+	stickyHeader: true
+	striped:      true
+}
+```
+
+`stickyHeader: true` freezes the header at the top: the column labels stay in
+place while the rows pass underneath them, and the rows are clipped below the
+band so no text shows through it. The header still moves sideways with its
+columns. It needs `showHeader: true` (the default) and `scroll: true`; without
+one of those it does nothing.
+
 ## Sorting
 
 Clicking a sortable header sorts ascending; clicking it again reverses. The
@@ -261,6 +288,7 @@ rebuilding the loop is the usual way to replace every row.
 | `variant` | enum | `outlined` (default), `filled`, `plain`; `plain` draws no surface or border |
 | `striped` | bool | alternate row tint; off by default |
 | `showHeader` | bool | `true` by default |
+| `stickyHeader` | bool | freeze the header while the rows scroll under it; needs `scroll: true`, see [Scrolling](#scrolling) |
 | `rowHeight` | number | row height in dp; 48 by default, a row's own `height` wins |
 | `headerHeight` | number | header height in dp; 40 by default |
 | `sortColumn` | number | sorted column index, `-1` (default) for declaration order |
