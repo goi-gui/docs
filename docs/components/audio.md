@@ -56,6 +56,7 @@ Button {
 | `muted` | bool | play without sound |
 | `volume` | number | 0 to 1; 1 by default |
 | `startAt` | number | where playback begins, in seconds |
+| `buffer` | number | how far ahead the decoder runs, in seconds; 1.5 by default, at most 10 |
 
 ## Methods
 
@@ -90,6 +91,13 @@ app.SetMediaVolume(podcast, 0.5)
 The state is on the node too: `Playing`, `Paused`, `Ended`, `Position`,
 `Duration`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
 to the changes, and a design spells those `onPlay`, `onPause` and `onEnd`.
+
+## Buffering
+
+`buffer` is how many seconds of sound to keep ready, 1.5 by default and at most
+10. The samples wait in the output device, not in a Go slice, so a two hour file
+uses the same memory as a ten second one and a slow disk still plays smoothly.
+`Audio.Buffered` reports how much is waiting.
 
 ## How it stays fast
 
