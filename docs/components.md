@@ -91,6 +91,14 @@ components. They all share one property set and one way of being driven from Go.
 - [Toolbar](components/toolbar.md) — A horizontal strip of compact controls.
 - [Code](components/code.md) — A syntax-highlighted code block.
 
+## Media
+
+- [Audio](components/audio.md) — A sound player with a built-in transport bar.
+- [Video](components/video.md) — A video player, decoded with ffmpeg.
+
+Both play through ffmpeg, which has to be on `PATH`; both can hide their controls
+and be driven from `.goi` (`clip.play()`) or Go (`app.PlayMedia(clip)`).
+
 ## Charts
 
 - [LineChart](components/linechart.md) — A line per series through the points.
