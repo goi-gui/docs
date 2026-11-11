@@ -10,14 +10,15 @@ any other picture.
 
 ```goi
 Video {
-	id:       clip
-	width:    100%
-	height:   320
-	src:      "goi://assets/clip.mp4"
-	fit:      contain
-	controls: true
-	loop:     true
-	volume:   0.8
+	id:        clip
+	width:     100%
+	height:    320
+	src:       "goi://assets/clip.mp4"
+	fit:       contain
+	controls:  true
+	loop:      true
+	volume:    0.8
+	subtitles: "goi://assets/clip.srt"
 }
 ```
 
@@ -31,6 +32,12 @@ With `controls: true` (the default) the element draws a bar along its bottom
 edge: a play/pause button, a scrubber, and the position. Clicking the button
 toggles playback, clicking the track seeks, and the pointer over the bar shows
 the pointer cursor.
+
+The bar **hides itself** three seconds after the pointer stops moving over the
+picture, or three seconds after it leaves. Moving the pointer back over the video
+— or pressing anywhere on it — brings it back and restarts the clock. A paused
+player follows the same rule: the bar is chrome for a picture, not a permanent
+overlay.
 
 With `controls: false` the element is only its picture. That is what a design
 that draws its own transport wants: point the buttons at the player by id, and
@@ -62,6 +69,8 @@ Button {
 | `volume` | number | 0 to 1; 1 by default |
 | `startAt` | number | where playback begins, in seconds |
 | `buffer` | number | how far ahead the decoder runs, in seconds; 1.5 by default, at most 10 |
+| `subtitles` | string | SRT file to draw over the picture; local path, `goi://` asset, or URL |
+| `audioTrack` | number | which audio stream to play, 0 being the first |
 | `fullscreen` | bool | fill the window with the picture, above everything else |
 
 ## Methods
@@ -76,6 +85,7 @@ Both the design and Go drive the player through the same six operations.
 | `toggle()` | play a paused player, pause a playing one |
 | `seek(seconds)` | jump to a position |
 | `volume(0..1)` | set the volume |
+| `audioTrack(0)` | pick an audio stream, 0 being the first |
 | `fullscreen()` | fill the window with the video, and the window with the screen |
 | `windowed()` | go back to the video's own box |
 | `toggleFullscreen()` | flip between the two |
@@ -98,7 +108,7 @@ app.SetMediaVolume(clip, 0.5)
 ```
 
 The state is on the node too: `Playing`, `Paused`, `Ended`, `Position`,
-`Duration`, `Live`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
+`Duration`, `Live`, `AudioTracks`, `Hardware`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
 to the changes, and a design spells those `onPlay`, `onPause` and `onEnd`.
 
 ## Buffering
@@ -117,6 +127,64 @@ does not show as a stutter, and it never decodes the whole file:
   the position, so a stall is visible before the picture stops.
 
 `Video.Buffered` and `Audio.Buffered` report how much is waiting, in time.
+
+## Subtitles
+
+```goi
+Video {
+	id:        clip
+	src:       "clip.mp4"
+	subtitles: "clip.srt"
+}
+```
+
+`subtitles` takes an SRT file — the format every subtitle editor writes. The
+cues are parsed once and drawn over the picture, centered near the bottom, each
+line on a dark scrim so it reads over a bright frame; the caption moves up when a
+control bar is showing and drops back when it hides.
+
+- A local path, a `goi://` asset from the design's container, and an `http(s)`
+  URL all work.
+- `<i>`, `<b>`, `<font>` and leftover ASS override codes are stripped, because
+  the caption is drawn as one plain run.
+- A damaged file does not stop the video: `SubtitleErr` says what went wrong and
+  the picture plays on, with no captions.
+- The text stays white on its scrim in every theme, because it sits on the
+  picture and not on a surface.
+- Changing `subtitles` at runtime (from Go or an expression) reloads the cues on
+  the next frame.
+
+Only SRT is read. `Video.RenderedSubtitles` is the file the loaded cues came
+from, which is the same "did the design change it" check a `src` has.
+
+## Audio tracks
+
+A file with several audio streams — a film with dubs — offers them as a choice.
+`audioTrack: 1` picks the second stream, and `clip.audioTrack(1)` or
+`app.SetMediaAudioTrack(clip, 1)` does the same at runtime.
+
+The switch reopens only the sound: the picture keeps playing, and the device's
+queue is flushed so a moment of the old language is not heard first. An index
+past the last stream is clamped to the last one, so a design that names a track a
+particular file lacks still plays.
+
+`Video.AudioTracks` is how many streams the file carries, from the probe; a
+design that draws its own track menu reads it to know what to offer.
+
+## Hardware decoding
+
+The decoder asks ffmpeg for hardware acceleration (`-hwaccel auto`), which picks
+whatever the machine has: VideoToolbox on macOS, D3D11 on Windows, VAAPI or NVDEC
+on Linux. Frames are downloaded to system memory for the RGBA canvas, so the rest
+of the pipeline is unchanged.
+
+Hardware decoding is an optimisation, never a requirement:
+
+- If the device, the driver or the codec cannot be opened, the pump reopens the
+  decoder in software before the first frame, so a player is never left blank.
+- Once a file has fallen back, it stays in software until it is reopened, so a
+  refusal is not retried every frame.
+- `Video.Hardware` reports which one produced the picture.
 
 ## Live streams
 

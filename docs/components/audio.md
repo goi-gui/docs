@@ -58,6 +58,7 @@ Button {
 | `volume` | number | 0 to 1; 1 by default |
 | `startAt` | number | where playback begins, in seconds |
 | `buffer` | number | how far ahead the decoder runs, in seconds; 1.5 by default, at most 10 |
+| `audioTrack` | number | which audio stream to play, 0 being the first |
 
 ## Methods
 
@@ -71,6 +72,7 @@ Both the design and Go drive the player through the same six operations.
 | `toggle()` | play a paused player, pause a playing one |
 | `seek(seconds)` | jump to a position |
 | `volume(0..1)` | set the volume |
+| `audioTrack(0)` | pick an audio stream, 0 being the first |
 
 From a design, a method is a handler call on the element's id:
 
@@ -92,6 +94,14 @@ app.SetMediaVolume(podcast, 0.5)
 The state is on the node too: `Playing`, `Paused`, `Ended`, `Position`,
 `Duration`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
 to the changes, and a design spells those `onPlay`, `onPause` and `onEnd`.
+
+## Audio tracks
+
+A file with several audio streams offers them as a choice: `audioTrack: 1` picks
+the second, and `podcast.audioTrack(1)` or `app.SetMediaAudioTrack(podcast, 1)`
+switches at runtime. Only the decoder is reopened, so the switch is a beat of
+silence and nothing more; the index is clamped to the streams the file has.
+`Audio.AudioTracks` is how many there are.
 
 ## Live streams
 
