@@ -91,6 +91,19 @@ components. They all share one property set and one way of being driven from Go.
 - [Toolbar](components/toolbar.md) — A horizontal strip of compact controls.
 - [Code](components/code.md) — A syntax-highlighted code block.
 
+## Charts
+
+- [LineChart](components/linechart.md) — A line per series through the points.
+- [AreaChart](components/areachart.md) — A line with the space under it filled.
+- [BarChart](components/barchart.md) — Grouped, stacked or horizontal bars.
+- [PieChart](components/piechart.md) — Slices, or a donut with a hole.
+- [ScatterChart](components/scatterchart.md) — One dot per value, no line.
+
+Every chart takes its numbers through `SetData` from Go, draws its chrome from
+[`grid`](components/linechart.md#properties), `axis`, `legend` and `values`, and
+is interactive: hovering shows a tooltip, clicking fires `onSelect` with the
+point index.
+
 ## Common properties
 
 These apply to every element and are not repeated on the component pages.
