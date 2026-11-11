@@ -22,7 +22,8 @@ Video {
 ```
 
 `src` is a path inside the design's container (`goi://`, or a relative path the
-app loaded), a path on the machine, or an `http`/`https` URL.
+app loaded), a path on the machine, or a URL ffmpeg can open: `http`/`https`
+(including HLS and DASH), `rtmp`, `rtsp`, `srt`, `udp` and the rest.
 
 ## Interaction
 
@@ -52,7 +53,7 @@ Button {
 
 | Property | Type | Notes |
 |---|---|---|
-| `src` | string | container path, machine path, or `http`/`https` URL |
+| `src` | string | container path, machine path, or a URL ffmpeg opens (HLS, RTMP, RTSP, SRT, UDP) |
 | `fit` | enum | `contain` (default), `cover`, `fill`; how the frame fills the box |
 | `controls` | bool | draw the built-in bar; `true` by default |
 | `autoplay` | bool | start as soon as the element appears |
@@ -97,7 +98,7 @@ app.SetMediaVolume(clip, 0.5)
 ```
 
 The state is on the node too: `Playing`, `Paused`, `Ended`, `Position`,
-`Duration`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
+`Duration`, `Live`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
 to the changes, and a design spells those `onPlay`, `onPause` and `onEnd`.
 
 ## Buffering
@@ -116,6 +117,45 @@ does not show as a stutter, and it never decodes the whole file:
   the position, so a stall is visible before the picture stops.
 
 `Video.Buffered` and `Audio.Buffered` report how much is waiting, in time.
+
+## Live streams
+
+Point `src` at a stream and it plays like a file, with the timeline bits that do
+not exist removed:
+
+```goi
+Video {
+	id:       camera
+	src:      "rtsp://192.168.1.20/stream"
+	fit:      contain
+	autoplay: true
+	muted:    true
+	buffer:   0.5
+}
+```
+
+A source is live when it is a network URL whose container reports no length,
+which is what every RTSP camera, RTMP push and live HLS playlist says. Nothing
+needs declaring; `Video.Live` reports the answer to Go.
+
+What changes for a live feed:
+
+- The bar keeps its play button but drops the scrubber: it shows a red dot and
+  **LIVE** instead of a position and a length.
+- `seek()` is ignored — there is no timeline to jump around in — and `startAt`
+  has no meaning. `loop` is pointless, because a feed never reaches an end.
+- `Position` counts how long this element has been playing, and `Duration` stays
+  0.
+- When the connection drops (a camera reboots, a network blips) the decoder is
+  reopened after a second and the picture comes back, rather than the player
+  reporting an end. A stream that never opened at all reports its error under
+  `LoadErr` instead of retrying forever.
+- The player always shows the newest decoded frame, so a slow patch does not
+  leave it seconds behind the source.
+
+`buffer` is the latency knob: it is how much of the feed is decoded ahead, so a
+live player wants a second or less, while a shaky network wants more. The
+default, 1.5, is a reasonable middle.
 
 ## Fullscreen
 

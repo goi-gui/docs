@@ -20,7 +20,8 @@ Audio {
 ```
 
 `src` is a path inside the design's container (`goi://`, or a relative path the
-app loaded), a path on the machine, or an `http`/`https` URL.
+app loaded), a path on the machine, or a URL ffmpeg can open: `http`/`https`
+(including HLS), `rtmp`, `rtsp`, `srt`, `udp` and the rest.
 
 ## Interaction
 
@@ -49,7 +50,7 @@ Button {
 
 | Property | Type | Notes |
 |---|---|---|
-| `src` | string | container path, machine path, or `http`/`https` URL |
+| `src` | string | container path, machine path, or a URL ffmpeg opens (HLS, RTMP, RTSP, SRT, UDP) |
 | `controls` | bool | draw the built-in bar; `true` by default |
 | `autoplay` | bool | start as soon as the element appears |
 | `loop` | bool | restart at the end |
@@ -91,6 +92,14 @@ app.SetMediaVolume(podcast, 0.5)
 The state is on the node too: `Playing`, `Paused`, `Ended`, `Position`,
 `Duration`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
 to the changes, and a design spells those `onPlay`, `onPause` and `onEnd`.
+
+## Live streams
+
+An audio `src` may be a stream as well: `rtmp`, `rtsp`, `srt`, `udp` or an HLS
+`http` URL. A network source with no length is treated as live — there is no
+scrubber, `seek()` is ignored, and a dropped connection is reopened after a
+second instead of ending the sound. `buffer` is how far ahead the device is fed,
+so a live feed wants a second or less.
 
 ## Buffering
 
