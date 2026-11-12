@@ -142,6 +142,7 @@ These apply to every element and are not repeated on the component pages.
 | `alignSelf` | enum | `start`, `center`, `end`, `stretch`; overrides the parent's `crossAxisAlign` |
 | `scroll` | bool | scroll when content overflows the box |
 | `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
+| `backdropBlur` | number | radius in dp of the blur applied to what is already painted behind the element, like CSS `backdrop-filter`; 0 (default) is no blur |
 | `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected |
 | `cursor` | enum | pointer shape, named the way CSS names it: `pointer`, `text`, `move`, `grab`, `not-allowed`, the resize arrows, `wait`, `none`, … |
 | `rotate` | rotate | CSS `rotate`: `45deg`, `0.25turn`, `x 90deg`, `1 1 1 90deg`; turns the element and its subtree |
@@ -208,6 +209,21 @@ a design that draws its own.
 no offscreen pass, so two overlapping children inside a translucent container
 still show through each other; for a card or a fading list the difference does
 not show.
+
+`backdropBlur` softens what is already painted behind the element, which is how
+a translucent panel reads as frosted glass. The element's own `background` then
+tints the blurred copy, so a low-alpha fill is usually what you want:
+
+```goi
+Column {
+	background:   #00000044
+	backdropBlur: 6
+	radius:       16
+}
+```
+
+The blur is measured in logical pixels and only covers the element's rounded
+box. It costs an offscreen pass, so it is off (0) unless a design asks for it.
 
 `marginTop`, `marginRight`, `marginBottom`, `marginLeft` (and the same four for
 `padding`) override one edge and leave the others following `margin`/`padding`.

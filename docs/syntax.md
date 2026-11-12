@@ -832,7 +832,7 @@ instead.
 Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
 `minHeight`, `maxHeight`, `margin`, `padding`, `paddingX`, `paddingY`, `background`, `borderColor`,
 `borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
-`opacity`, `zIndex`, `cursor`, `hideScrollbar`, `autoHideScrollbar`,
+`opacity`, `backdropBlur`, `zIndex`, `cursor`, `hideScrollbar`, `autoHideScrollbar`,
 `scrollbarWidth`,
 `scrollbarColor`, `scrollShadow`, `scrollShadowColor`, `template`. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
@@ -858,7 +858,21 @@ one child. `Text` has its own `align` (`start`, `center`, `end`) for the text
 inside its box.
 
 `opacity` takes `0` to `1`, or a percentage such as `50%`, and fades the
-element with everything under it. `zIndex` restacks an element among its
+element with everything under it. `backdropBlur` takes a radius in logical
+pixels and blurs what is already painted behind the element, like CSS
+`backdrop-filter`; the element's own `background` then tints the result, which
+is how a translucent panel reads as frosted glass:
+
+```goi
+Column {
+	background:   #00000044
+	backdropBlur: 6
+	radius:       16
+}
+```
+
+It is 0 by default, costs an offscreen pass, and only covers the element's
+rounded box. `zIndex` restacks an element among its
 siblings the way CSS does: a higher value paints later, so it lands on top, and
 equal values keep document order. Negative values go under siblings at the
 default `0`. It only changes paint order, never layout, so two siblings can
