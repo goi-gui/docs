@@ -55,6 +55,12 @@ Hovering moves a highlight to the nearest point and shows a tooltip with the
 category, the series and the value. Clicking fires `onSelect` with the point's
 index, and the clicked point keeps a ring so the choice stays visible.
 
+With `legend: true` the key along the top is clickable: a press there hides the
+series (dimming its entry) and a second press shows it again. The value scale
+narrows to the series that are left, and the last visible one stays on so the
+plot never goes blank. From Go the state is `Hidden []bool` on the chart, and
+`SeriesHidden(i)`/`ToggleHidden(i)` read and flip one entry.
+
 A design wires the two events like any other:
 
 ```goi

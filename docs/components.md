@@ -106,11 +106,19 @@ and be driven from `.goi` (`clip.play()`) or Go (`app.PlayMedia(clip)`).
 - [BarChart](components/barchart.md) — Grouped, stacked or horizontal bars.
 - [PieChart](components/piechart.md) — Slices, or a donut with a hole.
 - [ScatterChart](components/scatterchart.md) — One dot per value, no line.
+- [RadarChart](components/radarchart.md) — One polygon per series over a spoke per category.
+- [GaugeChart](components/gaugechart.md) — One value as an arc, with the number inside.
 
 Every chart takes its numbers through `SetData` from Go, draws its chrome from
 [`grid`](components/linechart.md#properties), `axis`, `legend` and `values`, and
 is interactive: hovering shows a tooltip, clicking fires `onSelect` with the
 point index.
+
+A legend is a switch as well as a key: clicking an entry hides that series (or
+that slice, on a pie) and clicking it again brings it back. A hidden entry stays
+in place, dimmed, and the value scale and the pie's shares follow what is left.
+The last visible entry cannot be turned off, so a chart never ends up with
+nothing to click.
 
 ## Common properties
 

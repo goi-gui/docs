@@ -85,7 +85,7 @@ const sidebars = {
           type: 'category',
           label: "Media and grouping",
           collapsed: true,
-          items: ["components/carousel", "components/toolbar", "components/code", "components/audio", "components/video", "components/linechart", "components/areachart", "components/barchart", "components/piechart", "components/scatterchart"],
+          items: ["components/carousel", "components/toolbar", "components/code", "components/audio", "components/video", "components/linechart", "components/areachart", "components/barchart", "components/piechart", "components/scatterchart", "components/radarchart", "components/gaugechart"],
         },
       ],
     },
