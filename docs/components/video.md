@@ -218,12 +218,26 @@ What changes for a live feed:
   reopened after a second and the picture comes back, rather than the player
   reporting an end. A stream that never opened at all reports its error under
   `LoadErr` instead of retrying forever.
-- The player always shows the newest decoded frame, so a slow patch does not
-  leave it seconds behind the source.
+- The picture is paced by the feed, not by a fixed clock: the player speeds up a
+  little while it has a deep cushion and slows down when the cushion runs low,
+  so it settles at the rate the source really delivers. Pacing at the nominal
+  rate drifts: a stream that reports 25 fps and delivers 23.5 drains the cushion
+  a little every second until the picture freezes, and playing "as fast as
+  frames arrive" shows a whole segment in half its duration and then stalls.
+- An HLS feed is opened a few segments behind the live edge (`-live_start_index
+  -3`), because sitting on the edge leaves nothing to play while the next
+  segment is being written.
+- A live feed decodes at the size it is drawn at, not twice it: its frames are
+  what the buffer is made of, and half the bytes is twice the cushion.
+- A dropped HTTP connection is reconnected by ffmpeg itself rather than waiting
+  for the player to reopen it.
+- Before the first frame the player gathers a cushion, so the first gap between
+  segments is covered. Until then the box breathes like a loading image.
 
-`buffer` is the latency knob: it is how much of the feed is decoded ahead, so a
-live player wants a second or less, while a shaky network wants more. The
-default, 1.5, is a reasonable middle.
+`buffer` is the latency knob: it is how many seconds of the feed are held ahead,
+and a live player defaults to 4 seconds — the file default of 1.5 cannot cover
+the gap between two HLS segments. Less means lower latency and a feed that
+freezes more readily; more means a longer delay behind the source.
 
 ## Fullscreen
 
