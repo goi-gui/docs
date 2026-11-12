@@ -59,6 +59,9 @@ Button {
 | `startAt` | number | where playback begins, in seconds |
 | `buffer` | number | how far ahead the decoder runs, in seconds; 1.5 by default, at most 10 |
 | `audioTrack` | number | which audio stream to play, 0 being the first |
+| `controlsIconColor` | color | play/pause icon colour; 0 keeps the scheme's |
+| `controlsTextColor` | color | clock and LIVE label colour; 0 keeps the scheme's |
+| `controlsTrackColor` | color | scrubber track, played part and knob; 0 keeps the scheme's |
 
 ## Methods
 

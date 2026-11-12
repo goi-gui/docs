@@ -125,7 +125,8 @@ These apply to every element and are not repeated on the component pages.
 | `margin` | number | outer spacing on all sides |
 | `marginTop`, `marginRight`, `marginBottom`, `marginLeft` | number | per-side override; unset follows `margin` |
 | `padding` | number | inner spacing on all sides |
-| `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` | number | per-side override; unset follows `padding` |
+| `paddingX`, `paddingY` | number | left+right, top+bottom; unset follows `padding` |
+| `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` | number | per-side override; unset follows its axis, then `padding` |
 | `background` | color | theme role or `#RRGGBB`; only where the element has no container |
 | `borderColor`, `borderWidth` | color, number | outline around the box |
 | `borderTopWidth`, `borderRightWidth`, `borderBottomWidth`, `borderLeftWidth` | number | per-side override; unset follows `borderWidth` |
@@ -209,14 +210,19 @@ still show through each other; for a card or a fading list the difference does
 not show.
 
 `marginTop`, `marginRight`, `marginBottom`, `marginLeft` (and the same four for
-`padding`) override one edge and leave the others following `margin`/`padding`:
+`padding`) override one edge and leave the others following `margin`/`padding`.
+`paddingX` and `paddingY` set the two horizontal and the two vertical sides at
+once, which is the usual way to set a rhythm:
 
 ```goi
 Column {
-	padding:     16
-	paddingLeft: 4 // 4 on the left, 16 on the other three sides
+	paddingX: 24 // left and right
+	paddingY: 8  // top and bottom
+	paddingTop: 16 // still wins over paddingY
 }
 ```
+
+Precedence is a single edge, then its axis, then `padding`.
 
 ## Containers and `gap`
 

@@ -830,19 +830,24 @@ and `top` reserve `-1` for "auto", so a slide off screen animates the translate
 instead.
 
 Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
-`minHeight`, `maxHeight`, `margin`, `padding`, `background`, `borderColor`,
+`minHeight`, `maxHeight`, `margin`, `padding`, `paddingX`, `paddingY`, `background`, `borderColor`,
 `borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
 `opacity`, `zIndex`, `cursor`, `hideScrollbar`, `autoHideScrollbar`,
 `scrollbarWidth`,
 `scrollbarColor`, `scrollShadow`, `scrollShadowColor`, `template`. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
-`margin`/`padding`:
+`margin`/`padding`; `paddingX` and `paddingY` set both sides of their axis:
 
 ```goi
 Column {
-	padding:     16 // 4 left, 16 the other sides
-	paddingLeft: 4
+	padding:     16
+	paddingLeft: 4 // 4 on the left, 16 on the other three sides
+}
+
+Column {
+	paddingX: 24 // left and right
+	paddingY: 8  // top and bottom
 }
 ```
 

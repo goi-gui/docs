@@ -70,8 +70,16 @@ Button {
 | `startAt` | number | where playback begins, in seconds |
 | `buffer` | number | how far ahead the decoder runs, in seconds; 1.5 by default, at most 10 |
 | `subtitles` | string | SRT file to draw over the picture; local path, `goi://` asset, or URL |
+| `subtitleFontSize` | number | caption size in dp; 0 keeps the body size |
+| `subtitleColor` | color | caption text colour; 0 keeps white |
+| `subtitleFontWeight` | number | caption weight: a number, or `normal`, `bold`, `bolder`, `lighter` |
+| `subtitleShadow` | shadow | text shadow behind the caption glyphs, e.g. `0 2 4 #000000cc` |
+| `subtitleBackground` | color | plate behind each caption line; 0 keeps none |
 | `audioTrack` | number | which audio stream to play, 0 being the first |
 | `fullscreen` | bool | fill the window with the picture, above everything else |
+| `controlsIconColor` | color | play/pause icon colour; 0 keeps the scheme's |
+| `controlsTextColor` | color | clock and LIVE label colour; 0 keeps the scheme's |
+| `controlsTrackColor` | color | scrubber track, played part and knob; 0 keeps the scheme's |
 
 ## Methods
 
@@ -128,6 +136,28 @@ does not show as a stutter, and it never decodes the whole file:
 
 `Video.Buffered` and `Audio.Buffered` report how much is waiting, in time.
 
+## Control bar colours
+
+The built-in bar follows the scheme unless the design recolours it. Three
+properties cover its three parts, and a zero value keeps the theme's own colour:
+
+```goi
+Video {
+	src:                "clip.mp4"
+	controlsIconColor:  theme.primary
+	controlsTextColor:  theme.onSurfaceVariant
+	controlsTrackColor: theme.secondary
+}
+```
+
+- `controlsIconColor` is the play/pause/replay glyph.
+- `controlsTextColor` is the clock and the **LIVE** label.
+- `controlsTrackColor` is the scrubber: the track, the buffered and played spans,
+  and the knob, so a recoloured bar stays one piece.
+
+The bar's own backdrop stays the scheme's scrim, because it has to read over any
+frame.
+
 ## Subtitles
 
 ```goi
@@ -156,6 +186,35 @@ control bar is showing and drops back when it hides.
 
 Only SRT is read. `Video.RenderedSubtitles` is the file the loaded cues came
 from, which is the same "did the design change it" check a `src` has.
+
+### Styling the captions
+
+The defaults are white text on a dark plate, because the caption sits on the
+picture and not on a surface. A design can change all of it:
+
+```goi
+Video {
+	src:                "clip.mp4"
+	subtitles:          "clip.srt"
+	subtitleFontSize:   26
+	subtitleColor:      #fff59d
+	subtitleFontWeight: bold
+	subtitleShadow:     0 2 4 #000000cc
+	subtitleBackground: #00000080
+}
+```
+
+- `subtitleFontSize` is in dp; 0 keeps the body size.
+- `subtitleFontWeight` takes a number or the CSS keywords `normal`, `bold`,
+  `bolder` and `lighter`, the same ones `Text` accepts.
+- `subtitleShadow` is a text shadow like `Text`'s `shadow`: `x y [blur
+  [spread]] [colour]`.
+- `subtitleBackground` paints a plate behind each line; 0 draws none, which is
+  the default.
+- `subtitleColor` is the glyph colour; 0 keeps white.
+
+A zero value means "the default", so setting only the colour leaves the size,
+weight and plate alone.
 
 ## Audio tracks
 
