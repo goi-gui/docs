@@ -49,17 +49,18 @@ export default function prismIncludeLanguages(Prism) {
 		},
 		// The namespaces the framework supplies. They are matched before the
 		// block keywords so `bridge.Count` is a namespace, not a declaration.
+		// `theme` and `customColor` are colour roles, which the scheme resolves.
 		builtin: {
-			pattern: /\b(?:app|window|props|bridge|data|event)\b(?=\s*\.)/,
+			pattern: /\b(?:app|window|props|bridge|data|event|theme|customColor)\b(?=\s*\.)/,
 		},
 		keyword: {
 			pattern:
-				/\b(?:import|props|bridge|data|type|func|if|else|for|range|switch|case|default|inset|none|normal|bold|bolder|lighter|italic|underline|overline|line-through)\b/,
+				/\b(?:import|props|bridge|data|type|func|if|else|for|range|switch|case|default|responsive|conditional|inset|none|normal|bold|bolder|lighter|italic|underline|overline|line-through)\b/,
 		},
 		boolean: /\b(?:true|false)\b/,
 		// The pure builtins a value may call.
 		function:
-			/\b(?:formatf|len|cap|min|max)\b(?=\s*\()/,
+			/\b(?:formatf|t|len|cap|min|max)\b(?=\s*\()/,
 		// An element or a declared type: a capitalised name before its body.
 		tag: {
 			pattern: /\b[A-Z][A-Za-z0-9]*(?=\s*\{)/,

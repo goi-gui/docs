@@ -689,7 +689,9 @@ value and goifmt writes it back in degrees (`0.25turn` is `90deg`, `1.57rad` is
 | `Rectangle` | no | — |
 | `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), plus `radius` |
 | `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`) |
-| `Text` | no | `text`, `fontSize`, `weight`, `fontWeight`, `fontStyle`, `decoration`, `decorationStyle`, `decorationThickness`, `decorationColor`, `color`, `align`, `wrap`, `role`, `selectable` |
+| `Text` | no | `text`, `fontSize`, `weight`, `fontWeight`, `fontStyle`, `decoration`, `decorationStyle`, `decorationThickness`, `decorationColor`, `color`, `align`, `wrap`, `role`, `selectable`, `link` |
+| `RichText` | yes (`Text` runs) | `role`, `fontSize`, `color`, `align`, `wrap`; each `Text` child is one styled run, see [RichText](components/richtext.md) |
+| `Markdown` | no (built from the source) | `text`; the document becomes ordinary elements, see [Markdown](components/markdown.md) |
 
 Every element takes the common set, which includes `shadow`: on `Text` it
 shadows the glyphs (CSS `text-shadow`), everywhere else the box (CSS
