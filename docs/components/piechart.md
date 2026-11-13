@@ -15,12 +15,19 @@ PieChart {
 	legend:      true
 	values:      true
 	startAngle:  -90
+	categories:  "Direct, Search, Social, Email"
+
+	ChartSeries {
+		values: "42, 27, 18, 13"
+	}
 }
 ```
 
 ## Slices
 
-The wedges read the **first** series only, and each category is one slice:
+The wedges read the **first** series only, and each category is one slice, so
+`categories` is what names the legend and the tooltip. An app whose numbers move
+fills the same picture from Go:
 
 ```go
 pie := ui.MustByID[*ui.PieChart](w, "channels")
@@ -31,7 +38,8 @@ pie.SetData(ui.ChartData{
 ```
 
 Each slice takes the next colour from the scheme's accents. To fix them, set a
-`Colors` list on the series; a single `Color` paints the whole pie one colour.
+`Colors` list on the series from Go; a single `Color` on a `ChartSeries` — or
+`Series.Color` in Go — paints the whole pie one colour.
 
 A negative or zero value is skipped, so a gap in the data does not tilt the
 others. The centre of a pie is not a slice: a press there picks nothing.
@@ -43,6 +51,7 @@ others. The centre of a pie is not a slice: a press there picks nothing.
 | `innerRadius` | number | 0 (default) is a pie; 0.5 is a donut with half the radius open |
 | `startAngle` | number | where the first wedge begins, in degrees; 0 is 12 o'clock |
 | `legend` | bool | a key for the categories; off by default |
+| `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
 | `values` | bool | the value written inside each wedge; off by default |
 | `grid` | bool | has no effect on a pie |
 | `axis` | bool | has no effect on a pie |

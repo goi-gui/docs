@@ -6,18 +6,38 @@ One line per series through the points, with the value axis drawn behind it.
 
 ## In a `.goi` file
 
+A design writes its own data: `categories` names the points and one `ChartSeries`
+child holds one line.
+
 ```goi
 LineChart {
-	id:     revenue
-	width:  100%
-	height: 240
-	legend: true
-	points: true
-	smooth: true
+	id:         revenue
+	width:      100%
+	height:     240
+	legend:     true
+	points:     true
+	smooth:     true
+	categories: "Jan, Feb, Mar, Apr, May, Jun"
+
+	ChartSeries {
+		label:  "2025"
+		values: "12, 18, 15, 24, 21, 29"
+	}
+
+	ChartSeries {
+		label:  "2026"
+		values: "16, 22, 19, 28, 26, 34"
+		color:  tertiary
+	}
 }
 ```
 
-The numbers come from Go, because a design file cannot hold a list of values:
+`ChartSeries` is data, not a node: the builder turns the children into the
+chart's `Series` and drops them from the tree, so their `id`s are not registered
+and layout and paint never see them.
+
+An app whose numbers move fills the chart from Go instead, and that replaces what
+the file declared:
 
 ```go
 line := ui.MustByID[*ui.LineChart](w, "revenue")
@@ -35,7 +55,18 @@ does not leave a tooltip pointing at a value that is gone.
 
 ## The data
 
-`ChartData` is the whole picture:
+`ChartSeries` is the design-side entry, one per line, bar group or pie ring:
+
+| Property | Type | Notes |
+|---|---|---|
+| `label` | string | the legend and tooltip name; empty draws no name |
+| `values` | string | one number per category, comma-separated: `"12, 18, 9"`; a short list reads as zero |
+| `color` | color | paints that series; a theme role such as `tertiary` follows the scheme, a literal is fixed, and unset takes the scheme's next accent |
+
+The checker rejects a value that is not a number, so a typo is a diagnostic
+rather than a bar of zero.
+
+From Go, `ChartData` is the whole picture:
 
 | Field | Type | Notes |
 |---|---|---|
@@ -44,6 +75,7 @@ does not leave a tooltip pointing at a value that is gone.
 | `Series[i].Label` | `string` | the legend and tooltip name; empty draws no name |
 | `Series[i].Values` | `[]float64` | one value per category; a short list reads as zero |
 | `Series[i].Color` | `color` | paints that line; unset takes the scheme's next accent |
+| `Series[i].ColorRole` | `string` | a theme role for the line, which `ChartSeries` fills in so it follows the scheme |
 | `Series[i].Colors` | `[]color` | per-point colours, which a pie uses per slice |
 
 A category with no label falls back to its number, so a `Categories` list that is
@@ -91,6 +123,7 @@ From Go, the state is on the node:
 | `grid` | bool | value lines behind the series; `true` by default |
 | `axis` | bool | the value labels on the left and the categories below; `true` by default |
 | `legend` | bool | a key for the series along the top; off by default |
+| `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
 | `values` | bool | the value written next to each point; off by default |
 | `points` | bool | a dot at each value; `true` by default |
 | `smooth` | bool | a Catmull-Rom curve instead of straight segments |

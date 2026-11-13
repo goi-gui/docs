@@ -37,6 +37,7 @@ BarChart {
 | `grid` | bool | value lines behind the bars; `true` by default |
 | `axis` | bool | the value and category labels; `true` by default |
 | `legend` | bool | a key for the series; off by default |
+| `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
 | `values` | bool | the value written above each bar |
 | `stacked` | bool | stack the series in one bar instead of grouping them |
 | `horizontal` | bool | run the bars left to right, with the categories down the side |

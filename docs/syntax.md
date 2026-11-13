@@ -692,6 +692,7 @@ value and goifmt writes it back in degrees (`0.25turn` is `90deg`, `1.57rad` is
 | `Text` | no | `text`, `fontSize`, `weight`, `fontWeight`, `fontStyle`, `decoration`, `decorationStyle`, `decorationThickness`, `decorationColor`, `color`, `align`, `wrap`, `role`, `selectable`, `link` |
 | `RichText` | yes (`Text` runs) | `role`, `fontSize`, `color`, `align`, `wrap`; each `Text` child is one styled run, see [RichText](components/richtext.md) |
 | `Markdown` | no (built from the source) | `text`; the document becomes ordinary elements, see [Markdown](components/markdown.md) |
+| `ChartSeries` | no | inside a chart: `label`, `values` (comma-separated numbers), `color`; the series becomes the chart's data and leaves the tree, see [LineChart](components/linechart.md#the-data) |
 
 Every element takes the common set, which includes `shadow`: on `Text` it
 shadows the glyphs (CSS `text-shadow`), everywhere else the box (CSS

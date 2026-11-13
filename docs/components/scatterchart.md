@@ -23,6 +23,7 @@ ScatterChart {
 | `grid` | bool | value lines behind the dots; `true` by default |
 | `axis` | bool | the value and category labels; `true` by default |
 | `legend` | bool | a key for the series; off by default |
+| `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
 | `points` | bool | draw the dots; `true` by default |
 | `min`, `max` | number | pin the value scale; `0` follows the data |
 

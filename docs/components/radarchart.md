@@ -48,6 +48,7 @@ difference of ten.
 | `grid` | bool | one ring per value tick; `true` by default |
 | `axis` | bool | the spokes and the category names; `true` by default |
 | `legend` | bool | a key for the series along the top; off by default |
+| `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
 | `values` | bool | the value written next to each corner; off by default |
 | `points` | bool | a dot at each corner; `true` by default |
 | `min`, `max` | number | pin the value scale; `0` means "follow the data" |

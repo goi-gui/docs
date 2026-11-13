@@ -13,10 +13,16 @@ GaugeChart {
 	width:  320
 	height: 260
 	max:    100
+
+	ChartSeries {
+		label:  "Uptime"
+		values: "99.4"
+	}
 }
 ```
 
-The value comes from Go, like every other chart:
+The series holds the one number a gauge shows; a design declares it like any
+other chart's data, and an app whose value moves replaces it with `SetData`:
 
 ```go
 gauge := ui.MustByID[*ui.GaugeChart](w, "uptime")
