@@ -8,15 +8,40 @@ is available on its own when a design needs mixed styling inside a sentence.
 
 ## In a `.goi` file
 
+A design writes the runs itself, one `Text` child per run:
+
 ```goi
 RichText {
 	id:    note
 	role:  bodyLarge
 	wrap:  true
 	width: 100%
-	text:  "Spans come from Go; text is the plain run a design can write alone."
+
+	Text { text: "Install with " }
+	Text { text: "go install" color: tertiary }
+	Text { text: ", then read the " }
+	Text { text: "guide" decoration: underline color: primary }
+	Text { text: " — it is " }
+	Text { text: "short" fontWeight: bold fontStyle: italic }
+	Text { text: "." }
 }
 ```
+
+Each child's style becomes its run's: `fontWeight` of 600 or more (or `bolder`)
+is bold, `fontStyle: italic` slants, `decoration` carries `underline` and
+`line-through`, and `color` does either of two things. A literal is fixed; a
+theme role such as `primary` or `tertiary` stays a role, so the run follows the
+scheme when the theme changes. A `custom:` colour does not reach a run, because
+the painter resolves roles only — use a literal there.
+
+The children are a way to author the runs, not nodes: they are turned into spans
+when the file is built and dropped from the tree, so their `id`s are not
+registered and layout, paint and lookups never see them. A run that changes while
+the app runs comes from `SetSpans` below. Size and family are the paragraph's
+own, so a `fontSize` on a child does not change its run.
+
+`text` is still there for a paragraph that needs no styling: with no children and
+no spans, the whole thing is one plain run.
 
 ## From Go
 
@@ -44,6 +69,7 @@ A `Span`'s fields:
 | `Code` | a tinted pill behind the run, the way inline code reads |
 | `Link` | draws in `primary` and underlined; the destination is kept for you |
 | `Color` | overrides the colour for this run; `0` keeps the node's |
+| `ColorRole` | a theme role such as `"primary"`, followed across theme changes; wins over `Color` |
 
 ## Wrapping
 
