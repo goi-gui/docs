@@ -6,6 +6,7 @@ const sidebars = {
     'intro',
     'syntax',
     'guide/build',
+    'guide/browser',
     {
       type: 'category',
       label: 'Language',
