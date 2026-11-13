@@ -116,10 +116,10 @@ Every chart takes `ChartSeries` children, so a design holds its own data:
 `label`, `values` and `color`. See
 [LineChart's data](components/linechart.md#the-data).
 
-Every chart takes its numbers through `SetData` from Go, draws its chrome from
+Every chart draws its chrome from
 [`grid`](components/linechart.md#properties), `axis`, `legend` and `values`, and
 is interactive: hovering shows a tooltip, clicking fires `onSelect` with the
-point index.
+point index. An app whose numbers move replaces the design's data with `SetData`.
 
 A legend is a switch as well as a key: clicking an entry hides that series (or
 that slice, on a pie) and clicking it again brings it back. A hidden entry stays
