@@ -19,7 +19,8 @@ LinearProgress {
 ```
 
 `variant: wavy` draws the same progress as a ribbon: a wave along the track
-instead of a flat bar, which is how the expressive style reads a percentage.
+instead of a flat bar, which is how the expressive style reads a percentage. The
+wave travels, so the bar always asks for the next frame while it is on screen.
 
 ```goi
 LinearProgress {
@@ -29,15 +30,17 @@ LinearProgress {
 }
 ```
 
-A wavy bar is a ribbon rather than a 4dp line, so it takes 16dp of height by
-default; a height the design pins is honored, and the wave scales down to fit it.
-Both variants end the track with the stop indicator dot.
+`thickness` sets the stroke: 4dp for a normal bar, 8dp for a ribbon. The height
+follows it — a stroke is that tall, a ribbon is 1.75 times it, so the default
+wavy bar is 14dp. A height the design pins is honored, and the wave scales down
+to fit it. Both variants end the track with the stop indicator dot.
 
 ## Properties
 
 | Property | Type | Notes |
 |---|---|---|
 | `variant` | enum | `normal` (a flat bar, the default) or `wavy` (a ribbon) |
+| `thickness` | number | stroke width; 0 keeps 4dp (normal) or 8dp (wavy) |
 | `value` | number | current number |
 | `min` | number | lowest value |
 | `max` | number | highest value |

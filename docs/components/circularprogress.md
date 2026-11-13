@@ -23,7 +23,8 @@ CircularProgress {
 ```
 
 `variant: wavy` makes the arc a ribbon too: the ring's radius pulses as it goes
-round, so the filled part reads as a wave over the plain track.
+round, so the filled part reads as a wave over the plain track. The wave travels,
+so the ring asks for the next frame while it is on screen.
 
 ```goi
 CircularProgress {
@@ -33,13 +34,15 @@ CircularProgress {
 ```
 
 The wave keeps itself inside the ring's box, so the default 48dp size needs no
-height of its own.
+height of its own. `thickness` sets the stroke: 4dp for a plain arc, 7dp for a
+ribbon, and a stroke too wide for the box is narrowed to fit.
 
 ## Properties
 
 | Property | Type | Notes |
 |---|---|---|
 | `variant` | enum | `normal` (a plain arc, the default) or `wavy` (a ribbon) |
+| `thickness` | number | stroke width; 0 keeps 4dp (plain) or 7dp (wavy) |
 | `value` | number | current number |
 | `min` | number | lowest value |
 | `max` | number | highest value |
