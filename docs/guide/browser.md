@@ -71,27 +71,70 @@ through the DOM:
 | --- | --- |
 | mouse move, press, release | `mousemove`, `mousedown`, `mouseup` on the canvas, and `mouseup` on the page so a drag that leaves the canvas still ends |
 | wheel | `wheel`, with `Shift` for a sideways gesture |
-| typing | `keydown`; a printable key commits its text |
+| typing | `keydown` for the named keys, an invisible textarea for text and the input method |
 | focus, blur | `focus`, `blur` on the page |
 | system theme | `prefers-color-scheme` |
 
 `Copy`, `Paste` and `Cut` use the page's clipboard: the app caches the text from
 the page's own `copy`/`paste` events, so Ctrl+V inside a text field works.
 
+## Picking a file
+
+A browser cannot block on a dialog, so the picker is a callback:
+
+```go
+app.PickFiles(func(files []string) {
+	if len(files) > 0 {
+		preview.Src.Set(files[0]) // `goi://picked/0/photo.png`
+	}
+}, ui.DialogFilters(ui.FileFilter{Name: "Images", Patterns: []string{"*.png", "*.jpg"}}))
+```
+
+The same call works on the desktop, where the native dialog runs off the UI
+goroutine. Each chosen file gets a `goi://picked/…` src that every reader
+understands, so an `Image`, a `Video` or a caption file can take one directly.
+
+`ui.OpenFile` and its siblings still exist for desktop code, but they return
+`ErrDialogCanceled` in a page, and `ui.DialogsAvailable()` is `false` there.
+
+## Media
+
+`Audio` and `Video` play through the page's own decoder: a hidden `<video>` or
+`<audio>` element holds the file, and the frame loop copies its picture into the
+node's bitmap. Paint, hover, the control bar and fullscreen therefore behave the
+way they do on the desktop, with the browser's container support, its hardware
+decoding and its audio device — no ffmpeg on the machine.
+
+- A `goi://…` asset or a picked file becomes a blob URL, so a design's `src`
+  works unchanged; an `http(s)` URL is used as written.
+- A live feed plays when the browser can play it, and the scrubber follows the
+  element's clock.
+- Subtitles are parsed and drawn by goi, so an SRT behaves as it does on the
+  desktop.
+- `audioTrack` is recorded but does not switch a stream: a page cannot select an
+  embedded audio track.
+
+## Keyboard and the input method
+
+Typing goes through an invisible `<textarea>` that the window keeps off screen
+and moves under the caret, which is what gives the browser's input method
+somewhere to compose:
+
+- a printable key types into that element and its `input` event commits the text,
+  so dead keys, AltGr and a composition all take one path;
+- `compositionstart`/`compositionupdate`/`compositionend` become the same preedit
+  and commit calls SDL's IME produces, so `Preedit` and `CommitText` behave
+  identically on both platforms.
+
 ## What it cannot do
 
-- **A file dialog.** `ui.OpenFile`, `ui.SaveFile` and `ui.OpenFolder` return
-  `ErrDialogCanceled`; `ui.DialogsAvailable()` is `false`. A page picks a file
-  with an `<input type="file">` and hands the bytes to Go.
-- **Media decoding.** The decoder is ffmpeg on `PATH`, which a browser does not
-  have. `Audio` and `Video` keep their box and stay silent; a page that wants
-  sound uses an `<audio>` element beside the canvas.
+- **Blocking dialogs.** `ui.OpenFile` and friends return `ErrDialogCanceled`; use
+  `app.PickFiles`.
 - **Window management.** Minimize, maximize, resize edges and size limits are
   recorded and reported back, but the tab is the window: `SetFullscreen` asks the
   browser for fullscreen on the canvas, and the rest is a no-op.
 - **More than one window.** One canvas per page is the model.
-- **An IME candidate window.** `SetTextInput` does nothing; a canvas has no
-  caret for the browser's input method to follow. Typing still arrives.
+- **Switching an embedded audio track.** `audioTrack` is recorded only.
 
 ## Frames
 
