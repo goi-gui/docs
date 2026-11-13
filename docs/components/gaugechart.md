@@ -43,6 +43,8 @@ is always written, because it is the point of the shape.
 
 | Property | Type | Notes |
 |---|---|---|
+| `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
+| `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
 | `min`, `max` | number | the ends of the scale; `0` means "from zero to the value" |
 | `startAngle` | number | degrees; `0` centres the gap at the bottom |
 

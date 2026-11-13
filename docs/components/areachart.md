@@ -41,6 +41,8 @@ area.SetData(ui.ChartData{
 | `axis` | bool | the value and category labels; `true` by default |
 | `legend` | bool | a key for the series; off by default |
 | `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
+| `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
+| `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
 | `values` | bool | the value written at each point; off by default |
 | `points` | bool | a dot at each value |
 | `smooth` | bool | a curve instead of straight segments |

@@ -37,9 +37,24 @@ pie.SetData(ui.ChartData{
 })
 ```
 
-Each slice takes the next colour from the scheme's accents. To fix them, set a
-`Colors` list on the series from Go; a single `Color` on a `ChartSeries` — or
-`Series.Color` in Go — paints the whole pie one colour.
+Each slice takes the next colour from the scheme's accents. To fix them, list one
+colour per slice on the series, and a theme role there keeps following the
+scheme:
+
+```goi
+PieChart {
+	categories: "Direct, Search, Social, Email"
+
+	ChartSeries {
+		values: "42, 27, 18, 13"
+		colors: "primary, tertiary, secondary, #c62828"
+	}
+}
+```
+
+`colors` takes the same forms a colour property does: a role such as `primary`,
+a hex literal, a CSS name or `rgb()`. A single `Color` on a `ChartSeries` — or
+`Series.Color` in Go — paints the whole pie one colour instead.
 
 A negative or zero value is skipped, so a gap in the data does not tilt the
 others. The centre of a pie is not a slice: a press there picks nothing.
@@ -52,6 +67,8 @@ others. The centre of a pie is not a slice: a press there picks nothing.
 | `startAngle` | number | where the first wedge begins, in degrees; 0 is 12 o'clock |
 | `legend` | bool | a key for the categories; off by default |
 | `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
+| `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
+| `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
 | `values` | bool | the value written inside each wedge; off by default |
 | `grid` | bool | has no effect on a pie |
 | `axis` | bool | has no effect on a pie |

@@ -62,6 +62,7 @@ does not leave a tooltip pointing at a value that is gone.
 | `label` | string | the legend and tooltip name; empty draws no name |
 | `values` | string | one number per category, comma-separated: `"12, 18, 9"`; a short list reads as zero |
 | `color` | color | paints that series; a theme role such as `tertiary` follows the scheme, a literal is fixed, and unset takes the scheme's next accent |
+| `colors` | string | one colour per slice, comma-separated: `"primary, #c62828"`. A pie reads it per wedge; other kinds take `color` for the whole series |
 
 The checker rejects a value that is not a number, so a typo is a diagnostic
 rather than a bar of zero.
@@ -124,6 +125,8 @@ From Go, the state is on the node:
 | `axis` | bool | the value labels on the left and the categories below; `true` by default |
 | `legend` | bool | a key for the series along the top; off by default |
 | `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
+| `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
+| `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
 | `values` | bool | the value written next to each point; off by default |
 | `points` | bool | a dot at each value; `true` by default |
 | `smooth` | bool | a Catmull-Rom curve instead of straight segments |
