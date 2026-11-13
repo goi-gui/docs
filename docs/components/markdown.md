@@ -53,7 +53,9 @@ block: `*italic*` slants, `**bold**` draws heavier, `` `code` `` gets a tinted
 pill, `~~struck~~` strikes through and `[links](https://goi.dev)` draw in the
 primary colour, underlined. A run breaks across lines with the rest of the
 paragraph, so a bold word in the middle of a sentence wraps where it should. An
-image keeps its alt text, since a run cannot carry a bitmap.
+image keeps its alt text, since a run cannot carry a bitmap. A link is clickable:
+a URL opens in the user's browser, a path in the file manager, and `OnLink` on
+the paragraph routes it somewhere else — see [Links](richtext.md#links).
 
 Table alignment markers (`:---`, `:---:`, `---:`) become the column and cell
 `align`, so a right-aligned column reads the way the document asked.

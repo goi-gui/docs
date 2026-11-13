@@ -73,6 +73,7 @@ still cover the older emoji.
 | `decorationThickness` | number | stroke width in dp; the default follows the font size |
 | `decorationColor` | color | stroke colour; defaults to the text colour |
 | `selectable` | bool | pointer selection and Ctrl+C |
+| `link` | string | makes the text a link: drawn in `primary` and underlined, and a click opens it — see [Links](richtext.md#links) |
 | `shadow` | shadow | text-shadow form: an offset copy of the glyphs per layer |
 | `fontFamily` | string | a family the app registered with `app.LoadFont`; inherited, see [Fonts](../guide/fonts.md) |
 

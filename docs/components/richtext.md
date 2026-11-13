@@ -20,7 +20,7 @@ RichText {
 	Text { text: "Install with " }
 	Text { text: "go install" color: tertiary }
 	Text { text: ", then read the " }
-	Text { text: "guide" decoration: underline color: primary }
+	Text { text: "guide" link: "https://goi.dev/guide" }
 	Text { text: " — it is " }
 	Text { text: "short" fontWeight: bold fontStyle: italic }
 	Text { text: "." }
@@ -29,7 +29,8 @@ RichText {
 
 Each child's style becomes its run's: `fontWeight` of 600 or more (or `bolder`)
 is bold, `fontStyle: italic` slants, `decoration` carries `underline` and
-`line-through`, and `color` does either of two things. A literal is fixed; a
+`line-through`, `link` makes the run a clickable target, and `color` does either
+of two things. A literal is fixed; a
 theme role such as `primary` or `tertiary` stays a role, so the run follows the
 scheme when the theme changes. A `custom:` colour does not reach a run, because
 the painter resolves roles only — use a literal there.
@@ -84,6 +85,42 @@ height the layout reserves is exactly the lines the painter draws. The result is
 cached per paragraph, keyed by the span version, the column and the style, so a
 still paragraph costs a map lookup per frame.
 
+## Links
+
+A link run — `Link` from Go, `link:` on a `Text` child, or `[text](target)` in
+a [Markdown](markdown.md) document — draws in `primary` and underlined, and the
+pointer over it is the link shape. A click opens it:
+
+| Target | Opens |
+|---|---|
+| `https://goi.dev/guide`, `mailto:tech@goi.dev` | whatever the system registered for that scheme — the user's browser for the web |
+| `myapp://open?id=1` | the app the system has for that deep link |
+| `/home/me/notes/a.md`, `~/notes`, `file:///home/me/notes` | the file manager, with the file selected where the desktop can |
+
+A target with a scheme is never asked of the filesystem, so a URL cannot be
+mistaken for a path; anything else is a path, and one that does not exist is
+handed to the system opener rather than opening a folder that is not there.
+Finder and Explorer select the file itself; the freedesktop opener cannot, so
+Linux shows the folder that holds it.
+
+An app that wants to route links itself subscribes instead, and goi then opens
+nothing:
+
+```go
+doc := ui.MustByID[*ui.RichText](w, "doc")
+doc.OnLink(func(target string) {
+	if rest, ok := strings.CutPrefix(target, "goi://"); ok {
+		app.Show(rest)
+		return
+	}
+	_ = ui.OpenLink(target) // the default, when the app decides
+})
+```
+
+The slot belongs to the paragraph, so every run of one RichText lands in the same
+handler; a plain `Text` with `link:` has its own. `ui.OpenLink` is the same
+opener goi uses, for a link the app owns.
+
 ## Properties
 
 | Property | Type | Notes |
@@ -107,5 +144,3 @@ The rest is the common box, so a RichText takes `width`, `padding`,
 - **Shaped ligatures across runs.** Every run is shaped on its own, which is
   right for Latin text and a small compromise for scripts whose shaping crosses
   a style boundary.
-- **Opening a link.** `Link` styles and records the destination; goi has no URL
-  opener of its own, so tapping a link is the app's job.
