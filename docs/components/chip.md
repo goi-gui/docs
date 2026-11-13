@@ -42,7 +42,6 @@ Chip {
 | `icon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
 | `variant` | enum | `assist` (default), `filter`, `input`, `suggestion` |
-| `size` | enum | — (fixed 32dp height) |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state; shows a check in place of the leading icon |
 | `checked` | bool | on/off state |

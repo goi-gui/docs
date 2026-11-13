@@ -30,7 +30,6 @@ FABMenu {
 |---|---|---|
 | `icon` | string | leading Material Symbols ligature |
 | `variant` | enum | `primary`, `secondary`, `tertiary` |
-| `size` | enum | — (fixed 56dp) |
 | `disabled` | bool | dims the element and blocks input |
 | `expanded` | bool | open state (menu, split button) |
 | `spacing` | number | gap between children |

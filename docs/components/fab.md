@@ -30,7 +30,6 @@ FAB {
 | `label` | string | the main text |
 | `icon` | string | leading Material Symbols ligature |
 | `variant` | enum | `primary` (default), `secondary`, `tertiary` |
-| `size` | enum | `sm`, `md` (default), `lg`; a `label` makes it extended |
 | `disabled` | bool | dims the element and blocks input |
 | `expanded` | bool | open state (menu, split button) |
 

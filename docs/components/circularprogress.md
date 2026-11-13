@@ -50,7 +50,6 @@ ribbon, and a stroke too wide for the box is narrowed to fit.
 | `value` | number | current number |
 | `min` | number | lowest value |
 | `max` | number | highest value |
-| `size` | enum | — (follows width and height) |
 
 ## From Go
 

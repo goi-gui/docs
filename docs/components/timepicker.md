@@ -21,7 +21,6 @@ TimePicker {
 | `label` | string | the caption above the time |
 | `text` | string | the picked time as `HH:MM` (24h); empty means now |
 | `variant` | enum | — (no style variants) |
-| `size` | enum | — (fixed metrics) |
 | `spacing` | number | gap between children |
 | `gap` | number | alias of `spacing` |
 | `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |

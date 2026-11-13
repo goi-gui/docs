@@ -45,7 +45,6 @@ Button {
 | `label` | string | the main text |
 | `icon` | string | leading Material Symbols ligature |
 | `variant` | enum | `filled` (default), `tonal`, `elevated`, `outlined`, `text` |
-| `size` | enum | — (fixed 40dp height) |
 | `disabled` | bool | dims the element and blocks input |
 
 ## From Go

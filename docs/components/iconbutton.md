@@ -34,7 +34,6 @@ IconButton {
 |---|---|---|
 | `icon` | string | leading Material Symbols ligature |
 | `variant` | enum | `standard` (default), `filled`, `tonal`, `outlined` |
-| `size` | enum | `sm` (32dp), `md` (default, 40dp), `lg` (48dp) |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state |
 

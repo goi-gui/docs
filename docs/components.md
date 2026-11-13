@@ -135,6 +135,7 @@ These apply to every element and are not repeated on the component pages.
 |---|---|---|
 | `id` | string | assigned by the builder; the handle Go looks up |
 | `width, height` | number | declared size; `-1` (default) means auto |
+| `size` | number | both axes at once: `size: 32` is a 32 by 32 box, the same as `width: 32 height: 32` |
 | `minWidth, maxWidth` | number | bounds for the resolved width; `SetMinWidth`/`SetMaxWidth` from Go |
 | `minHeight, maxHeight` | number | bounds for the resolved height; `SetMinHeight`/`SetMaxHeight` from Go |
 | `margin` | number | outer spacing on all sides |

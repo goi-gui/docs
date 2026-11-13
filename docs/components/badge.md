@@ -24,7 +24,6 @@ Badge {
 |---|---|---|
 | `label` | string | the main text |
 | `variant` | enum | — (no style variants; `label` turns the dot into a count) |
-| `size` | enum | — (no effect; `label` switches between the dot and a count) |
 
 ## From Go
 

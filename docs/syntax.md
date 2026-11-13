@@ -915,7 +915,7 @@ box without changing its anchors. They exist for enter/exit animation: `left`
 and `top` reserve `-1` for "auto", so a slide off screen animates the translate
 instead.
 
-Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
+Common to every element: `id`, `width`, `height`, `size`, `minWidth`, `maxWidth`,
 `minHeight`, `maxHeight`, `margin`, `padding`, `paddingX`, `paddingY`, `background`, `borderColor`,
 `borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
 `opacity`, `backdropBlur`, `zIndex`, `cursor`, `hideScrollbar`, `autoHideScrollbar`,
@@ -923,9 +923,14 @@ Common to every element: `id`, `width`, `height`, `minWidth`, `maxWidth`,
 `scrollbarColor`, `scrollShadow`, `scrollShadowColor`, `template`. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
-`margin`/`padding`; `paddingX` and `paddingY` set both sides of their axis:
+`margin`/`padding`; `paddingX` and `paddingY` set both sides of their axis.
+`size` sets width and height together, so a square box is one property; a later
+`width` or `height` then moves only the axis it names:
 
 ```goi
+Rectangle { size: 48 }            // 48 by 48
+Rectangle { size: 48 height: 24 } // 48 wide, 24 tall
+
 Column {
 	padding:     16
 	paddingLeft: 4 // 4 on the left, 16 on the other three sides
