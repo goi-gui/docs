@@ -33,6 +33,10 @@ CircularProgress {
 }
 ```
 
+The arc and the track never touch either: the track is the rest of the circle
+with a gap at each end of the filled part, so nothing runs under the arc, and
+every end is rounded rather than cut square.
+
 The wave keeps itself inside the ring's box, so the default 48dp size needs no
 height of its own. `thickness` sets the stroke: 4dp for a plain arc, 7dp for a
 ribbon, and a stroke too wide for the box is narrowed to fit.
