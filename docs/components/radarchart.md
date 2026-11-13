@@ -48,7 +48,7 @@ difference of ten.
 | `grid` | bool | one ring per value tick; `true` by default |
 | `axis` | bool | the spokes and the category names; `true` by default |
 | `legend` | bool | a key for the series along the top; off by default |
-| `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
+| `categories` | list | the labels along the value axis: `["Jan", "Feb", "Mar"]`; empty falls back to numbers |
 | `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
 | `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
 | `values` | bool | the value written next to each corner; off by default |

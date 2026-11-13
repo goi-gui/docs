@@ -16,7 +16,7 @@ GaugeChart {
 
 	ChartSeries {
 		label:  "Uptime"
-		values: "99.4"
+		values: [99.4]
 	}
 }
 ```

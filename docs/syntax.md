@@ -562,6 +562,36 @@ declaration. A function call appears either as an event property's whole value
 | `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form; `none` clears it, see [Shadows](guide/shadows.md) |
 | `responsive { base: 8 md: 16 }` | modifier | responsive value, one entry per breakpoint; see [Responsive values](#responsive-values) |
 | `conditional { 10: bridge.isWide }` | modifier | first true condition picks the value; see [Conditional values](#conditional-values) |
+| `[1, 2, 3]`, `["Jan", "Feb"]` | list | a property whose value is a list, such as a chart's `categories`, `values` or `colors`; a trailing comma is allowed, see [Lists](#lists) |
+
+## Lists
+
+A few properties take a list instead of one value. A chart is the case today:
+`categories` names the points, and one `ChartSeries` child carries a series'
+`values` and its `colors`.
+
+```goi
+PieChart {
+	categories: ["Direct", "Search", "Social"]
+	textColor:  theme.onSurface
+
+	ChartSeries {
+		values: [42, 27, 18]
+		colors: [theme.primary, theme.tertiary, #c62828]
+	}
+}
+```
+
+The square brackets hold ordinary values, separated by commas. A trailing comma
+is allowed, so a long list reads like Go's. What an item may be is the property's
+own rule: a number for `values`, a string or bare word for `categories`, a colour
+or a `theme.` role for `colors`.
+
+A colour list is the one place a role *must* carry its namespace. A bare word in
+a list is read as a CSS colour name (`red`, `rebeccapurple`), so `primary` is a
+diagnostic that names the form to write: `theme.primary`. Everywhere else a
+colour property accepts the bare spelling too, because a single value leaves no
+room for doubt; in a list it would.
 
 ## Colours and gradients
 

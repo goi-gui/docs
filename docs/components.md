@@ -112,7 +112,7 @@ and be driven from `.goi` (`clip.play()`) or Go (`app.PlayMedia(clip)`).
 - [GaugeChart](components/gaugechart.md) — One value as an arc, with the number inside.
 
 Every chart takes `ChartSeries` children, so a design holds its own data:
-`categories: "Jan, Feb"` names the points and one child per line carries
+`categories: ["Jan", "Feb"]` names the points and one child per line carries
 `label`, `values` and `color`. See
 [LineChart's data](components/linechart.md#the-data).
 

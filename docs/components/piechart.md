@@ -15,10 +15,10 @@ PieChart {
 	legend:      true
 	values:      true
 	startAngle:  -90
-	categories:  "Direct, Search, Social, Email"
+	categories:  ["Direct", "Search", "Social", "Email"]
 
 	ChartSeries {
-		values: "42, 27, 18, 13"
+		values: [42, 27, 18, 13]
 	}
 }
 ```
@@ -43,11 +43,11 @@ scheme:
 
 ```goi
 PieChart {
-	categories: "Direct, Search, Social, Email"
+	categories: ["Direct", "Search", "Social", "Email"]
 
 	ChartSeries {
-		values: "42, 27, 18, 13"
-		colors: "primary, tertiary, secondary, #c62828"
+		values: [42, 27, 18, 13]
+		colors: [theme.primary, theme.tertiary, theme.secondary, #c62828]
 	}
 }
 ```
@@ -66,7 +66,7 @@ others. The centre of a pie is not a slice: a press there picks nothing.
 | `innerRadius` | number | 0 (default) is a pie; 0.5 is a donut with half the radius open |
 | `startAngle` | number | where the first wedge begins, in degrees; 0 is 12 o'clock |
 | `legend` | bool | a key for the categories; off by default |
-| `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
+| `categories` | list | the labels along the value axis: `["Direct", "Search"]`; empty falls back to numbers |
 | `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
 | `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
 | `values` | bool | the value written inside each wedge; off by default |

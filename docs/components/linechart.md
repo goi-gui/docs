@@ -17,16 +17,16 @@ LineChart {
 	legend:     true
 	points:     true
 	smooth:     true
-	categories: "Jan, Feb, Mar, Apr, May, Jun"
+	categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
 
 	ChartSeries {
 		label:  "2025"
-		values: "12, 18, 15, 24, 21, 29"
+		values: [12, 18, 15, 24, 21, 29]
 	}
 
 	ChartSeries {
 		label:  "2026"
-		values: "16, 22, 19, 28, 26, 34"
+		values: [16, 22, 19, 28, 26, 34]
 		color:  tertiary
 	}
 }
@@ -60,9 +60,9 @@ does not leave a tooltip pointing at a value that is gone.
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the legend and tooltip name; empty draws no name |
-| `values` | string | one number per category, comma-separated: `"12, 18, 9"`; a short list reads as zero |
-| `color` | color | paints that series; a theme role such as `tertiary` follows the scheme, a literal is fixed, and unset takes the scheme's next accent |
-| `colors` | string | one colour per slice, comma-separated: `"primary, #c62828"`. A pie reads it per wedge; other kinds take `color` for the whole series |
+| `values` | list | one number per category: `[12, 18, 9]`; a short list reads as zero |
+| `color` | color | paints that series; a theme role such as `theme.tertiary` follows the scheme, a literal is fixed, and unset takes the scheme's next accent |
+| `colors` | list | one colour per slice: `[theme.primary, #c62828]`. A pie reads it per wedge; other kinds take `color` for the whole series |
 
 The checker rejects a value that is not a number, so a typo is a diagnostic
 rather than a bar of zero.
@@ -124,7 +124,7 @@ From Go, the state is on the node:
 | `grid` | bool | value lines behind the series; `true` by default |
 | `axis` | bool | the value labels on the left and the categories below; `true` by default |
 | `legend` | bool | a key for the series along the top; off by default |
-| `categories` | string | the labels along the value axis, comma-separated: `"Jan, Feb, Mar"`; empty falls back to numbers |
+| `categories` | list | the labels along the value axis: `["Jan", "Feb", "Mar"]`; empty falls back to numbers |
 | `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
 | `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
 | `values` | bool | the value written next to each point; off by default |
