@@ -1,7 +1,7 @@
 # Markdown
 
 A whole markdown document, rendered as the elements goi already has: a heading
-becomes a `Text` with a role, a fenced block a `Code`, a rule a `Divider`, a list
+becomes a `RichText` with a role, a fenced block a `Code`, a rule a `Divider`, a list
 a run of rows, a table a `Table`. Because the children are real nodes, layout,
 themes, wrapping and scrolling work without a second renderer inside the
 component.
@@ -40,17 +40,20 @@ same document costs one string comparison.
 
 | Markdown | Element |
 |---|---|
-| `# Heading` to `###### Heading` | `Text` with `headlineLarge`, `headlineMedium`, `headlineSmall`, `titleLarge`, `titleMedium`, `titleSmall` |
-| a paragraph | `Text` with `wrap: true` |
+| `# Heading` to `###### Heading` | `RichText` with `headlineLarge`, `headlineMedium`, `headlineSmall`, `titleLarge`, `titleMedium`, `titleSmall` |
+| a paragraph | `RichText` with `wrap: true` |
 | `- item` / `1. item` | a `Row` with a bullet or a number and the text; nesting indents by depth |
 | a fenced or indented code block | `Code`, with the fence's language as `language` |
 | `> quote` | a `Column` with a bar on the left and the quote's blocks inside |
 | `---` | `Divider` |
-| a GFM table | `Table`, with a `TableColumn` per header cell and a `Text` inside each `TableCell` |
+| a GFM table | `Table`, with a `TableColumn` per header cell and a `RichText` inside each `TableCell` |
 
-Emphasis, strong text, code spans, links and images keep their **words** and lose
-their markup: a `Text` node draws one style, so a run of mixed weight becomes
-plain text rather than three colours.
+Inline markup becomes styled runs on the [RichText](richtext.md) that draws the
+block: `*italic*` slants, `**bold**` draws heavier, `` `code` `` gets a tinted
+pill, `~~struck~~` strikes through and `[links](https://goi.dev)` draw in the
+primary colour, underlined. A run breaks across lines with the rest of the
+paragraph, so a bold word in the middle of a sentence wraps where it should. An
+image keeps its alt text, since a run cannot carry a bitmap.
 
 Table alignment markers (`:---`, `:---:`, `---:`) become the column and cell
 `align`, so a right-aligned column reads the way the document asked.
@@ -73,7 +76,6 @@ lives in a scrolling `Column` with `width: 100%`.
 - **Footnotes, definition lists, front matter.** The parser is goldmark with its
   GFM extension, so tables, task lists, strikethrough and autolinks are in;
   anything else is not part of the AST this component maps.
-- **Inline styling.** Bold inside a paragraph does not draw bolder, because one
-  `Text` node carries one style.
+- **Text selection.** A paragraph is a `RichText`, which is not selectable yet.
 - **Syntax colours in a fence without a language.** A fence with no language
   reads as plain text, which is what `Code` does with an unknown name.

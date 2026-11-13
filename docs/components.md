@@ -91,6 +91,7 @@ components. They all share one property set and one way of being driven from Go.
 - [Toolbar](components/toolbar.md) — A horizontal strip of compact controls.
 - [Code](components/code.md) — A syntax-highlighted code block.
 - [Markdown](components/markdown.md) — A markdown document, rendered as elements.
+- [RichText](components/richtext.md) — One paragraph of styled runs.
 
 ## Media
 
