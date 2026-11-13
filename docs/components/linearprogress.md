@@ -35,9 +35,9 @@ separates them, the track is only the part that is left, and both ends are
 rounded. Nothing is drawn under the progress, and the stop indicator sits at the
 end with its own small gap.
 
-`thickness` sets the stroke: 4dp for a normal bar, 8dp for a ribbon. The height
+`thickness` sets the stroke: 4dp for a normal bar, 6dp for a ribbon. The height
 follows it — a stroke is that tall, a ribbon is 1.75 times it, so the default
-wavy bar is 14dp. A height the design pins is honored, and the wave scales down
+wavy bar is 10.5dp. A height the design pins is honored, and the wave scales down
 to fit it. Both variants end the track with the stop indicator dot.
 
 ## Properties
@@ -45,7 +45,7 @@ to fit it. Both variants end the track with the stop indicator dot.
 | Property | Type | Notes |
 |---|---|---|
 | `variant` | enum | `normal` (a flat bar, the default) or `wavy` (a ribbon) |
-| `thickness` | number | stroke width; 0 keeps 4dp (normal) or 8dp (wavy) |
+| `thickness` | number | stroke width; 0 keeps 4dp (normal) or 6dp (wavy) |
 | `value` | number | current number |
 | `min` | number | lowest value |
 | `max` | number | highest value |

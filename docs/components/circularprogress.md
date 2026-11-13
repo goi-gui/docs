@@ -38,7 +38,7 @@ with a gap at each end of the filled part, so nothing runs under the arc, and
 every end is rounded rather than cut square.
 
 The wave keeps itself inside the ring's box, so the default 48dp size needs no
-height of its own. `thickness` sets the stroke: 4dp for a plain arc, 7dp for a
+height of its own. `thickness` sets the stroke: 4dp for a plain arc, 5dp for a
 ribbon, and a stroke too wide for the box is narrowed to fit.
 
 ## Properties
@@ -46,7 +46,7 @@ ribbon, and a stroke too wide for the box is narrowed to fit.
 | Property | Type | Notes |
 |---|---|---|
 | `variant` | enum | `normal` (a plain arc, the default) or `wavy` (a ribbon) |
-| `thickness` | number | stroke width; 0 keeps 4dp (plain) or 7dp (wavy) |
+| `thickness` | number | stroke width; 0 keeps 4dp (plain) or 5dp (wavy) |
 | `value` | number | current number |
 | `min` | number | lowest value |
 | `max` | number | highest value |
