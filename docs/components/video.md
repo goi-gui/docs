@@ -77,9 +77,9 @@ Button {
 | `subtitleBackground` | color | plate behind each caption line; 0 keeps none |
 | `audioTrack` | number | which audio stream to play, 0 being the first |
 | `fullscreen` | bool | fill the window with the picture, above everything else |
-| `controlsIconColor` | color | play/pause icon colour; 0 keeps the scheme's |
-| `controlsTextColor` | color | clock and LIVE label colour; 0 keeps the scheme's |
-| `controlsTrackColor` | color | scrubber track, played part and knob; 0 keeps the scheme's |
+| `controlsIconColor` | color | play/pause icon colour; 0 is white, since the bar sits over the picture |
+| `controlsTextColor` | color | clock and LIVE label colour; 0 is white, since the bar sits over the picture |
+| `controlsTrackColor` | color | scrubber track, played part and knob; 0 follows white and the scheme's primary |
 
 ## Methods
 
@@ -156,7 +156,9 @@ Video {
   and the knob, so a recoloured bar stays one piece.
 
 The bar's own backdrop stays the scheme's scrim, because it has to read over any
-frame.
+frame. Its default ink is white rather than the scheme's `onSurface`: the light
+theme draws near-black text, which would vanish into the scrim over a picture. An
+`Audio` player keeps the scheme's ink, because its bar is a surface of its own.
 
 ## Subtitles
 

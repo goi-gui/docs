@@ -587,6 +587,25 @@ is allowed, so a long list reads like Go's. What an item may be is the property'
 own rule: a number for `values`, a string or bare word for `categories`, a colour
 or a `theme.` role for `colors`.
 
+An item may also be a variable or an expression, so one number of a series, or
+one slice's colour, can come from Go while the rest stays in the file:
+
+```goi
+PieChart {
+	categories: [bridge.firstLabel, "Search", "Social"]
+
+	ChartSeries {
+		values: [bridge.direct, 27, 18]
+		colors: [theme.primary, theme.tertiary, customColor.accent]
+	}
+}
+```
+
+`bridge.` names a value the app set with `ui.SetData`, `app.` and `window.` are
+the usual globals, and a conditional (`bridge.wide ? 40 : 12`) works too. A list
+with one of those is re-read every frame, and the chart rebuilds its data when a
+resolved value changed; a list of plain literals is written once.
+
 A colour list is the one place a role *must* carry its namespace. A bare word in
 a list is read as a CSS colour name (`red`, `rebeccapurple`), so `primary` is a
 diagnostic that names the form to write: `theme.primary`. Everywhere else a

@@ -60,9 +60,9 @@ does not leave a tooltip pointing at a value that is gone.
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the legend and tooltip name; empty draws no name |
-| `values` | list | one number per category: `[12, 18, 9]`; a short list reads as zero |
+| `values` | list | one number per category: `[12, 18, 9]`; a short list reads as zero. An item may be a variable (`bridge.jan`) or an expression |
 | `color` | color | paints that series; a theme role such as `theme.tertiary` follows the scheme, a literal is fixed, and unset takes the scheme's next accent |
-| `colors` | list | one colour per slice: `[theme.primary, #c62828]`. A pie reads it per wedge; other kinds take `color` for the whole series |
+| `colors` | list | one colour per slice: `[theme.primary, customColor.brand, #c62828]`. A pie reads it per wedge; other kinds take `color` for the whole series |
 
 The checker rejects a value that is not a number, so a typo is a diagnostic
 rather than a bar of zero.
