@@ -42,7 +42,17 @@ it lives in an imported fragment. Completion knows:
   `cap`, `min`, `max`;
 - the icon names the embedded Material Symbols font actually contains;
 - for a fragment instance, its props, the root properties it lets you override
-  and the slots it fills.
+  and the slots it fills;
+- the file's own declarations before the root element: `import`, `props`,
+  `bridge`, `data` and `type`;
+- a switch body's arms, `case` and `default`, where an element would not fit.
+
+An item finishes the line for you: an element opens its braces with the caret
+inside, a property writes its `name:`, and a control statement opens its body. A
+client that reports snippet support gets the whole thing — `Text { }` with the
+caret between the braces, indented under the element around it, and the argument
+placeholder of `t()` or `formatf()` — while a text-only client still gets the
+colon and the name.
 
 Hover explains declarations, shape fields, loop variables and fragments.
 `Ctrl`-click on an `import` path, its alias or an id jumps to its declaration,
