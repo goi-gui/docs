@@ -47,6 +47,9 @@ it lives in an imported fragment. Completion knows:
   `bridge`, `data` and `type`;
 - a switch body's arms, `case` and `default`, where an element would not fit.
 
+Inside a `!"…"!` block string the server stays quiet: the words there are a
+document, not a design.
+
 An item finishes the line for you: an element opens its braces with the caret
 inside, a property writes its `name:`, and a control statement opens its body. A
 client that reports snippet support gets the whole thing — `Text { }` with the
