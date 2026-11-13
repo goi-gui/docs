@@ -547,7 +547,8 @@ declaration. A function call appears either as an event property's whole value
 
 | Form | Type | Notes |
 |---|---|---|
-| `"text"` | string | `\" \\ \n \t \r \uXXXX` escapes; `\uD83D\uDE00` surrogate pairs work |
+| `"text"` | string | one line; `\" \\ \n \t \r \uXXXX` escapes; `\uD83D\uDE00` surrogate pairs work |
+| `!"line\nline"!` | string | a block that spans lines, with no escapes; see [Multi-line strings](#multi-line-strings) |
 | `hello` | identifier | used for enums and `id`; also accepted where a string is expected |
 | `480`, `32.5`, `-1` | number | one numeric type everywhere (`float64`) |
 | `true`, `false` | bool | |
@@ -563,6 +564,38 @@ declaration. A function call appears either as an event property's whole value
 | `responsive { base: 8 md: 16 }` | modifier | responsive value, one entry per breakpoint; see [Responsive values](#responsive-values) |
 | `conditional { 10: bridge.isWide }` | modifier | first true condition picks the value; see [Conditional values](#conditional-values) |
 | `[1, 2, 3]`, `["Jan", "Feb"]` | list | a property whose value is a list, such as a chart's `categories`, `values` or `colors`; a trailing comma is allowed, see [Lists](#lists) |
+
+## Multi-line strings
+
+A string that spans lines is written between `!"` and `"!`:
+
+```goi
+Markdown {
+	text: !"# Title
+
+		A paragraph with **bold** words.
+
+		- one
+		- two
+			- nested"!
+}
+```
+
+The block's indentation is stripped, which is what lets the document keep the
+indentation of the element around it. The base is the whitespace that starts the
+line the closing `"!` sits on, and it is removed from every line after the first;
+the first line stays as written right after `!"`. A line indented further keeps
+the difference, so a nested list stays nested.
+
+Put the closing `"!` after the last line of text, or alone on a line indented like
+the rest: on its own line it adds a final newline to the value, at the end of the
+text it does not. Either way the base is that line's indentation.
+
+Nothing is unescaped in this form, because a document is not source code: a
+backslash stays a backslash. Any string property accepts it — a `Markdown`'s
+`text`, a `Code`'s `text`, a `Text`'s `text` — and goifmt writes a value with a
+line break back this way, one line per source line, indented one level under the
+property.
 
 ## Lists
 

@@ -12,13 +12,21 @@ component.
 
 ```goi
 Markdown {
-	id:   readme
-	text: "# Title\n\nA paragraph with **bold** words.\n\n- one\n- two"
+	id: readme
+	text: !"# Title
+
+		A paragraph with **bold** words.
+
+		- one
+		- two"!
 }
 ```
 
-`text` is the document. A design file has no multi-line literal, so the lines are
-joined with `\n`; a document read at runtime is usually loaded in Go instead.
+`text` is the document, written between `!"` and `"!` when it spans lines. The
+block's own indentation is stripped, so the document can be indented with the
+element around it and still read as markdown; a nested list keeps the extra
+indentation that makes it nested. A one-line document can stay a normal quoted
+string, and a document read at runtime is usually loaded in Go instead.
 
 ## From Go
 
