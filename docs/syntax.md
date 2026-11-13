@@ -594,8 +594,9 @@ text it does not. Either way the base is that line's indentation.
 Nothing is unescaped in this form, because a document is not source code: a
 backslash stays a backslash. Any string property accepts it — a `Markdown`'s
 `text`, a `Code`'s `text`, a `Text`'s `text` — and goifmt writes a value with a
-line break back this way, one line per source line, indented one level under the
-property.
+line break back this way, one line per source line, each lined up under the
+column the first line's text starts at, so the block reads as one column however
+the properties around it are padded.
 
 ## Lists
 
