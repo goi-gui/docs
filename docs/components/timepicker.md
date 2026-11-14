@@ -44,8 +44,8 @@ first. The active half is filled with `primaryContainer` and its text is
 ## The input variant
 
 `variant: input` replaces the clock with two fields and labels them `Hour` and
-`Minute`. The active field is outlined and keeps a caret; the other is a filled
-box. Typing digits fills that field: one digit starts the number, a second
+`Minute`. The active field is outlined; the other is a filled box. The outline
+is the only marker — no caret line sits beside the number. Typing digits fills that field: one digit starts the number, a second
 completes it, and the hour hands over to the minutes. Arrow up/down step the
 active field, left/right switch fields, Enter is OK and Escape is Cancel.
 
