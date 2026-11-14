@@ -42,7 +42,7 @@ TextField {
 | `trailingIcon` | string | trailing Material Symbols ligature |
 | `variant` | enum | `filled` (default), `outlined` |
 | `type` | string | what can be entered: `text` (default), `numeric`, `alpha`, `alphanumeric`, or the characters themselves |
-| `mask` | string | input mask: `#` a digit, `@` a letter, `*` either, every other character a literal |
+| `mask` | string | input mask: `#` a digit, `@` a letter, `*` either, `\` makes the next character literal, everything else literal |
 | `color` | color | value, label and placeholder colour; unset keeps onSurface |
 | `disabled` | bool | dims the element and blocks input |
 
@@ -77,6 +77,19 @@ Backspace and Delete remove an entered character and skip the literals between
 them. A `type` and a `mask` both apply: a character has to pass the type and fit
 the slot. The value keeps the literals, so `onEdit` and `onSubmit` report the
 formatted string.
+
+The three slot characters can be shown literally with a backslash. A `.goi`
+string spells that backslash twice: `mask: "\\# ###"` shows a leading `#` and
+takes three digits, so `123` becomes `# 123`. `\#`, `\@` and `\*` are literal
+punctuation, `\\` is a literal backslash, and a backslash before any other
+character makes that character literal too.
+
+```goi
+TextField {
+	label: "Issue"
+	mask:  "\\# ###"
+}
+```
 
 The mask formats input, not a value the design or the app writes: `text` is
 shown as written until the field is edited.
