@@ -17,6 +17,7 @@ components. They all share one property set and one way of being driven from Go.
 - [Stack](components/stack.md) — Overlays children on top of each other, last child on top.
 - [Positioned](components/positioned.md) — Anchors a child inside a Stack.
 - [ClipRRect](components/cliprrect.md) — Cuts its children to a rounded box.
+- [GestureDetector](components/gesturedetector.md) — Wraps a child and reports a double tap, a long press and a pan.
 - [Wrap](components/wrap.md) — Flows children left to right and starts a new run when the next child does not fit.
 - [Grid](components/grid.md) — Places children in equal-width columns, as rows or packed like a pinboard.
 - [AspectRatio](components/aspectratio.md) — Sizes its box from a width/height ratio and lets the other axis follow.
@@ -310,6 +311,9 @@ Window {
 | `onPlay: bridge.Handler(event)` | `OnPlay(func(float64))` | Audio, Video (payload: position in seconds) |
 | `onPause: bridge.Handler(event)` | `OnPause(func(float64))` | Audio, Video |
 | `onEnd: bridge.Handler(event)` | `OnEnd(func(float64))` | Audio, Video |
+| `onDoubleTap: bridge.Handler()` | `OnDoubleTap(func(ui.ClickEvent))` | GestureDetector |
+| `onLongPress: bridge.Handler()` | `OnLongPress(func(ui.ClickEvent))` | GestureDetector |
+| `onPanStart`, `onPanUpdate`, `onPanEnd` | `OnPanStart/Update/End(func(ui.PanEvent))` | GestureDetector |
 
 The value of an event property is always a handler call. Its arguments are
 evaluated when the event fires; `event` is the event's own payload. A fragment

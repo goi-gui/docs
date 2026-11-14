@@ -45,7 +45,14 @@ Button {
 | `label` | string | the main text |
 | `icon` | string | leading Material Symbols ligature |
 | `variant` | enum | `filled` (default), `tonal`, `elevated`, `outlined`, `text` |
+| `color` | color | label and icon colour; unset keeps the variant's own |
 | `disabled` | bool | dims the element and blocks input |
+
+The design can style the box itself: `background` (solid or a gradient),
+`borderColor`, `borderWidth` and the per-side border properties, `radius` and
+`shadow` replace the variant's own fill, outline, shape and elevation. The
+common properties are listed once in
+[Common properties](../components.md#common-properties).
 
 ## From Go
 

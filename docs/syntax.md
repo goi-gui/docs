@@ -785,6 +785,7 @@ value and goifmt writes it back in degrees (`0.25turn` is `90deg`, `1.57rad` is
 | `TitleBar` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign`; a press that misses its clickable children moves the window |
 | `Stack` | yes | `crossAxisAlign`, `mainAxisAlign` |
 | `ClipRRect` | yes | `crossAxisAlign`, `mainAxisAlign`; clips its children to its rounded box |
+| `GestureDetector` | yes | `onDoubleTap`, `onLongPress`, `onPanStart`, `onPanUpdate`, `onPanEnd`; lays children out like a `Stack` |
 | `Positioned` | yes | `left`, `top`, `right`, `bottom`, `translateX`, `translateY` |
 | `Wrap` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
 | `Grid` | yes | `columns`, `variant` (`normal`, `masonry`), `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
@@ -897,8 +898,8 @@ separate package. Containers take children; the rest are leaves:
 They share one vocabulary: `label`, `supporting`, `text`, `placeholder`, `icon`,
 `trailingIcon` (icon names are Material Symbols ligatures such as `home`),
 `variant`, `disabled`, `checked`, `selected`, `expanded`, `value`, `min`, `max`,
-`step`, `language`, `showCopy`, and `color` where the component is its own
-glyph (the loading indicator). `size` is not part of it: it is the common box
+`step`, `language`, `showCopy`, and `color` where the component names a
+foreground of its own (the loading indicator, a button, a text field). `size` is not part of it: it is the common box
 property that sets width and height together. Each kind accepts only the subset
 that makes sense for it;
 `internal/componentdef` is the single table that the schema and the node tree

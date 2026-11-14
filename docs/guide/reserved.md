@@ -156,6 +156,8 @@ Window {
 | `onSelect` | number (the selected index) |
 | `onHover` | number: the chart point under the pointer, -1 when it leaves |
 | `onPlay`, `onPause`, `onEnd` | number: the playback position in seconds |
+| `onDoubleTap`, `onLongPress` | no value; only on a `GestureDetector` |
+| `onPanStart`, `onPanUpdate`, `onPanEnd` | no value; only on a `GestureDetector` |
 | `onClick` | no value; `onClick` is a plain callback |
 
 Passing `event` to an `onClick` handler, or to a parameter of another type, is a

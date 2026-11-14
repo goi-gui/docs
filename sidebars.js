@@ -56,6 +56,7 @@ const sidebars = {
 						'components/stack',
 						'components/positioned',
 						'components/cliprrect',
+						'components/gesturedetector',
 						'components/wrap',
 						'components/grid',
 						'components/aspectratio',
