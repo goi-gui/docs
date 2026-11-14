@@ -39,8 +39,10 @@ picture, or three seconds after it leaves. Moving the pointer back over the vide
 player follows the same rule: the bar is chrome for a picture, not a permanent
 overlay.
 
-`seekbar: wavy` turns the scrubber into a sine ribbon with round joins; the
-filled part and the thumb ride the wave, and the hit area grows to its height.
+`seekbar: wavy` draws the part already watched as a sine ribbon with round
+joins, and only while the video is playing: the thumb rides the end of the wave,
+the part still ahead is a dim flat track, and a paused video shows the normal
+bar. The hit area grows to the wave's height in both states.
 
 The pointer itself hides with the bar while it rests on a video, so a watching
 cursor does not sit on the film. Any movement brings it back; leaving the video
@@ -87,7 +89,7 @@ Button {
 | `controlsIconColor` | color | play/pause icon colour; 0 is white, since the bar sits over the picture |
 | `controlsTextColor` | color | clock and LIVE label colour; 0 is white, since the bar sits over the picture |
 | `controlsTrackColor` | color | scrubber track, played part and knob; 0 follows white and the scheme's primary |
-| `seekbar` | enum | `normal` (a plain track, the default) or `wavy` (a sine ribbon) |
+| `seekbar` | enum | `normal` (a plain track, the default) or `wavy` (the watched part as a sine ribbon while playing) |
 
 ## Methods
 

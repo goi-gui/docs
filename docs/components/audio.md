@@ -62,7 +62,7 @@ Button {
 | `controlsIconColor` | color | play/pause icon colour; 0 keeps the scheme's |
 | `controlsTextColor` | color | clock and LIVE label colour; 0 keeps the scheme's |
 | `controlsTrackColor` | color | scrubber track, played part and knob; 0 keeps the scheme's |
-| `seekbar` | enum | `normal` (a plain track, the default) or `wavy` (a sine ribbon) |
+| `seekbar` | enum | `normal` (a plain track, the default) or `wavy` (the played part as a sine ribbon while playing) |
 | `subtitles` | string | an SRT or WebVTT file, or a `goi://` path to one; empty draws none |
 | `subtitleFontSize` | number | caption size in dp; 0 follows the player's own |
 | `subtitleColor` | color | caption colour; 0 keeps white |
