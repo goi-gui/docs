@@ -92,10 +92,11 @@ What a page shows: text, documents, media and plain boxes. These are nodes rathe
 - [CircularProgress](components/circularprogress.md) — A circular progress ring.
 - [LoadingIndicator](components/loadingindicator.md) — The M3 indeterminate loading shape.
 
-## Date and time
+## Date, time and colour
 
 - [DatePicker](components/datepicker.md) — A calendar surface for picking a date.
 - [TimePicker](components/timepicker.md) — An M3 time picker with a clock dial or two typed fields, a 12-hour display and AM/PM.
+- [ColorPicker](components/colorpicker.md) — A saturation/value square and a hue bar for picking an opaque colour.
 
 ## Media
 
@@ -304,8 +305,8 @@ Window {
 | `onClick: bridge.Handler(...)` | `OnClick(func(ui.ClickEvent))` | every element; `ClickEvent` has `X`, `Y`, `Button` |
 | `onToggle: bridge.Handler(event)` | `OnToggle(func(bool))` | Checkbox, RadioButton, Switch, Chip |
 | `onChange: bridge.Handler(event)` | `OnChangeValue(func(float64))` | Slider |
-| `onEdit: bridge.Handler(event)` | `OnEdit(func(string))` | TextField, SearchBar (every keystroke) |
-| `onSubmit: bridge.Handler(event)` | `OnSubmit(func(string))` | TextField, SearchBar (Enter) |
+| `onEdit: bridge.Handler(event)` | `OnEdit(func(string))` | TextField, SearchBar (every keystroke); ColorPicker (every change) |
+| `onSubmit: bridge.Handler(event)` | `OnSubmit(func(string))` | TextField, SearchBar (Enter); DatePicker, TimePicker, ColorPicker (the picked value) |
 | `onSelect: bridge.Handler(event)` | `OnSelect(func(int))` | Tabs, NavigationBar, NavigationRail, List, Menu, Table, SegmentedButton, Carousel, and every chart (the slice or point) |
 | `onHover: bridge.Handler(event)` | `OnHoverPoint(func(int))` | charts: the point under the pointer, -1 when it leaves |
 | `onPlay: bridge.Handler(event)` | `OnPlay(func(float64))` | Audio, Video (payload: position in seconds) |
