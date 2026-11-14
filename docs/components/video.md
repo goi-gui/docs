@@ -40,6 +40,11 @@ picture, or three seconds after it leaves. Moving the pointer back over the vide
 player follows the same rule: the bar is chrome for a picture, not a permanent
 overlay.
 
+While the player is fetching the file or waiting for the decoder — a live stream
+between segments included — a small circular-progress ring turns in the middle
+of the picture, so a slow start reads as work rather than a still frame. It
+disappears as soon as a frame is there.
+
 `seekbar: wavy` draws the part already watched as a moving sine ribbon with
 round joins, and only while the video is playing: the wave travels, the handle
 rides its end, and a paused video shows the normal bar. The part still ahead is
