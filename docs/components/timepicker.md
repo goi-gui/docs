@@ -37,6 +37,11 @@ The dial is a single 12-hour ring: a click on a number sets the hour and hands
 over to the minutes, so a second click completes the time. The picked number is
 a filled circle at the end of a hand from the centre.
 
+The minute ring has sixty positions although only every fifth is labelled: press
+and drag the hand, or click anywhere on the ring, and the minute under it is
+picked — 13 as readily as 15. Picking the minutes keeps them active, so the hour
+never comes back on its own; the header halves switch back.
+
 The two halves of the big time are targets too, so either half can be picked
 first. The active half is filled with `primaryContainer` and its text is
 `primary`; the other sits on `surfaceContainerHighest`.
@@ -46,7 +51,8 @@ first. The active half is filled with `primaryContainer` and its text is
 `variant: input` replaces the clock with two fields and labels them `Hour` and
 `Minute`. The active field is outlined; the other is a filled box. The outline
 is the only marker — no caret line sits beside the number. Typing digits fills that field: one digit starts the number, a second
-completes it, and the hour hands over to the minutes. Arrow up/down step the
+completes it, and the hour hands over to the minutes; the minutes stay where
+they are. Arrow up/down step the
 active field, left/right switch fields, Enter is OK and Escape is Cancel.
 
 ## 12 and 24 hours
@@ -70,7 +76,9 @@ The corner icon swaps the variants — a keyboard on the dial and a clock on the
 fields — which is also a design-level change, so a `.goi` file can start on
 either with `variant`.
 
-- **OK** and Enter emit `onOK` and `onSubmit` with the value.
+- Each dial or field change reports through `onSubmit` with the value.
+- **OK** and Enter emit `onOK` and `onSubmit` with the value; the dial does not,
+  because dragging a hand is not confirming anything.
 - **Cancel** and Escape emit `onCancel` with the value, which the app decides
   what to do with.
 
