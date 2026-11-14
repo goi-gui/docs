@@ -156,6 +156,7 @@ Window {
 | `onSelect` | number (the selected index) |
 | `onHover` | number: the chart point under the pointer, -1 when it leaves |
 | `onPlay`, `onPause`, `onEnd` | number: the playback position in seconds |
+| `onCancel` | string: the time a picker is holding when Cancel is pressed |
 | `onDoubleTap`, `onLongPress` | no value; only on a `GestureDetector` |
 | `onPanStart`, `onPanUpdate`, `onPanEnd` | no value; only on a `GestureDetector` |
 | `onClick` | no value; `onClick` is a plain callback |

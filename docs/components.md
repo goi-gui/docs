@@ -95,7 +95,7 @@ What a page shows: text, documents, media and plain boxes. These are nodes rathe
 ## Date and time
 
 - [DatePicker](components/datepicker.md) — A calendar surface for picking a date.
-- [TimePicker](components/timepicker.md) — A clock dial for picking a time.
+- [TimePicker](components/timepicker.md) — An M3 time picker with a clock dial or two typed fields, a 12-hour display and AM/PM.
 
 ## Media
 
@@ -311,6 +311,7 @@ Window {
 | `onPlay: bridge.Handler(event)` | `OnPlay(func(float64))` | Audio, Video (payload: position in seconds) |
 | `onPause: bridge.Handler(event)` | `OnPause(func(float64))` | Audio, Video |
 | `onEnd: bridge.Handler(event)` | `OnEnd(func(float64))` | Audio, Video |
+| `onCancel: bridge.Handler(event)` | `OnCancel(func(string))` | TimePicker |
 | `onDoubleTap: bridge.Handler()` | `OnDoubleTap(func(ui.ClickEvent))` | GestureDetector |
 | `onLongPress: bridge.Handler()` | `OnLongPress(func(ui.ClickEvent))` | GestureDetector |
 | `onPanStart`, `onPanUpdate`, `onPanEnd` | `OnPanStart/Update/End(func(ui.PanEvent))` | GestureDetector |
