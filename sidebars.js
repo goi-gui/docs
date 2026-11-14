@@ -58,6 +58,7 @@ const sidebars = {
 						'components/cliprrect',
 						'components/wrap',
 						'components/grid',
+						'components/aspectratio',
 						'components/divider',
 					],
 				},

@@ -19,8 +19,8 @@ Code {
 |---|---|---|
 | `text` | string | the source; `\n` separates lines |
 | `language` | string | any of the ~300 lexer names Chroma knows: `go`, `goi`, `js`, `python`, `sh`, `yaml`, `sql`, `rust`, `html`, `css`, `toml`, …; anything else reads as plain |
-| `showCopy` | bool | draws a copy button in the top-right corner |
-| `variant` | enum | `filled` (default) or `outlined` |
+| `showCopy` | bool | draws a copy button in the top-right corner; `true` by default |
+| `variant` | enum | `outlined` (default, draws a 1dp border) or `filled` (no border) |
 
 ## Behaviour
 
@@ -35,8 +35,9 @@ comments with `onSurfaceVariant`, so the block follows the theme. The lexing is
 works, including template syntax inside a string.
 
 The text is selectable like prose: drag to select, double click for a word,
-triple click for the line's paragraph, Ctrl+C to copy. `showCopy` adds a button
-that copies the whole block.
+triple click for the line's paragraph, Ctrl+C to copy. The copy button in the
+corner copies the whole block; it is drawn by default and `showCopy: false`
+removes it.
 
 Tabs are expanded to four spaces, because a tab has no advance of its own in the
 font. What you see is what is copied, so a selected snippet comes out with

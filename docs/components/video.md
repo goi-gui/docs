@@ -39,6 +39,10 @@ picture, or three seconds after it leaves. Moving the pointer back over the vide
 player follows the same rule: the bar is chrome for a picture, not a permanent
 overlay.
 
+The pointer itself hides with the bar while it rests on a video, so a watching
+cursor does not sit on the film. Any movement brings it back; leaving the video
+restores whatever cursor the element under it asks for.
+
 With `controls: false` the element is only its picture. That is what a design
 that draws its own transport wants: point the buttons at the player by id, and
 the same calls work from Go.

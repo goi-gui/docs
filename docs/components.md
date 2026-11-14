@@ -18,7 +18,8 @@ components. They all share one property set and one way of being driven from Go.
 - [Positioned](components/positioned.md) — Anchors a child inside a Stack.
 - [ClipRRect](components/cliprrect.md) — Cuts its children to a rounded box.
 - [Wrap](components/wrap.md) — Flows children left to right and starts a new run when the next child does not fit.
-- [Grid](components/grid.md) — Places children in a fixed number of equal-width columns.
+- [Grid](components/grid.md) — Places children in equal-width columns, as rows or packed like a pinboard.
+- [AspectRatio](components/aspectratio.md) — Sizes its box from a width/height ratio and lets the other axis follow.
 - [Divider](components/divider.md) — A one-pixel rule between content.
 
 ## Content

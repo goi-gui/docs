@@ -787,7 +787,8 @@ value and goifmt writes it back in degrees (`0.25turn` is `90deg`, `1.57rad` is
 | `ClipRRect` | yes | `crossAxisAlign`, `mainAxisAlign`; clips its children to its rounded box |
 | `Positioned` | yes | `left`, `top`, `right`, `bottom`, `translateX`, `translateY` |
 | `Wrap` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
-| `Grid` | yes | `columns`, `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
+| `Grid` | yes | `columns`, `variant` (`normal`, `masonry`), `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
+| `AspectRatio` | yes | `aspectRatio` (width / height); the parent gives the width and the height follows, or the height in a row and the width follows |
 | `Rectangle` | no | — |
 | `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), plus `radius` |
 | `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`) |
