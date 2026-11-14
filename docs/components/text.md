@@ -17,7 +17,7 @@ Text {
 Text {
 	text:   "Headline"
 	role:   "displaySmall"
-	shadow: 0 2 6 onSurfaceVariant
+	shadow: 0 2 6 theme.onSurfaceVariant
 }
 
 Text {

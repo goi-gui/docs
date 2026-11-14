@@ -133,14 +133,21 @@ Column {
 - A stop may carry a position (`0%`, `50%`, `100%`, or `0`–`1`). A stop without
   one is spread evenly between its neighbours, and the ends default to 0% and
   100%.
+- A stop may name a colour variable instead of a literal: `theme.primary` or
+  `customColor.brand`. The gradient follows the scheme and `SetCustomColor` like
+  any other colour, and a literal and a role can sit in one gradient.
 - The box keeps its `radius` and its `borderColor`/`borderWidth`, drawn on top of
   the fill.
 - Only `background` takes a gradient. A gradient on `color` or `borderColor` is a
   checker error: it fills a box, not a stroke or a glyph.
 
-A gradient is a whole value, so write it quoted. A theme role inside a gradient
-is not resolved; use a literal there, because a gradient is parsed once from the
-string rather than re-resolved per theme.
+A gradient is a whole value, so write it quoted:
+
+```goi
+Card {
+	background: "linear-gradient(90deg, theme.primary, customColor.brand 80%)"
+}
+```
 
 ## Rotating a colour
 

@@ -38,8 +38,21 @@ offsets are required.
 | `x y` | the offset in logical pixels; negative values are allowed |
 | `blur` | how far the edge fades; `0` is a hard edge |
 | `spread` | how much the shape grows before it is blurred (box only); negative shrinks it |
-| `color` | a `#rrggbb` literal, a theme role such as `primary`, or left out |
+| `color` | a `#rrggbb` literal, a CSS name such as `red`, `theme.primary`, `customColor.brand`, or left out |
 | `inset` | paints inside the shape instead of behind it (box only) |
+
+A colour variable names its namespace, so a shadow never guesses between the
+scheme and the app's own colours:
+
+```goi
+Card {
+	shadow: 0 4 12 2 theme.surfaceContainerHighest
+}
+
+Card {
+	shadow: 0 4 12 2 customColor.brand
+}
+```
 
 When the colour is left out, the scheme's shadow colour is used, so a dark theme
 does not get a black smudge on a black page.
@@ -53,7 +66,7 @@ blur outlines the letters, and four hard copies in a ring fake a border.
 ```goi
 Text {
 	text:   "Soft"
-	shadow: 1 1 3 onSurfaceVariant
+	shadow: 1 1 3 theme.onSurfaceVariant
 }
 
 Text {

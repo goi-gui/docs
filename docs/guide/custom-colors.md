@@ -19,6 +19,10 @@ Text {
 	color: customColor.brand
 }
 
+Rectangle {
+	background: "linear-gradient(90deg, theme.primary, customColor.brand)"
+}
+
 Text {
 	text:  "Shipped"
 	color: customColor.success
@@ -43,9 +47,9 @@ every dot, label and border naming it changes in the next frame.
 
 - **The name must be a `.goi` identifier**: a letter or `_`, then letters, digits
   or `_`. `brand`, `brand_2` and `_accent` are fine; `brand-color` is not.
-- **A theme role's name is reserved.** `SetCustomColor("primary", …)` logs an
-  error and is ignored, so a design that says `theme.primary` always follows the
-  scheme. Custom names and role names cannot shadow each other.
+- **A name may repeat a theme role.** Each namespace is explicit, so
+  `theme.primary` and `customColor.primary` are two different colours and set
+  beside each other in one design without a warning. Nothing is reserved.
 - **A name nothing defines warns once** and draws the scheme's `onSurface` until
   it is defined. The warning names the file and suggests the closest role, so a
   typo shows up in the log instead of as a mystery colour.

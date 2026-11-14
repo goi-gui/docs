@@ -563,7 +563,7 @@ declaration. A function call appears either as an event property's whole value
 | `theme.surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
 | `customColor.myBrand` | custom color | a name the app defines with `ui.SetCustomColor`; an undefined one warns and falls back to `onSurface` |
 | `90deg`, `x 90deg`, `1 1 1 90deg` | rotate | the `rotate` property only: CSS form, see [Rotate](#rotate) |
-| `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form; `none` clears it, see [Shadows](guide/shadows.md) |
+| `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form, a colour variable as `theme.<role>` or `customColor.<name>`; `none` clears it, see [Shadows](guide/shadows.md) |
 | `responsive { base: 8 md: 16 }` | modifier | responsive value, one entry per breakpoint; see [Responsive values](#responsive-values) |
 | `conditional { 10: bridge.isWide }` | modifier | first true condition picks the value; see [Conditional values](#conditional-values) |
 | `[1, 2, 3]`, `["Jan", "Feb"]` | list | a property whose value is a list, such as a chart's `categories`, `values` or `colors`; a trailing comma is allowed, see [Lists](#lists) |
@@ -716,13 +716,14 @@ Column {
   stop without one is spread evenly between its neighbours, and the ends default
   to 0% and 100%.
 - The box keeps its `radius` and its border, which are drawn on top of the fill.
+- A stop may be a colour variable: `theme.primary` or `customColor.brand`. It
+  follows the scheme and `SetCustomColor`, so one gradient can mix a role with a
+  literal.
 - A gradient is a whole value: write it quoted, since the commas inside belong to
   the gradient, not to `.goi`.
 - Only `background` takes one. A gradient on `color` or `borderColor` is a checker
   error rather than a silently empty fill, because a gradient is a box, not a
   stroke or a glyph colour.
-- A theme role inside a gradient is not resolved; use a literal there, because the
-  stop list is parsed once from the string.
 
 ## Rotate
 
