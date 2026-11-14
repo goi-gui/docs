@@ -46,8 +46,10 @@ of the picture, so a slow start reads as work rather than a still frame. It
 takes `color`, and `variant: wavy` draws it as a ribbon too. It disappears as
 soon as a frame is there.
 
-`color` tints the scrubber's watched part and its handle, and the loading ring
-below. `variant: wavy` draws that played part as a moving sine ribbon with round
+`surfaceColor` is the bar's background and, while the player is fetching a file
+or a live segment, the loading area behind the ring: an opaque colour replaces
+the scrim, and an `#rrggbbaa` value keeps exactly the alpha it names. `color`
+tints the scrubber's watched part and its handle, and the loading ring below. `variant: wavy` draws that played part as a moving sine ribbon with round
 joins, and only while the video is playing: the wave travels, the handle
 rides its end, and a paused video shows the normal bar. The part still ahead is
 a dim flat track with no dim fill under the ribbon.
@@ -104,6 +106,7 @@ Button {
 | `controlsTrackColor` | color | scrubber track, played part and knob; 0 follows white and the scheme's primary |
 | `variant` | enum | `normal` (a plain track and loading ring, the default) or `wavy` (both as a moving ribbon) |
 | `color` | color | the scrubber's watched part and handle, and the loading ring; unset keeps white over the picture |
+| `surfaceColor` | color | the bar's background, alpha included, and the loading area; unset keeps the translucent scrim |
 
 ## Methods
 

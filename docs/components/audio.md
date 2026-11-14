@@ -64,6 +64,7 @@ Button {
 | `controlsTrackColor` | color | scrubber track, played part and knob; 0 keeps the scheme's |
 | `variant` | enum | `normal` (a plain track and loading ring, the default) or `wavy` (both as a moving ribbon) |
 | `color` | color | the scrubber's played part and handle, and the loading ring; unset keeps the scheme's primary, or white over a video |
+| `surfaceColor` | color | the bar's background, alpha included; on a video it also paints the loading area; unset keeps the translucent theme colour |
 | `subtitles` | string | an SRT or WebVTT file, or a `goi://` path to one; empty draws none |
 | `subtitleFontSize` | number | caption size in dp; 0 follows the player's own |
 | `subtitleColor` | color | caption colour; 0 keeps white |
