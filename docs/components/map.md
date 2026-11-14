@@ -1,7 +1,8 @@
 # Map
 
 A slippy map: raster tiles from OpenStreetMap by default, dragged with the
-pointer and zoomed with the wheel, with a GeoJSON boundary drawn over it.
+pointer and zoomed with the wheel, with boundaries, markers and routes drawn as
+its children.
 
 [All components](../components.md)
 
@@ -14,18 +15,30 @@ Map {
 	height:      360
 	radius:      16
 	bbox:        [28.5, 40.8, 29.5, 41.4]
-	geom:        "goi://districts.geojson"
-	lineColor:   theme.primary
-	fillColor:   #6750a433
 	attribution: "© OpenStreetMap contributors"
+
+	Geom {
+		data:      [28.97, 41.01, 29.06, 41.01, 29.06, 41.08]
+		lineColor: theme.primary
+		fillColor: #6750a433
+	}
+
+	Path {
+		coordinates: [[28.97, 41.01], [29.06, 41.01], [29.06, 41.08]]
+		lineColor:   theme.tertiary
+	}
+
+	Point {
+		coordinate: [28.97, 41.01]
+		IconButton { icon: location_on variant: filled }
+	}
 }
 ```
 
 `bbox` frames a region, so a map opens where the design wants it; `center` and
 `zoom` are the alternative when a box is not what you have. The repository's
-`examples/map` runs this shape with a GeoJSON asset next to it: `make map`. `geom` takes GeoJSON
-text inline or the path of an asset that holds it, so a boundary file stays a
-file.
+`examples/map` searches PiriAPI and builds one `Geom` per returned polygon with a
+`for` loop: `make map`.
 
 ## Properties
 
@@ -36,15 +49,29 @@ file.
 | `center` | string | — | `lat,lon`, the way every map URL writes a position |
 | `zoom` | number | `2` | Web Mercator zoom, `0`..`19`; fractions are allowed |
 | `bbox` | list | — | four numbers, `[west, south, east, north]` in degrees; while set it wins over `center` and `zoom` and the map refits whenever the box or the map's size changes |
-| `geom` | string | — | GeoJSON text, or the path of an asset (`goi://…`) or file that holds it |
-| `lineColor` | color | scheme `primary` | paints the boundary stroke and its vertex dots |
-| `fillColor` | color | — | fills the polygons; use a translucent literal such as `#6750a433`, since a role is opaque |
 | `reverseTileColors` | bool | `false` | inverts the tile RGB as it draws, for a dark scheme over a light raster service |
 | `disablePan` | bool | `false` | dragging no longer moves the map |
 | `disableZoom` | bool | `false` | the wheel no longer zooms the map, so it reaches the page behind it |
 
 A map fills the width it is given, like a chart, and keeps a 220dp height until
 the design sets one. The usual box is `width: 100%` with a `flex` or a `height`.
+
+## Overlays
+
+A Map takes three children, in paint order:
+
+- [Geom](geom.md) — one filled and stroked polygon.
+- [Path](path.md) — an open polyline.
+- [Point](point.md) — a marker whose children are centred on a coordinate.
+
+Coordinates are GeoJSON order wherever a list holds a pair: longitude first,
+then latitude. `bbox` and `Point.coordinate` are `[lon, lat]`; a `Geom`'s `data`
+is a flat `[lon, lat, lon, lat, …]` ring, and a `Path`'s `coordinates` is a list
+of `[lon, lat]` pairs.
+
+`Geom` and `Path` are overlay children, not content: layout gives them the whole
+map box, so setting `width` or `padding` on them does nothing. A `Point` keeps the
+size of its children and is moved to its projected coordinate when it paints.
 
 ## Interaction
 
@@ -64,44 +91,21 @@ the design sets one. The usual box is `width: 100%` with a `flex` or a `height`.
   press fall through to the page, and a disabled zoom lets the wheel scroll it.
   A disabled zoom takes double-click and pinch with it.
 
-## The boundary layer
-
-`geom` accepts anything GeoJSON calls a geometry, plus the `Feature`,
-`FeatureCollection` and `GeometryCollection` wrappers, so a file from a GIS
-export usually works as it is. Coordinates are GeoJSON order — longitude, then
-latitude:
-
-```json
-{
-  "type": "Feature",
-  "geometry": {
-    "type": "Polygon",
-    "coordinates": [[[28.97, 41.01], [29.06, 41.01], [29.06, 41.08], [28.97, 41.01]]]
-  }
-}
-```
-
-`Polygon` and `MultiPolygon` draw their rings as outlines (an inner ring reads as
-a hole in the outline), `LineString` and `MultiLineString` draw open paths, and
-`Point` and `MultiPoint` draw dots. Everything is stroked in the scheme's
-`primary`, 2dp wide, with a dot at each vertex; there is no fill, because a
-semi-transparent fill over street tiles is harder to read than an outline.
-
-The geometry is parsed once per value, so a per-frame paint does not re-read the
-JSON. A `geom` that fails to parse draws nothing; `Map.GeomError()` in Go says
-why.
-
 ## From Go
 
 ```go
 m := ui.MustByID[*ui.Map](w, "city")
 m.SetView(41.0082, 28.9784, 13) // lat, lon, zoom
 lat, lng, zoom := m.View()
-
-// A boundary an app computed: a GeoJSON geometry, Feature or collection.
-m.Geom.Set(geoJSON)          // GeoJSON text, parsed on the next paint
-m.SetGeometry(boundary)       // ui.MapGeometry, e.g. an API's coordinates
 m.BBox.Set([]float64{28.5, 40.8, 29.5, 41.4})
+
+// One polygon from an API's [lon, lat] ring.
+ui.MustByID[*ui.Geom](w, "district").Data.Set(ring)
+
+// A route as [lon, lat] pairs.
+ui.MustByID[*ui.Path](w, "route").Coordinates.Set([]ui.Coord{
+	{28.97, 41.01}, {29.06, 41.01},
+})
 ```
 
 | Method | Notes |
@@ -109,14 +113,26 @@ m.BBox.Set([]float64{28.5, 40.8, 29.5, 41.4})
 | `SetView(lat, lng, zoom)` | moves the camera and writes it back to `center` and `zoom` |
 | `View()` | the position and zoom on screen |
 | `PanBy(dx, dy)` | moves the camera by a pointer delta, in logical pixels |
-| `SetGeometry(g)` | draws a boundary that already exists as `ui.MapGeometry` coordinates, with no JSON round trip |
 | `ZoomAt(x, y, delta)` | changes the zoom while keeping the point at `x`,`y` (map-local pixels) fixed |
-| `Geometry()` | the parsed `geom`, or nil |
-| `GeomError()` | why the last `geom` did not parse |
 
 The camera properties are the state, so a `Bind` that runs after a hot reload
 keeps the view the user left, and a design that writes `zoom: app.zoom` still
 works.
+
+A list of polygons usually comes from the bridge, one loop row per polygon:
+
+```goi
+for _, g := range bridge.Geoms {
+	Geom {
+		data:      g.Data
+		lineColor: theme.primary
+		fillColor: #6750a433
+	}
+}
+```
+
+A bridge slice may feed a list property, so `g.Data` (a `[]float64`) is assigned
+to `data` as it is. The same works for `Point.coordinate` from a `[]float64`.
 
 ## Tiles and attribution
 

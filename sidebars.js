@@ -170,7 +170,7 @@ const sidebars = {
 					type: 'category',
 					label: 'Maps',
 					collapsed: true,
-					items: ['components/map'],
+					items: ['components/map', 'components/geom', 'components/point', 'components/path'],
 				},
 				{
 					type: 'category',

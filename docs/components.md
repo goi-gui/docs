@@ -107,7 +107,10 @@ Both play through ffmpeg, which has to be on `PATH`; both can hide their control
 
 ## Maps
 
-- [Map](components/map.md) — OpenStreetMap tiles with pan, zoom and a GeoJSON boundary overlay.
+- [Map](components/map.md) — OpenStreetMap tiles with pan, zoom and overlay children.
+- [Geom](components/geom.md) — One filled and stroked polygon on a map.
+- [Point](components/point.md) — A marker on a map, with any children.
+- [Path](components/path.md) — An open polyline between coordinates on a map.
 
 ## Charts
 
