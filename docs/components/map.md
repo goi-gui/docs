@@ -15,6 +15,8 @@ Map {
 	radius:      16
 	bbox:        [28.5, 40.8, 29.5, 41.4]
 	geom:        "goi://districts.geojson"
+	lineColor:   theme.primary
+	fillColor:   #6750a433
 	attribution: "© OpenStreetMap contributors"
 }
 ```
@@ -35,6 +37,9 @@ file.
 | `zoom` | number | `2` | Web Mercator zoom, `0`..`19`; fractions are allowed |
 | `bbox` | list | — | four numbers, `[west, south, east, north]` in degrees; while set it wins over `center` and `zoom` and the map refits whenever the box or the map's size changes |
 | `geom` | string | — | GeoJSON text, or the path of an asset (`goi://…`) or file that holds it |
+| `lineColor` | color | scheme `primary` | paints the boundary stroke and its vertex dots |
+| `fillColor` | color | — | fills the polygons; use a translucent literal such as `#6750a433`, since a role is opaque |
+| `reverseTileColors` | bool | `false` | inverts the tile RGB as it draws, for a dark scheme over a light raster service |
 | `disablePan` | bool | `false` | dragging no longer moves the map |
 | `disableZoom` | bool | `false` | the wheel no longer zooms the map, so it reaches the page behind it |
 
@@ -46,14 +51,18 @@ the design sets one. The usual box is `width: 100%` with a `flex` or a `height`.
 - **Drag** pans. The press belongs to the map, so a scroll area under it does
   not also move.
 - **Wheel** zooms around the point under the pointer, so the street you pointed
-  at stays under it. A notch is half a level; a touchpad moves it smoothly.
-- Both write back to `center` and `zoom`, which is why reading them from Go
-  tells you what the user is looking at.
-- `disablePan` and `disableZoom` take one gesture each; a disabled pan lets a
+  at stays under it. A notch is half a level; a touchpad moves it smoothly. The
+  direction is the reverse of a page scroll: a notch away from you zooms in.
+- **Double click** (or a second press on the same spot within 300ms) zooms one
+  level in, around the click. A drag between the two presses cancels it.
+- **Pinch** on a trackpad or touchscreen applies the gesture's relative scale to
+  the map under the pointer. SDL reports the scale but no position, so the
+  pointer is the anchor.
+- All of them write back to `center` and `zoom`, which is why reading them from
+  Go tells you what the user is looking at.
+- `disablePan` and `disableZoom` take the gestures away; a disabled pan lets a
   press fall through to the page, and a disabled zoom lets the wheel scroll it.
-
-There is no double-click or pinch gesture: a map is panned and zoomed, and the
-two switches are the whole configuration.
+  A disabled zoom takes double-click and pinch with it.
 
 ## The boundary layer
 
