@@ -1,7 +1,7 @@
 # LoadingIndicator
 
-The M3 indeterminate loading shape: a rounded star that turns while its lobe
-count morphs between eight, six and four points.
+The M3 indeterminate loading shape: a twelve-lobed star that turns while it
+morphs into a rounded square, squeezes into a pill, and comes back.
 
 [All components](../components.md)
 
