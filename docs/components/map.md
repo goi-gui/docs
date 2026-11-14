@@ -13,7 +13,7 @@ Map {
 	width:       100%
 	height:      360
 	radius:      16
-	bbox:        "28.5,40.8,29.5,41.4"
+	bbox:        [28.5, 40.8, 29.5, 41.4]
 	geom:        "goi://districts.geojson"
 	attribution: "© OpenStreetMap contributors"
 }
@@ -33,7 +33,7 @@ file.
 | `attribution` | string | `© OpenStreetMap contributors` | the credit line in the corner; `""` hides it |
 | `center` | string | — | `lat,lon`, the way every map URL writes a position |
 | `zoom` | number | `2` | Web Mercator zoom, `0`..`19`; fractions are allowed |
-| `bbox` | string | — | `west,south,east,north` in degrees; while set it wins over `center` and `zoom` and the map refits whenever the box or the map's size changes |
+| `bbox` | list | — | four numbers, `[west, south, east, north]` in degrees; while set it wins over `center` and `zoom` and the map refits whenever the box or the map's size changes |
 | `geom` | string | — | GeoJSON text, or the path of an asset (`goi://…`) or file that holds it |
 | `disablePan` | bool | `false` | dragging no longer moves the map |
 | `disableZoom` | bool | `false` | the wheel no longer zooms the map, so it reaches the page behind it |
@@ -90,7 +90,9 @@ m.SetView(41.0082, 28.9784, 13) // lat, lon, zoom
 lat, lng, zoom := m.View()
 
 // A boundary an app computed: a GeoJSON geometry, Feature or collection.
-m.Geom.Set(geoJSON)
+m.Geom.Set(geoJSON)          // GeoJSON text, parsed on the next paint
+m.SetGeometry(boundary)       // ui.MapGeometry, e.g. an API's coordinates
+m.BBox.Set([]float64{28.5, 40.8, 29.5, 41.4})
 ```
 
 | Method | Notes |
@@ -98,6 +100,7 @@ m.Geom.Set(geoJSON)
 | `SetView(lat, lng, zoom)` | moves the camera and writes it back to `center` and `zoom` |
 | `View()` | the position and zoom on screen |
 | `PanBy(dx, dy)` | moves the camera by a pointer delta, in logical pixels |
+| `SetGeometry(g)` | draws a boundary that already exists as `ui.MapGeometry` coordinates, with no JSON round trip |
 | `ZoomAt(x, y, delta)` | changes the zoom while keeping the point at `x`,`y` (map-local pixels) fixed |
 | `Geometry()` | the parsed `geom`, or nil |
 | `GeomError()` | why the last `geom` did not parse |
