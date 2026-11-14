@@ -92,8 +92,10 @@ Only `ui` is imported by an application.
 ### Platform requirements
 
 goi runs on Linux (Wayland and X11), Windows and macOS. The window layer is
-cgo over SDL3, so a build needs a C compiler, `pkg-config` and SDL3's
-development files; everything above it is pure Go.
+cgo over SDL3 by default, so that build needs a C compiler, `pkg-config` and
+SDL3's development files; everything above it is pure Go. A `CGO_ENABLED=0`
+build uses the purego SDL3 backend instead and needs only the SDL3 runtime
+library.
 
 ```sh
 # Linux
@@ -107,9 +109,14 @@ go build ./...
 # Windows (MSYS2 MINGW64 shell)
 pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-pkgconf mingw-w64-x86_64-SDL3
 go build ./...
+
+# Any of the three, without a C toolchain or SDL development files
+CGO_ENABLED=0 go build -tags nofakecgo ./...
 ```
 
 The same binary asks SDL which video driver it got and draws through Vulkan
 (Wayland, X11), Direct3D 12 (Windows) or Metal (macOS); no GPU SDK is needed
-beyond the driver. `-ldflags=-linkmode=internal` is Linux-only, because goffi's
-dynamic imports and the cgo SDL shim cannot share the external linker.
+beyond the driver. `-ldflags=-linkmode=internal` is Linux-only for the cgo
+build, because goffi's dynamic imports and the cgo SDL shim cannot share the
+external linker. The purego build needs no cgo flag; `nofakecgo` lets goffi and
+purego share one fake C runtime.

@@ -175,10 +175,19 @@ CGO_ENABLED=0 GOOS=windows go build ./internal/...
 CGO_ENABLED=0 GOOS=darwin  go build ./internal/...
 ```
 
-A full app binary cannot be cross-compiled with the stock Go toolchain, because
-the platform layer needs the target's SDL3 headers and a C compiler for that
-target. The reliable way is to build on each platform — what goi's own CI does,
-with SDL3 built from source on Linux, Homebrew on macOS and MSYS2 on Windows.
+The purego platform cross-compiles a full app: `CGO_ENABLED=0` does not ask the
+target for a C toolchain or SDL3 headers, only for the runtime library at run
+time.
+
+```sh
+CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags nofakecgo ./cmd/myapp
+CGO_ENABLED=0 GOOS=darwin  GOARCH=arm64 go build -tags nofakecgo ./cmd/myapp
+```
+
+The cgo platform still cannot be cross-compiled with the stock toolchain: it
+needs the target's SDL3 headers and a C compiler for that target. Build cgo
+binaries on each platform — what goi's own CI does, with SDL3 built from source
+on Linux, Homebrew on macOS and MSYS2 on Windows.
 
 ## Checking a build
 
