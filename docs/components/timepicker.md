@@ -58,7 +58,7 @@ The corner icon swaps the variants — a keyboard on the dial and a clock on the
 fields — which is also a design-level change, so a `.goi` file can start on
 either with `variant`.
 
-- **OK** and Enter emit `onSubmit` with the value.
+- **OK** and Enter emit `onOK` and `onSubmit` with the value.
 - **Cancel** and Escape emit `onCancel` with the value, which the app decides
   what to do with.
 
@@ -66,7 +66,7 @@ either with `variant`.
 
 ```go
 picker := ui.MustByID[*ui.TimePicker](w, "time")
-picker.OnSubmit(func(v string) { fmt.Println("picked", v) }) // "19:30"
+picker.OnOK(func(v string) { fmt.Println("picked", v) }) // "19:30"
 picker.OnCancel(func(v string) { closeDialog() })
 picker.Text.Set("07:00")
 picker.Variant.Set("input")

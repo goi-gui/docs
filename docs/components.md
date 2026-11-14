@@ -312,6 +312,7 @@ Window {
 | `onPause: bridge.Handler(event)` | `OnPause(func(float64))` | Audio, Video |
 | `onEnd: bridge.Handler(event)` | `OnEnd(func(float64))` | Audio, Video |
 | `onCancel: bridge.Handler(event)` | `OnCancel(func(string))` | TimePicker |
+| `onOK: bridge.Handler(event)` | `OnOK(func(string))` | TimePicker |
 | `onDoubleTap: bridge.Handler()` | `OnDoubleTap(func(ui.ClickEvent))` | GestureDetector |
 | `onLongPress: bridge.Handler()` | `OnLongPress(func(ui.ClickEvent))` | GestureDetector |
 | `onPanStart`, `onPanUpdate`, `onPanEnd` | `OnPanStart/Update/End(func(ui.PanEvent))` | GestureDetector |
