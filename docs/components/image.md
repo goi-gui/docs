@@ -57,7 +57,7 @@ path straight through.
 | Property | Type | Notes |
 |---|---|---|
 | `src` | string | `goi://` container path, a machine path, or an `http`/`https` URL |
-| `fit` | string | `cover`, `contain` or `fill` |
+| `fit` | enum | `cover`, `contain` or `fill` |
 | `paused` | bool | holds a GIF or APNG where it is; `false` by default |
 | `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
 

@@ -10,7 +10,7 @@ shadow's colour, and so on.
 
 [All components](../components.md)
 
-## The four ways to name a colour
+## The five ways to name a colour
 
 | Form | Example | Follows the theme? |
 |---|---|---|

@@ -18,8 +18,8 @@ FAB {
 }
 
 FAB {
-	icon:    add
-	variant: small
+	icon: add
+	size: 40
 }
 ```
 
@@ -29,7 +29,7 @@ FAB {
 |---|---|---|
 | `label` | string | the main text |
 | `icon` | string | leading Material Symbols ligature |
-| `variant` | enum | `primary` (default), `secondary`, `tertiary` |
+| `variant` | enum | `primary` (default), `secondary`, `tertiary`; `extended` with a `label` |
 | `disabled` | bool | dims the element and blocks input |
 | `expanded` | bool | open state (menu, split button) |
 

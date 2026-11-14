@@ -3,7 +3,8 @@
 A sortable data grid: `TableColumn` children declare the columns, `TableRow`
 children hold one `TableCell` per column. A cell's children are what a reader
 sees, so it can hold a `Text`, a `Chip`, an icon-bearing row or any other
-component; its `value` is the string sorting reads. The header sorts on click,
+component; its `value` is the key sorting reads, kept as the text it was
+written as (a string, a number or a bool). The header sorts on click,
 `selectable` lets a click pick rows, and Go can do both through the same API.
 
 [All components](../components.md)

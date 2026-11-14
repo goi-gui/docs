@@ -52,9 +52,10 @@ PieChart {
 }
 ```
 
-`colors` takes the same forms a colour property does: a role such as `primary`,
-a hex literal, a CSS name or `rgb()`. A single `Color` on a `ChartSeries` — or
-`Series.Color` in Go — paints the whole pie one colour instead.
+`colors` is a colour list, so each entry names its namespace: a theme role
+(`theme.primary`), an app colour (`customColor.brand`), a hex literal, a CSS name
+or `rgb()`. A single `color` on a `ChartSeries` — or `Series.Color` in Go — paints
+the whole pie one colour instead.
 
 A negative or zero value is skipped, so a gap in the data does not tilt the
 others. The centre of a pie is not a slice: a press there picks nothing.
@@ -72,6 +73,7 @@ others. The centre of a pie is not a slice: a press there picks nothing.
 | `values` | bool | the value written inside each wedge; off by default |
 | `grid` | bool | has no effect on a pie |
 | `axis` | bool | has no effect on a pie |
+| `min`, `max` | number | pin the scale the shares are read against; `0` follows the data |
 
 The rest of the surface is the common box: `background`, `borderWidth`,
 `borderColor`, `radius`, `padding` and the rest of the

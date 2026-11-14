@@ -19,10 +19,19 @@ components. They all share one property set and one way of being driven from Go.
 - [ClipRRect](components/cliprrect.md) — Cuts its children to a rounded box.
 - [Wrap](components/wrap.md) — Flows children left to right and starts a new run when the next child does not fit.
 - [Grid](components/grid.md) — Places children in a fixed number of equal-width columns.
-- [Rectangle](components/rectangle.md) — A plain colored box.
+- [Divider](components/divider.md) — A one-pixel rule between content.
+
+## Content
+
+What a page shows: text, documents, media and plain boxes. These are nodes rather than Material components, so they take the common box properties and nothing else unless their page says so.
+
+- [Text](components/text.md) — One run of text at a Material 3 type-scale role.
+- [RichText](components/richtext.md) — One paragraph of styled runs.
+- [Code](components/code.md) — A syntax-highlighted code block.
+- [Markdown](components/markdown.md) — A markdown document, rendered as elements.
 - [Image](components/image.md) — Draws a decoded bitmap.
 - [SVG](components/svg.md) — Draws an SVG file, with `currentColor` set from the design.
-- [Text](components/text.md) — One run of text at a Material 3 type-scale role.
+- [Rectangle](components/rectangle.md) — A plain colored box.
 
 ## Actions
 
@@ -34,6 +43,7 @@ components. They all share one property set and one way of being driven from Go.
 - [SplitButton](components/splitbutton.md) — A primary action with an attached menu trigger.
 - [SegmentedButton](components/segmentedbutton.md) — A horizontal set of segments.
 - [Chip](components/chip.md) — A compact, rounded element for filters, inputs, suggestions and tags.
+- [Toolbar](components/toolbar.md) — A horizontal strip of compact controls.
 
 ## Selection controls
 
@@ -54,14 +64,14 @@ components. They all share one property set and one way of being driven from Go.
 - [Dialog](components/dialog.md) — A modal surface for a decision or a short form.
 - [BottomSheet](components/bottomsheet.md) — A surface anchored to the bottom edge.
 - [SideSheet](components/sidesheet.md) — A surface anchored to a side edge, for settings or detail.
-- [Divider](components/divider.md) — A one-pixel rule between content.
 - [List](components/list.md) — A vertical container for `ListItem`s and `MenuItem`s.
 - [ListItem](components/listitem.md) — One row in a list: leading icon, label, optional supporting line, trailing affordance.
 - [Menu](components/menu.md) — A popup list of `MenuItem`s.
 - [MenuItem](components/menuitem.md) — One row in a menu.
-- [Tooltip](components/tooltip.md) — A short hint attached to a control.
 - [Snackbar](components/snackbar.md) — A short, transient message at the bottom of the screen.
+- [Tooltip](components/tooltip.md) — A hint that wraps the control it explains and floats above it on hover.
 - [Table](components/table.md) — A sortable data grid with declared columns and rows, selectable and sortable from a design or from Go.
+- [Carousel](components/carousel.md) — A horizontally scrolling row of cards.
 
 ## Navigation
 
@@ -85,21 +95,12 @@ components. They all share one property set and one way of being driven from Go.
 - [DatePicker](components/datepicker.md) — A calendar surface for picking a date.
 - [TimePicker](components/timepicker.md) — A clock dial for picking a time.
 
-## Media and grouping
-
-- [Carousel](components/carousel.md) — A horizontally scrolling row of cards.
-- [Toolbar](components/toolbar.md) — A horizontal strip of compact controls.
-- [Code](components/code.md) — A syntax-highlighted code block.
-- [Markdown](components/markdown.md) — A markdown document, rendered as elements.
-- [RichText](components/richtext.md) — One paragraph of styled runs.
-
 ## Media
+
+Both play through ffmpeg, which has to be on `PATH`; both can hide their controls and be driven from `.goi` (`clip.play()`) or Go (`app.PlayMedia(clip)`).
 
 - [Audio](components/audio.md) — A sound player with a built-in transport bar.
 - [Video](components/video.md) — A video player, decoded with ffmpeg.
-
-Both play through ffmpeg, which has to be on `PATH`; both can hide their controls
-and be driven from `.goi` (`clip.play()`) or Go (`app.PlayMedia(clip)`).
 
 ## Charts
 
@@ -303,7 +304,11 @@ Window {
 | `onChange: bridge.Handler(event)` | `OnChangeValue(func(float64))` | Slider |
 | `onEdit: bridge.Handler(event)` | `OnEdit(func(string))` | TextField, SearchBar (every keystroke) |
 | `onSubmit: bridge.Handler(event)` | `OnSubmit(func(string))` | TextField, SearchBar (Enter) |
-| `onSelect: bridge.Handler(event)` | `OnSelect(func(int))` | Tabs, NavigationBar, NavigationRail, List, Menu |
+| `onSelect: bridge.Handler(event)` | `OnSelect(func(int))` | Tabs, NavigationBar, NavigationRail, List, Menu, Table, SegmentedButton, Carousel, and every chart (the slice or point) |
+| `onHover: bridge.Handler(event)` | `OnHoverPoint(func(int))` | charts: the point under the pointer, -1 when it leaves |
+| `onPlay: bridge.Handler(event)` | `OnPlay(func(float64))` | Audio, Video (payload: position in seconds) |
+| `onPause: bridge.Handler(event)` | `OnPause(func(float64))` | Audio, Video |
+| `onEnd: bridge.Handler(event)` | `OnEnd(func(float64))` | Audio, Video |
 
 The value of an event property is always a handler call. Its arguments are
 evaluated when the event fires; `event` is the event's own payload. A fragment
@@ -311,71 +316,19 @@ can also declare a handler prop (`props { OnOpen func(id string) }`) and call
 it, with the instance deciding which bridge handler that is. See
 `syntax.md` for the bridge block, handler types and runtime errors.
 
-## Themes
+## Themes and custom colours
 
-`theme` names a colour scheme. `light` and `dark` are built in; the app defines
-more on the window, under the scheme's own `Name`:
+`theme` names a colour scheme: `light` and `dark` are built in, and the app adds
+more on the window with `Window.DefineTheme`, either edited by hand or derived
+from one seed colour. Every colour a component draws comes from the resolved
+scheme, so switching it recolours the whole window.
 
-```go
-brand := *ui.LightTheme()
-brand.Name = "brand"
-brand.Colors.Primary = 0x00695CFF
+An app can also name its own colours and use them under `customColor.`; they
+resolve on every frame, so setting one again recolours every element that uses
+it without a reload.
 
-win, _ := app.LoadWindowFile("app.goi")
-win.DefineTheme(&brand)
-```
-
-```goi
-Window {
-	theme: brand
-}
-```
-
-`ui.LightTheme()`/`ui.DarkTheme()` return a copy you can edit; `ui.Theme` and
-`ui.Colors` are the exported types. `ui.NewThemeFromSeed(color, dark)` builds a
-whole scheme from one seed colour, named `lightFromSeed` or `darkFromSeed`. A
-design may name a scheme before `DefineTheme` runs; an unknown name falls back to
-light and logs a warning once.
-
-`app.mode` (design) and `Window.Mode()` (Go) report the resolved scheme's mood as
-`light` or `dark`, so a registered dark theme reads as dark. `theme: app.systemMode`
-follows the desktop setting, and `Window.SystemMode()` reports it from Go as a
-`ui.Mode` enum.
-
-### Custom colours
-
-An app can name its own colours and use them under `customColor.`, exactly where
-a role goes:
-
-```go
-win.SetCustomColors(map[string]uint32{
-	"myBrand":    0x411F89FF,
-	"otherColor": 0x2C165CFF,
-})
-win.SetCustomColor("myBrand", 0x53268AFF) // or one at a time
-```
-
-```goi
-Rectangle {
-	background: customColor.myBrand
-}
-
-Text {
-	color: customColor.otherColor
-}
-```
-
-A name resolves on every frame, so setting it again recolours every element that
-uses it, with no reload. Two rules keep the vocabulary honest:
-
-- A name the Material scheme already owns (`primary`, `onSurface`, …) is
-  **reserved**: the call logs an error and does nothing, so a design that says
-  `theme.primary` keeps following the theme.
-- A name a design uses but nothing defines logs a **warning** once (with a "did
-  you mean" hint) and draws the scheme's `onSurface` until it is defined.
-
-A custom name must be a `.goi` identifier: a letter or `_`, then letters, digits
-or `_`. See [Custom colours](guide/custom-colors.md) for the full rules.
+Both are covered on their own pages: [Theming](guide/theming.md) and
+[Custom colours](guide/custom-colors.md).
 
 ## Finding elements from Go
 

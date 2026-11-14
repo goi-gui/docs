@@ -27,6 +27,7 @@ ScatterChart {
 | `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
 | `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
 | `points` | bool | draw the dots; `true` by default |
+| `values` | bool | the value written beside each dot; off by default |
 | `min`, `max` | number | pin the value scale; `0` follows the data |
 
 The rest of the surface is the common box: `background`, `borderWidth`,

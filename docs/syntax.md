@@ -447,14 +447,17 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   passes a bool, `onChange` a number, `onEdit` and `onSubmit` a string,
   `onSelect` an index. `onClick` carries no scalar value.
 - **Events.** Every element accepts `onClick`. Components also accept
-  `onToggle`, `onChange`, `onEdit`, `onSubmit` and `onSelect` where they emit
-  them. The value is always a handler call — `bridge.Name(...)` in a design,
-  `props.Name(...)` inside the fragment that declares it; a literal is
+  `onToggle`, `onChange`, `onEdit`, `onSubmit`, `onSelect`, `onPlay`, `onPause`
+  and `onEnd` where they emit them, and a chart adds `onHover` for the point
+  under the pointer. The value is always a handler call — `bridge.Name(...)` in
+  a design, `props.Name(...)` inside the fragment that declares it; a literal is
   rejected.
-- **A call on an id.** An event may drive an animated element directly instead
-  of going through Go: `onClick: spin.pause()`. An `Image` or `SVG` answers
-  `play()`, `pause()` and `stop()`, and they take no arguments. Anything else
-  is a checker error.
+- **A call on an id.** An event may drive an element directly instead of going
+  through Go: `onClick: spin.pause()`. An `Image` or `SVG` answers `play()`,
+  `pause()` and `stop()`. `Audio` and `Video` answer the same three plus
+  `seek(seconds)`, `volume(level)`, `audioTrack(index)`, `fullscreen()` and
+  `windowed()`; `Switch` answers `toggle()`. Anything else is a checker error,
+  and so is an argument of the wrong type.
 - **Any file may declare them.** A fragment owns its own `bridge { ... }` block
   and the types its loops walk; the declarations merge into the one design the
   app sees, so `ui.SetData(w, "Rows", …)` feeds a list a fragment drew.
@@ -773,7 +776,7 @@ value and goifmt writes it back in degrees (`0.25turn` is `90deg`, `1.57rad` is
 | `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), plus `radius` |
 | `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`) |
 | `Text` | no | `text`, `fontSize`, `weight`, `fontWeight`, `fontStyle`, `decoration`, `decorationStyle`, `decorationThickness`, `decorationColor`, `color`, `align`, `wrap`, `role`, `selectable`, `link` |
-| `RichText` | yes (`Text` runs) | `role`, `fontSize`, `color`, `align`, `wrap`; each `Text` child is one styled run, see [RichText](components/richtext.md) |
+| `RichText` | yes (`Text` runs) | `text`, `role`, `fontSize`, `color`, `align`, `wrap`; each `Text` child is one styled run, see [RichText](components/richtext.md) |
 | `Markdown` | no (built from the source) | `text`; the document becomes ordinary elements, see [Markdown](components/markdown.md) |
 | `ChartSeries` | no | inside a chart: `label`, `values` (comma-separated numbers), `color`; the series becomes the chart's data and leaves the tree, see [LineChart](components/linechart.md#the-data) |
 
@@ -870,12 +873,16 @@ separate package. Containers take children; the rest are leaves:
 `TopAppBar`, `NavigationBar`, `NavigationRail`, `NavigationDrawer`,
 `NavigationItem`, `Tabs`, `Tab`, `LinearProgress`, `CircularProgress`,
 `LoadingIndicator`, `DatePicker`, `TimePicker`, `Carousel`, `Toolbar`,
-`TextArea`, `Code`.
+`TextArea`, `Code`, `Audio`, `Video`, and the seven charts (`LineChart`,
+`AreaChart`, `BarChart`, `PieChart`, `ScatterChart`, `RadarChart`,
+`GaugeChart`), whose `ChartSeries` children carry their data.
 
 They share one vocabulary: `label`, `supporting`, `text`, `placeholder`, `icon`,
 `trailingIcon` (icon names are Material Symbols ligatures such as `home`),
-`variant`, `size`, `disabled`, `checked`, `selected`, `expanded`, `value`,
-`min`, `max`, `step`, `language`, `showCopy`. Each kind accepts only the subset
+`variant`, `disabled`, `checked`, `selected`, `expanded`, `value`, `min`, `max`,
+`step`, `language`, `showCopy`, and `color` where the component is its own
+glyph (the loading indicator). `size` is not part of it: it is the common box
+property that sets width and height together. Each kind accepts only the subset
 that makes sense for it;
 `internal/componentdef` is the single table that the schema and the node tree
 both read, so an element can never validate without existing.
@@ -916,11 +923,14 @@ and `top` reserve `-1` for "auto", so a slide off screen animates the translate
 instead.
 
 Common to every element: `id`, `width`, `height`, `size`, `minWidth`, `maxWidth`,
-`minHeight`, `maxHeight`, `margin`, `padding`, `paddingX`, `paddingY`, `background`, `borderColor`,
-`borderWidth`, `radius`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
-`opacity`, `backdropBlur`, `zIndex`, `cursor`, `hideScrollbar`, `autoHideScrollbar`,
-`scrollbarWidth`,
-`scrollbarColor`, `scrollShadow`, `scrollShadowColor`, `template`. `marginTop`,
+`minHeight`, `maxHeight`, `margin`, `padding`, `paddingX`, `paddingY`,
+`background`, `borderColor`, `borderWidth`, `borderTopWidth`,
+`borderRightWidth`, `borderBottomWidth`, `borderLeftWidth`,
+`borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor`,
+`radius`, `fontFamily`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
+`opacity`, `backdropBlur`, `zIndex`, `cursor`, `rotate`, `hideScrollbar`,
+`autoHideScrollbar`, `scrollbarWidth`, `scrollbarColor`, `scrollShadow`,
+`scrollShadowColor`, `template`. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
 `margin`/`padding`; `paddingX` and `paddingY` set both sides of their axis.
@@ -1300,8 +1310,9 @@ mid-typing never reflows it.
 
 ## Rules and diagnostics
 
-- Exactly one root element, and it must be `Window` — unless the file declares
-  `props`, which makes it a fragment that an `import` pulls in.
+- Exactly one root element. A design the app loads with `LoadWindow` must be a
+  `Window`; a fragment pulled in with `import` declares `props` and may root at
+  any element.
 - `id` must match `[a-z][A-Za-z0-9_]*` (or `a.b`, which is what an instance
   gives a fragment's ids) and be unique within the file.
 - `Positioned` must be a direct child of `Stack`.
@@ -1318,14 +1329,7 @@ mid-typing never reflows it.
 No bindings and no handler bodies — a design declares a handler's name and
 parameters, but the body is always Go. A list from Go is a `bridge` variable the
 app sets; `ui.Fill` covers a list built by hand.
-Theming covers the built-in light and dark Material 3 schemes, any palette the
-app defines with `Window.DefineTheme`, and a whole scheme derived from one seed
-colour with `ui.NewThemeFromSeed`; the seed derivation follows Material's tonal
-palette in CIELCh, not Material You's HCT.
 
-`Window.theme` picks the scheme and every colour a component draws comes from it,
-so set it from Go (`win.Root().Theme.Set("dark")`) and the whole window follows.
-Leave the root's `background` unset when the page should follow the scheme: the
-renderer then fills with the theme surface. A declared `background` is a fixed
-colour and stays put across a theme change, which is what to use for a deliberate
-brand surface and not for the page.
+Theming is not part of the language: `theme` names a scheme and every colour a
+component draws comes from it. See [Theming](guide/theming.md) for the built-in
+schemes, `Window.DefineTheme` and seed colours.

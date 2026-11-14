@@ -34,9 +34,10 @@ Rectangle {
 | `app.systemLanguage` | string | the desktop's language as an ISO 639-1 code: `tr`, `en`, `de`; empty when the platform does not report one |
 | `app.os` | string | `runtime.GOOS`: `linux`, `darwin`, `windows`, `freebsd` |
 
-- `app.theme` is the string form of the scheme, so it feeds any string property:
-  `theme: app.systemMode` is how a design follows the desktop's preference
-  instead of a fixed choice.
+- `app.mode` is the string form of the scheme's mood, so it feeds any string
+  property; `app.theme` is the scheme's own name. A design follows the desktop's
+  preference with `theme: app.systemMode`, which names the built-in scheme it
+  reports rather than whatever the app chose.
 - `app.mode` is the *mood* rather than the name. A custom dark theme registered
   as `"midnight"` reads `app.theme == "midnight"` and `app.mode == "dark"`, so
   `app.mode == "dark"` keeps working when the app renames its scheme.
@@ -108,7 +109,7 @@ Text {
 
 ## The other reserved names
 
-Four more names are supplied by the framework rather than declared. They are
+Five more names are supplied by the framework rather than declared. They are
 covered on their own pages; this table is just where they fit:
 
 | Name | Supplied by | Page |
@@ -153,6 +154,8 @@ Window {
 | `onEdit` | string |
 | `onSubmit` | string |
 | `onSelect` | number (the selected index) |
+| `onHover` | number: the chart point under the pointer, -1 when it leaves |
+| `onPlay`, `onPause`, `onEnd` | number: the playback position in seconds |
 | `onClick` | no value; `onClick` is a plain callback |
 
 Passing `event` to an `onClick` handler, or to a parameter of another type, is a

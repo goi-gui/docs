@@ -131,7 +131,6 @@ From Go, the state is on the node:
 | `points` | bool | a dot at each value; `true` by default |
 | `smooth` | bool | a Catmull-Rom curve instead of straight segments |
 | `min`, `max` | number | pin the value scale; `0` means "follow the data" |
-| `color` | color | the line colour when the data names none |
 
 The rest of the surface is the common box: `background`, `borderWidth`,
 `borderColor`, `radius`, `padding` and the rest of the

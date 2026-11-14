@@ -34,7 +34,7 @@ Window {
 | Property | Type | Notes |
 |---|---|---|
 | `title` | string | window title |
-| `theme` | string | `light` or `dark` |
+| `theme` | string | `light`, `dark`, or any name the app registered with `DefineTheme` |
 | `titleBar` | enum | `system` (default) or `custom` |
 | `minWidth`, `minHeight` | number | the smallest the user can drag the window |
 | `maxWidth`, `maxHeight` | number | the largest; `-1` (default) means no limit |

@@ -64,10 +64,10 @@ still cover the older emoji.
 | `weight` | number | overrides the role's weight; 100–900 |
 | `fontWeight` | number or keyword | CSS spelling of `weight`: `normal`, `bold`, `bolder`, `lighter`, or a number; shares the same cell |
 | `fontStyle` | enum | `normal`, `italic`; italic is synthesized, since Roboto italic is not embedded |
-| `color` | string | text colour role |
+| `color` | color | text colour: a theme role, a hex literal or a CSS colour |
 | `align` | enum | `start`, `center`, `end`; text alignment inside the box |
 | `wrap` | bool | wrap at the node width |
-| `role` | string | M3 type-scale role |
+| `role` | enum | M3 type-scale role: `displayLarge` … `labelSmall` |
 | `decoration` | keywords | any of `underline`, `overline`, `line-through`, combined with spaces; `none` clears |
 | `decorationStyle` | enum | `solid`, `wavy`, `dotted`, `double`, `dashed` |
 | `decorationThickness` | number | stroke width in dp; the default follows the font size |

@@ -19,8 +19,8 @@ Text {
 	color: customColor.brand
 }
 
-Icon {
-	icon:  check_circle
+Text {
+	text:  "Shipped"
 	color: customColor.success
 }
 ```

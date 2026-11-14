@@ -48,7 +48,7 @@ The rules are the same as for [Image](image.md#where-a-src-points).
 | Property | Type | Notes |
 |---|---|---|
 | `src` | string | `goi://` container path, a machine path, or an `http`/`https` URL |
-| `fit` | string | `contain` (default), `cover` or `fill` |
+| `fit` | enum | `contain` (default), `cover` or `fill` |
 | `color` | color | replaces the file's `currentColor`; a role name or a hex literal |
 | `paused` | bool | holds a SMIL animation where it is; `false` by default |
 | `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
