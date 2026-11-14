@@ -31,6 +31,7 @@ What a page shows: text, documents, media and plain boxes. These are nodes rathe
 - [RichText](components/richtext.md) — One paragraph of styled runs.
 - [Code](components/code.md) — A syntax-highlighted code block.
 - [Markdown](components/markdown.md) — A markdown document, rendered as elements.
+- [Mermaid](components/mermaid.md) — A Mermaid diagram rendered from its source.
 - [Image](components/image.md) — Draws a decoded bitmap.
 - [SVG](components/svg.md) — Draws an SVG file, with `currentColor` set from the design.
 - [Rectangle](components/rectangle.md) — A plain colored box.
