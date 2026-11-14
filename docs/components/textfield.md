@@ -48,8 +48,9 @@ TextField {
 
 A field's `type` filters what reaches its value, whether it arrives as a
 keystroke, a paste or an IME commit. The three names are shortcuts; any other
-value is the exact set of characters to allow, so a field for a hex code writes
-`type: "0123456789abcdef"` and a decimal one `type: "0123456789."`.
+value is the exact set of characters to allow, matched rune for rune and
+case-sensitively. A decimal field writes `type: "0123456789."`; a hex field that
+takes a normal `#RRGGBB` writes `type: "0123456789abcdefABCDEF#"`.
 
 ```goi
 TextField {
@@ -62,6 +63,11 @@ TextField {
 TextField {
 	label: "Ticket"
 	type:  "ABC123"
+}
+
+TextField {
+	label: "Hex"
+	type:  "0123456789abcdefABCDEF#"
 }
 ```
 
