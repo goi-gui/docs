@@ -30,8 +30,9 @@ app loaded), a path on the machine, or a URL ffmpeg can open: `http`/`https`
 
 With `controls: true` (the default) the element draws a bar along its bottom
 edge: a play/pause button, a scrubber, and the position. Clicking the button
-toggles playback, clicking the track seeks, and the pointer over the bar shows
-the pointer cursor.
+toggles playback, pressing or dragging the scrubber seeks, and the pointer over
+the bar shows the pointer cursor. A drag moves the handle with the pointer and
+seeks the decoder once, on release.
 
 The bar **hides itself** three seconds after the pointer stops moving over the
 picture, or three seconds after it leaves. Moving the pointer back over the video
@@ -40,10 +41,14 @@ player follows the same rule: the bar is chrome for a picture, not a permanent
 overlay.
 
 `seekbar: wavy` draws the part already watched as a moving sine ribbon with
-round joins, and only while the video is playing: the wave travels, the thumb
+round joins, and only while the video is playing: the wave travels, the handle
 rides its end, and a paused video shows the normal bar. The part still ahead is
-a dim flat track with no dim fill under the ribbon, and a gap past the thumb
-keeps them apart. The hit area grows to the wave's height in both states.
+a dim flat track with no dim fill under the ribbon.
+
+The handle is the slider's: a slim vertical pill rather than a dot. In every
+state the watched part stops at the handle and the dim track starts after a 6dp
+gap, so they never touch. The hit area grows to the wave's height in both
+states.
 
 The pointer itself hides with the bar while it rests on a video, so a watching
 cursor does not sit on the film. Any movement brings it back; leaving the video
