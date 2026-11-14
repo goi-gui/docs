@@ -96,7 +96,7 @@ What a page shows: text, documents, media and plain boxes. These are nodes rathe
 
 - [DatePicker](components/datepicker.md) — A calendar surface for picking a date.
 - [TimePicker](components/timepicker.md) — An M3 time picker with a clock dial or two typed fields, a 12-hour display and AM/PM.
-- [ColorPicker](components/colorpicker.md) — A saturation/value square and a hue bar for picking an opaque colour.
+- [ColorPicker](components/colorpicker.md) — A saturation/value square, hue and alpha bars, and a hex field for picking a colour.
 
 ## Media
 
