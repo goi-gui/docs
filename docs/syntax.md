@@ -459,13 +459,16 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
 - **Fire time.** Arguments are evaluated when the event fires, not every frame,
   so `ticket.ID` is the row that exists at click time.
 - **`event`.** The event's own payload is available as `event`: `onToggle`
-  passes a bool, `onChange` a number, `onEdit` and `onSubmit` a string,
-  `onSelect` an index. `onClick` carries no scalar value.
+  passes a bool, `onChange` a number, `onEdit`, `onSubmit`, `onOK` and
+  `onCancel` a string, `onSelect` an index. `onClick` and the gestures carry no
+  scalar value.
 - **Events.** Every element accepts `onClick`. Components also accept
   `onToggle`, `onChange`, `onEdit`, `onSubmit`, `onSelect`, `onPlay`, `onPause`
-  and `onEnd` where they emit them, and a chart adds `onHover` for the point
-  under the pointer. The value is always a handler call — `bridge.Name(...)` in
-  a design, `props.Name(...)` inside the fragment that declares it; a literal is
+  and `onEnd` where they emit them; a chart adds `onHover` for the point under
+  the pointer, a `TimePicker` adds `onOK` and `onCancel`, and a
+  `GestureDetector` adds `onDoubleTap`, `onLongPress` and the three pan events.
+  The value is always a handler call — `bridge.Name(...)` in a design,
+  `props.Name(...)` inside the fragment that declares it; a literal is
   rejected.
 - **A call on an id.** An event may drive an element directly instead of going
   through Go: `onClick: spin.pause()`. An `Image` or `SVG` answers `play()`,
