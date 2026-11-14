@@ -37,6 +37,41 @@ The arc and the track never touch either: the track is the rest of the circle
 with a gap at each end of the filled part, so nothing runs under the arc, and
 every end is rounded rather than cut square.
 
+## A label or an icon inside
+
+A ring can hold children, and each one keeps its own size and sits in the middle
+of the ring: a percentage, a small `SVG` or `Image`, or any other element.
+
+```goi
+CircularProgress {
+	value:  0.72
+	width:  96
+	height: 96
+
+	Text {
+		text: "72%"
+		role: labelLarge
+	}
+}
+
+CircularProgress {
+	value:  0.4
+	width:  56
+	height: 56
+
+	SVG {
+		src:    "spinner.svg"
+		width:  20
+		height: 20
+		color:  theme.primary
+	}
+}
+```
+
+A child that declares `width`/`height: 100%` fills the ring instead, which is
+what a background plate wants; children paint over the ring, so keep a picture
+inside the inner circle.
+
 The wave keeps itself inside the ring's box, so the default 48dp size needs no
 height of its own. `thickness` sets the stroke: 4dp for a plain arc, 5dp for a
 ribbon, and a stroke too wide for the box is narrowed to fit.
