@@ -43,10 +43,12 @@ overlay.
 While the player is fetching the file or waiting for the decoder — a live stream
 between segments included — a small circular-progress ring turns in the middle
 of the picture, so a slow start reads as work rather than a still frame. It
-disappears as soon as a frame is there.
+takes `color`, and `variant: wavy` draws it as a ribbon too. It disappears as
+soon as a frame is there.
 
-`seekbar: wavy` draws the part already watched as a moving sine ribbon with
-round joins, and only while the video is playing: the wave travels, the handle
+`color` tints the scrubber's watched part and its handle, and the loading ring
+below. `variant: wavy` draws that played part as a moving sine ribbon with round
+joins, and only while the video is playing: the wave travels, the handle
 rides its end, and a paused video shows the normal bar. The part still ahead is
 a dim flat track with no dim fill under the ribbon.
 
@@ -100,7 +102,8 @@ Button {
 | `controlsIconColor` | color | play/pause icon colour; 0 is white, since the bar sits over the picture |
 | `controlsTextColor` | color | clock and LIVE label colour; 0 is white, since the bar sits over the picture |
 | `controlsTrackColor` | color | scrubber track, played part and knob; 0 follows white and the scheme's primary |
-| `seekbar` | enum | `normal` (a plain track, the default) or `wavy` (the watched part as a moving ribbon while playing) |
+| `variant` | enum | `normal` (a plain track and loading ring, the default) or `wavy` (both as a moving ribbon) |
+| `color` | color | the scrubber's watched part and handle, and the loading ring; unset keeps white over the picture |
 
 ## Methods
 
