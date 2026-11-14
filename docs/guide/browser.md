@@ -51,6 +51,52 @@ cp "$(go env GOROOT)/lib/wasm/wasm_exec.js" web/
 - If the page has no `<canvas>`, one is created and appended to `<body>`.
 - The canvas becomes a WebGPU context; a browser without WebGPU shows nothing.
 
+## Waiting for the first frame
+
+The canvas is blank until the wasm module starts and presents its first frame.
+The framework dispatches a `goi-ready` event on the canvas at that point, once,
+so a page can cover the gap with its own loading indicator:
+
+```html
+<div id="goi-loading" role="status" aria-live="polite" aria-label="Loading">
+	<div class="spinner" aria-hidden="true"></div>
+</div>
+<canvas id="hero"></canvas>
+
+<style>
+	#goi-loading {
+		position: fixed; inset: 0; display: grid; place-items: center;
+		background: #f6f3fb; transition: opacity .2s ease;
+	}
+	#goi-loading.done { opacity: 0; pointer-events: none; }
+	.spinner {
+		width: 48px; height: 48px; border-radius: 50%;
+		border: 4px solid #e8def8; border-top-color: #6750a4;
+		animation: spin .9s linear infinite;
+	}
+	@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<script src="wasm_exec.js"></script>
+<script>
+	const canvas = document.getElementById("hero");
+	const loading = document.getElementById("goi-loading");
+	canvas.addEventListener("goi-ready", () => {
+		loading.classList.add("done");
+		loading.setAttribute("aria-hidden", "true");
+	}, { once: true });
+
+	const go = new Go();
+	WebAssembly.instantiateStreaming(fetch("app.wasm"), go.importObject)
+		.then((result) => go.run(result.instance));
+</script>
+```
+
+The event fires on the canvas that presented the frame and bubbles, so a page
+with several apps can listen once on `document` and hide the loader that matches
+`event.target`. If the app cannot start, no frame is presented and the loader
+stays, which is the honest state to show.
+
 ## Choosing the canvas
 
 By default the app takes the page's first canvas. A page that holds more than one
