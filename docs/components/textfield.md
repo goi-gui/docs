@@ -94,6 +94,11 @@ TextField {
 The mask formats input, not a value the design or the app writes: `text` is
 shown as written until the field is edited.
 
+A field with `supporting` text reserves a line under its box: its natural height
+is 76 instead of 56, so a column leaves room for the helper. An explicit
+`height` covers the field and that line together; the fill and outline stop
+above it.
+
 The field's box is the design's when it styles one: `background` (solid or a
 gradient), `borderColor`/`borderWidth` with the per-side properties, `radius` and
 `shadow` replace the variant's fill, outline, shape and elevation. A design

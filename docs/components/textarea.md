@@ -30,6 +30,9 @@ TextArea {
 
 ## Behaviour
 
+A field with `supporting` text reserves its line under the box, and an explicit
+`height` covers the text area and that line together.
+
 Enter inserts a newline instead of submitting; `Submit` fires on Ctrl+Enter you
 handle, or when an app reads the value. Home and End move to the start and end
 of the current line, Up and Down walk the wrapped lines and keep the column.
