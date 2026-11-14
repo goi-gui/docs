@@ -465,7 +465,7 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
 - **Events.** Every element accepts `onClick`. Components also accept
   `onToggle`, `onChange`, `onEdit`, `onSubmit`, `onSelect`, `onPlay`, `onPause`
   and `onEnd` where they emit them; a chart adds `onHover` for the point under
-  the pointer, a `TimePicker` adds `onOK` and `onCancel`, and a
+  the pointer, a `TimePicker` or `ColorPicker` adds `onOK` and `onCancel`, and a
   `GestureDetector` adds `onDoubleTap`, `onLongPress` and the three pan events.
   The value is always a handler call — `bridge.Name(...)` in a design,
   `props.Name(...)` inside the fragment that declares it; a literal is
