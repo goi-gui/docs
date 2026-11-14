@@ -29,6 +29,7 @@ TimePicker {
 | `label` | string | the caption above the time; `Select time` on the dial and `Enter time` on the fields |
 | `text` | string | the picked time as `HH:MM` (24-hour); empty means now |
 | `variant` | enum | `dial` (the clock, default) or `input` (two text fields) |
+| `hourFormat` | number | `12` (default, with AM/PM) or `24` |
 
 ## The dial
 
@@ -47,6 +48,17 @@ first. The active half is filled with `primaryContainer` and its text is
 box. Typing digits fills that field: one digit starts the number, a second
 completes it, and the hour hands over to the minutes. Arrow up/down step the
 active field, left/right switch fields, Enter is OK and Escape is Cancel.
+
+## 12 and 24 hours
+
+`hourFormat: 24` hides the AM/PM switch, spells the hour 00-23, and turns the
+dial into the two-ring 24-hour one: 1-12 outside, 13-00 inside. The value is
+always stored as `HH:MM` in 24-hour form, so switching the format never changes
+the time.
+
+The small `12h`/`24h` chip beside the variant icon is the visual switch: it says
+which clock is showing and flips it when clicked, from a design or from Go
+alike.
 
 ## AM/PM and the actions
 
@@ -70,6 +82,7 @@ picker.OnOK(func(v string) { fmt.Println("picked", v) }) // "19:30"
 picker.OnCancel(func(v string) { closeDialog() })
 picker.Text.Set("07:00")
 picker.Variant.Set("input")
+picker.HourFormat.Set(24)
 ```
 
 Every element also accepts the [common properties](../components.md#common-properties).
