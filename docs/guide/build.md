@@ -80,6 +80,51 @@ A GUI app usually should not open a console window:
 go build -ldflags="-H windowsgui" -o myapp.exe ./cmd/myapp
 ```
 
+## Smaller binaries
+
+A release build usually wants `-s -w`: it drops the symbol table and DWARF
+debug info, which is about 13 MB on a Linux amd64 build of the `hello` example.
+
+The colour emoji font is the single largest embedded asset. It is Noto Color
+Emoji, about 10.7 MB, and it is what makes every emoji render offline. A build
+that does not need colour emoji can leave it out:
+
+```sh
+go build -tags noemoji -ldflags="-s -w" -o myapp ./cmd/myapp
+```
+
+In a `noemoji` build, text falls back to the font's monochrome glyphs where
+they exist. The flag is independent of the platform and works in a wasm build too.
+
+Approximate sizes, Linux amd64 with Go 1.27 and the `examples/hello` app:
+
+| Build | Native | Browser wasm |
+| --- | ---: | ---: |
+| default, unstripped | 53 MB | — |
+| default, `-s -w` | 40 MB | 54 MB |
+| `-tags noemoji`, `-s -w` | **30 MB** | **44 MB** |
+| a minimal window, `-s -w` | 20 MB | 27 MB |
+
+The wasm numbers include the Go runtime and the app's embedded assets, so they
+are larger than the native build; compare builds of the same app. A native
+`libwgpu_native.so` is a separate 9 MB file on disk, not part of the binary.
+
+The biggest fixed costs are the Go runtime, the WebGPU binding (`wgpu`, `naga`
+and `goffi`), text shaping (`go-text/typesetting`) and the two fonts. Removing
+Mermaid from an app that used it saved another 7 MB on the native probe and a
+much larger amount in wasm, because it brought its own SVG rasterizer and wasm
+runtime.
+
+### Purego and cgo-free builds
+
+The platform layer is cgo over SDL3. A purego SDL3 backend is possible in
+isolation, but it cannot currently share a binary with the WebGPU renderer:
+`goffi` and `purego` both provide the C runtime and dynamic-loader stubs when
+cgo is off, and the linker rejects the duplicate `_cgo_init`/`dlopen` symbols.
+A `CGO_ENABLED=0` build therefore stops at the platform layer with undefined
+SDL symbols, and adding purego only moves the failure to the linker. Replacing
+`goffi`'s FFI is the prerequisite; until then the platform build needs cgo.
+
 ## The design file next to the binary
 
 A program that calls `app.LoadWindowFile("myapp/myapp.goi", ...)` resolves that
