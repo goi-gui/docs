@@ -18,7 +18,7 @@ Map {
 	attribution: "© OpenStreetMap contributors"
 
 	Geom {
-		data:      [28.97, 41.01, 29.06, 41.01, 29.06, 41.08]
+		data:      [[28.97, 41.01], [29.06, 41.01], [29.06, 41.08]]
 		lineColor: theme.primary
 		fillColor: #6750a433
 	}
@@ -66,8 +66,8 @@ A Map takes three children, in paint order:
 
 Coordinates are GeoJSON order wherever a list holds a pair: longitude first,
 then latitude. `bbox` and `Point.coordinate` are `[lon, lat]`; a `Geom`'s `data`
-is a flat `[lon, lat, lon, lat, …]` ring, and a `Path`'s `coordinates` is a list
-of `[lon, lat]` pairs.
+is a list of `[lon, lat]` pairs, and a `Path`'s `coordinates` is the same
+shape.
 
 `Geom` and `Path` are overlay children, not content: layout gives them the whole
 map box, so setting `width` or `padding` on them does nothing. A `Point` keeps the

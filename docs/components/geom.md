@@ -14,7 +14,7 @@ Map {
 	bbox:   [28.5, 40.8, 29.5, 41.4]
 
 	Geom {
-		data:      [28.97, 41.01, 29.06, 41.01, 29.06, 41.08]
+		data:      [[28.97, 41.01], [29.06, 41.01], [29.06, 41.08]]
 		lineColor: theme.primary
 		fillColor: #6750a433
 	}
@@ -38,7 +38,7 @@ for _, g := range bridge.Geoms {
 
 | Property | Type | Default | Notes |
 |---|---|---|---|
-| `data` | list of numbers | — | one ring as `[lon, lat, lon, lat, …]`; the last point joins the first, and an odd trailing number is ignored |
+| `data` | list of pairs | — | one ring as `[[lon, lat], [lon, lat], …]`; the last point joins the first |
 | `lineColor` | color | scheme `primary` | the stroke, 2dp wide |
 | `fillColor` | color | — | fills the ring; use a translucent literal such as `#6750a433`, since a role is opaque |
 
@@ -56,7 +56,9 @@ rasterizes it itself.
 
 ```go
 g := ui.MustByID[*ui.Geom](w, "district")
-g.Data.Set([]float64{28.97, 41.01, 29.06, 41.01, 29.06, 41.08})
+g.Data.Set([]ui.Coord{
+	{28.97, 41.01}, {29.06, 41.01}, {29.06, 41.08},
+})
 g.LineColor.Set(0x6750a4ff)
 g.FillColor.Set(0x6750a433)
 ```
