@@ -105,6 +105,10 @@ Both play through ffmpeg, which has to be on `PATH`; both can hide their control
 - [Audio](components/audio.md) — A sound player with a built-in transport bar.
 - [Video](components/video.md) — A video player, decoded with ffmpeg.
 
+## Maps
+
+- [Map](components/map.md) — OpenStreetMap tiles with pan, zoom and a GeoJSON boundary overlay.
+
 ## Charts
 
 - [LineChart](components/linechart.md) — A line per series through the points.

@@ -168,6 +168,12 @@ const sidebars = {
 				},
 				{
 					type: 'category',
+					label: 'Maps',
+					collapsed: true,
+					items: ['components/map'],
+				},
+				{
+					type: 'category',
 					label: 'Charts',
 					collapsed: true,
 					items: [
