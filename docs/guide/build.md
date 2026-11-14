@@ -117,13 +117,28 @@ runtime.
 
 ### Purego and cgo-free builds
 
-The platform layer is cgo over SDL3. A purego SDL3 backend is possible in
-isolation, but it cannot currently share a binary with the WebGPU renderer:
-`goffi` and `purego` both provide the C runtime and dynamic-loader stubs when
-cgo is off, and the linker rejects the duplicate `_cgo_init`/`dlopen` symbols.
-A `CGO_ENABLED=0` build therefore stops at the platform layer with undefined
-SDL symbols, and adding purego only moves the failure to the linker. Replacing
-`goffi`'s FFI is the prerequisite; until then the platform build needs cgo.
+The same app builds without cgo. The platform layer then loads `libSDL3` through
+[purego](https://github.com/ebitengine/purego) instead of linking it:
+
+```sh
+CGO_ENABLED=0 go build -tags nofakecgo -o myapp ./cmd/myapp
+```
+
+- **`CGO_ENABLED=0`** picks the purego window backend automatically.
+- **`-tags nofakecgo`** is required because the WebGPU renderer (`goffi`) and
+  purego each ship their own fake C runtime; without the tag the linker sees two
+  `_cgo_init`/`dlopen` implementations. `nofakecgo` tells goffi to use purego's
+  copy, and the single runtime serves both.
+- The target needs SDL3 as a **runtime** shared library (`libSDL3.so.0`, 
+  `SDL3.dll` or `libSDL3.dylib`), but not its development headers or
+  `pkg-config`.
+- Linux, Windows and macOS (amd64 and arm64) are build-tested this way. macOS
+  gets its Metal layer through `SDL_Metal_*` loaded by purego.
+- The binary is roughly the same size as the cgo build; what disappears is the
+  C toolchain and SDL development package requirement, not the SDL runtime.
+
+A purego build of the `hello` example is about 54 MB unstripped (53 MB with
+cgo), and `-tags noemoji -ldflags="-s -w"` brings it to about 31 MB.
 
 ## The design file next to the binary
 
