@@ -28,8 +28,9 @@ Tooltip {
 ```
 
 The box of a `Tooltip` is exactly the box of its child, so hovering anywhere on
-the child brings the bubble out. Several children are laid out like a `Column`;
-wrap them in a `Row` when the hint belongs to a row.
+the child brings the bubble out. Several children are laid out like a `Column`,
+so the usual `spacing` and `crossAxisAlign` apply; wrap them in a `Row` when the
+hint belongs to a row.
 
 ## Properties
 

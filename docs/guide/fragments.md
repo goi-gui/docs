@@ -9,7 +9,8 @@ A fragment is a `.goi` file that describes part of a window instead of a whole
 one. It can take values, handlers and children from the file that uses it, so a
 design stays small without copying the same block of elements around.
 
-A file that declares `props`, or uses `$children` or a named slot, is a fragment.
+A file that declares `props`, or writes a slot of its own (`$children` or a named
+`$name`), is a fragment.
 The file a program loads must still be a `Window`; a fragment's root may be any
 element, and the editor and `goicheck` never insist on a `Window` root, so a page
 split out of a window is fine to open on its own.
@@ -74,6 +75,8 @@ decides its own layout and the instance places it like any other child.
 
 - A prop the instance leaves out is the **type's zero value** (`""`, `0`,
   `false`, `#00000000`), so a fragment never has to guard for a missing value.
+  A slice, a map and a handler have no literal zero: a fragment that reads one
+  needs the instance to pass it, and the checker says which prop and where.
 - A prop type is written the way Go writes it: a primitive, `[]Ticket`, a map,
   a handler (`func(id string)`) or a declared `type`.
 - Fragments may import fragments. A cycle is an error.
@@ -182,14 +185,20 @@ Window {
 }
 ```
 
-- `$children` is a slot, not an element: it takes no properties and no children
-  of its own. A fragment may have more than one; each gets the same children.
+- `$children` is a slot, not an element: it takes no properties, and
+  `$children {}` means the same as `$children`. A slot is written once; a second
+  `$children` is an error, because the same children cannot live in two places,
+  and a child with an `id` would be declared twice.
+- A slot with anything inside it is an error in the fragment body: that content
+  would belong to nobody. Content is what an instance passes, as
+  `$children { … }`.
 - Children may be anything, including other fragments. They resolve their
   imports in the **file they were written in**.
 - Passing children to a fragment with no `$children` is an error, reported where
   the children were written.
-- A slot with nothing passed draws nothing, so the fragment still previews on
-  its own.
+- A fragment with a slot and nothing passed still draws, with the slot empty.
+- A `Window` cannot declare a slot: the file a program loads has no caller above
+  it to fill one, so it is an error rather than a silent hole.
 
 ## Named slots
 
@@ -230,10 +239,18 @@ Card {
 }
 ```
 
-- A bare `$header` in the fragment body is a slot marker; `$header { ... }` in
-  an instance passes the elements that land there.
+- A bare `$header`, or `$header {}` with nothing inside, is a slot marker in the
+  fragment body. `$header { … }` in an instance call passes the elements that
+  land there.
+- A slot fill carries elements only: a property written on `$header { … }` is an
+  error instead of being ignored, and a bare `$header` at a call outside a
+  fragment passes nothing, so it is an error too.
 - Passing a slot the fragment does not declare is an error, reported in the
   caller. An empty `$header { }` still counts as filling the slot.
+- Inside a nested fragment call, a bare slot forwards this fragment's children
+  to that call — that is how a wrapper passes on what it was given. A
+  `$name { … }` there is that call's own argument and is left for it, so the
+  outer caller cannot reach into it by accident.
 
 ## Ids and instances
 
@@ -276,5 +293,12 @@ A design can read a node's property by id, the same way it reads `window.width`:
 - A name the `props` block does not declare is an error, with a "did you mean"
   hint.
 - A prop's declared type is checked against every property it feeds.
-- `goicheck` and the language server report a file with `props`, `$children` or
-  a named slot as a fragment rather than a window.
+- A slot is written once per fragment. A repeat is an error, because the same
+  children cannot be in two places, and a passed child with an `id` would be
+  declared twice.
+- A slot in a `Window` is an error: the file a program loads has no caller to
+  fill it.
+- A slot fill passes elements only, and a bare `$name` at a call passes nothing:
+  write `$name { … }`.
+- `goicheck` and the language server report a file with `props` or a slot as a
+  fragment rather than a window.

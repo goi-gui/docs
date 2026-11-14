@@ -95,7 +95,9 @@ Window {
 - `Sidebar { }` is replaced by the fragment's root element, so the fragment
   decides its own layout and the instance places it like any other child.
 - A prop is `Name Type`, with no default: a prop the instance leaves out is the
-  **type's zero value** (`""`, `0`, `false`, `#00000000`), so a fragment never
+  **type's zero value** (`""`, `0`, `false`, `#00000000`); a slice, a map and a
+  handler have no literal zero, so a fragment that reads one needs the instance
+  to pass it, and the checker says so, so a fragment never
   has to guard for a missing value.
 - The type is written the way Go writes it: a primitive, a slice (`[]Ticket`), a
   map (`map[string]int`), a handler (`func(id string)`) or a declared `type`.
@@ -163,18 +165,27 @@ Window {
 }
 ```
 
-- `$children` is a slot, not an element: it takes no properties and no children
-  of its own. A fragment may have more than one; each gets the same children.
+- `$children` is a slot, not an element: it takes no properties, and
+  `$children {}` means the same as `$children`. A slot is written once; a second
+  `$children` is an error, because the same children cannot live in two places,
+  and a child with an `id` would be declared twice.
+- A slot with content inside it is an error in the fragment body, because that
+  content would belong to nobody; content is what an instance passes as
+  `$children { … }`.
 - Children may be anything, including other fragments. They resolve their
   imports in the **file they were written in**, so a child can use an alias that
   only `Main.goi` imports.
 - Passing children to a fragment that has no `$children` is an error, reported
   where the children were written. A fragment with a slot but no children just
   draws nothing there, so it can still be previewed on its own.
-- A slot may sit anywhere in the fragment body, including inside another
-  fragment call, which is how a fragment forwards its children.
-- Like a file with props, a file with `$children` is a fragment: `goicheck` and
-  the language server do not require it to be a `Window`.
+- A slot may sit anywhere in the fragment body, including inside a block arm.
+  Inside a nested fragment call, a bare slot forwards this fragment's children
+  to that call; a `$name { … }` there is that call's own argument and is left
+  alone.
+- A `Window` cannot declare a slot: the file a program loads has no caller to
+  fill it.
+- Like a file with props, a file with a slot is a fragment: `goicheck` and the
+  language server do not require it to be a `Window`.
 
 ### Named slots
 
@@ -216,8 +227,12 @@ Card {
 }
 ```
 
-- A bare `$header` in a fragment body is a slot marker; `$header { ... }` in an
-  instance call passes the elements that land there.
+- A bare `$header`, or `$header {}`, in a fragment body is a slot marker;
+  `$header { … }` in an instance call passes the elements that land there.
+- A slot fill carries elements only; a property on it is an error rather than
+  being ignored, and a bare `$name` at a call (no braces) passes nothing, so it is
+  an error outside a fragment, where it forwards instead.
+- A slot is written once per fragment.
 - Passing a slot the fragment does not declare is an error, reported in the
   caller. An empty `$header { }` still counts as filling the slot.
 - As with `$children`, a slot with nothing passed draws nothing, so the fragment
@@ -913,8 +928,8 @@ the page list.
 
 Containers that lay children out (`ButtonGroup`, `Toolbar`, `Carousel`, `Tabs`,
 `NavigationBar`, `NavigationRail`, `NavigationDrawer`, `List`, `Menu`, `Card`,
-`Dialog`, `BottomSheet`, `SideSheet`, `DatePicker`, `TimePicker`, `FABMenu`) also
-accept
+`Dialog`, `BottomSheet`, `SideSheet`, `DatePicker`, `TimePicker`, `FABMenu`,
+`Tooltip`) also accept
 `spacing`, `gap`, `crossAxisAlign` and `mainAxisAlign`. `gap` is the same cell
 as `spacing`, under the name a layout reader expects.
 
