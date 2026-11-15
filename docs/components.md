@@ -180,6 +180,48 @@ These apply to every element and are not repeated on the component pages.
 | `scrollbarColor` | color | bar colour; defaults to the theme's muted onSurfaceVariant |
 | `scrollShadow` | bool | fades an edge when there is content scrolled away from it |
 | `scrollShadowColor` | color | colour of that edge gradient; defaults to the scheme's shadow colour |
+| `scrollSnapType` | enum | `none` (default), `mandatory` or `proximity`: snap the scroll to the children's snap points, always or only when the gesture ends near one |
+| `scrollSnapAlign` | enum | `none` (default), `start`, `center` or `end`: the edge of this child that lines up with the frame |
+| `scrollSnapStop` | enum | `normal` (default) lets a gesture pass several snap points; `stop` ends it at the next one |
+| `scrollPadding` | number | inset between the frame and a `start`/`end` snap line, the way CSS `scroll-padding` insets it |
+
+### Scroll snapping
+
+A scroll container can settle on its children. The container says how strictly
+(`scrollSnapType`) and each child says which edge lines up
+(`scrollSnapAlign`); the axis is the container's own, so a `Column` snaps
+vertically and a `Row` or a `Carousel` sideways without an `x`/`y` suffix:
+
+```goi
+Column {
+	scroll:            true
+	scrollSnapType:    mandatory
+	scrollSnapStop:    stop
+	scrollPadding:     10
+	width:             100%
+	height:            300
+
+	for range 10 {
+		Rectangle {
+			width:           100%
+			height:          200
+			scrollSnapAlign: start
+		}
+	}
+}
+```
+
+- `mandatory` always settles on a snap point; `proximity` takes one only when
+  the gesture ends within a quarter of the frame of it, so a hand that stops
+  mid-block keeps that place.
+- A notched wheel moves one snap point per notch. A touchpad swipe, a drag and
+  a fling scroll freely and settle when they end; `scrollSnapStop: stop` stops a
+  fling at the first point it reaches instead of coasting through several.
+- `scrollPadding` insets the `start` and `end` lines from the frame, which is
+  what keeps a card from sitting flush against the edge. `center` ignores it.
+- Snapping is a property of any scrolling element, so it works on a `Column`, a
+  `Row`, a `List`, a `Carousel`, a `Table` and the panels that scroll on their
+  own. `scrollSnapAlign` on a child of a non-scrolling parent does nothing.
 
 A scrolling element takes a gesture along its own axis only: a notched wheel
 scrolls vertically and **Shift + wheel** scrolls a sideways element, while a
