@@ -166,8 +166,11 @@ does not show as a stutter, and it never decodes the whole file:
 - `buffer` is how many seconds of video to keep ready: 1.5 by default, clamped to
   10. Frames are queued, so the decoder blocks when the queue is full and the
   memory stays flat.
-- The queue is also capped by bytes (64 MiB), so a 4K file at a large `buffer`
-  still cannot fill RAM.
+- The queue is also capped by bytes: 16 MiB for a file and 32 MiB for a live
+  feed, so a 4K file at a large `buffer` still cannot fill RAM. A 1080p frame is
+  about 8 MB, which is a few frames of lookahead. `App.VideoBuffer(bytes)`
+  changes the budget before a player opens; a player that already opened keeps
+  the one it started with.
 - Sound is held in the output device, about as far ahead as `buffer` asks (never
   more than 2 MiB), not in a Go slice.
 - The unplayed part of the buffer shows on the scrubber as a lighter track behind

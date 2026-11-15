@@ -96,24 +96,36 @@ go build -tags noemoji -ldflags="-s -w" -o myapp ./cmd/myapp
 In a `noemoji` build, text falls back to the font's monochrome glyphs where
 they exist. The flag is independent of the platform and works in a wasm build too.
 
-Approximate sizes, Linux amd64 with Go 1.27 and the `examples/hello` app:
+The rest of the binary is optional features. Each has a build tag; they
+compose, and an app that does not use the feature also loses the dependency:
 
-| Build | Native | Browser wasm |
-| --- | ---: | ---: |
-| default, unstripped | 53 MB | — |
-| default, `-s -w` | 40 MB | 54 MB |
-| `-tags noemoji`, `-s -w` | **30 MB** | **44 MB** |
-| a minimal window, `-s -w` | 20 MB | 27 MB |
+| Tag | Drops | Native, `-s -w` |
+| --- | --- | ---: |
+| `noemoji` | the 10.7 MB colour emoji font | 40 → 30 MB |
+| `nonet` | `net/http` and TLS: remote `Image`, `SVG` and map tiles fail | 40 → 38 MB |
+| `nocode` | Chroma and its regexp engine: a `Code` block draws as plain text | 40 → 36 MB |
+| `nosvg` | oksvg/rasterx: `SVG` elements report an error | 40 → 39 MB |
+| `nomarkdown` | goldmark: `Markdown` draws nothing | 40 → 39 MB |
+| `nodialog` | zenity/beeep and D-Bus: file dialogs and `Notify` report an error | 40 → 40 MB |
 
-The wasm numbers include the Go runtime and the app's embedded assets, so they
-are larger than the native build; compare builds of the same app. A native
-`libwgpu_native.so` is a separate 9 MB file on disk, not part of the binary.
+Approximate sizes, Linux amd64 with Go 1.27 and the `examples/counter` app:
+
+| Build | Native |
+| --- | ---: |
+| default, unstripped | 53 MB |
+| default, `-s -w` | 40 MB |
+| `noemoji`, `-s -w` | 30 MB |
+| all six tags, `-s -w` | **22 MB** |
+
+The wasm numbers are larger because they include the Go runtime and the app's
+embedded assets; compare builds of the same app. There is no native
+`libwgpu_native.so` in a current build: the renderer talks to Vulkan/DX12/Metal
+through `gogpu/wgpu`'s pure-Go backends, so the only runtime libraries are the
+display driver and, for the cgo build, SDL3 itself. An old `lib/` directory is
+left over from the previous backend and is not part of the binary or the module.
 
 The biggest fixed costs are the Go runtime, the WebGPU binding (`wgpu`, `naga`
-and `goffi`), text shaping (`go-text/typesetting`) and the two fonts. Removing
-Mermaid from an app that used it saved another 7 MB on the native probe and a
-much larger amount in wasm, because it brought its own SVG rasterizer and wasm
-runtime.
+and `goffi`), text shaping (`go-text/typesetting`) and the two fonts.
 
 ### Purego and cgo-free builds
 
@@ -139,6 +151,24 @@ CGO_ENABLED=0 go build -tags nofakecgo -o myapp ./cmd/myapp
 
 A purego build of the `hello` example is about 54 MB unstripped (53 MB with
 cgo), and `-tags noemoji -ldflags="-s -w"` brings it to about 31 MB.
+
+## Memory
+
+The framework keeps its caches bounded, and three knobs trade memory for
+quality:
+
+| Call | Default | What it does |
+| --- | --- | --- |
+| `app.MSAA(n)` | 4 | multisample count; 1 turns it off. A 4x target costs ~33 MB at 1080p and ~132 MB at 4K, so a low-end or software GPU wants 1 or 2 |
+| `app.ImageCache(bytes)` | 64 MB | decoded image LRU. A picture over 2048 px on its longest side is scaled down at load, and the oldest is reloaded from disk when the budget runs out |
+| `app.VideoBuffer(bytes)` | 16 MB (32 live) | buffered video frames per player; a 1080p frame is ~8 MB, so this is what a design's `buffer` seconds cost |
+
+The image and glyph atlases start small and grow on demand (512² and 1024²),
+so an app that never draws a picture does not pay for a 2048² texture. The
+colour emoji font is parsed the first time a glyph needs it, not at startup; a
+build with `noemoji` never carries it. Animations are capped at 32 MB each and
+count against the image cache, map tiles have their own 32 MB budget, and
+rasterized SVG icons have an 8 MB one.
 
 ## The design file next to the binary
 

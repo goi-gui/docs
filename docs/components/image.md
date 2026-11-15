@@ -151,6 +151,11 @@ spin.Play()
 spin.Stop()
 ```
 
+A picture is decoded once per `src` and cached. Its longest side is capped at
+2048 px at load, so a 12-megapixel photo does not hold 49 MB of pixels for a
+400dp box; the decoded images share a 64 MB LRU, and the oldest one is reloaded
+when it comes back. `App.ImageCache(bytes)` changes that budget.
+
 ## From Go
 
 ```go
