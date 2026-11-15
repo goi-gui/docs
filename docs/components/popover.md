@@ -34,9 +34,15 @@ The panel is an ordinary child of the `Popover`, so paint and hit-testing reach
 it and it can take the common properties. It floats outside the popover's own
 box, which stays as small as the anchor. Two things follow from being an
 overlay: the panel is not cut by the element that holds it, and it paints above
-the siblings written after it — no `zIndex` is needed. When it would leave the
+the siblings written after it without naming a `zIndex`. When it would leave the
 window it flips above the anchor, and a panel wider than the window slides in
 from the edge rather than hanging off it.
+
+The branch that holds a panel paints above its siblings, which is what keeps the
+panel on top of the elements written after its host. That lift is a default, not
+a rule that beats everything: an element with an explicit `zIndex` paints above
+it. A modal drawer or dialog written after a page that contains a popover needs
+`zIndex` for that reason.
 
 A scrolling ancestor is the one box a panel does not escape. The panel belongs
 to the scroll it was written in: it moves with its anchor, is cut at the

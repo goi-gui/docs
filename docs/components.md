@@ -171,7 +171,7 @@ These apply to every element and are not repeated on the component pages.
 | `scroll` | bool | scroll when content overflows the box |
 | `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
 | `backdropBlur` | number | radius in dp of the blur applied to what is already painted behind the element, like CSS `backdrop-filter`; 0 (default) is no blur |
-| `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected |
+| `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected. It is the stronger claim: a modal overlay names one to stay above a page whose popover panel lifts its branch |
 | `cursor` | enum | pointer shape, named the way CSS names it: `pointer`, `text`, `move`, `grab`, `not-allowed`, the resize arrows, `wait`, `none`, … |
 | `rotate` | rotate | CSS `rotate`: `45deg`, `0.25turn`, `x 90deg`, `1 1 1 90deg`; turns the element and its subtree |
 | `hideScrollbar` | bool | removes the scrollbar entirely |
