@@ -5,8 +5,15 @@ A horizontal progress bar.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/linearprogress-light.png" alt="LinearProgress in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/linearprogress-dark.png" alt="LinearProgress in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>normal</strong><br />
+  <img src="/img/components/linearprogress-normal-light.png" alt="LinearProgress normal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/linearprogress-normal-dark.png" alt="LinearProgress normal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>wavy</strong><br />
+  <img src="/img/components/linearprogress-wavy-light.png" alt="LinearProgress wavy in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/linearprogress-wavy-dark.png" alt="LinearProgress wavy in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

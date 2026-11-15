@@ -5,8 +5,21 @@ A Material 3 surface that groups related content.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/card-light.png" alt="Card in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/card-dark.png" alt="Card in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>elevated</strong><br />
+  <img src="/img/components/card-elevated-light.png" alt="Card elevated in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/card-elevated-dark.png" alt="Card elevated in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>filled</strong><br />
+  <img src="/img/components/card-filled-light.png" alt="Card filled in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/card-filled-dark.png" alt="Card filled in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>outlined</strong><br />
+  <img src="/img/components/card-outlined-light.png" alt="Card outlined in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/card-outlined-dark.png" alt="Card outlined in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

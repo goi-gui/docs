@@ -7,8 +7,15 @@ any other picture.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/video-light.png" alt="Video in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/video-dark.png" alt="Video in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>normal</strong><br />
+  <img src="/img/components/video-normal-light.png" alt="Video normal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/video-normal-dark.png" alt="Video normal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>wavy</strong><br />
+  <img src="/img/components/video-wavy-light.png" alt="Video wavy in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/video-wavy-dark.png" alt="Video wavy in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

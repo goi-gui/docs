@@ -5,8 +5,27 @@ A compact, rounded element for filters, inputs, suggestions and tags.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/chip-light.png" alt="Chip in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/chip-dark.png" alt="Chip in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>assist</strong><br />
+  <img src="/img/components/chip-assist-light.png" alt="Chip assist in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/chip-assist-dark.png" alt="Chip assist in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>filter</strong><br />
+  <img src="/img/components/chip-filter-light.png" alt="Chip filter in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/chip-filter-dark.png" alt="Chip filter in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>input</strong><br />
+  <img src="/img/components/chip-input-light.png" alt="Chip input in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/chip-input-dark.png" alt="Chip input in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>suggestion</strong><br />
+  <img src="/img/components/chip-suggestion-light.png" alt="Chip suggestion in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/chip-suggestion-dark.png" alt="Chip suggestion in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

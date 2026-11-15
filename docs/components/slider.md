@@ -6,8 +6,21 @@ fills out from a center value, and a range with two handles.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/slider-light.png" alt="Slider in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/slider-dark.png" alt="Slider in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>standard</strong><br />
+  <img src="/img/components/slider-standard-light.png" alt="Slider standard in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/slider-standard-dark.png" alt="Slider standard in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>centered</strong><br />
+  <img src="/img/components/slider-centered-light.png" alt="Slider centered in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/slider-centered-dark.png" alt="Slider centered in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>range</strong><br />
+  <img src="/img/components/slider-range-light.png" alt="Slider range in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/slider-range-dark.png" alt="Slider range in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

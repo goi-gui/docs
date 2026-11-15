@@ -5,8 +5,33 @@ A primary action with an attached menu trigger.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/splitbutton-light.png" alt="SplitButton in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/splitbutton-dark.png" alt="SplitButton in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>filled</strong><br />
+  <img src="/img/components/splitbutton-filled-light.png" alt="SplitButton filled in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/splitbutton-filled-dark.png" alt="SplitButton filled in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>tonal</strong><br />
+  <img src="/img/components/splitbutton-tonal-light.png" alt="SplitButton tonal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/splitbutton-tonal-dark.png" alt="SplitButton tonal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>elevated</strong><br />
+  <img src="/img/components/splitbutton-elevated-light.png" alt="SplitButton elevated in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/splitbutton-elevated-dark.png" alt="SplitButton elevated in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>outlined</strong><br />
+  <img src="/img/components/splitbutton-outlined-light.png" alt="SplitButton outlined in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/splitbutton-outlined-dark.png" alt="SplitButton outlined in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>text</strong><br />
+  <img src="/img/components/splitbutton-text-light.png" alt="SplitButton text in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/splitbutton-text-dark.png" alt="SplitButton text in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

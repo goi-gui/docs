@@ -5,8 +5,33 @@ The ordinary Material 3 button. Five variants share one element.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/button-light.png" alt="Button in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/button-dark.png" alt="Button in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>filled</strong><br />
+  <img src="/img/components/button-filled-light.png" alt="Button filled in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/button-filled-dark.png" alt="Button filled in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>tonal</strong><br />
+  <img src="/img/components/button-tonal-light.png" alt="Button tonal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/button-tonal-dark.png" alt="Button tonal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>elevated</strong><br />
+  <img src="/img/components/button-elevated-light.png" alt="Button elevated in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/button-elevated-dark.png" alt="Button elevated in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>outlined</strong><br />
+  <img src="/img/components/button-outlined-light.png" alt="Button outlined in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/button-outlined-dark.png" alt="Button outlined in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>text</strong><br />
+  <img src="/img/components/button-text-light.png" alt="Button text in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/button-text-dark.png" alt="Button text in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

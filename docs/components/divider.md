@@ -5,8 +5,15 @@ A one-pixel rule between content.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/divider-light.png" alt="Divider in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/divider-dark.png" alt="Divider in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>horizontal</strong><br />
+  <img src="/img/components/divider-horizontal-light.png" alt="Divider horizontal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/divider-horizontal-dark.png" alt="Divider horizontal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>vertical</strong><br />
+  <img src="/img/components/divider-vertical-light.png" alt="Divider vertical in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/divider-vertical-dark.png" alt="Divider vertical in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

@@ -5,8 +5,27 @@ A square button that holds only an icon.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/iconbutton-light.png" alt="IconButton in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/iconbutton-dark.png" alt="IconButton in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>standard</strong><br />
+  <img src="/img/components/iconbutton-standard-light.png" alt="IconButton standard in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/iconbutton-standard-dark.png" alt="IconButton standard in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>filled</strong><br />
+  <img src="/img/components/iconbutton-filled-light.png" alt="IconButton filled in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/iconbutton-filled-dark.png" alt="IconButton filled in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>tonal</strong><br />
+  <img src="/img/components/iconbutton-tonal-light.png" alt="IconButton tonal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/iconbutton-tonal-dark.png" alt="IconButton tonal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>outlined</strong><br />
+  <img src="/img/components/iconbutton-outlined-light.png" alt="IconButton outlined in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/iconbutton-outlined-dark.png" alt="IconButton outlined in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

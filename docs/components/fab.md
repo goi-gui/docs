@@ -5,8 +5,27 @@ The floating action button: the primary action of a page.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/fab-light.png" alt="FAB in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/fab-dark.png" alt="FAB in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>primary</strong><br />
+  <img src="/img/components/fab-primary-light.png" alt="FAB primary in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/fab-primary-dark.png" alt="FAB primary in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>secondary</strong><br />
+  <img src="/img/components/fab-secondary-light.png" alt="FAB secondary in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/fab-secondary-dark.png" alt="FAB secondary in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>tertiary</strong><br />
+  <img src="/img/components/fab-tertiary-light.png" alt="FAB tertiary in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/fab-tertiary-dark.png" alt="FAB tertiary in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>extended</strong><br />
+  <img src="/img/components/fab-extended-light.png" alt="FAB extended in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/fab-extended-dark.png" alt="FAB extended in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

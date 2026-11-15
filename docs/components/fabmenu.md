@@ -5,8 +5,21 @@ A FAB that expands into a column of actions.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/fabmenu-light.png" alt="FABMenu in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/fabmenu-dark.png" alt="FABMenu in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>primary</strong><br />
+  <img src="/img/components/fabmenu-primary-light.png" alt="FABMenu primary in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/fabmenu-primary-dark.png" alt="FABMenu primary in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>secondary</strong><br />
+  <img src="/img/components/fabmenu-secondary-light.png" alt="FABMenu secondary in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/fabmenu-secondary-dark.png" alt="FABMenu secondary in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>tertiary</strong><br />
+  <img src="/img/components/fabmenu-tertiary-light.png" alt="FABMenu tertiary in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/fabmenu-tertiary-dark.png" alt="FABMenu tertiary in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

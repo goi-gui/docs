@@ -5,8 +5,15 @@ A multiline text field.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/textarea-light.png" alt="TextArea in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/textarea-dark.png" alt="TextArea in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>filled</strong><br />
+  <img src="/img/components/textarea-filled-light.png" alt="TextArea filled in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/textarea-filled-dark.png" alt="TextArea filled in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>outlined</strong><br />
+  <img src="/img/components/textarea-outlined-light.png" alt="TextArea outlined in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/textarea-outlined-dark.png" alt="TextArea outlined in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

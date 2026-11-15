@@ -5,8 +5,15 @@ An editable single-line field with a floating label.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/textfield-light.png" alt="TextField in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/textfield-dark.png" alt="TextField in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>filled</strong><br />
+  <img src="/img/components/textfield-filled-light.png" alt="TextField filled in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/textfield-filled-dark.png" alt="TextField filled in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>outlined</strong><br />
+  <img src="/img/components/textfield-outlined-light.png" alt="TextField outlined in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/textfield-outlined-dark.png" alt="TextField outlined in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

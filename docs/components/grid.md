@@ -7,8 +7,15 @@ into the shortest column, the way a pinboard does.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/grid-light.png" alt="Grid in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/grid-dark.png" alt="Grid in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>normal</strong><br />
+  <img src="/img/components/grid-normal-light.png" alt="Grid normal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/grid-normal-dark.png" alt="Grid normal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>masonry</strong><br />
+  <img src="/img/components/grid-masonry-light.png" alt="Grid masonry in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/grid-masonry-dark.png" alt="Grid masonry in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

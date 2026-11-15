@@ -5,8 +5,15 @@ A horizontal set of segments. Contiguous siblings form one group.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/segmentedbutton-light.png" alt="SegmentedButton in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/segmentedbutton-dark.png" alt="SegmentedButton in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>single</strong><br />
+  <img src="/img/components/segmentedbutton-single-light.png" alt="SegmentedButton single in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/segmentedbutton-single-dark.png" alt="SegmentedButton single in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>multi</strong><br />
+  <img src="/img/components/segmentedbutton-multi-light.png" alt="SegmentedButton multi in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/segmentedbutton-multi-dark.png" alt="SegmentedButton multi in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

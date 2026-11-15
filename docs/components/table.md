@@ -10,8 +10,21 @@ written as (a string, a number or a bool). The header sorts on click,
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/table-light.png" alt="Table in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/table-dark.png" alt="Table in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>outlined</strong><br />
+  <img src="/img/components/table-outlined-light.png" alt="Table outlined in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/table-outlined-dark.png" alt="Table outlined in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>filled</strong><br />
+  <img src="/img/components/table-filled-light.png" alt="Table filled in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/table-filled-dark.png" alt="Table filled in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>plain</strong><br />
+  <img src="/img/components/table-plain-light.png" alt="Table plain in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/table-plain-dark.png" alt="Table plain in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

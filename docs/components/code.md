@@ -5,8 +5,15 @@ A syntax-highlighted code block.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/code-light.png" alt="Code in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/code-dark.png" alt="Code in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>outlined</strong><br />
+  <img src="/img/components/code-outlined-light.png" alt="Code outlined in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/code-outlined-dark.png" alt="Code outlined in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>filled</strong><br />
+  <img src="/img/components/code-filled-light.png" alt="Code filled in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/code-filled-dark.png" alt="Code filled in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

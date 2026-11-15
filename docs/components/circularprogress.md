@@ -5,8 +5,15 @@ A circular progress ring.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/circularprogress-light.png" alt="CircularProgress in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/circularprogress-dark.png" alt="CircularProgress in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <strong>normal</strong><br />
+  <img src="/img/components/circularprogress-normal-light.png" alt="CircularProgress normal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/circularprogress-normal-dark.png" alt="CircularProgress normal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>wavy</strong><br />
+  <img src="/img/components/circularprogress-wavy-light.png" alt="CircularProgress wavy in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/circularprogress-wavy-dark.png" alt="CircularProgress wavy in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file
