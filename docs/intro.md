@@ -91,32 +91,26 @@ Only `ui` is imported by an application.
 
 ### Platform requirements
 
-goi runs on Linux (Wayland and X11), Windows and macOS. The window layer is
-cgo over SDL3 by default, so that build needs a C compiler, `pkg-config` and
-SDL3's development files; everything above it is pure Go. A `CGO_ENABLED=0`
-build uses the purego SDL3 backend instead and needs only the SDL3 runtime
-library.
+goi runs on Linux (Wayland and X11), Windows and macOS. The window layer loads
+the SDL3 runtime library through purego, so the build is cgo-free and needs no C
+compiler, `pkg-config` or SDL3 development files; the runtime library is the
+only requirement.
 
 ```sh
-# Linux
-sudo apt install libsdl3-dev            # or build SDL3 from source
-go build -ldflags=-linkmode=internal ./...
+# Linux (the runtime package; libsdl3-0 on Debian/Ubuntu, sdl3 on Arch)
+sudo apt install libsdl3-0
+CGO_ENABLED=0 go build -tags nofakecgo ./...
 
 # macOS
 brew install sdl3
-go build ./...
+CGO_ENABLED=0 go build -tags nofakecgo ./...
 
-# Windows (MSYS2 MINGW64 shell)
-pacman -S mingw-w64-x86_64-gcc mingw-w64-x86_64-pkgconf mingw-w64-x86_64-SDL3
-go build ./...
-
-# Any of the three, without a C toolchain or SDL development files
+# Windows (put SDL3.dll next to the executable)
 CGO_ENABLED=0 go build -tags nofakecgo ./...
 ```
 
-The same binary asks SDL which video driver it got and draws through Vulkan
-(Wayland, X11), Direct3D 12 (Windows) or Metal (macOS); no GPU SDK is needed
-beyond the driver. `-ldflags=-linkmode=internal` is Linux-only for the cgo
-build, because goffi's dynamic imports and the cgo SDL shim cannot share the
-external linker. The purego build needs no cgo flag; `nofakecgo` lets goffi and
-purego share one fake C runtime.
+`CGO_ENABLED=0` keeps cgo out, and `-tags nofakecgo` lets goffi and purego share
+one fake C runtime; both are required. The same binary asks SDL which video
+driver it got and draws through Vulkan (Wayland, X11), Direct3D 12 (Windows) or
+Metal (macOS); no GPU SDK is needed beyond the driver. See
+[Building](guide/build.md) for the optional build tags and the memory knobs.
