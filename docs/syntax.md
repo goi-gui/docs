@@ -475,9 +475,11 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   so `ticket.ID` is the row that exists at click time.
 - **`event`.** The event's own payload is available as `event`: `onToggle`
   passes a bool, `onChange` a number, `onEdit`, `onSubmit`, `onOK` and
-  `onCancel` a string, `onSelect` an index. `onClick` and the gestures carry no
-  scalar value.
-- **Events.** Every element accepts `onClick`. Components also accept
+  `onCancel` a string, `onSelect` an index. `onClick`, `onClickOutside` and the
+  gestures carry no scalar value.
+- **Events.** Every element accepts `onClick` and `onClickOutside`, which fires
+  on a press outside the element's subtree (the anchor and a popover's panel are
+  both inside). Components also accept
   `onToggle`, `onChange`, `onEdit`, `onSubmit`, `onSelect`, `onPlay`, `onPause`
   and `onEnd` where they emit them; a chart adds `onHover` for the point under
   the pointer, a `TimePicker` or `ColorPicker` adds `onOK` and `onCancel`, and a

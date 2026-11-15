@@ -39,14 +39,19 @@ window it flips above the anchor, and a panel wider than the window slides in
 from the edge rather than hanging off it.
 
 A design that only shows the panel sometimes puts the slot inside a condition;
-the panel then appears and disappears with that branch:
+the panel then appears and disappears with that branch. `onClickOutside` is how
+it goes away again: a press anywhere outside the popover — the anchor and the
+panel both count as inside — reaches the handler on the press itself.
 
 ```goi
 bridge {
-	sharing bool
+	sharing   bool
+	onDismiss func()
 }
 
 Popover {
+	onClickOutside: bridge.onDismiss()
+
 	Button { label: "Share" }
 
 	if bridge.sharing {
@@ -54,6 +59,11 @@ Popover {
 	}
 }
 ```
+
+`onClickOutside` is on every element, not only this one; see the
+[events table](../components.md#events). While the panel is hidden the handler
+stays quiet, so a popover that stays mounted does not hear every press on the
+page.
 
 ## Properties
 

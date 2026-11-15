@@ -310,6 +310,7 @@ Window {
 | Design property | Go call | Emitted by |
 |---|---|---|
 | `onClick: bridge.Handler(...)` | `OnClick(func(ui.ClickEvent))` | every element; `ClickEvent` has `X`, `Y`, `Button` |
+| `onClickOutside: bridge.Handler(...)` | `OnClickOutside(func(ui.ClickEvent))` | every element; a primary press outside its subtree, on the press itself |
 | `onToggle: bridge.Handler(event)` | `OnToggle(func(bool))` | Checkbox, RadioButton, Switch, Chip |
 | `onChange: bridge.Handler(event)` | `OnChangeValue(func(float64))` | Slider |
 | `onEdit: bridge.Handler(event)` | `OnEdit(func(string))` | TextField, SearchBar (every keystroke); ColorPicker (every change) |
