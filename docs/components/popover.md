@@ -38,6 +38,13 @@ the siblings written after it — no `zIndex` is needed. When it would leave the
 window it flips above the anchor, and a panel wider than the window slides in
 from the edge rather than hanging off it.
 
+A scrolling ancestor is the one box a panel does not escape. The panel belongs
+to the scroll it was written in: it moves with its anchor, is cut at the
+scroller's frame like the content, and disappears when the anchor is scrolled
+out of view — a popover at the end of a long `Column` shows nothing until you
+scroll down to it. A card or a `ClipRRect` that does not scroll still lets the
+panel out, which is what keeps a menu-like popover inside a raised surface.
+
 A design that only shows the panel sometimes puts the slot inside a condition;
 the panel then appears and disappears with that branch. `onClickOutside` is how
 it goes away again: a press anywhere outside the popover — the anchor and the
