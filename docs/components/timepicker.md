@@ -54,6 +54,10 @@ and drag the hand, or click anywhere on the ring, and the minute under it is
 picked — 13 as readily as 15. Picking the minutes keeps them active, so the hour
 never comes back on its own; the header halves switch back.
 
+The two fields are centred in the card as one group. A 24-hour clock has no
+AM/PM control, so it centres the two on their own instead of leaving the gap
+where the control would be.
+
 The two halves of the big time are targets too, so either half can be picked
 first. The active half is filled with `primaryContainer` and its text is
 `primary`; the other sits on `surfaceContainerHighest`.
