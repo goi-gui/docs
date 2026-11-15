@@ -249,26 +249,26 @@ selection counts the rows as they are shown.
   seed it directly:
 
   ```goi
-TableRow {
-	selected: true
+  TableRow {
+ 	selected: true
 
-	TableCell {
+ 	TableCell {
 		value: "Kaan"
 
 		Text {
 			text: "Kaan"
 		}
-	}
+ 	}
 
-	TableCell {
+ 	TableCell {
 		value: "Engineer"
 
 		Text {
 			text: "Engineer"
 		}
-	}
-}
-```
+ 	}
+  }
+  ```
 
 Indices are display indices, so a selection stays on the row the reader sees
 after a sort. The `OnSelect` event reports the row that was toggled.

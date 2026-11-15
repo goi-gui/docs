@@ -1310,26 +1310,26 @@ The layout is fixed, and running it twice changes nothing:
   struct:
 
   ```goi
-props {
-	Title    string
-	LongName int
-}
+  props {
+ 	Title    string
+ 	LongName int
+  }
   ```
 
 - An element body holds one property per line, with the values in one column:
 
   ```goi
-Column {
-	gap:     10
-	padding: 10
+  Column {
+ 	gap:     10
+ 	padding: 10
 
-	Text {
+ 	Text {
 		text: "example"
-	}
+ 	}
 
-	Text {}
-}
-```
+ 	Text {}
+  }
+  ```
 
 - A property run and the children after it are separated by one blank line, and
   so are two children. The closing brace follows the last member with no blank
