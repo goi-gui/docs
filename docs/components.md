@@ -223,6 +223,11 @@ Column {
   `Row`, a `List`, a `Carousel`, a `Table` and the panels that scroll on their
   own. `scrollSnapAlign` on a child of a non-scrolling parent does nothing.
 
+A scroll position is UI state, not a design value: a hot reload keeps the page
+where the reader left it. The node is matched by its `id` when it has one, and by
+its place in the tree otherwise, so an edit to a style does not jump a scroller
+back to the top.
+
 A scrolling element takes a gesture along its own axis only: a notched wheel
 scrolls vertically and **Shift + wheel** scrolls a sideways element, while a
 touchpad's two-finger swipe needs no modifier and keeps whichever axis the hand
