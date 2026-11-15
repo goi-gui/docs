@@ -40,29 +40,24 @@ Column {
 
 ## From Go
 
-A column is also the usual list: mark one row `template: true` and let
-`ui.Fill` replace the rows from a slice.
+A column is also the usual list: a `for … range` over a bridge slice, which
+`ui.SetData` rebuilds when the data changes.
 
 ```goi
 Column {
 	id:      list
 	spacing: 8
 
-	ListItem {
-		template: true
-		label:    "Item"
+	for _, it := range bridge.items {
+		ListItem {
+			label: it.label
+		}
 	}
 }
 ```
 
 ```go
-col := ui.MustByID[*ui.Column](w, "list")
-err := ui.Fill(w, col, items, func(row *ui.ListItem, it item) {
-	row.Label.Set(it.Label)
-})
+ui.SetData(w, "items", items)
 ```
-
-`ui.Instantiate[*ui.ListItem](w, "template", parent)` clones the row once when
-you need to add a single item by hand.
 
 Every element also accepts the [common properties](../components.md#common-properties).

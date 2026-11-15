@@ -28,15 +28,17 @@ List {
 }
 ```
 
-For rows that come from Go, keep one hidden prototype and fill from a slice:
+For rows that come from Go, loop over a bridge slice; `ui.SetData` rebuilds the
+rows when the data changes:
 
 ```goi
 List {
 	id: results
 
-	ListItem {
-		template: true
-		label:    "Item"
+	for _, it := range bridge.items {
+		ListItem {
+			label: it.label
+		}
 	}
 }
 ```
@@ -54,13 +56,9 @@ List {
 ## From Go
 
 ```go
-list := ui.MustByID[*ui.List](w, "results")
-err := ui.Fill(w, list, results, func(row *ui.ListItem, r result) {
-	row.Label.Set(r.Title)
-	row.Supporting.Set(r.Subtitle)
-})
+ui.SetData(w, "items", items)
 ```
 
-`Fill` removes the previous rows first, so a refresh cannot stack duplicates.
+`SetData` rebuilds the rows the loop built, so a refresh cannot stack duplicates.
 
 Every element also accepts the [common properties](../components.md#common-properties).

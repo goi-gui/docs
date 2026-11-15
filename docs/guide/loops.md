@@ -116,31 +116,6 @@ ui.OnEach[*ui.ListItem](w, "Tickets", func(row *ui.ListItem, t Ticket) {
 `OnEach` runs for every row the loop builds, including rebuilt ones, and gets the
 item the row was built from. It must be safe to call twice.
 
-## Lists that do not come from a loop
-
-A loop always walks a bridge list, a fragment prop or a number. For a list built
-by hand, use a hidden prototype and `ui.Fill`:
-
-```goi
-List {
-	id: results
-
-	ListItem {
-		template: true
-		label:    "Item"
-	}
-}
-```
-
-```go
-ui.Fill(w, list, items, func(row *ui.ListItem, it item) {
-	row.Label.Set(it.label)
-})
-```
-
-`template: true` keeps the prototype out of layout and painting, and `Fill`
-replaces the copies instead of stacking them.
-
 ## Nested loops
 
 A loop inside a loop sees both sets of variables, and the inner loop is rebuilt

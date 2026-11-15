@@ -238,6 +238,21 @@ Card {
 - As with `$children`, a slot with nothing passed draws nothing, so the fragment
   previews on its own.
 
+A built-in component can declare a slot of its own. `Popover` takes its panel as
+`$popover`, written directly under it, and the elements are ordinary children:
+
+```goi
+Popover {
+	align: start
+
+	Button { label: "Share" }
+
+	$popover {
+		Card { label: "Anyone with the link" }
+	}
+}
+```
+
 ### Ids and instances
 
 An instance that sets `id` namespaces every id inside the fragment, so one
@@ -499,8 +514,8 @@ type User struct {
 - **Rebuilding.** A list variable rebuilds only the loops that walk it, and only
   when it is set. A scalar keeps its nodes and just re-reads the value, which is
   why `if bridge.Loading` costs one visibility toggle.
-- **Row ids** are not registered, exactly like an `ui.Instantiate` copy, because
-  every row would otherwise collide: reach a part of a row with `ui.Descendant`.
+- **Row ids** are not registered, because every row would otherwise collide:
+  reach a part of a row with `ui.Descendant`.
 - **Hooks.** `ui.OnEach` runs for every row the loop builds, including rebuilt
   ones, and gets the item the row was built from. It must be safe to call twice.
 - **Validation.** `goicheck` and the language server check the declarations, the
@@ -510,8 +525,6 @@ type User struct {
 - **Runtime errors.** Calling a handler that Go never registered, or passing it
   arguments it cannot accept, is reported through the app's error hook instead
   of killing the frame.
-- `ui.Fill` and `template: true` remain for a list built by hand — inserting one
-  row, or a container that is not a `.goi` block.
 
 ## Grammar
 
@@ -951,7 +964,7 @@ Common to every element: `id`, `width`, `height`, `size`, `minWidth`, `maxWidth`
 `radius`, `fontFamily`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
 `opacity`, `backdropBlur`, `zIndex`, `cursor`, `rotate`, `hideScrollbar`,
 `autoHideScrollbar`, `scrollbarWidth`, `scrollbarColor`, `scrollShadow`,
-`scrollShadowColor`, `template`. `marginTop`,
+`scrollShadowColor`. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
 `margin`/`padding`; `paddingX` and `paddingY` set both sides of their axis.
@@ -1349,7 +1362,7 @@ mid-typing never reflows it.
 
 No bindings and no handler bodies — a design declares a handler's name and
 parameters, but the body is always Go. A list from Go is a `bridge` variable the
-app sets; `ui.Fill` covers a list built by hand.
+app sets with `ui.SetData`.
 
 Theming is not part of the language: `theme` names a scheme and every colour a
 component draws comes from it. See [Theming](guide/theming.md) for the built-in

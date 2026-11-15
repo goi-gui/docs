@@ -70,6 +70,7 @@ What a page shows: text, documents, media and plain boxes. These are nodes rathe
 - [ListItem](components/listitem.md) — One row in a list: leading icon, label, optional supporting line, trailing affordance.
 - [Menu](components/menu.md) — A popup list of `MenuItem`s.
 - [MenuItem](components/menuitem.md) — One row in a menu.
+- [Popover](components/popover.md) — A panel that floats against the box of its children.
 - [Snackbar](components/snackbar.md) — A short, transient message at the bottom of the screen.
 - [Tooltip](components/tooltip.md) — A hint that wraps the control it explains and floats above it on hover.
 - [Table](components/table.md) — A sortable data grid with declared columns and rows, selectable and sortable from a design or from Go.
@@ -164,7 +165,6 @@ These apply to every element and are not repeated on the component pages.
 | `fontFamily` | string | a family the app registered with `app.LoadFont`, inherited by children; see [Fonts](guide/fonts.md) |
 | `shadow` | shadow | CSS-style shadow: the box everywhere, the glyphs on `Text`; see [Shadows](guide/shadows.md) |
 | `visible` | bool | removes the element from layout, painting and hit-testing |
-| `template` | bool | marks a hidden row prototype for `ui.Fill` |
 | `flex` | number | share of the parent's leftover main-axis space |
 | `alignSelf` | enum | `start`, `center`, `end`, `stretch`; overrides the parent's `crossAxisAlign` |
 | `scroll` | bool | scroll when content overflows the box |
@@ -386,10 +386,6 @@ Window {
 }
 ```
 
-`template: true` plus `ui.Fill` remains for a list built by hand — one row
-inserted, or a container that is not a `.goi` block. `ui.Instantiate` and
-`ui.Remove` are the low-level clone and detach.
-
-A fragment instance can be the template row too, which keeps the row's design in
-its own file: `Row { template: true supporting: "x" }` hides the expanded
-fragment and `ui.Fill` copies it like any other template.
+A row built by hand is a loop over a one item list, not a cloned node: the
+design keeps the row and `ui.SetData` supplies it. `ui.Remove` detaches a node
+whose subtree should simply go away.

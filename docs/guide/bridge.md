@@ -185,6 +185,5 @@ The hook runs again for every rebuilt row, so it must be safe to call twice.
 
 ## Lists built by hand
 
-`bridge` covers lists that come from Go. For a list built by hand — one row, or a
-container that is not a `.goi` block — use a hidden `template: true` row and
-`ui.Fill`; see the [List](../components/list.md) page.
+A single row is a loop over a one item list: keep the row in the design and call
+`ui.SetData` with a slice of one. There is no cloned prototype node.
