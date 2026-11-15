@@ -44,15 +44,37 @@ SplitButton {
 }
 ```
 
+The trailing segment draws `arrow_drop_down` unless the design names an icon,
+which is how a split button shows its open state:
+
+```goi
+SplitButton {
+	id:           splitBtn
+	label:        "Share"
+	trailingIcon: splitBtn.expanded ? arrow_upward : arrow_downward
+	onClick:      splitBtn.expand()
+}
+
+Button {
+	label:   "Open the menu"
+	onClick: splitBtn.expand(true)
+}
+```
+
+`expand()` toggles and `expand(true)` / `expand(false)` sets, so a button can
+open a menu and another can close it. The state comes back as
+`splitBtn.expanded`, which an expression can read like any other property.
+
 ## Properties
 
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
 | `icon` | string | leading Material Symbols ligature |
+| `trailingIcon` | string | icon in the menu segment; `arrow_drop_down` when unset |
 | `variant` | enum | `filled` (default), `tonal`, `elevated`, `outlined`, `text` |
 | `disabled` | bool | dims the element and blocks input |
-| `expanded` | bool | open state (menu, split button) |
+| `expanded` | bool | open state (menu, split button); set it with `id.expand(on)` from an event or from Go |
 
 ## From Go
 
@@ -61,6 +83,7 @@ split := w.MustByID[*ui.SplitButton]("split")
 split.OnClick(func(ui.ClickEvent) {
 	split.Expanded.Set(!split.Expanded.Get())
 })
+split.Trailing.Set("arrow_upward") // the menu segment's icon
 ```
 
 Every element also accepts the [common properties](../components.md#common-properties).
