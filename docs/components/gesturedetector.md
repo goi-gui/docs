@@ -1,8 +1,8 @@
 # GestureDetector
 
 A hit area that reports gestures, the way Flutter's detector works. It wraps its
-child, sizes to it, and adds a double tap, a long press and a pan beside the
-click every element already has.
+child, sizes to it, and adds a double tap, a long press, a pan and the pointer's
+position beside the click every element already has.
 
 [All components](../components.md)
 
@@ -27,13 +27,16 @@ The events are handler calls, like every other event:
 
 ```goi
 bridge {
-	onFlip func()
-	onHold func()
+	onFlip  func()
+	onHold  func()
+	onHover func(on bool)
 }
 
 GestureDetector {
 	onDoubleTap: bridge.onFlip()
 	onLongPress: bridge.onHold()
+	onMouseEnter: bridge.onHover(true)
+	onMouseLeave: bridge.onHover(false)
 	// …
 }
 ```
@@ -50,24 +53,29 @@ The child is laid out like a `Stack`: an undeclared child fills the box, and
 | `onPanStart` | event | the pointer left the 8dp slop with the button down |
 | `onPanUpdate` | event | each move after the pan started |
 | `onPanEnd` | event | the button came up after a pan |
+| `onMouseEnter` | event | the pointer entered the detector's box |
+| `onMouseMove` | event | the pointer moved while over it, once per move |
+| `onMouseLeave` | event | the pointer left the box, or the window |
 
 `onClick` comes from every element and fires on a tap without a pan or a long
 press. A double tap fires `onDoubleTap` instead of `onClick` for its second tap,
 and a long press fires `onLongPress` without a click on release, so one gesture
 never runs an action twice.
 
-Gesture handlers take no `event`: a click and a pan carry geometry, not a scalar
-a design could use. Go gets it, though:
+Gesture and mouse handlers take no `event`: a click, a pan and a pointer
+position carry geometry, not a scalar a design could use. Go gets it, though:
 
 ```go
 card := ui.MustByID[*ui.GestureDetector](w, "card")
 card.OnPanStart(func(ui.PanEvent) { start = box.TranslateX.Get() })
 card.OnPanUpdate(func(e ui.PanEvent) { box.TranslateX.Set(start + e.DX) })
 card.OnDoubleTap(func(ui.ClickEvent) { flip() })
+card.OnMouseMove(func(e ui.MouseEvent) { hint.Set(fmt.Sprintf("%.0f, %.0f", e.X, e.Y)) })
 ```
 
-`ui.PanEvent` carries `X`, `Y` and the step's `DX`/`DY`. A pan owns the gesture,
-so a scroll view under the detector does not also scroll while the pointer drags.
+`ui.PanEvent` carries `X`, `Y` and the step's `DX`/`DY`; `ui.MouseEvent` carries
+the pointer's `X` and `Y` in window coordinates. A pan owns the gesture, so a
+scroll view under the detector does not also scroll while the pointer drags.
 
 ## From Go
 

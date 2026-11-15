@@ -325,6 +325,7 @@ Window {
 | `onDoubleTap: bridge.Handler()` | `OnDoubleTap(func(ui.ClickEvent))` | GestureDetector |
 | `onLongPress: bridge.Handler()` | `OnLongPress(func(ui.ClickEvent))` | GestureDetector |
 | `onPanStart`, `onPanUpdate`, `onPanEnd` | `OnPanStart/Update/End(func(ui.PanEvent))` | GestureDetector |
+| `onMouseEnter`, `onMouseMove`, `onMouseLeave` | `OnMouseEnter/Move/Leave(func(ui.MouseEvent))` | GestureDetector: the pointer entering, moving over, or leaving its box |
 
 The value of an event property is always a handler call. Its arguments are
 evaluated when the event fires; `event` is the event's own payload. A fragment
