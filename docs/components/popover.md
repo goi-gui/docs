@@ -38,8 +38,13 @@ box, which stays as small as the anchor; keep the `Popover` last in its parent
 A design that only shows the panel sometimes writes an `if` inside the slot:
 
 ```goi
+bridge {
+	sharing  bool
+	onToggle func()
+}
+
 Popover {
-	Button { label: "Share" onclick: bridge.toggleShare() }
+	Button { label: "Share" onClick: bridge.onToggle() }
 
 	$popover {
 		if bridge.sharing {
