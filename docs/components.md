@@ -154,7 +154,7 @@ These apply to every element and are not repeated on the component pages.
 | `padding` | number | inner spacing on all sides |
 | `paddingX`, `paddingY` | number | left+right, top+bottom; unset follows `padding` |
 | `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` | number | per-side override; unset follows its axis, then `padding` |
-| `background` | color | theme role or `#RRGGBB`; only where the element has no container |
+| `background` | color | theme role, `#RRGGBB`, or a gradient; on a component it replaces the built-in surface, on a selection control it fills the box behind the control |
 | `borderColor`, `borderWidth` | color, number | outline around the box |
 | `borderTopWidth`, `borderRightWidth`, `borderBottomWidth`, `borderLeftWidth` | number | per-side override; unset follows `borderWidth` |
 | `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor` | color | per-side override; unset follows `borderColor` |
