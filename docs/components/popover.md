@@ -32,24 +32,25 @@ Popover {
 
 The panel is an ordinary child of the `Popover`, so paint and hit-testing reach
 it and it can take the common properties. It floats outside the popover's own
-box, which stays as small as the anchor; keep the `Popover` last in its parent
-(or give it a `zIndex`) when the panel must sit above later siblings.
+box, which stays as small as the anchor. Two things follow from being an
+overlay: the panel is not cut by the element that holds it, and it paints above
+the siblings written after it — no `zIndex` is needed. When it would leave the
+window it flips above the anchor, and a panel wider than the window slides in
+from the edge rather than hanging off it.
 
-A design that only shows the panel sometimes writes an `if` inside the slot:
+A design that only shows the panel sometimes puts the slot inside a condition;
+the panel then appears and disappears with that branch:
 
 ```goi
 bridge {
-	sharing  bool
-	onToggle func()
+	sharing bool
 }
 
 Popover {
-	Button { label: "Share" onClick: bridge.onToggle() }
+	Button { label: "Share" }
 
-	$popover {
-		if bridge.sharing {
-			Card { label: "Anyone with the link" height: 96 }
-		}
+	if bridge.sharing {
+		$popover { Card { label: "Anyone with the link" height: 96 } }
 	}
 }
 ```
