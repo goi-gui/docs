@@ -6,6 +6,11 @@ click every element already has.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/gesturedetector-light.png" alt="GestureDetector in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/gesturedetector-dark.png" alt="GestureDetector in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

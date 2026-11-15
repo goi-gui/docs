@@ -4,6 +4,11 @@ A plain colored box. It has no component behaviour, so it is the cheapest backgr
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/rectangle-light.png" alt="Rectangle in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/rectangle-dark.png" alt="Rectangle in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

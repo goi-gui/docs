@@ -4,6 +4,11 @@ An open polyline on a [Map](map.md), one stroke through its coordinates.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/path-light.png" alt="Path in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/path-dark.png" alt="Path in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

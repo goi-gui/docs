@@ -4,6 +4,11 @@ Cuts its children to a rounded box.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/cliprrect-light.png" alt="ClipRRect in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/cliprrect-dark.png" alt="ClipRRect in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

@@ -4,6 +4,11 @@ A syntax-highlighted code block.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/code-light.png" alt="Code in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/code-dark.png" alt="Code in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

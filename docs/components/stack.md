@@ -4,6 +4,11 @@ Overlays children on top of each other, last child on top. It is the base for di
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/stack-light.png" alt="Stack in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/stack-dark.png" alt="Stack in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

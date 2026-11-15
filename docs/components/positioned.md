@@ -4,6 +4,11 @@ Anchors a child inside a Stack. Only valid as a direct child of `Stack`.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/positioned-light.png" alt="Positioned in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/positioned-dark.png" alt="Positioned in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

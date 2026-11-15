@@ -4,6 +4,11 @@ A compact, rounded element for filters, inputs, suggestions and tags.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/chip-light.png" alt="Chip in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/chip-dark.png" alt="Chip in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

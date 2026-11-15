@@ -6,6 +6,11 @@ scrubber and the position.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/audio-light.png" alt="Audio in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/audio-dark.png" alt="Audio in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

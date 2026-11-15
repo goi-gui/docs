@@ -4,6 +4,11 @@ One line per series through the points, with the value axis drawn behind it.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/linechart-light.png" alt="LineChart in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/linechart-dark.png" alt="LineChart in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 A design writes its own data: `categories` names the points and one `ChartSeries`

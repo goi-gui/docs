@@ -4,6 +4,11 @@ One destination in a navigation bar, rail or drawer.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/navigationitem-light.png" alt="NavigationItem in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/navigationitem-dark.png" alt="NavigationItem in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

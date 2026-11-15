@@ -4,6 +4,11 @@ One row in a list: leading icon, label, optional supporting line, trailing affor
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/listitem-light.png" alt="ListItem in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/listitem-dark.png" alt="ListItem in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

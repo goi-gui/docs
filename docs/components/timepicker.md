@@ -5,6 +5,11 @@ time with an AM/PM switch, and both end with the same Cancel and OK actions.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/timepicker-light.png" alt="TimePicker in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/timepicker-dark.png" alt="TimePicker in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

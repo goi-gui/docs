@@ -5,6 +5,11 @@ morphs into a rounded square, squeezes into a pill, and comes back.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/loadingindicator-light.png" alt="LoadingIndicator in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/loadingindicator-dark.png" alt="LoadingIndicator in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

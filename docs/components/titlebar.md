@@ -6,6 +6,11 @@ title bar's contents are its children. Use it together with
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/titlebar-light.png" alt="TitleBar in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/titlebar-dark.png" alt="TitleBar in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

@@ -5,6 +5,11 @@ disk usage, a score out of 100.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/gaugechart-light.png" alt="GaugeChart in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/gaugechart-dark.png" alt="GaugeChart in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

@@ -5,6 +5,11 @@ sits against a scale.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/scatterchart-light.png" alt="ScatterChart in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/scatterchart-dark.png" alt="ScatterChart in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

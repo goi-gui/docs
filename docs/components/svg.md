@@ -6,6 +6,11 @@ comes from `src` or, from Go, from `SetDataString`/`SetDataBytes`.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/svg-light.png" alt="SVG in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/svg-dark.png" alt="SVG in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

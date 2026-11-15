@@ -4,6 +4,11 @@ One wedge per value of the first series, with an optional hole for a donut.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/piechart-light.png" alt="PieChart in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/piechart-dark.png" alt="PieChart in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

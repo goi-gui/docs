@@ -4,6 +4,11 @@ One run of text at a Material 3 type-scale role.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/text-light.png" alt="Text in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/text-dark.png" alt="Text in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

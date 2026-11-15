@@ -4,6 +4,11 @@ A square button that holds only an icon.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/iconbutton-light.png" alt="IconButton in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/iconbutton-dark.png" alt="IconButton in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

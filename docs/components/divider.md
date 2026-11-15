@@ -4,6 +4,11 @@ A one-pixel rule between content.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/divider-light.png" alt="Divider in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/divider-dark.png" alt="Divider in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

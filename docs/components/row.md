@@ -4,6 +4,11 @@ Places children left to right.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/row-light.png" alt="Row in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/row-dark.png" alt="Row in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

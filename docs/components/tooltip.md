@@ -6,6 +6,11 @@ that child without taking room in the layout.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/tooltip-light.png" alt="Tooltip in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/tooltip-dark.png" alt="Tooltip in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

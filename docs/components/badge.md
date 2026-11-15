@@ -4,6 +4,11 @@ A small count or status dot, usually overlaid on an icon with `Positioned` or `S
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/badge-light.png" alt="Badge in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/badge-dark.png" alt="Badge in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

@@ -4,6 +4,11 @@ Flows children left to right and starts a new run when the next child does not f
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/wrap-light.png" alt="Wrap in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/wrap-dark.png" alt="Wrap in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

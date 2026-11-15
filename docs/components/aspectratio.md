@@ -6,6 +6,11 @@ that must keep its shape whatever the window does.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/aspectratio-light.png" alt="AspectRatio in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/aspectratio-dark.png" alt="AspectRatio in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

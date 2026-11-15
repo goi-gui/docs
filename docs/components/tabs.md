@@ -4,6 +4,11 @@ A tab bar that groups `Tab` children.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/tabs-light.png" alt="Tabs in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/tabs-dark.png" alt="Tabs in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

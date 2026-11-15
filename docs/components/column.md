@@ -4,6 +4,11 @@ Stacks children vertically, top to bottom.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/column-light.png" alt="Column in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/column-dark.png" alt="Column in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

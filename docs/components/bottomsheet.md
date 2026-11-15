@@ -4,6 +4,11 @@ A surface anchored to the bottom edge.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/bottomsheet-light.png" alt="BottomSheet in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/bottomsheet-dark.png" alt="BottomSheet in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

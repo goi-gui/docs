@@ -6,6 +6,11 @@ is available on its own when a design needs mixed styling inside a sentence.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/richtext-light.png" alt="RichText in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/richtext-dark.png" alt="RichText in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 A design writes the runs itself, one `Text` child per run:

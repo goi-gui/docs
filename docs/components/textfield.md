@@ -4,6 +4,11 @@ An editable single-line field with a floating label.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/textfield-light.png" alt="TextField in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/textfield-dark.png" alt="TextField in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

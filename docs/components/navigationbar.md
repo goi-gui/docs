@@ -4,6 +4,11 @@ The bottom navigation bar for the compact window class.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/navigationbar-light.png" alt="NavigationBar in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/navigationbar-dark.png" alt="NavigationBar in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

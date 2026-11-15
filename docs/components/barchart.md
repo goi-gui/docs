@@ -4,6 +4,11 @@ One bar per value, grouped by series or stacked on top of each other.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/barchart-light.png" alt="BarChart in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/barchart-dark.png" alt="BarChart in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

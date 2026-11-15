@@ -4,6 +4,11 @@ A primary action with an attached menu trigger.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/splitbutton-light.png" alt="SplitButton in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/splitbutton-dark.png" alt="SplitButton in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

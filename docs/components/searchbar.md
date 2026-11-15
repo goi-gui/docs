@@ -4,6 +4,11 @@ A text field shaped as a search input, with a leading search glyph.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/searchbar-light.png" alt="SearchBar in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/searchbar-dark.png" alt="SearchBar in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

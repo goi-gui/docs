@@ -4,6 +4,11 @@ The bar at the top of a screen: a leading icon, a title and a trailing icon.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/topappbar-light.png" alt="TopAppBar in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/topappbar-dark.png" alt="TopAppBar in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi

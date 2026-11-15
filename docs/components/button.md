@@ -4,6 +4,11 @@ The ordinary Material 3 button. Five variants share one element.
 
 [All components](../components.md)
 
+<p align="center">
+  <img src="/img/components/button-light.png" alt="Button in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/button-dark.png" alt="Button in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi
