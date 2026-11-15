@@ -46,7 +46,7 @@ Toolbar {
 ## From Go
 
 ```go
-bar := ui.MustByID[*ui.Toolbar](w, "format")
+bar := w.MustByID[*ui.Toolbar]("format")
 bar.Spacing.Set(2)
 ```
 

@@ -41,8 +41,8 @@ Stack {
 ## From Go
 
 ```go
-stack := ui.MustByID[*ui.Stack](w, "overlay")
-sheet, err := ui.ByID[*ui.Positioned](w, "sheet")
+stack := w.MustByID[*ui.Stack]("overlay")
+sheet, err := w.ByID[*ui.Positioned]("sheet")
 if err == nil {
 	sheet.SetVisible(true)
 }

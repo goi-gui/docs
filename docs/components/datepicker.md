@@ -43,7 +43,7 @@ back through the same geometry the painter used (`paint.DateLayoutOf`).
 ## From Go
 
 ```go
-picker := ui.MustByID[*ui.DatePicker](w, "date")
+picker := w.MustByID[*ui.DatePicker]("date")
 picker.OnSubmit(func(v string) {
 	fmt.Println("picked", v) // "2026-11-02"
 })

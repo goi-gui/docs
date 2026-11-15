@@ -36,8 +36,8 @@ Dialog {
 ## From Go
 
 ```go
-dialog := ui.MustByID[*ui.Dialog](w, "confirm")
-scrim := ui.MustByID[*ui.Rectangle](w, "scrim")
+dialog := w.MustByID[*ui.Dialog]("confirm")
+scrim := w.MustByID[*ui.Rectangle]("scrim")
 open := func(v bool) {
 	scrim.SetVisible(v)
 	dialog.SetVisible(v)

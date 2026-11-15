@@ -34,7 +34,7 @@ _No component-specific properties._
 ## From Go
 
 ```go
-scrim := ui.MustByID[*ui.Rectangle](w, "scrim")
+scrim := w.MustByID[*ui.Rectangle]("scrim")
 scrim.OnClick(func(ui.ClickEvent) { closeSheet() })
 ```
 

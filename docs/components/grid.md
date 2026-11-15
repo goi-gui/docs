@@ -75,7 +75,7 @@ decides both axes.
 ## From Go
 
 ```go
-grid := ui.MustByID[*ui.Grid](w, "grid")
+grid := w.MustByID[*ui.Grid]("grid")
 grid.Columns.Set(2)
 ```
 

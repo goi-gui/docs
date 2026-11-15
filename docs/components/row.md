@@ -39,7 +39,7 @@ Row {
 ## From Go
 
 ```go
-row := ui.MustByID[*ui.Row](w, "actions")
+row := w.MustByID[*ui.Row]("actions")
 row.Spacing.Set(16)
 ```
 

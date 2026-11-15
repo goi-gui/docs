@@ -58,7 +58,7 @@ clip, and a child larger than the box paints outside it unless a `ClipRRect` or
 ## From Go
 
 ```go
-box := ui.MustByID[*ui.AspectRatio](w, "cover")
+box := w.MustByID[*ui.AspectRatio]("cover")
 box.Ratio.Set(1.5)
 ```
 

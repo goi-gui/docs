@@ -73,7 +73,7 @@ Chip {
 ## From Go
 
 ```go
-chip := ui.MustByID[*ui.Chip](w, "filter")
+chip := w.MustByID[*ui.Chip]("filter")
 chip.OnClick(func(ui.ClickEvent) {
 	chip.Selected.Set(!chip.Selected.Get())
 })

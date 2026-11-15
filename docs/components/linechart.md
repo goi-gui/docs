@@ -45,7 +45,7 @@ An app whose numbers move fills the chart from Go instead, and that replaces wha
 the file declared:
 
 ```go
-line := ui.MustByID[*ui.LineChart](w, "revenue")
+line := w.MustByID[*ui.LineChart]("revenue")
 line.SetData(ui.ChartData{
 	Categories: []string{"Jan", "Feb", "Mar", "Apr", "May", "Jun"},
 	Series: []ui.Series{
@@ -147,7 +147,7 @@ The rest of the surface is the common box: `background`, `borderWidth`,
 rest of the data is already right:
 
 ```go
-line := ui.MustByID[*ui.LineChart](w, "revenue")
+line := w.MustByID[*ui.LineChart]("revenue")
 data := line.Data
 data.Series[0].Values[5] = 41
 line.SetData(data)

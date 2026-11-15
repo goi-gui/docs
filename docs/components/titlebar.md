@@ -63,13 +63,13 @@ Window {
 
 ```go
 win.Bind(func(w *ui.Window) error {
-	ui.MustByID[*ui.IconButton](w, "minimize").OnClick(func(ui.ClickEvent) {
+	w.MustByID[*ui.IconButton]("minimize").OnClick(func(ui.ClickEvent) {
 		w.Minimize()
 	})
-	ui.MustByID[*ui.IconButton](w, "maximize").OnClick(func(ui.ClickEvent) {
+	w.MustByID[*ui.IconButton]("maximize").OnClick(func(ui.ClickEvent) {
 		w.ToggleMaximize()
 	})
-	ui.MustByID[*ui.IconButton](w, "close").OnClick(func(ui.ClickEvent) {
+	w.MustByID[*ui.IconButton]("close").OnClick(func(ui.ClickEvent) {
 		w.Close()
 	})
 	return nil

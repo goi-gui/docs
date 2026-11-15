@@ -71,7 +71,7 @@ the first character replaces it.
 ## From Go
 
 ```go
-accent := ui.MustByID[*ui.ColorPicker](w, "accent")
+accent := w.MustByID[*ui.ColorPicker]("accent")
 accent.OnEdit(func(hex string) { preview.SetBackground(hex) })
 accent.OnSubmit(func(hex string) { saveAccent(hex) })
 accent.OnOK(func(hex string) { closeDialog() })

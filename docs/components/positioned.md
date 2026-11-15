@@ -50,10 +50,10 @@ Stack {
 ## From Go
 
 ```go
-frame := ui.MustByID[*ui.Positioned](w, "drawer")
+frame := w.MustByID[*ui.Positioned]("drawer")
 frame.TranslateX.Set(-320)
-stop := app.Animate(&frame.TranslateX, 0, 250*time.Millisecond, ui.Emphasized)
-_ = stop
+slide := app.Animate(&frame.TranslateX, 0, 250*time.Millisecond, ui.Emphasized)
+slide.Stop() // and it can chain with .Then(d, ease, fn)
 ```
 
 Every element also accepts the [common properties](../components.md#common-properties).

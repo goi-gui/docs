@@ -41,7 +41,7 @@ Wrap {
 ## From Go
 
 ```go
-wrap := ui.MustByID[*ui.Wrap](w, "chips")
+wrap := w.MustByID[*ui.Wrap]("chips")
 wrap.Spacing.Set(12)
 ```
 

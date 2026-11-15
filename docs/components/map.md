@@ -99,16 +99,16 @@ size of its children and is moved to its projected coordinate when it paints.
 ## From Go
 
 ```go
-m := ui.MustByID[*ui.Map](w, "city")
+m := w.MustByID[*ui.Map]("city")
 m.SetView(41.0082, 28.9784, 13) // lat, lon, zoom
 lat, lng, zoom := m.View()
 m.BBox.Set([]float64{28.5, 40.8, 29.5, 41.4})
 
 // One polygon from an API's [lon, lat] ring.
-ui.MustByID[*ui.Geom](w, "district").Data.Set(ring)
+w.MustByID[*ui.Geom]("district").Data.Set(ring)
 
 // A route as [lon, lat] pairs.
-ui.MustByID[*ui.Path](w, "route").Coordinates.Set([]ui.Coord{
+w.MustByID[*ui.Path]("route").Coordinates.Set([]ui.Coord{
 	{28.97, 41.01}, {29.06, 41.01},
 })
 ```

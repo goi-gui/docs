@@ -28,7 +28,7 @@ Snackbar {
 ## From Go
 
 ```go
-snack := ui.MustByID[*ui.Snackbar](w, "snack")
+snack := w.MustByID[*ui.Snackbar]("snack")
 snack.Label.Set("Saved")
 snack.SetVisible(true)
 time.AfterFunc(3*time.Second, func() {

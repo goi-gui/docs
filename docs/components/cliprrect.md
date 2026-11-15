@@ -48,7 +48,7 @@ overflowing child from leaking past its container.
 ## From Go
 
 ```go
-clip := ui.MustByID[*ui.ClipRRect](w, "avatar")
+clip := w.MustByID[*ui.ClipRRect]("avatar")
 clip.Radius.Set(48)
 ```
 

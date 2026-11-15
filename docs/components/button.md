@@ -87,7 +87,7 @@ common properties are listed once in
 ## From Go
 
 ```go
-btn := ui.MustByID[*ui.Button](w, "save")
+btn := w.MustByID[*ui.Button]("save")
 btn.OnClick(func(ui.ClickEvent) {
 	btn.Label.Set("Saved")
 	btn.Disabled.Set(true)

@@ -50,7 +50,7 @@ NavigationBar {
 ## From Go
 
 ```go
-bar := ui.MustByID[*ui.NavigationBar](w, "navbar")
+bar := w.MustByID[*ui.NavigationBar]("navbar")
 bar.OnSelect(func(i int) { show(i) })
 ```
 

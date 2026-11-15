@@ -35,7 +35,7 @@ The wedges read the **first** series only, and each category is one slice, so
 fills the same picture from Go:
 
 ```go
-pie := ui.MustByID[*ui.PieChart](w, "channels")
+pie := w.MustByID[*ui.PieChart]("channels")
 pie.SetData(ui.ChartData{
 	Categories: []string{"Direct", "Search", "Social", "Email"},
 	Series:     []ui.Series{{Values: []float64{42, 27, 18, 13}}},

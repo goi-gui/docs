@@ -120,7 +120,7 @@ while focused.
 ## From Go
 
 ```go
-email := ui.MustByID[*ui.TextField](w, "email")
+email := w.MustByID[*ui.TextField]("email")
 email.OnEdit(func(s string) { draft.Email = s })
 email.OnSubmit(func(s string) { save(s) })
 ```

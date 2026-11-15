@@ -56,7 +56,7 @@ Card {
 ## From Go
 
 ```go
-card := ui.MustByID[*ui.Card](w, "summary")
+card := w.MustByID[*ui.Card]("summary")
 card.Label.Set("3 results")
 card.OnClick(func(ui.ClickEvent) { open(3) })
 ```

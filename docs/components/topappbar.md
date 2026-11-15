@@ -32,7 +32,7 @@ TopAppBar {
 ## From Go
 
 ```go
-bar := ui.MustByID[*ui.TopAppBar](w, "appbar")
+bar := w.MustByID[*ui.TopAppBar]("appbar")
 bar.Label.Set("Settings")
 bar.OnClick(func(e ui.ClickEvent) {
 	// e.X is a window coordinate; compare against the bar's own box for sides.

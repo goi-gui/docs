@@ -78,7 +78,7 @@ page.
 ## From Go
 
 ```go
-pop := ui.MustByID[*ui.Popover](w, "pop")
+pop := w.MustByID[*ui.Popover]("pop")
 pop.Align.Set("end")
 ```
 

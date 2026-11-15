@@ -60,7 +60,7 @@ FAB {
 ## From Go
 
 ```go
-fab := ui.MustByID[*ui.FAB](w, "compose")
+fab := w.MustByID[*ui.FAB]("compose")
 fab.OnClick(func(ui.ClickEvent) { openEditor() })
 ```
 

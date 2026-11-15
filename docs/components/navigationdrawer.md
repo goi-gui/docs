@@ -42,7 +42,7 @@ NavigationDrawer {
 ## From Go
 
 ```go
-drawer := ui.MustByID[*ui.NavigationDrawer](w, "drawer")
+drawer := w.MustByID[*ui.NavigationDrawer]("drawer")
 drawer.OnClick(func(ui.ClickEvent) { closeDrawer() })
 ```
 

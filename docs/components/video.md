@@ -148,7 +148,7 @@ Button {
 From Go:
 
 ```go
-clip := ui.MustByID[*ui.Video](w, "clip")
+clip := w.MustByID[*ui.Video]("clip")
 app.PlayMedia(clip)
 app.SeekMedia(clip, 12*time.Second)
 app.SetMediaVolume(clip, 0.5)

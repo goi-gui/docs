@@ -56,7 +56,7 @@ and the caret scrolls vertically to stay visible.
 ## From Go
 
 ```go
-area := ui.MustByID[*ui.TextArea](w, "notes")
+area := w.MustByID[*ui.TextArea]("notes")
 area.OnEdit(func(s string) {
 	fmt.Println("value:", s)
 })

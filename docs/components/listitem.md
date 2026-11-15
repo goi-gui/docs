@@ -45,7 +45,7 @@ ListItem {
 ## From Go
 
 ```go
-row := ui.MustByID[*ui.ListItem](w, "item")
+row := w.MustByID[*ui.ListItem]("item")
 row.OnClick(func(ui.ClickEvent) {
 	row.Selected.Set(true)
 })

@@ -52,7 +52,7 @@ no spans, the whole thing is one plain run.
 ## From Go
 
 ```go
-note := ui.MustByID[*ui.RichText](w, "note")
+note := w.MustByID[*ui.RichText]("note")
 note.SetSpans([]ui.Span{
 	{Text: "Install with "},
 	{Text: "go install", Code: true},
@@ -112,7 +112,7 @@ An app that wants to route links itself subscribes instead, and goi then opens
 nothing:
 
 ```go
-doc := ui.MustByID[*ui.RichText](w, "doc")
+doc := w.MustByID[*ui.RichText]("doc")
 doc.OnLink(func(target string) {
 	if rest, ok := strings.CutPrefix(target, "goi://"); ok {
 		app.Show(rest)

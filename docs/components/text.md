@@ -85,12 +85,12 @@ still cover the older emoji.
 ## From Go
 
 ```go
-label := ui.MustByID[*ui.Text](w, "counter")
+label := w.MustByID[*ui.Text]("counter")
 label.Text.Set(strconv.Itoa(n))
 label.Role.Set("headlineMedium")
 
 // Selectable body copy.
-body := ui.MustByID[*ui.Text](w, "notes")
+body := w.MustByID[*ui.Text]("notes")
 body.Selectable.Set(true)
 ```
 

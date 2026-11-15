@@ -97,7 +97,7 @@ either with `variant`.
 ## From Go
 
 ```go
-picker := ui.MustByID[*ui.TimePicker](w, "time")
+picker := w.MustByID[*ui.TimePicker]("time")
 picker.OnOK(func(v string) { fmt.Println("picked", v) }) // "19:30"
 picker.OnCancel(func(v string) { closeDialog() })
 picker.Text.Set("07:00")

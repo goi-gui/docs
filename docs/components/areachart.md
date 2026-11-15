@@ -28,7 +28,7 @@ AreaChart {
 series under it:
 
 ```go
-area := ui.MustByID[*ui.AreaChart](w, "costs")
+area := w.MustByID[*ui.AreaChart]("costs")
 area.SetData(ui.ChartData{
 	Categories: []string{"Jan", "Feb", "Mar"},
 	Series: []ui.Series{

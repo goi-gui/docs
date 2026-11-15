@@ -38,10 +38,10 @@ MenuItem {
 ## From Go
 
 ```go
-item := ui.MustByID[*ui.MenuItem](w, "cut")
+item := w.MustByID[*ui.MenuItem]("cut")
 item.OnClick(func(ui.ClickEvent) {
 	cut()
-	ui.MustByID[*ui.Menu](w, "menu").SetVisible(false)
+	w.MustByID[*ui.Menu]("menu").SetVisible(false)
 })
 ```
 

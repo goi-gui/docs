@@ -25,7 +25,7 @@ RadarChart {
 The numbers come from Go, the way every chart takes them:
 
 ```go
-radar := ui.MustByID[*ui.RadarChart](w, "satisfaction")
+radar := w.MustByID[*ui.RadarChart]("satisfaction")
 radar.SetData(ui.ChartData{
 	Categories: []string{"Speed", "Design", "Support", "Price"},
 	Series: []ui.Series{

@@ -92,6 +92,7 @@ What a page shows: text, documents, media and plain boxes. These are nodes rathe
 - [LinearProgress](components/linearprogress.md) — A horizontal progress bar.
 - [CircularProgress](components/circularprogress.md) — A circular progress ring.
 - [LoadingIndicator](components/loadingindicator.md) — The M3 indeterminate loading shape.
+- [Skeleton](components/skeleton.md) — A shimmering placeholder for content that has not arrived.
 
 ## Date, time and colour
 
@@ -350,12 +351,17 @@ Both are covered on their own pages: [Theming](guide/theming.md) and
 ## Finding elements from Go
 
 ```go
-btn, err := ui.ByID[*ui.Button](w, "save")   // typed, fails when missing or mistyped
-btn := ui.MustByID[*ui.Button](w, "save")    // panics; fine in Bind
-node, err := w.ByID("save")                  // untyped
+btn, err := w.ByID[*ui.Button]("save")   // typed, fails when missing or mistyped
+btn := w.MustByID[*ui.Button]("save")    // panics; fine in Bind
+node, err := w.ByID[ui.Node]("save")     // untyped
 
 ui.SetHandler(w, "onOpen", func(id string) { open(id) })  // body of a bridge handler
 ```
+
+The lookup is a generic method, so the window comes first and the type argument
+says what the id must be. The package form does the same and stays for a helper
+that only holds the window and the id: `ui.ByID[*ui.Button](w, "save")` and
+`ui.MustByID[*ui.Button](w, "save")`.
 
 `ui.SetHandler` supplies the Go function a `bridge { OnOpen func(id string) }`
 declaration calls; register it from `Bind` so a hot reload registers it again.

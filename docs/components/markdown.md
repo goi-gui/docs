@@ -36,7 +36,7 @@ string, and a document read at runtime is usually loaded in Go instead.
 ## From Go
 
 ```go
-doc := ui.MustByID[*ui.Markdown](w, "readme")
+doc := w.MustByID[*ui.Markdown]("readme")
 doc.SetSource(source)
 
 // or, when the file ships beside the binary:

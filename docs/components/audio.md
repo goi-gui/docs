@@ -111,7 +111,7 @@ Button {
 From Go:
 
 ```go
-podcast := ui.MustByID[*ui.Audio](w, "podcast")
+podcast := w.MustByID[*ui.Audio]("podcast")
 app.PlayMedia(podcast)
 app.SeekMedia(podcast, 12*time.Second)
 app.SetMediaVolume(podcast, 0.5)

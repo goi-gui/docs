@@ -34,12 +34,12 @@ BottomSheet {
 ## From Go
 
 ```go
-sheet := ui.MustByID[*ui.BottomSheet](w, "sheet")
+sheet := w.MustByID[*ui.BottomSheet]("sheet")
 sheet.SetVisible(true)
 
 // Animate the placement, not the node: a sheet that grows is usually a
 // Positioned whose top edge moves.
-frame := ui.MustByID[*ui.Positioned](w, "sheetFrame")
+frame := w.MustByID[*ui.Positioned]("sheetFrame")
 app.Animate(&frame.Top, 300, 250*time.Millisecond, ui.Emphasized)
 ```
 

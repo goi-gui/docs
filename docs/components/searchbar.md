@@ -34,7 +34,7 @@ SearchBar {
 ## From Go
 
 ```go
-search := ui.MustByID[*ui.SearchBar](w, "search")
+search := w.MustByID[*ui.SearchBar]("search")
 search.OnEdit(func(q string) { filter(q) })
 ```
 

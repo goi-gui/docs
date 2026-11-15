@@ -57,7 +57,7 @@ SplitButton {
 ## From Go
 
 ```go
-split := ui.MustByID[*ui.SplitButton](w, "split")
+split := w.MustByID[*ui.SplitButton]("split")
 split.OnClick(func(ui.ClickEvent) {
 	split.Expanded.Set(!split.Expanded.Get())
 })

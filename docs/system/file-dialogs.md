@@ -89,7 +89,7 @@ goroutine; only the update goes through `App.Post`.
 ## A complete handler
 
 ```go
-open := ui.MustByID[*ui.Button](w, "open")
+open := w.MustByID[*ui.Button]("open")
 open.OnClick(func(ui.ClickEvent) {
 	path, err := ui.OpenFile(ui.DialogTitle("Open"))
 	if err != nil {

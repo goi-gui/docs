@@ -53,7 +53,7 @@ reflow.
 ## From Go
 
 ```go
-tip := ui.MustByID[*ui.Tooltip](w, "tip")
+tip := w.MustByID[*ui.Tooltip]("tip")
 tip.Text.Set("Saves to your library")
 ```
 

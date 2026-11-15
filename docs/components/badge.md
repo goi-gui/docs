@@ -33,7 +33,7 @@ Badge {
 ## From Go
 
 ```go
-badge := ui.MustByID[*ui.Badge](w, "unread")
+badge := w.MustByID[*ui.Badge]("unread")
 badge.Label.Set(strconv.Itoa(count))
 ```
 

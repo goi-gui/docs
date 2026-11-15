@@ -276,7 +276,7 @@ after a sort. The `OnSelect` event reports the row that was toggled.
 ## From Go
 
 ```go
-table := ui.MustByID[*ui.Table](w, "people")
+table := w.MustByID[*ui.Table]("people")
 
 table.OnSort(func(s ui.SortOrder) {
 	// s.Column, s.Key, s.Ascending

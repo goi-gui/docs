@@ -64,7 +64,7 @@ IconButton {
 ## From Go
 
 ```go
-star := ui.MustByID[*ui.IconButton](w, "star")
+star := w.MustByID[*ui.IconButton]("star")
 star.OnClick(func(ui.ClickEvent) {
 	on := !star.Selected.Get()
 	star.Selected.Set(on)

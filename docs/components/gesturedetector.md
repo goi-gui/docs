@@ -66,7 +66,7 @@ Gesture and mouse handlers take no `event`: a click, a pan and a pointer
 position carry geometry, not a scalar a design could use. Go gets it, though:
 
 ```go
-card := ui.MustByID[*ui.GestureDetector](w, "card")
+card := w.MustByID[*ui.GestureDetector]("card")
 card.OnPanStart(func(ui.PanEvent) { start = box.TranslateX.Get() })
 card.OnPanUpdate(func(e ui.PanEvent) { box.TranslateX.Set(start + e.DX) })
 card.OnDoubleTap(func(ui.ClickEvent) { flip() })
@@ -80,7 +80,7 @@ scroll view under the detector does not also scroll while the pointer drags.
 ## From Go
 
 ```go
-tap := ui.MustByID[*ui.GestureDetector](w, "tap")
+tap := w.MustByID[*ui.GestureDetector]("tap")
 off := tap.OnLongPress(func(ui.ClickEvent) { hold(true) })
 off() // unsubscribe
 ```

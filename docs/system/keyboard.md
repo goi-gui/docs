@@ -73,7 +73,7 @@ text field as text, with IME composition handled by the field, so a handler that
 wants the current value should read it rather than rebuild it from key events:
 
 ```go
-field := ui.MustByID[*ui.TextField](w, "search")
+field := w.MustByID[*ui.TextField]("search")
 field.OnEdit(func(value string) { filter(value) })
 field.OnSubmit(func(value string) { search(value) })
 ```

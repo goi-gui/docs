@@ -30,7 +30,7 @@ Checkbox {
 ## From Go
 
 ```go
-cb := ui.MustByID[*ui.Checkbox](w, "remember")
+cb := w.MustByID[*ui.Checkbox]("remember")
 cb.OnToggle(func(v bool) { remember = v })
 cb.Checked.Set(true)
 ```

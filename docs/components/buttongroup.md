@@ -66,7 +66,7 @@ ButtonGroup {
 ## From Go
 
 ```go
-group := ui.MustByID[*ui.ButtonGroup](w, "group")
+group := w.MustByID[*ui.ButtonGroup]("group")
 group.Spacing.Set(12)
 ```
 

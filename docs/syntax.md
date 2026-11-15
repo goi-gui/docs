@@ -141,7 +141,7 @@ A fragment can take children, not just values. It marks where they go with
 Column {
 	gap: 5
 
-	$children {}
+	$children
 }
 ```
 
@@ -165,13 +165,13 @@ Window {
 }
 ```
 
-- `$children` is a slot, not an element: it takes no properties, and
-  `$children {}` means the same as `$children`. A slot is written once; a second
-  `$children` is an error, because the same children cannot live in two places,
-  and a child with an `id` would be declared twice.
-- A slot with content inside it is an error in the fragment body, because that
-  content would belong to nobody; content is what an instance passes as
-  `$children { … }`.
+- `$children` is a slot, not an element: it is written **bare**, takes no
+  properties, and only an instance puts braces on it. A slot is written once; a
+  second `$children` is an error, because the same children cannot live in two
+  places, and a child with an `id` would be declared twice.
+- Braces in a fragment body are an error, `$children { … }` included: that shape
+  is how an instance fills a slot, and the content inside would belong to
+  nobody.
 - Children may be anything, including other fragments. They resolve their
   imports in the **file they were written in**, so a child can use an alias that
   only `Main.goi` imports.
@@ -186,6 +186,10 @@ Window {
   fill it.
 - Like a file with props, a file with a slot is a fragment: `goicheck` and the
   language server do not require it to be a `Window`.
+- `len($children)` is how many elements the instance passed: the direct children
+  of the call, before they expand into anything. A slot nobody filled is `0`, so
+  `if len($children) > 0 { $children }` hides the hole without a second file, and
+  `spacing: conditional { 16: len($children) > 0 }` can react to it as well.
 
 ### Named slots
 
@@ -197,11 +201,11 @@ plain children go to:
 // Card.goi
 
 Column {
-	$header {}
+	$header
 
-	$children {}
+	$children
 
-	$footer {}
+	$footer
 }
 ```
 
@@ -227,11 +231,14 @@ Card {
 }
 ```
 
-- A bare `$header`, or `$header {}`, in a fragment body is a slot marker;
-  `$header { … }` in an instance call passes the elements that land there.
+- A `$header` in a fragment body declares a slot, and `$header { … }` at a call
+  fills it: the braces are the instance's. `$header {}` in a fragment body is
+  therefore an error, with the bare form as its hint.
 - A slot fill carries elements only; a property on it is an error rather than
   being ignored, and a bare `$name` at a call (no braces) passes nothing, so it is
   an error outside a fragment, where it forwards instead.
+- `len($header)` counts what the instance passed, one per direct element, so a
+  header that nothing filled reads `0`.
 - A slot is written once per fragment.
 - Passing a slot the fragment does not declare is an error, reported in the
   caller. An empty `$header { }` still counts as filling the slot.
@@ -239,7 +246,8 @@ Card {
   previews on its own.
 
 A built-in component can declare a slot of its own. `Popover` takes its panel as
-`$popover`, written directly under it, and the elements are ordinary children:
+`$popover`, written directly under it with braces, the way an instance fills a
+slot; the elements are ordinary children:
 
 ```goi
 Popover {
@@ -272,7 +280,7 @@ Column {
 ```
 
 `Card.goi`'s `Text { id: title }` is `first.title` in the first copy and
-`second.title` in the second, and `ui.ByID[*ui.Text](w, "first.title")` finds
+`second.title` in the second, and `w.ByID[*ui.Text]("first.title")` finds
 them. References inside the fragment follow the instance, so `side.width` still
 points at that copy's own `side`. Ids written in the caller — its own children,
 including the ones it passes to a slot — are not scoped, because they belong to
@@ -1169,14 +1177,17 @@ Go's pure builtins are available in a value:
 |---|---|
 | `formatf(pattern, …)` | a string built with Go's `fmt` verbs |
 | `t(key, …)` | a translation from the `i18n` catalogs |
-| `len(x)` | the length of a string, a list or a map |
+| `len(x)` | the length of a string, a list or a map, or a slot's element count (`len($children)`) |
 | `cap(x)` | a list's capacity; a design list has no spare capacity, so this is its length |
 | `min(a, b, …)` | the smallest number or string |
 | `max(a, b, …)` | the largest number or string |
 
 `len` and `cap` are the one place a list is a value: everywhere else a list is
-walked with `for`. The builtins that allocate, mutate or touch the process have
-no meaning in a value that is re-read every frame, so `append`, `make`, `new`,
+walked with `for`. Inside a fragment, `len($slot)` is how many elements the
+instance passed to that slot, which is what an empty slot is tested with.
+
+The builtins that allocate, mutate or touch the process have no meaning in a
+value that is re-read every frame, so `append`, `make`, `new`,
 `copy`, `delete`, `clear`, `close`, `panic`, `recover`, `print`, `println`,
 `complex`, `real` and `imag` are rejected with a message that names what a value
 may call.

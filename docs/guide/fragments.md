@@ -161,7 +161,7 @@ A fragment marks where children go with `$children`:
 Column {
 	gap: 5
 
-	$children {}
+	$children
 }
 ```
 
@@ -185,13 +185,12 @@ Window {
 }
 ```
 
-- `$children` is a slot, not an element: it takes no properties, and
-  `$children {}` means the same as `$children`. A slot is written once; a second
+- `$children` is a slot, not an element: it is written bare, takes no
+  properties, and only an instance fills it. A slot is written once; a second
   `$children` is an error, because the same children cannot live in two places,
   and a child with an `id` would be declared twice.
-- A slot with anything inside it is an error in the fragment body: that content
-  would belong to nobody. Content is what an instance passes, as
-  `$children { … }`.
+- Braces are the instance's: `$children { … }` in a fragment body is an error,
+  braces or not, because that shape fills a slot rather than declaring one.
 - Children may be anything, including other fragments. They resolve their
   imports in the **file they were written in**.
 - Passing children to a fragment with no `$children` is an error, reported where
@@ -209,11 +208,11 @@ plain children go to:
 // Card.goi
 
 Column {
-	$header {}
+	$header
 
-	$children {}
+	$children
 
-	$footer {}
+	$footer
 }
 ```
 
@@ -239,14 +238,16 @@ Card {
 }
 ```
 
-- A bare `$header`, or `$header {}` with nothing inside, is a slot marker in the
-  fragment body. `$header { … }` in an instance call passes the elements that
-  land there.
+- A `$header` in a fragment body declares the slot; `$header { … }` in an
+  instance call fills it. Writing the braces in the fragment is an error, with
+  the bare form as its hint.
 - A slot fill carries elements only: a property written on `$header { … }` is an
   error instead of being ignored, and a bare `$header` at a call outside a
   fragment passes nothing, so it is an error too.
 - Passing a slot the fragment does not declare is an error, reported in the
   caller. An empty `$header { }` still counts as filling the slot.
+- `len($header)` counts the elements the instance passed, and `0` for a slot
+  nothing filled, so `if len($header) > 0 { $header }` hides an empty one.
 - Inside a nested fragment call, a bare slot forwards this fragment's children
   to that call — that is how a wrapper passes on what it was given. A
   `$name { … }` there is that call's own argument and is left for it, so the
@@ -273,8 +274,8 @@ Column {
 `second.title` in the second:
 
 ```go
-first := ui.MustByID[*ui.Text](w, "first.title")
-second := ui.MustByID[*ui.Text](w, "second.title")
+first := w.MustByID[*ui.Text]("first.title")
+second := w.MustByID[*ui.Text]("second.title")
 ```
 
 Ids written in the caller — its own children, including the ones it passes to a

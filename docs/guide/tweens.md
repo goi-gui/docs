@@ -23,8 +23,8 @@ call mid-flight continues from where it is rather than jumping:
 app.Animate(&panel.Width, 320, 300*time.Millisecond, ui.Emphasized)
 ```
 
-It is `Tween` with the interpolation written out, and it returns the same stop
-function.
+It is `Tween` with the interpolation written out, and it returns the same
+`*ui.Tween`.
 
 ## Easing
 
@@ -45,25 +45,48 @@ app.Tween(150*time.Millisecond, snap, func(p float64) {
 })
 ```
 
-## Stopping and replacing
+## Chaining
 
-`Tween` returns a stop function. Calling it ends the tween without another call,
-which is what a second press of the same button wants:
+`Then` queues another step that starts where the one before it ended, so a move
+can arrive, settle and fade out without a callback between them:
 
 ```go
-var stop func()
+app.Tween(220*time.Millisecond, ui.Standard, func(p float64) {
+	sheet.TranslateY.Set(-240 + 240*p) // slide in
+}).Then(500*time.Millisecond, ui.Linear, func(p float64) {
+	spinner.Opacity.Set(p) // then start the loading state
+}).Then(160*time.Millisecond, ui.Emphasized, func(p float64) {
+	sheet.Height.Set(320 - 40*p) // and settle
+})
+```
+
+- Steps run in order, each with its own duration, easing and function, and the
+  tween reports itself done after the last one.
+- A step starts on the frame the one before it was due to end, not on the next
+  frame after it, so a long chain does not drift.
+- `Then` returns the same tween, so calls chain; a step of zero length runs
+  immediately.
+- `Stop` ends the tween and every step not yet run.
+
+## Stopping and replacing
+
+`Tween` returns a `*ui.Tween`. `Stop` ends it without another call, which is what
+a second press of the same button wants:
+
+```go
+var slide *ui.Tween
 play := func() {
-	if stop != nil {
-		stop()
+	if slide != nil {
+		slide.Stop()
 	}
 	dot.TranslateX.Set(-160)
-	stop = app.Tween(400*time.Millisecond, ui.Emphasized, func(p float64) {
+	slide = app.Tween(400*time.Millisecond, ui.Emphasized, func(p float64) {
 		dot.TranslateX.Set(-160 + 160*p)
 	})
 }
 ```
 
-Keep the stop function in app state outside `Bind`: `Bind` runs again after a hot
+Keep the tween in app state outside `Bind`: `Bind` runs again after a hot
 reload, and a tween started in `Bind` belongs to the tree it was bound to.
 
 ## Driving several properties

@@ -39,7 +39,7 @@ horizontal form is 1dp tall and fills the width.
 ## From Go
 
 ```go
-div := ui.MustByID[*ui.Divider](w, "divider")
+div := w.MustByID[*ui.Divider]("divider")
 div.SetVisible(hasResults)
 ```
 

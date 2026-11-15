@@ -39,9 +39,9 @@ RadioButton {
 
 ```go
 radios := []*ui.RadioButton{
-	ui.MustByID[*ui.RadioButton](w, "small"),
-	ui.MustByID[*ui.RadioButton](w, "medium"),
-	ui.MustByID[*ui.RadioButton](w, "large"),
+	w.MustByID[*ui.RadioButton]("small"),
+	w.MustByID[*ui.RadioButton]("medium"),
+	w.MustByID[*ui.RadioButton]("large"),
 }
 pick := func(i int) {
 	for j, r := range radios {

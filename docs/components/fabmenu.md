@@ -63,7 +63,7 @@ have no bounds at all, so they neither draw nor take a click.
 ## From Go
 
 ```go
-menu := ui.MustByID[*ui.FABMenu](w, "actions")
+menu := w.MustByID[*ui.FABMenu]("actions")
 menu.OnClick(func(ui.ClickEvent) {
 	menu.Expanded.Set(!menu.Expanded.Get())
 })

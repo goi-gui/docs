@@ -144,7 +144,7 @@ Button {
 ```
 
 ```go
-spin := ui.MustByID[*ui.Image](w, "spinner")
+spin := w.MustByID[*ui.Image]("spinner")
 spin.Paused.Set(true)   // the property, for a switch
 spin.Pause()            // the method, for a one-off
 spin.Play()
@@ -159,7 +159,7 @@ when it comes back. `App.ImageCache(bytes)` changes that budget.
 ## From Go
 
 ```go
-img := ui.MustByID[*ui.Image](w, "cover")
+img := w.MustByID[*ui.Image]("cover")
 img.Src.Set("https://example.com/other.png")
 ```
 

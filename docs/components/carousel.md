@@ -48,7 +48,7 @@ Carousel {
 ## From Go
 
 ```go
-carousel := ui.MustByID[*ui.Carousel](w, "carousel")
+carousel := w.MustByID[*ui.Carousel]("carousel")
 carousel.Spacing.Set(16)
 ```
 

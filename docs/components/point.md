@@ -53,7 +53,7 @@ Point {
 ## From Go
 
 ```go
-p := ui.MustByID[*ui.Point](w, "pin")
+p := w.MustByID[*ui.Point]("pin")
 p.Coordinate.Set([]float64{28.97, 41.01})
 p.SetVisible(true)
 ```

@@ -41,7 +41,7 @@ Tabs {
 ## From Go
 
 ```go
-tabs := ui.MustByID[*ui.Tabs](w, "tabs")
+tabs := w.MustByID[*ui.Tabs]("tabs")
 tabs.OnSelect(func(i int) { showPanel(i) })
 ```
 

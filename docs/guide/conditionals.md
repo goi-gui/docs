@@ -80,7 +80,7 @@ Column {
 ```
 
 ```go
-ui.MustByID[*ui.Checkbox](w, "detailed").Checked.Set(true)
+w.MustByID[*ui.Checkbox]("detailed").Checked.Set(true)
 ```
 
 `SetData` works the same way: setting `bridge.Loading` shows and hides an arm

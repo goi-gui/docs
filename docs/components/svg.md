@@ -139,7 +139,7 @@ Button {
 ```
 
 ```go
-spin := ui.MustByID[*ui.SVG](w, "spinner")
+spin := w.MustByID[*ui.SVG]("spinner")
 spin.Pause()
 spin.Play()
 spin.Stop()
@@ -148,7 +148,7 @@ spin.Stop()
 ## From Go
 
 ```go
-icon := ui.MustByID[*ui.SVG](w, "mark")
+icon := w.MustByID[*ui.SVG]("mark")
 icon.Color.Set(0xFF0000FF) // re-rasterized on the next frame
 icon.Src.Set("goi://assets/other.svg")
 icon.Src.Set("https://example.com/other.svg")

@@ -72,7 +72,7 @@ layout sees that.
 ## From Go
 
 ```go
-text := ui.MustByID[*ui.Text](w, "label")
+text := w.MustByID[*ui.Text]("label")
 text.SetFontFamily("Inter")
 ```
 

@@ -34,7 +34,7 @@ SideSheet {
 ## From Go
 
 ```go
-side := ui.MustByID[*ui.SideSheet](w, "filters")
+side := w.MustByID[*ui.SideSheet]("filters")
 side.SetVisible(true)
 ```
 

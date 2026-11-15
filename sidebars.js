@@ -152,6 +152,7 @@ const sidebars = {
 						'components/linearprogress',
 						'components/circularprogress',
 						'components/loadingindicator',
+						'components/skeleton',
 					],
 				},
 				{

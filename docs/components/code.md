@@ -58,7 +58,7 @@ spaces.
 ## From Go
 
 ```go
-block := ui.MustByID[*ui.Code](w, "snippet")
+block := w.MustByID[*ui.Code]("snippet")
 block.SetText(source)
 block.Language.Set("python")
 ```

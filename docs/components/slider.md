@@ -82,13 +82,13 @@ without changing the shape.
 ## From Go
 
 ```go
-vol := ui.MustByID[*ui.Slider](w, "volume")
+vol := w.MustByID[*ui.Slider]("volume")
 vol.OnChangeValue(func(v float64) {
 	fmt.Println("volume", v)
 })
 app.Animate(&vol.Value, 0.9, 700*time.Millisecond, ui.Standard)
 
-rangeSlider := ui.MustByID[*ui.Slider](w, "price")
+rangeSlider := w.MustByID[*ui.Slider]("price")
 rangeSlider.OnRange(func(lo, hi float64) {
 	fmt.Println("price", lo, "to", hi)
 })

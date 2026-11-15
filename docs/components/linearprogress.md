@@ -65,7 +65,7 @@ to fit it. Both variants end the track with the stop indicator dot.
 ## From Go
 
 ```go
-bar := ui.MustByID[*ui.LinearProgress](w, "upload")
+bar := w.MustByID[*ui.LinearProgress]("upload")
 app.Animate(&bar.Value, 1, 900*time.Millisecond, ui.Standard)
 ```
 

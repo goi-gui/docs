@@ -41,7 +41,7 @@ Map, so its own `width` and `padding` do not size or inset it.
 ## From Go
 
 ```go
-route := ui.MustByID[*ui.Path](w, "route")
+route := w.MustByID[*ui.Path]("route")
 route.Coordinates.Set([]ui.Coord{
 	{28.97, 41.01},
 	{29.06, 41.01},

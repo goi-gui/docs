@@ -59,7 +59,7 @@ NavigationRail {
 ## From Go
 
 ```go
-rail := ui.MustByID[*ui.NavigationRail](w, "rail")
+rail := w.MustByID[*ui.NavigationRail]("rail")
 rail.OnSelect(func(i int) { show(i) })
 
 // The index counts destinations only, so the theme switch below them does not

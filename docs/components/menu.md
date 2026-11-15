@@ -43,7 +43,7 @@ Menu {
 ## From Go
 
 ```go
-menu := ui.MustByID[*ui.Menu](w, "menu")
+menu := w.MustByID[*ui.Menu]("menu")
 menu.SetVisible(!menu.Base().Visible())
 ```
 

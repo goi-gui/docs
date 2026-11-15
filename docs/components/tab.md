@@ -36,7 +36,7 @@ Tab {
 ## From Go
 
 ```go
-tab := ui.MustByID[*ui.Tab](w, "specs")
+tab := w.MustByID[*ui.Tab]("specs")
 tab.Selected.Set(true)
 ```
 

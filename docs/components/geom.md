@@ -60,7 +60,7 @@ rasterizes it itself.
 ## From Go
 
 ```go
-g := ui.MustByID[*ui.Geom](w, "district")
+g := w.MustByID[*ui.Geom]("district")
 g.Data.Set([]ui.Coord{
 	{28.97, 41.01}, {29.06, 41.01}, {29.06, 41.08},
 })

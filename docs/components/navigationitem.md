@@ -43,7 +43,7 @@ NavigationItem {
 ## From Go
 
 ```go
-item := ui.MustByID[*ui.NavigationItem](w, "search")
+item := w.MustByID[*ui.NavigationItem]("search")
 item.OnClick(func(ui.ClickEvent) { show(searchPage) })
 item.M3().Selected.Set(true)
 ```

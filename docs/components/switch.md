@@ -58,7 +58,7 @@ load or on a hot reload. The handle is UI state, not a property: it lives in
 ## From Go
 
 ```go
-dark := ui.MustByID[*ui.Switch](w, "theme")
+dark := w.MustByID[*ui.Switch]("theme")
 dark.OnToggle(func(on bool) {
 	theme := "light"
 	if on {

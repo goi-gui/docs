@@ -52,7 +52,7 @@ SegmentedButton {
 ## From Go
 
 ```go
-seg := ui.MustByID[*ui.SegmentedButton](w, "week")
+seg := w.MustByID[*ui.SegmentedButton]("week")
 seg.OnClick(func(ui.ClickEvent) {
 	seg.Selected.Set(true)
 })

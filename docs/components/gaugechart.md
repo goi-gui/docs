@@ -30,7 +30,7 @@ The series holds the one number a gauge shows; a design declares it like any
 other chart's data, and an app whose value moves replaces it with `SetData`:
 
 ```go
-gauge := ui.MustByID[*ui.GaugeChart](w, "uptime")
+gauge := w.MustByID[*ui.GaugeChart]("uptime")
 gauge.SetData(ui.ChartData{
 	Series: []ui.Series{{Label: "Uptime", Values: []float64{99.4}}},
 })

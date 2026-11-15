@@ -101,7 +101,7 @@ ribbon, and a stroke too wide for the box is narrowed to fit.
 ## From Go
 
 ```go
-ring := ui.MustByID[*ui.CircularProgress](w, "ring")
+ring := w.MustByID[*ui.CircularProgress]("ring")
 app.Animate(&ring.Value, 0.9, 900*time.Millisecond, ui.Emphasized)
 ```
 
