@@ -22,6 +22,12 @@ An editable single-line field with a floating label.
   <img src="/img/components/textfield-password-dark.png" alt="TextField with obscureText and a trailing slot in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
+<p align="center">
+  <strong>revealed</strong><br />
+  <img src="/img/components/textfield-revealed-light.png" alt="The same TextField with obscureText off in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/textfield-revealed-dark.png" alt="The same TextField with obscureText off in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi
@@ -90,9 +96,11 @@ body it was given and keeps the field to one icon's width.
 
 `obscureText: true` turns a field into a password field: every character paints
 as a dot, and the selection, the caret and the IME composition follow the dots,
-so the caret still sits on the character it covers. The value itself does not
-change — `text`, `onEdit` and `onSubmit` keep the real string, and the app can
-flip the setting at any time:
+so the caret still sits on the character it covers. The pair of pictures above
+is the same field, once with the setting on and once off.
+
+The value itself does not change — `text`, `onEdit` and `onSubmit` keep the real
+string, and the app can flip the setting at any time:
 
 A design can wire a reveal button itself, with the value it wants:
 
