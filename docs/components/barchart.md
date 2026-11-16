@@ -13,13 +13,24 @@ One bar per value, grouped by series or stacked on top of each other.
 
 ```goi
 BarChart {
-	id:     sales
-	width:  100%
-	height: 240
-	legend: true
-	values: true
+	id:       sales
+	width:    100%
+	height:   240
+	legend:   true
+	values:   true
+	barRadius: 6
+	barGap:    4
+}
+
+BarChart {
+	barBorderWidth: 1
+	barBorderColor: theme.outline
 }
 ```
+
+`barRadius` rounds each bar, `barBorderWidth` and `barBorderColor` outline it,
+and `barGap` separates the bars of one group. The gap needs the room a vertical
+group has, so a `horizontal: true` chart ignores it.
 
 ## Groups and stacks
 
@@ -48,6 +59,10 @@ BarChart {
 | `values` | bool | the value written above each bar |
 | `stacked` | bool | stack the series in one bar instead of grouping them |
 | `horizontal` | bool | run the bars left to right, with the categories down the side |
+| `barRadius` | number | each bar's corner radius; unset follows the chart's own `radius` |
+| `barGap` | number | space between the bars of one group on a vertical chart; ignored on a horizontal one |
+| `barBorderWidth` | number | outline width around each bar, drawn inside its box; 0 (default) is none |
+| `barBorderColor` | color | outline colour; unset follows the scheme's `onSurface` |
 | `min`, `max` | number | pin the value scale; `0` follows the data |
 
 The rest of the surface is the common box: `background`, `borderWidth`,
