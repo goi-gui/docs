@@ -390,6 +390,12 @@ Column {
 
 - A slice gives the index and the element (`for i, row := range bridge.rows`).
 - A map gives the key and the value, in sorted key order so a frame is stable.
+- The variables are typed the way Go types them: a slice's index is an `int`, a
+  map's first name has the key's type, and a scalar list's element has the
+  element's type. So `onClick: bridge.onPick(i)` works with
+  `onPick func(index int)`, `onKey(k)` with a `string` map key, and
+  `onValue(v)` with a `map[string]int`. A row is not a scalar: pass its fields
+  (`row.Name`), not the row.
 - A number counts from zero: `for i := range 5`, or `for range 5` when the index
   is not needed.
 - The count may be an expression or a number from the bridge:
