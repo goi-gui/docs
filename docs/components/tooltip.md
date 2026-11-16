@@ -43,6 +43,10 @@ hint belongs to a row.
 |---|---|---|
 | `text` | string | the bubble's text; empty draws nothing |
 | `variant` | enum | — (no style variants) |
+| `spacing` | number | space between the children on the main axis |
+| `gap` | number | alias of `spacing` |
+| `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
+| `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along it |
 
 The bubble is drawn above the child, 6dp away, and slides inside the window when
 the child sits near an edge; when there is no room above, it goes below. It is

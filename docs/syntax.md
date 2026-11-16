@@ -960,11 +960,13 @@ separate package. Containers take children; the rest are leaves:
 `Button`, `IconButton`, `FAB`, `FABMenu`, `ButtonGroup`, `SplitButton`,
 `SegmentedButton`, `Chip`, `Badge`, `Checkbox`, `RadioButton`, `Switch`,
 `Slider`, `TextField`, `SearchBar`, `Tooltip`, `Card`, `Dialog`, `BottomSheet`,
-`SideSheet`, `Divider`, `List`, `ListItem`, `Menu`, `MenuItem`, `Snackbar`,
-`TopAppBar`, `NavigationBar`, `NavigationRail`, `NavigationDrawer`,
+`SideSheet`, `Popover`, `Divider`, `List`, `ListItem`, `Menu`, `MenuItem`,
+`Snackbar`, `TopAppBar`, `NavigationBar`, `NavigationRail`, `NavigationDrawer`,
 `NavigationItem`, `Tabs`, `Tab`, `LinearProgress`, `CircularProgress`,
-`LoadingIndicator`, `DatePicker`, `TimePicker`, `Carousel`, `Toolbar`,
-`TextArea`, `Code`, `Audio`, `Video`, and the seven charts (`LineChart`,
+`LoadingIndicator`, `Skeleton`, `DatePicker`, `TimePicker`, `ColorPicker`,
+`Carousel`, `Toolbar`, `TextArea`, `Code`, `Markdown`, `Audio`, `Video`, `Map`
+with its `Geom`, `Point` and `Path` overlays, `Table` with its `TableColumn`,
+`TableRow` and `TableCell` children, and the seven charts (`LineChart`,
 `AreaChart`, `BarChart`, `PieChart`, `ScatterChart`, `RadarChart`,
 `GaugeChart`), whose `ChartSeries` children carry their data.
 

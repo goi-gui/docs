@@ -41,6 +41,10 @@ TimePicker {
 | `label` | string | the caption above the time; `Select time` on the dial and `Enter time` on the fields |
 | `text` | string | the picked time as `HH:MM` (24-hour); empty means now |
 | `variant` | enum | `dial` (the clock, default) or `input` (two text fields) |
+| `spacing` | number | space between the children on the main axis |
+| `gap` | number | alias of `spacing` |
+| `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
+| `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along it |
 | `hourFormat` | number | `12` (default, with AM/PM) or `24` |
 
 ## The dial
