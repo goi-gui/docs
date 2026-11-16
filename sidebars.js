@@ -35,6 +35,7 @@ const sidebars = {
 				'guide/fonts',
 				'guide/shadows',
 				'guide/rotate',
+				'guide/scale',
 				'guide/tweens',
 			],
 		},

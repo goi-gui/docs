@@ -41,6 +41,8 @@ it back in degrees.
   accepted and kept, but not projected.
 - `rotate` paints: changing it repaints without a re-layout.
 
+Its sibling is [Scale](scale.md), which stretches instead of turning.
+
 From Go the same value is `SetRotation`:
 
 ```go
