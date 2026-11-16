@@ -70,6 +70,7 @@ const sidebars = {
 					collapsed: true,
 					items: [
 						'components/text',
+						'components/icon',
 						'components/richtext',
 						'components/code',
 						'components/markdown',
