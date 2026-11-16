@@ -431,6 +431,19 @@ box.SetBorderWidth(1)
 box.SetBorderColor(0x79747EFF)
 ```
 
+One side of a box is settable too, and `-1` removes the override so the side
+follows its aggregate again:
+
+```go
+box.SetPaddingX(16)     // left and right
+box.SetPaddingY(8)      // top and bottom
+box.SetMarginTop(24)
+box.SetBorderLeftWidth(2)
+box.SetRadiusTopLeft(0) // a flat top-left corner
+box.SetRadiusBottom(12)
+box.SetBorderTopColor(0x6750A4FF)
+```
+
 Every setter marks the tree dirty, so the next frame lays out and repaints
 without a manual call. A size is dp, not a percentage: a percentage depends on
 the parent the node is built in, which is a design-time fact. A colour is a
