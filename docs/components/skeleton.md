@@ -7,8 +7,8 @@ list while the data loads, so the page keeps its shape instead of jumping.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/skeleton-light.png" alt="Skeleton in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/skeleton-dark.png" alt="Skeleton in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/skeleton-light.gif" alt="Skeleton in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/skeleton-dark.gif" alt="Skeleton in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file
