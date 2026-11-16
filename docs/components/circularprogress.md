@@ -12,8 +12,8 @@ A circular progress ring.
 
 <p align="center">
   <strong>wavy</strong><br />
-  <img src="/img/components/circularprogress-wavy-light.png" alt="CircularProgress wavy in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/circularprogress-wavy-dark.png" alt="CircularProgress wavy in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/circularprogress-wavy-light.gif" alt="CircularProgress wavy in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/circularprogress-wavy-dark.gif" alt="CircularProgress wavy in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

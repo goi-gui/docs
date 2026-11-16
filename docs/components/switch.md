@@ -5,8 +5,8 @@ A single on/off control with an optional label and optional glyph in the thumb.
 [All components](../components.md)
 
 <p align="center">
-  <img src="/img/components/switch-light.png" alt="Switch in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/switch-dark.png" alt="Switch in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/switch-light.gif" alt="Switch in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/switch-dark.gif" alt="Switch in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file

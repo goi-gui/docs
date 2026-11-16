@@ -12,8 +12,8 @@ A horizontal progress bar.
 
 <p align="center">
   <strong>wavy</strong><br />
-  <img src="/img/components/linearprogress-wavy-light.png" alt="LinearProgress wavy in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
-  <img src="/img/components/linearprogress-wavy-dark.png" alt="LinearProgress wavy in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/linearprogress-wavy-light.gif" alt="LinearProgress wavy in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/linearprogress-wavy-dark.gif" alt="LinearProgress wavy in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
 ## In a `.goi` file
