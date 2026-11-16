@@ -14,12 +14,12 @@ One row in a menu.
 ```goi
 MenuItem {
 	label: "Cut"
-	icon:  content_cut
+	leadingIcon:  content_cut
 }
 
 MenuItem {
 	label:    "Delete"
-	icon:     delete
+	leadingIcon:     delete
 	disabled: true
 }
 ```
@@ -29,7 +29,7 @@ MenuItem {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
 | `variant` | enum | — (no style variants) |
 | `disabled` | bool | dims the element and blocks input |

@@ -26,7 +26,7 @@ Dialog {
 |---|---|---|
 | `label` | string | the main text |
 | `supporting` | string | secondary line under the label |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `variant` | enum | — (no style variants) |
 | `spacing` | number | gap between children |
 | `gap` | number | alias of `spacing` |

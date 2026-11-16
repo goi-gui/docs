@@ -44,7 +44,7 @@ SegmentedButton {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `variant` | enum | `single` (radio behaviour), `multi` (default; each segment toggles) |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state |

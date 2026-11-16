@@ -19,7 +19,7 @@ Tooltip {
 
 	Button {
 		label: "Save"
-		icon:  save
+		leadingIcon:  save
 	}
 }
 

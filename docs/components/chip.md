@@ -33,7 +33,7 @@ A compact, rounded element for filters, inputs, suggestions and tags.
 ```goi
 Chip {
 	label: "Assist"
-	icon:  event
+	leadingIcon:  event
 }
 
 Chip {
@@ -63,7 +63,7 @@ Chip {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
 | `variant` | enum | `assist` (default), `filter`, `input`, `suggestion` |
 | `disabled` | bool | dims the element and blocks input |

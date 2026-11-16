@@ -15,7 +15,7 @@ The bar at the top of a screen: a leading icon, a title and a trailing icon.
 TopAppBar {
 	id:           appbar
 	label:        "Inbox"
-	icon:         menu
+	leadingIcon:         menu
 	trailingIcon: search
 }
 ```
@@ -26,7 +26,7 @@ TopAppBar {
 |---|---|---|
 | `label` | string | the main text |
 | `variant` | enum | — (no style variants) |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
 
 ## From Go

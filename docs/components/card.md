@@ -45,7 +45,7 @@ Card {
 |---|---|---|
 | `label` | string | the main text |
 | `supporting` | string | secondary line under the label |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `variant` | enum | `elevated` (default), `filled`, `outlined` |
 | `disabled` | bool | dims the element and blocks input |
 | `spacing` | number | gap between children |

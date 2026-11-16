@@ -139,7 +139,7 @@ anywhere a value works:
 ```goi
 Button {
 	label: "Toggle theme"
-	icon:  app.dark ? "light_mode" : "dark_mode"
+	leadingIcon:  app.dark ? "light_mode" : "dark_mode"
 }
 ```
 

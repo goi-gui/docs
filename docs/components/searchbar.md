@@ -26,7 +26,7 @@ SearchBar {
 | `label` | string | the main text |
 | `text` | string | current value |
 | `placeholder` | string | shown while the value is empty |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
 | `variant` | enum | — (always an elevated pill) |
 | `disabled` | bool | dims the element and blocks input |

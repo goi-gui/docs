@@ -39,7 +39,7 @@ A primary action with an attached menu trigger.
 ```goi
 SplitButton {
 	label:    "Split"
-	icon:     add
+	leadingIcon:     add
 	expanded: false
 }
 ```
@@ -70,7 +70,7 @@ open a menu and another can close it. The state comes back as
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | icon in the menu segment; `arrow_drop_down` when unset |
 | `variant` | enum | `filled` (default), `tonal`, `elevated`, `outlined`, `text` |
 | `disabled` | bool | dims the element and blocks input |

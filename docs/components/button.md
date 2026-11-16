@@ -63,7 +63,7 @@ Button {
 
 Button {
 	label:   "Save"
-	icon:    check
+	leadingIcon:    check
 	variant: filled
 }
 ```
@@ -73,7 +73,7 @@ Button {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `variant` | enum | `filled` (default), `tonal`, `elevated`, `outlined`, `text` |
 | `color` | color | label and icon colour; unset keeps the variant's own |
 | `disabled` | bool | dims the element and blocks input |

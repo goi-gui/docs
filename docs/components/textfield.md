@@ -33,7 +33,7 @@ TextField {
 TextField {
 	label:       "Email"
 	placeholder: "you@example.com"
-	icon:        mail
+	leadingIcon:        mail
 }
 
 TextField {
@@ -50,7 +50,7 @@ TextField {
 | `text` | string | current value |
 | `placeholder` | string | shown while the value is empty |
 | `supporting` | string | secondary line under the label |
-| `icon` | string | leading Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
 | `variant` | enum | `filled` (default), `outlined` |
 | `type` | string | what can be entered: `text` (default), `numeric`, `alpha`, `alphanumeric`, or the characters themselves |

@@ -18,12 +18,12 @@ List {
 
 	ListItem {
 		label: "Inbox"
-		icon:  inbox
+		leadingIcon:  inbox
 	}
 
 	ListItem {
 		label: "Drafts"
-		icon:  draft
+		leadingIcon:  draft
 	}
 }
 ```

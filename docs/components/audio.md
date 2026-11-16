@@ -53,7 +53,7 @@ Audio {
 
 Button {
 	label:   "Play"
-	icon:    play_arrow
+	leadingIcon:    play_arrow
 	onClick: podcast.play()
 }
 ```

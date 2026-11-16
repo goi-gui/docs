@@ -29,7 +29,7 @@ Window {
 		Button {
 			id:    inc
 			label: "Increase"
-			icon:  add
+			leadingIcon:  add
 		}
 	}
 }
@@ -968,11 +968,14 @@ separate package. Containers take children; the rest are leaves:
 `AreaChart`, `BarChart`, `PieChart`, `ScatterChart`, `RadarChart`,
 `GaugeChart`), whose `ChartSeries` children carry their data.
 
-They share one vocabulary: `label`, `supporting`, `text`, `placeholder`, `icon`,
-`trailingIcon` (icon names are Material Symbols ligatures such as `home`),
-`variant`, `disabled`, `checked`, `selected`, `expanded`, `value`, `min`, `max`,
-`step`, `language`, `showCopy`, and `color` where the component names a
-foreground of its own (the loading indicator, a button, a text field). `size` is not part of it: it is the common box
+They share one vocabulary: `label`, `supporting`, `text`, `placeholder`,
+`leadingIcon`, `trailingIcon` (icon names are Material Symbols ligatures such as
+`home`), `variant`, `disabled`, `checked`, `selected`, `expanded`, `value`,
+`min`, `max`, `step`, `language`, `showCopy`, and `color` where the component
+names a foreground of its own (the loading indicator, a button, a text field).
+`icon` alone is the element's own glyph, so it stays on `IconButton`, `FAB`,
+`FABMenu`, `Switch`, `TableColumn` and `TableCell`; a component with a label
+calls the one before it `leadingIcon`. `size` is not part of it: it is the common box
 property that sets width and height together. Each kind accepts only the subset
 that makes sense for it;
 `internal/componentdef` is the single table that the schema and the node tree
@@ -980,9 +983,9 @@ both read, so an element can never validate without existing.
 
 The language server completes icon names from the embedded font, so the list is
 whatever `Library.IconFace` can draw. A name that starts with a digit (`10k`,
-`3d`) needs quotes; every other name is a bare identifier (`icon: add`).
+`3d`) needs quotes; every other name is a bare identifier (`leadingIcon: add`).
 
-`Switch` also takes `iconOn` and `iconOff`, which override `icon` for the
+`Switch` also takes `iconOn` and `iconOff`, which override its `icon` for the
 checked and unchecked state. Any of them empty means no glyph in the thumb; a
 switch with an icon keeps the larger thumb in both states so the glyph has room,
 inset 4dp on every side. The glyph is `Primary` on the checked thumb and the

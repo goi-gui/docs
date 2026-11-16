@@ -22,13 +22,13 @@ NavigationRail {
 
 	NavigationItem {
 		label:    "Home"
-		icon:     home
+		leadingIcon:     home
 		selected: true
 	}
 
 	NavigationItem {
 		label: "Search"
-		icon:  search
+		leadingIcon:  search
 	}
 
 	// A rail's own actions sit at the bottom, under the destinations.

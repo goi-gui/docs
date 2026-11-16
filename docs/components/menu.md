@@ -15,17 +15,17 @@ A popup list of `MenuItem`s.
 Menu {
 	MenuItem {
 		label: "Cut"
-		icon:  content_cut
+		leadingIcon:  content_cut
 	}
 
 	MenuItem {
 		label: "Copy"
-		icon:  content_copy
+		leadingIcon:  content_copy
 	}
 
 	MenuItem {
 		label: "Paste"
-		icon:  content_paste
+		leadingIcon:  content_paste
 	}
 }
 ```

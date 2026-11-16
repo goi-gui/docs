@@ -17,7 +17,7 @@ draws nothing. The language server completes these names in an icon property.
 ```goi
 Button {
 	label: "Save"
-	icon:  check
+	leadingIcon:  check
 }
 
 Switch {
@@ -28,7 +28,7 @@ Switch {
 
 ListItem {
 	label:        "Inbox"
-	icon:         inbox
+	leadingIcon:         inbox
 	trailingIcon: chevron_right
 }
 ```

@@ -17,13 +17,13 @@ NavigationDrawer {
 
 	NavigationItem {
 		label:    "Home"
-		icon:     home
+		leadingIcon:     home
 		selected: true
 	}
 
 	NavigationItem {
 		label: "Search"
-		icon:  search
+		leadingIcon:  search
 	}
 }
 ```

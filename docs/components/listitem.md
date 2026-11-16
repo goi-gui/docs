@@ -13,22 +13,60 @@ One row in a list: leading icon, label, optional supporting line, trailing affor
 
 ```goi
 ListItem {
-	label: "Inbox"
-	icon:  inbox
+	label:       "Inbox"
+	leadingIcon: inbox
 }
 
 ListItem {
 	label:      "Two lines"
 	supporting: "Supporting text"
-	icon:       photo
+	leadingIcon: photo
 }
 
 ListItem {
 	label:    "Selected"
-	icon:     star
+	leadingIcon: star
 	selected: true
 }
+
+ListItem {
+	label:      "Tinted"
+	labelColor: theme.primary
+	leadingIconColor: theme.tertiary
+}
 ```
+
+## Leading and trailing bodies
+
+The icon properties take a Material Symbols name. When a row needs something
+else there — an avatar, a badge, a switch — the `$leading` and `$trailing` slots
+take any element, and layout centres it in the 40dp square the icon would use:
+
+```goi
+ListItem {
+	label:      "Notifications"
+	supporting: "On"
+
+	$leading {
+		Rectangle {
+			width:  32
+			height: 32
+			radius: 16
+			background: theme.tertiaryContainer
+		}
+	}
+
+	$trailing {
+		Switch {
+			checked: true
+		}
+	}
+}
+```
+
+An explicit `leadingIcon` or `trailingIcon` wins over the matching slot, so one
+design can take either without a condition: a row with an icon ignores the body
+it was given and keeps the row to one icon's width.
 
 ## Properties
 
@@ -36,8 +74,12 @@ ListItem {
 |---|---|---|
 | `label` | string | the main text |
 | `supporting` | string | secondary line under the label |
-| `icon` | string | leading Material Symbols ligature |
-| `trailingIcon` | string | trailing Material Symbols ligature |
+| `leadingIcon` | string | leading Material Symbols ligature; wins over `$leading` |
+| `trailingIcon` | string | trailing Material Symbols ligature; wins over `$trailing` |
+| `leadingIconColor` | color | the leading icon's colour; unset follows `onSurfaceVariant` |
+| `trailingIconColor` | color | the trailing icon's colour; unset follows `onSurfaceVariant` |
+| `labelColor` | color | the label's colour; unset follows `onSurface` |
+| `supportingColor` | color | the supporting line's colour; unset follows `onSurfaceVariant` |
 | `variant` | enum | — (no style variants) |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state |
