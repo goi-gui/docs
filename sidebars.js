@@ -123,6 +123,7 @@ const sidebars = {
 						'components/listitem',
 						'components/menu',
 						'components/menuitem',
+						'components/popover',
 						'components/snackbar',
 						'components/tooltip',
 						'components/table',
@@ -159,7 +160,7 @@ const sidebars = {
 					type: 'category',
 					label: 'Date and time',
 					collapsed: true,
-					items: ['components/datepicker', 'components/timepicker'],
+					items: ['components/datepicker', 'components/timepicker', 'components/colorpicker'],
 				},
 				{
 					type: 'category',
