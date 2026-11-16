@@ -604,6 +604,7 @@ declaration. A function call appears either as an event property's whole value
 | `theme.surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
 | `customColor.myBrand` | custom color | a name the app defines with `ui.SetCustomColor`; an undefined one warns and falls back to `onSurface` |
 | `90deg`, `x 90deg`, `1 1 1 90deg` | rotate | the `rotate` property only: CSS form, see [Rotate](#rotate) |
+| `2`, `50%`, `2 0.5`, `200% 50% 200%` | scale | the `scale` property only: CSS form, see [Scale](#scale) |
 | `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form, a colour variable as `theme.<role>` or `customColor.<name>`; `none` clears it, see [Shadows](guide/shadows.md) |
 | `responsive { base: 8 md: 16 }` | modifier | responsive value, one entry per breakpoint; see [Responsive values](#responsive-values) |
 | `conditional { 10: bridge.isWide }` | modifier | first true condition picks the value; see [Conditional values](#conditional-values) |
@@ -801,6 +802,46 @@ value and goifmt writes it back in degrees (`0.25turn` is `90deg`, `1.57rad` is
 - Nested rotations compose: an inner 45° inside an outer 90° turns 135°, and the
   inner pivot follows the outer frame.
 
+## Scale
+
+`scale` is CSS `scale`: it stretches the element and everything under it about
+the element's own centre. Layout ignores it, so the box keeps its place and its
+siblings do not move.
+
+```goi
+Column {
+	scale: none // the default
+}
+
+Column {
+	scale: 2 // both axes
+}
+
+Column {
+	scale: 50% // a percentage is a factor: 0.5
+}
+
+Column {
+	scale: 2 0.5 // x, y
+}
+
+Column {
+	scale: 200% 50% 200% // x, y, z
+}
+```
+
+- One value scales both axes, two are x and y, three add z.
+- A percentage is its factor, so `50%` is `0.5`; goifmt writes the factor back.
+- Everything the element draws stretches with it: corners become ellipses under
+  a non-uniform scale, and glyphs, images and border widths follow the axes.
+- Nested scales multiply, and scale applies before `rotate` on the same element.
+- The renderer is two-dimensional, so z is kept and does not show.
+- Hit-testing stays on the layout box, like `rotate`.
+- `scale` paints: changing it repaints without a re-layout.
+
+The [Scale guide](guide/scale.md) has the worked example and the Go side
+(`SetScale`).
+
 ## Elements
 
 | Element | Children | Properties beyond the common set |
@@ -971,10 +1012,13 @@ Common to every element: `id`, `width`, `height`, `size`, `minWidth`, `maxWidth`
 `background`, `borderColor`, `borderWidth`, `borderTopWidth`,
 `borderRightWidth`, `borderBottomWidth`, `borderLeftWidth`,
 `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor`,
-`radius`, `fontFamily`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
-`opacity`, `backdropBlur`, `zIndex`, `cursor`, `rotate`, `hideScrollbar`,
+`radius`, `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft`,
+`radiusTopLeft`, `radiusTopRight`, `radiusBottomRight`, `radiusBottomLeft`,
+`fontFamily`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
+`opacity`, `backdropBlur`, `zIndex`, `cursor`, `rotate`, `scale`, `hideScrollbar`,
 `autoHideScrollbar`, `scrollbarWidth`, `scrollbarColor`, `scrollShadow`,
-`scrollShadowColor`. `marginTop`,
+`scrollShadowColor`, `scrollSnapType`, `scrollSnapStop`, `scrollSnapAlign`,
+`scrollPadding`. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
 `margin`/`padding`; `paddingX` and `paddingY` set both sides of their axis.
@@ -1026,7 +1070,10 @@ that scrolls: `hideScrollbar` removes the bar, `autoHideScrollbar` (default
 `true`) shows it only while the pointer is over the area or it scrolled in the
 last two seconds, `scrollbarWidth` sets its thickness (4 by default),
 `scrollbarColor` its colour, and `scrollShadow` adds a gradient at each edge the
-content has scrolled away from, tinted by `scrollShadowColor`. Padding spaces
+content has scrolled away from, tinted by `scrollShadowColor`. A scrolling element
+can also settle on its children: `scrollSnapType`, `scrollSnapStop` and
+`scrollPadding` on the container, `scrollSnapAlign` on a child, all documented in
+[Scroll snapping](components.md#scroll-snapping). Padding spaces
 only the moving content: the bar and the shadows stay against the frame, and
 content slides under the padding, so the start padding leaves the view once you
 scroll and the end padding appears after the last child at the end.
