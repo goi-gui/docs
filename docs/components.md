@@ -25,9 +25,10 @@ components. They all share one property set and one way of being driven from Go.
 
 ## Content
 
-What a page shows: text, documents, media and plain boxes. These are nodes rather than Material components, so they take the common box properties and nothing else unless their page says so.
+What a page shows: text, documents, glyphs, media and plain boxes. These are nodes rather than Material components, so they take the common box properties and nothing else unless their page says so.
 
 - [Text](components/text.md) — One run of text at a Material 3 type-scale role.
+- [Icon](components/icon.md) — One Material Symbols glyph, sized and tinted on its own.
 - [RichText](components/richtext.md) — One paragraph of styled runs.
 - [Code](components/code.md) — A syntax-highlighted code block.
 - [Markdown](components/markdown.md) — A markdown document, rendered as elements.
