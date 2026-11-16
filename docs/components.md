@@ -229,6 +229,10 @@ where the reader left it. The node is matched by its `id` when it has one, and b
 its place in the tree otherwise, so an edit to a style does not jump a scroller
 back to the top.
 
+A drag locks to the axis the hand moved along, the way touch scrolling does: a
+sideways pull on a `Row` or a `Carousel` does not nudge the page it sits in, and
+a diagonal pull on a two-axis `Table` still takes both.
+
 A scrolling element takes a gesture along its own axis only: a notched wheel
 scrolls vertically and **Shift + wheel** scrolls a sideways element, while a
 touchpad's two-finger swipe needs no modifier and keeps whichever axis the hand
