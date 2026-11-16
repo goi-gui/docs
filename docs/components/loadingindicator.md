@@ -41,7 +41,7 @@ it costs one quad a frame.
 ```go
 spinner := w.MustByID[*ui.LoadingIndicator]("loading")
 spinner.Color.Set(0x6750A4FF) // any hex, or the role the design named
-spinner.Base().SetWidth(64)
+spinner.SetWidth(64)
 ```
 
 Every element also accepts the [common properties](../components.md#common-properties).

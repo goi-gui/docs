@@ -415,6 +415,28 @@ says what the id must be. The package form does the same and stays for a helper
 that only holds the window and the id: `ui.ByID[*ui.Button](w, "save")` and
 `ui.MustByID[*ui.Button](w, "save")`.
 
+The common box is a Go API as well as a design property, so a size or a colour
+decided at run time needs no reload:
+
+```go
+box := w.MustByID[*ui.Column]("page")
+box.SetWidth(320)   // dp; a negative value returns it to auto
+box.SetHeight(180)
+box.SetSize(320, 180) // both at once, like the design's `size`
+box.SetPadding(16)
+box.SetMargin(8)
+box.SetRadius(12)
+box.SetBackground(0x6750A4FF) // a solid colour, replacing a role or a gradient
+box.SetBorderWidth(1)
+box.SetBorderColor(0x79747EFF)
+```
+
+Every setter marks the tree dirty, so the next frame lays out and repaints
+without a manual call. A size is dp, not a percentage: a percentage depends on
+the parent the node is built in, which is a design-time fact. A colour is a
+literal, because a role or a gradient has to be resolved against the scheme; the
+getters (`Width`, `Height`, `Background`, …) read back what was set.
+
 `ui.SetHandler` supplies the Go function a `bridge { OnOpen func(id string) }`
 declaration calls; register it from `Bind` so a hot reload registers it again.
 The design can read a node's property by id as well (`width: panel.width`), which
