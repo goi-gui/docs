@@ -29,8 +29,10 @@ handlers with Go field syntax: `Name Type`, no colon, no default.
 
 ## Passing values
 
-`ui.SetData(w, name, value)` writes a bridge variable. Call it from `Bind` (or
-from `App.Post`), then read it in the design as `bridge.Name`:
+`ui.SetData(w, name, value)` writes a bridge variable. Call it from `Bind`, or
+from the UI goroutine through `App.Post` (see
+[Updating from another goroutine](#updating-from-another-goroutine)), then read
+it in the design as `bridge.Name`:
 
 ```go
 func bind(w *ui.Window) error {
@@ -88,6 +90,41 @@ slice is an empty list, which is what the first frame has before a fetch returns
 Setting a list with `ui.SetData` rebuilds only the loops that walk it. Setting a
 scalar keeps the nodes and re-reads the value, so `bridge.Loading` costs one
 visibility toggle rather than a rebuild.
+
+## Updating from another goroutine
+
+The window is single-threaded: nodes, props and bridge data are touched by the
+frame goroutine only. Slow work — an HTTP call, a database query, a file — runs
+off that goroutine and comes back through `app.Post`. Keep the `*ui.App` next to
+the window:
+
+```go
+go func() {
+	tickets, err := fetchTickets() // any blocking call
+	app.Post(func() {
+		ui.SetData(w, "Loading", false)
+		if err != nil {
+			ui.SetData(w, "Error", err.Error())
+			return
+		}
+		ui.SetData(w, "Tickets", tickets)
+	})
+}()
+```
+
+- `Post` queues the function and wakes the loop, so an idle window runs the
+  frame that shows the change; nothing has to poll.
+- Queued functions run in the order they were posted, at the start of a frame,
+  before layout. A batch posted together lands in one rebuild, not one per call.
+- Everything inside the function is on the UI goroutine, so that is where the
+  tree is read and written. The goroutine outside it must not touch `w` or call
+  `ui.SetData` directly.
+- A handler already runs on the UI goroutine, so a click does not need `Post`. A
+  ticker, an HTTP client, a worker pool or an ffmpeg callback does.
+- The request that is no longer wanted still answers: keep a sequence number in
+  app state and drop a stale reply inside the posted function, as
+  [`examples/map`](https://github.com/goi-gui/examples/tree/main/map) does with
+  `searchSeq`.
 
 ## Passing handlers
 
