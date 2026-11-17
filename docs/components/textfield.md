@@ -1,6 +1,6 @@
 # TextField
 
-An editable single-line field with a floating label.
+An editable single-line field with a label that floats out of the way.
 
 [All components](../components.md)
 
@@ -58,6 +58,26 @@ TextField {
 	text:        "correct horse"
 	obscureText: true
 	leadingIcon: lock
+}
+```
+
+## The floating label
+
+The label sits in the value area while the field is empty, has no placeholder
+and is not focused. A value, a placeholder or a press that focuses the field
+lifts it: filled fields move it into the top band of the container, outlined
+ones move it onto the border. An outlined border is cut behind the floated
+label, so the line does not run through it.
+
+Both variants animate the travel, up on focus or content and back down when the
+field empties and loses focus. The first frame after a page loads adopts the
+design's state without moving, so opening a window does not slide every label.
+
+```goi
+TextField {
+	label:       "Email"
+	placeholder: "you@example.com"
+	variant:     outlined
 }
 ```
 
