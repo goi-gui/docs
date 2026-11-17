@@ -65,6 +65,7 @@ path straight through.
 | `fit` | enum | `cover`, `contain` or `fill` |
 | `paused` | bool | holds a GIF or APNG where it is; `false` by default |
 | `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
+| `lazy` | bool | defer reading and decoding `src` until the box is on screen; `false` by default |
 
 An image takes the common `borderThickness`, `borderColor` and `borderType`, and
 draws that ring over the picture. `radius` rounds the crop itself: when a
@@ -81,6 +82,11 @@ its declared size straight away and paints a faint wash that breathes until the
 bitmap lands. Nothing else waits for the network — a slow host cannot hold up the
 window's first frame or a hot reload, and a broken URL leaves a coloured
 placeholder instead of a hole.
+
+With `lazy: true` a local file is not read and a remote URL is not fetched until
+the image's box is on screen. Give it a `width` and `height` so the page reserves
+the space before the picture lands; an image with no declared size loads at once,
+because the file is what gives it a size.
 
 What happens to a remote image:
 

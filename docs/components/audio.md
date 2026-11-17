@@ -58,12 +58,20 @@ Button {
 }
 ```
 
+## Lazy players
+
+`lazy: true` lets the control bar and its box lay out at once, but waits to probe
+the file and start a decoder until the player scrolls into view. Autoplay waits
+for the same moment. A player that has been loaded stays loaded when it scrolls
+away.
+
 ## Properties
 
 | Property | Type | Notes |
 |---|---|---|
 | `src` | string | container path, machine path, or a URL ffmpeg opens (HLS, RTMP, RTSP, SRT, UDP) |
 | `controls` | bool | draw the built-in bar; `true` by default |
+| `lazy` | bool | defer probing and opening the source until the box is on screen; `false` by default |
 | `autoplay` | bool | start as soon as the element appears |
 | `loop` | bool | restart at the end |
 | `muted` | bool | play without sound |

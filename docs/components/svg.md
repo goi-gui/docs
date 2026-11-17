@@ -57,6 +57,7 @@ The rules are the same as for [Image](image.md#where-a-src-points).
 | `color` | color | replaces the file's `currentColor`; a role name or a hex literal |
 | `paused` | bool | holds a SMIL animation where it is; `false` by default |
 | `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
+| `lazy` | bool | defer reading and rasterizing `src` until the box is on screen; `false` by default |
 
 The file is parsed and rasterized with the SVG's own `viewBox` aspect, at most
 1024 px on the long edge, so `fit` behaves the same as on [Image](image.md). If
@@ -82,6 +83,10 @@ pass has given it a value, and a `src` changed from Go rasters again. A remote `
 `Image`: the node lays out at its declared size straight away and paints a faint
 wash that breathes until the file lands. Nothing waits for the network — a slow
 host cannot hold up the first frame or a hot reload.
+
+With `lazy: true` the file is not read and a remote URL is not fetched until the
+icon's box is on screen. A declared `width` and `height` reserve the space; an
+SVG with neither loads at once, because its `viewBox` is what gives it a size.
 
 What happens to a remote SVG:
 
