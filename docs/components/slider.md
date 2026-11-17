@@ -23,6 +23,12 @@ fills out from a center value, and a range with two handles.
   <img src="/img/components/slider-range-dark.png" alt="Slider range in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
 </p>
 
+<p align="center">
+  <strong>showTooltip</strong><br />
+  <img src="/img/components/slider-tooltip-light.png" alt="Slider value tooltip in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/slider-tooltip-dark.png" alt="Slider value tooltip in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi
@@ -63,6 +69,13 @@ Slider {
 	max:     100
 	step:    5
 }
+
+Slider {
+	showTooltip: true // the value above the handle, while hovered or dragged
+	value:       0.4
+	min:         0
+	max:         1
+}
 ```
 
 ## Shapes
@@ -78,6 +91,14 @@ Slider {
 
 `step` snaps every handle, and `disabled` dims the track and blocks input
 without changing the shape.
+
+## Value tooltip
+
+`showTooltip: true` puts the handle's value in a small bubble above it while the
+pointer is over the slider or a drag is in progress. A range slider names the
+handle nearest the pointer, and the grabbed one while dragging, so the bubble
+always shows the number that is about to change. It is off by default, and a
+disabled slider shows nothing.
 
 ## From Go
 
@@ -108,5 +129,6 @@ rangeSlider.Range()              // lo, hi
 | `min` | number | lowest value |
 | `max` | number | highest value |
 | `step` | number | snap interval; 0 means continuous |
+| `showTooltip` | bool | shows the value above the handle while hovered or dragged; off by default |
 
 Every element also accepts the [common properties](../components.md#common-properties).
