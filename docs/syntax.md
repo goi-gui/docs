@@ -1020,10 +1020,12 @@ and `top` reserve `-1` for "auto", so a slide off screen animates the translate
 instead.
 
 Common to every element: `id`, `width`, `height`, `size`, `minWidth`, `maxWidth`,
-`minHeight`, `maxHeight`, `margin`, `padding`, `paddingX`, `paddingY`,
-`background`, `borderColor`, `borderThickness`, `borderType`, `borderTopThickness`,
+`minHeight`, `maxHeight`, `margin`, `marginX`, `marginY`, `padding`, `paddingX`,
+`paddingY`, `background`, `borderColor`, `borderThickness`, `borderType`,
+`borderXThickness`, `borderYThickness`, `borderTopThickness`,
 `borderRightThickness`, `borderBottomThickness`, `borderLeftThickness`,
-`borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor`,
+`borderXColor`, `borderYColor`, `borderTopColor`, `borderRightColor`,
+`borderBottomColor`, `borderLeftColor`,
 `radius`, `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft`,
 `radiusTopLeft`, `radiusTopRight`, `radiusBottomRight`, `radiusBottomLeft`,
 `ripple`,
@@ -1036,7 +1038,8 @@ component's own default, `true` gives a plain element one, `false` takes it away
 from a component that has it. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
-`margin`/`padding`; `paddingX` and `paddingY` set both sides of their axis.
+their axis; `marginX`/`marginY` and `paddingX`/`paddingY` set both sides of an
+axis, and those follow `margin`/`padding`.
 `size` sets width and height together, so a square box is one property; a later
 `width` or `height` then moves only the axis it names:
 
@@ -1137,9 +1140,11 @@ Rectangle {
 }
 ```
 
-`borderTopThickness`, `borderRightThickness`, `borderBottomThickness` and
-`borderLeftThickness` override `borderThickness` for one side, and the matching
-`…Color` properties override `borderColor`. An uneven border is drawn as four
+`borderXThickness`/`borderYThickness` override `borderThickness` for both sides
+of an axis, and `borderTopThickness`, `borderRightThickness`,
+`borderBottomThickness` and `borderLeftThickness` for one side. The matching
+`…Color` properties do the same to `borderColor`: `borderXColor`/`borderYColor`
+for an axis, then a side. An uneven border is drawn as four
 bands, and layout insets content by each side's own width. Four equal sides stay
 one rounded shape; an uneven border is rounded only when all four corners share
 a radius.

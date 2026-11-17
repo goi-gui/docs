@@ -155,15 +155,18 @@ These apply to every element and are not repeated on the component pages.
 | `minWidth, maxWidth` | number | bounds for the resolved width; `SetMinWidth`/`SetMaxWidth` from Go |
 | `minHeight, maxHeight` | number | bounds for the resolved height; `SetMinHeight`/`SetMaxHeight` from Go |
 | `margin` | number | outer spacing on all sides |
-| `marginTop`, `marginRight`, `marginBottom`, `marginLeft` | number | per-side override; unset follows `margin` |
+| `marginX`, `marginY` | number | left+right, top+bottom; unset follows `margin` |
+| `marginTop`, `marginRight`, `marginBottom`, `marginLeft` | number | per-side override; unset follows `marginX`/`marginY`, then `margin` |
 | `padding` | number | inner spacing on all sides |
 | `paddingX`, `paddingY` | number | left+right, top+bottom; unset follows `padding` |
 | `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` | number | per-side override; unset follows its axis, then `padding` |
 | `background` | color | theme role, `#RRGGBB`, or a gradient; on a component it replaces the built-in surface, on a selection control it fills the box behind the control |
 | `borderColor`, `borderThickness` | color, number | outline around the box; `-1` (default) draws none and keeps a component's own outline, `0` removes that outline |
 | `borderType` | enum | `solid` (default), `dashed` or `dotted`; a thickness without a colour restyles the outline a component already draws |
-| `borderTopThickness`, `borderRightThickness`, `borderBottomThickness`, `borderLeftThickness` | number | per-side override; unset follows `borderThickness` |
-| `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor` | color | per-side override; unset follows `borderColor` |
+| `borderXThickness`, `borderYThickness` | number | left+right, top+bottom; unset follows `borderThickness` |
+| `borderTopThickness`, `borderRightThickness`, `borderBottomThickness`, `borderLeftThickness` | number | per-side override; unset follows its axis, then `borderThickness` |
+| `borderXColor`, `borderYColor` | color | left+right, top+bottom; unset follows `borderColor` |
+| `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor` | color | per-side override; unset follows its axis colour, then `borderColor` |
 | `radius` | number | corner radius on all four corners |
 | `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft` | number | rounds both corners on that side; unset follows `radius` |
 | `radiusTopLeft`, `radiusTopRight`, `radiusBottomRight`, `radiusBottomLeft` | number | rounds one corner; unset follows the side, then `radius` |
@@ -440,11 +443,16 @@ follows its aggregate again:
 ```go
 box.SetPaddingX(16)     // left and right
 box.SetPaddingY(8)      // top and bottom
+box.SetMarginX(24)      // left and right
+box.SetMarginY(12)      // top and bottom
 box.SetMarginTop(24)
-box.SetBorderLeftWidth(2)
+box.SetBorderXThickness(2) // left and right
+box.SetBorderYThickness(1) // top and bottom
+box.SetBorderLeftThickness(2)
+box.SetBorderXColor(0x79747EFF)
+box.SetBorderTopColor(0x6750A4FF)
 box.SetRadiusTopLeft(0) // a flat top-left corner
 box.SetRadiusBottom(12)
-box.SetBorderTopColor(0x6750A4FF)
 ```
 
 Every setter marks the tree dirty, so the next frame lays out and repaints
