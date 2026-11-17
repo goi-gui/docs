@@ -123,9 +123,13 @@ Window {
 }
 ```
 
-- `primary` is the seed's hue at a moderate chroma, `secondary` the same hue at
-  a lower one, `tertiary` sits 60° around the wheel, and the neutrals keep a
-  trace of the seed.
+- `primary` is the seed's hue at the seed's own chroma, capped at Material's 48,
+  `secondary` the same hue at a quarter of it, `tertiary` sits 60° around the
+  wheel, and the neutrals keep a trace of the seed. A vivid seed therefore gives
+  a vivid primary: the baseline `#6750A4` stays `#6750A4` at tone 40.
+- A rose scheme is a magenta seed such as `0xE91E63FF` or `0xD81B60FF`. Its
+  `primaryContainer` is the pale pink a button or a selected chip uses, and
+  `tertiary` lands on a warm brown, because Material turns the accent 60° away.
 - A muted seed gives a muted scheme; the chroma is clamped so a nearly grey seed
   cannot produce a saturated hue.
 - The palette is derived in CIELCh rather than Material's HCT, so the result is
