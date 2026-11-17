@@ -282,8 +282,10 @@ Button {
 ```
 
 A child inherits the nearest declared cursor, and `cursor: auto` asks for the
-framework's own shape again (an I-beam over text, a hand over anything
-clickable). Hyphenated names are written bare, the way CSS writes them.
+framework's own shape again (an I-beam over text, a hand over anything that
+activates). Press feedback alone does not change the pointer: `ripple: true` on
+a plain box keeps the arrow until the design names a cursor. Hyphenated names
+are written bare, the way CSS writes them.
 
 Values the platform has no system shape for fall back to the closest one:
 `zoom-in`, `zoom-out`, `help`, `copy`, `alias` and `context-menu` show the
