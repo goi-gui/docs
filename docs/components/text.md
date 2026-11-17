@@ -71,7 +71,7 @@ still cover the older emoji.
 | `fontStyle` | enum | `normal`, `italic`; italic is synthesized, since Roboto italic is not embedded |
 | `color` | color | text colour: a theme role, a hex literal or a CSS colour |
 | `align` | enum | `start`, `center`, `end`; text alignment inside the box |
-| `wrap` | bool | wrap at the node width |
+| `wrap` | bool | wrap at the node width; in a column the run takes the column's content width, so the card around it always reserves every line |
 | `truncate` | bool | one line, ended with `…` when it does not fit the box; like CSS `text-overflow: ellipsis` |
 | `maxLines` | number | wrap and stop after this many lines, ending the last with `…`; 0 (default) is no clamp |
 | `role` | enum | M3 type-scale role: `displayLarge` … `labelSmall` |
