@@ -12,6 +12,7 @@ components. They all share one property set and one way of being driven from Go.
 
 - [Window](components/window.md) — The root of the tree.
 - [Column](components/column.md) — Stacks children vertically, top to bottom.
+- [Flex](components/flex.md) — A Row or a Column, chosen by its `direction` property.
 - [Row](components/row.md) — Places children left to right.
 - [TitleBar](components/titlebar.md) — A Row that moves the window when dragged.
 - [Stack](components/stack.md) — Overlays children on top of each other, last child on top.

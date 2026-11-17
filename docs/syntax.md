@@ -855,6 +855,7 @@ The [Scale guide](guide/scale.md) has the worked example and the Go side
 | `Window` | yes | `title`, `theme` (`light`, `dark`, or a name the app registered), `titleBar` (`system`, `custom`), `resizable`, `minimizable`, `maximizable`, `minimized`, `maximized`, `fullscreen` (all bool; `disableResize` is the older inverse of `resizable`) |
 | `Column` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
 | `Row` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
+| `Flex` | yes | `direction` (`row`, `column`), and the Row/Column layout properties: `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
 | `TitleBar` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign`; a press that misses its clickable children moves the window |
 | `Stack` | yes | `crossAxisAlign`, `mainAxisAlign` |
 | `ClipRRect` | yes | `crossAxisAlign`, `mainAxisAlign`; clips its children to its rounded box |
@@ -866,7 +867,7 @@ The [Scale guide](guide/scale.md) has the worked example and the Go side
 | `Rectangle` | no | — |
 | `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), plus `radius` |
 | `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`) |
-| `Text` | no | `text`, `fontSize`, `weight`, `fontWeight`, `fontStyle`, `decoration`, `decorationStyle`, `decorationThickness`, `decorationColor`, `color`, `align`, `wrap`, `role`, `selectable`, `link` |
+| `Text` | no | `text`, `fontSize`, `weight`, `fontWeight`, `fontStyle`, `decoration`, `decorationStyle`, `decorationThickness`, `decorationColor`, `color`, `align`, `wrap`, `truncate`, `maxLines`, `role`, `selectable`, `link` |
 | `RichText` | yes (`Text` runs) | `text`, `role`, `fontSize`, `color`, `align`, `wrap`; each `Text` child is one styled run, see [RichText](components/richtext.md) |
 | `Markdown` | no (built from the source) | `text`; the document becomes ordinary elements, see [Markdown](components/markdown.md) |
 | `ChartSeries` | no | inside a chart: `label`, `values` (comma-separated numbers), `color`; the series becomes the chart's data and leaves the tree, see [LineChart](components/linechart.md#the-data) |

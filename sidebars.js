@@ -52,6 +52,7 @@ const sidebars = {
 					items: [
 						'components/window',
 						'components/column',
+						'components/flex',
 						'components/row',
 						'components/titlebar',
 						'components/stack',
