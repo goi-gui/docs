@@ -32,7 +32,7 @@ LineChart {
 	ChartSeries {
 		label:  "2026"
 		values: [16, 22, 19, 28, 26, 34]
-		color:  tertiary
+		color: theme.tertiary
 	}
 }
 ```

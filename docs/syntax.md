@@ -691,11 +691,9 @@ the usual globals, and a conditional (`bridge.wide ? 40 : 12`) works too. A list
 with one of those is re-read every frame, and the chart rebuilds its data when a
 resolved value changed; a list of plain literals is written once.
 
-A colour list is the one place a role *must* carry its namespace. A bare word in
-a list is read as a CSS colour name (`red`, `rebeccapurple`), so `primary` is a
-diagnostic that names the form to write: `theme.primary`. Everywhere else a
-colour property accepts the bare spelling too, because a single value leaves no
-room for doubt; in a list it would.
+A role always carries its namespace. A bare word is a CSS colour name (`red`,
+`rebeccapurple`) or, when the scheme owns it, a diagnostic that names the form
+to write: `theme.primary`. Lists are stricter only in reporting it earlier.
 
 ## Colours and gradients
 
@@ -737,9 +735,10 @@ Column {
 
 The checker accepts the full CSS list: the 148 names (`white`, `black`,
 `rebeccapurple`, `darkslategray`, …), `rgb()`/`rgba()` in both the comma and the
-`/ alpha` spelling, `hsl()`/`hsla()`, and every hex form. A name the Material
-scheme already owns (`primary`, `onSurface`) is still a role, so the theme wins;
-a CSS keyword such as `white` is a literal and stays white in either scheme.
+`/ alpha` spelling, `hsl()`/`hsla()`, and every hex form. A scheme colour is
+written `theme.<role>`; the bare spelling (`primary`, `onSurface`) is a
+diagnostic, because a role is a reference and not a literal. A CSS keyword such
+as `white` is a literal and stays white in either scheme.
 
 A gradient is a colour value, and it fills a box, so `background` is where it
 goes:
@@ -1133,10 +1132,10 @@ A border works the same way one step down:
 
 ```goi
 Rectangle {
-	borderThickness:       1
-	borderColor:       outlineVariant
-	borderTopThickness:    2
-	borderBottomColor: primary
+	borderThickness:    1
+	borderColor:        theme.outlineVariant
+	borderTopThickness: 2
+	borderBottomColor:  theme.primary
 }
 ```
 
@@ -1157,7 +1156,7 @@ picks the stroke: `solid` (the default), `dashed` or `dotted`.
 ```goi
 Card {
 	borderThickness: 1
-	borderColor:     outlineVariant
+	borderColor: theme.outlineVariant
 	borderType:      dashed
 }
 ```

@@ -20,7 +20,7 @@ Column {
 	AspectRatio {
 		aspectRatio: 1.7777 // 16:9
 		radius:      12
-		background:  surfaceContainerHigh
+		background: theme.surfaceContainerHigh
 	}
 }
 

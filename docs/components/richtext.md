@@ -23,7 +23,7 @@ RichText {
 	width: 100%
 
 	Text { text: "Install with " }
-	Text { text: "go install" color: tertiary }
+	Text { text: "go install" color: theme.tertiary }
 	Text { text: ", then read the " }
 	Text { text: "guide" link: "https://goi.dev/guide" }
 	Text { text: " — it is " }

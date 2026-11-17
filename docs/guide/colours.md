@@ -75,9 +75,10 @@ All 148 CSS colour names work, bare or quoted. The list is the CSS Color Module
 Level 4 one, including the synonyms: `grey` and `gray`, `aqua` and `cyan`,
 `fuchsia` and `magenta`, plus `rebeccapurple`.
 
-A bare word is tried as a CSS keyword first and only then as a theme role. That
-order is what makes `color: white` a literal rather than an undefined name, and
-it costs nothing: no Material role is spelled like a CSS keyword.
+A bare word must be a CSS keyword. A scheme colour is always a reference, so
+`color: white` is the literal and `color: primary` is a diagnostic that asks for
+`theme.primary`; no Material role is spelled like a CSS keyword, so the two
+never meet.
 
 ## CSS functions
 
