@@ -170,6 +170,7 @@ These apply to every element and are not repeated on the component pages.
 | `fontFamily` | string | a family the app registered with `app.LoadFont`, inherited by children; see [Fonts](guide/fonts.md) |
 | `shadow` | shadow | CSS-style shadow: the box everywhere, the glyphs on `Text`; see [Shadows](guide/shadows.md) |
 | `visible` | bool | removes the element from layout, painting and hit-testing |
+| `ripple` | bool | press feedback on any element. Unwritten keeps the host's default: a component that ripples (buttons, icon buttons, FABs, chips, tabs, switches, menu and list rows) keeps it, a plain element has none. `true` adds one to a box or a picture, `false` removes it from a button. The disc is clipped to the element's own shape, so it never spills past a pill or a card |
 | `flex` | number | share of the parent's leftover main-axis space |
 | `alignSelf` | enum | `start`, `center`, `end`, `stretch`; overrides the parent's `crossAxisAlign` |
 | `scroll` | bool | scroll when content overflows the box |

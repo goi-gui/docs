@@ -1026,11 +1026,14 @@ Common to every element: `id`, `width`, `height`, `size`, `minWidth`, `maxWidth`
 `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor`,
 `radius`, `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft`,
 `radiusTopLeft`, `radiusTopRight`, `radiusBottomRight`, `radiusBottomLeft`,
+`ripple`,
 `fontFamily`, `shadow`, `visible`, `flex`, `alignSelf`, `scroll`,
 `opacity`, `backdropBlur`, `zIndex`, `cursor`, `rotate`, `scale`, `hideScrollbar`,
 `autoHideScrollbar`, `scrollbarWidth`, `scrollbarColor`, `scrollShadow`,
 `scrollShadowColor`, `scrollSnapType`, `scrollSnapStop`, `scrollSnapAlign`,
-`scrollPadding`. `marginTop`,
+`scrollPadding`. `ripple` is the press feedback: unwritten follows the
+component's own default, `true` gives a plain element one, `false` takes it away
+from a component that has it. `marginTop`,
 `marginRight`, `marginBottom`, `marginLeft` and `paddingTop`, `paddingRight`,
 `paddingBottom`, `paddingLeft` override one edge and leave the others following
 `margin`/`padding`; `paddingX` and `paddingY` set both sides of their axis.
