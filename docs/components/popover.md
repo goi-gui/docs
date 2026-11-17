@@ -44,12 +44,14 @@ a rule that beats everything: an element with an explicit `zIndex` paints above
 it. A modal drawer or dialog written after a page that contains a popover needs
 `zIndex` for that reason.
 
-A scrolling ancestor is the one box a panel does not escape. The panel belongs
-to the scroll it was written in: it moves with its anchor, is cut at the
-scroller's frame like the content, and disappears when the anchor is scrolled
-out of view — a popover at the end of a long `Column` shows nothing until you
-scroll down to it. A card or a `ClipRRect` that does not scroll still lets the
-panel out, which is what keeps a menu-like popover inside a raised surface.
+A scrolling ancestor is the one box a panel does not escape, but only once it
+really scrolls. The panel belongs to the scroll it was written in: it moves with
+its anchor, is cut at the scroller's frame like the content, and disappears when
+the anchor is scrolled out of view — a popover at the end of a long `Column`
+shows nothing until you scroll down to it. A `Column` that merely wraps the
+popover has nothing to scroll, so it lets the panel out; a card or a `ClipRRect`
+does the same, which is what keeps a menu-like popover inside a raised
+surface.
 
 A design that only shows the panel sometimes puts the slot inside a condition;
 the panel then appears and disappears with that branch. `onClickOutside` is how
