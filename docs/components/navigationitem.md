@@ -51,6 +51,10 @@ An item finds its navigation container wherever it sits: wrapped in a `Column`
 for layout, it still draws its indicator and still stacks its icon and label the
 way the rail or bar does.
 
+A selected destination draws its icon in the filled Material Symbols instance,
+so the active item reads even before a colour change. `filledIcon` and
+`filledLeadingIcon` still force the filled glyph on an idle item.
+
 ## From Go
 
 ```go
