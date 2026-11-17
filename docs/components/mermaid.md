@@ -51,7 +51,8 @@ a diagram costs one texture, not one draw call per shape.
   directory for the next run), so the window keeps painting instead of freezing.
 - A diagram is only rendered when its box is on screen. A hidden page, or a
   diagram below the fold, waits until it is scrolled into view.
-- The bitmap is cached by source and scheme. Two nodes with the same source share
+- The bitmap is cached by source and scheme, and rasterized at the size the box
+  draws it, so a diagram that a design scales up is not a blurred enlargement. Two nodes with the same source share
   one render, a page opened again is instant, and a theme change renders once
   with the new palette.
 - The palette follows the app's scheme: surfaces, text, lines and the accent are
