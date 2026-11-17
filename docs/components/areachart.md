@@ -54,7 +54,7 @@ area.SetData(ui.ChartData{
 | `stacked` | bool | add the series and fill each band down to the one below it |
 | `min`, `max` | number | pin the value scale; `0` follows the data |
 
-The rest of the surface is the common box: `background`, `borderWidth`,
+The rest of the surface is the common box: `background`, `borderThickness`,
 `borderColor`, `radius`, `padding` and the rest of the
 [common properties](../components.md#common-properties).
 

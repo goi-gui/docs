@@ -142,6 +142,7 @@ const sidebars = {
 						'components/navigationrail',
 						'components/navigationdrawer',
 						'components/navigationitem',
+						'components/breadcrumb',
 						'components/tabs',
 						'components/tab',
 					],

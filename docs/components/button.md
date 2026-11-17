@@ -79,7 +79,7 @@ Button {
 | `disabled` | bool | dims the element and blocks input |
 
 The design can style the box itself: `background` (solid or a gradient),
-`borderColor`, `borderWidth` and the per-side border properties, `radius` and
+`borderColor`, `borderThickness` and the per-side border properties, `radius` and
 `shadow` replace the variant's own fill, outline, shape and elevation. The
 common properties are listed once in
 [Common properties](../components.md#common-properties).

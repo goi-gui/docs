@@ -66,6 +66,12 @@ path straight through.
 | `paused` | bool | holds a GIF or APNG where it is; `false` by default |
 | `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
 
+An image takes the common `borderThickness`, `borderColor` and `borderType`, and
+draws that ring over the picture. `radius` rounds the crop itself: when a
+scrolling area shows only part of an image, the rounded corners stay on the
+image's own box, so the edge the viewport cuts is straight rather than rounded
+again.
+
 A local path is read and decoded while the window is built, so the first frame
 already has it; the decoded bitmap is cached by `src`, so a reload does not read
 it again. A `src` written as an expression is read once the expression pass has

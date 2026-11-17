@@ -60,7 +60,7 @@ difference of ten.
 | `points` | bool | a dot at each corner; `true` by default |
 | `min`, `max` | number | pin the value scale; `0` means "follow the data" |
 
-The rest of the surface is the common box: `background`, `borderWidth`,
+The rest of the surface is the common box: `background`, `borderThickness`,
 `borderColor`, `radius`, `padding` and the rest of the
 [common properties](../components.md#common-properties).
 

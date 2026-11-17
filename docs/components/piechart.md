@@ -80,7 +80,7 @@ others. The centre of a pie is not a slice: a press there picks nothing.
 | `axis` | bool | has no effect on a pie |
 | `min`, `max` | number | pin the scale the shares are read against; `0` follows the data |
 
-The rest of the surface is the common box: `background`, `borderWidth`,
+The rest of the surface is the common box: `background`, `borderThickness`,
 `borderColor`, `radius`, `padding` and the rest of the
 [common properties](../components.md#common-properties).
 

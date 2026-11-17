@@ -69,6 +69,14 @@ Chip {
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state; shows a check in place of the leading icon |
 | `checked` | bool | on/off state |
+| `labelColor` | color | the label's colour; unset follows the variant's content colour |
+| `leadingIconColor` | color | the leading glyph's colour, including the check a selected chip shows |
+| `trailingIconColor` | color | the trailing glyph's colour |
+
+The chip's outline is the design's to change: `borderThickness: 0` removes it,
+and a thickness with `borderColor` replaces it. A thickness alone restyles the
+outline the chip already draws, so `borderThickness: 2` is a thicker chip rather
+than no chip border.
 
 ## From Go
 

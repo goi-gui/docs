@@ -137,7 +137,7 @@ From Go, the state is on the node:
 | `smooth` | bool | a Catmull-Rom curve instead of straight segments |
 | `min`, `max` | number | pin the value scale; `0` means "follow the data" |
 
-The rest of the surface is the common box: `background`, `borderWidth`,
+The rest of the surface is the common box: `background`, `borderThickness`,
 `borderColor`, `radius`, `padding` and the rest of the
 [common properties](../components.md#common-properties).
 

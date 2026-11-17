@@ -39,6 +39,15 @@ NavigationItem {
 | `variant` | enum | — (no style variants) |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state |
+| `labelColor` | color | the label's colour while idle |
+| `selectedLabelColor` | color | the label's colour while selected |
+| `iconColor` | color | the icon's colour while idle |
+| `selectedIconColor` | color | the icon's colour while selected |
+| `selectedContainerColor` | color | the indicator behind a selected item; defaults to `secondaryContainer` |
+
+An item finds its navigation container wherever it sits: wrapped in a `Column`
+for layout, it still draws its indicator and still stacks its icon and label the
+way the rail or bar does.
 
 ## From Go
 

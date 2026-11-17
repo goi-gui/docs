@@ -203,7 +203,7 @@ is 76 instead of 56, so a column leaves room for the helper. An explicit
 above it.
 
 The field's box is the design's when it styles one: `background` (solid or a
-gradient), `borderColor`/`borderWidth` with the per-side properties, `radius` and
+gradient), `borderColor`/`borderThickness` with the per-side properties, `radius` and
 `shadow` replace the variant's fill, outline, shape and elevation. A design
 border also wins over the focus colour, so a custom field keeps its own look
 while focused.

@@ -136,7 +136,7 @@ Column {
 - A stop may name a colour variable instead of a literal: `theme.primary` or
   `customColor.brand`. The gradient follows the scheme and `SetCustomColor` like
   any other colour, and a literal and a role can sit in one gradient.
-- The box keeps its `radius` and its `borderColor`/`borderWidth`, drawn on top of
+- The box keeps its `radius` and its `borderColor`/`borderThickness`, drawn on top of
   the fill.
 - Only `background` takes a gradient. A gradient on `color` or `borderColor` is a
   checker error: it fills a box, not a stroke or a glyph.

@@ -84,6 +84,7 @@ What a page shows: text, documents, glyphs, media and plain boxes. These are nod
 - [NavigationRail](components/navigationrail.md) — The side navigation rail for medium and expanded windows.
 - [NavigationDrawer](components/navigationdrawer.md) — A modal drawer that lists the same destinations as the rail and bar.
 - [NavigationItem](components/navigationitem.md) — One destination in a navigation bar, rail or drawer.
+- [Breadcrumb](components/breadcrumb.md) — A trail of destinations, with the separators between them.
 - [Tabs](components/tabs.md) — A tab bar that groups `Tab` children.
 - [Tab](components/tab.md) — One tab in a tab bar.
 
@@ -158,8 +159,9 @@ These apply to every element and are not repeated on the component pages.
 | `paddingX`, `paddingY` | number | left+right, top+bottom; unset follows `padding` |
 | `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` | number | per-side override; unset follows its axis, then `padding` |
 | `background` | color | theme role, `#RRGGBB`, or a gradient; on a component it replaces the built-in surface, on a selection control it fills the box behind the control |
-| `borderColor`, `borderWidth` | color, number | outline around the box |
-| `borderTopWidth`, `borderRightWidth`, `borderBottomWidth`, `borderLeftWidth` | number | per-side override; unset follows `borderWidth` |
+| `borderColor`, `borderThickness` | color, number | outline around the box; `-1` (default) draws none and keeps a component's own outline, `0` removes that outline |
+| `borderType` | enum | `solid` (default), `dashed` or `dotted`; a thickness without a colour restyles the outline a component already draws |
+| `borderTopThickness`, `borderRightThickness`, `borderBottomThickness`, `borderLeftThickness` | number | per-side override; unset follows `borderThickness` |
 | `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor` | color | per-side override; unset follows `borderColor` |
 | `radius` | number | corner radius on all four corners |
 | `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft` | number | rounds both corners on that side; unset follows `radius` |
@@ -326,7 +328,7 @@ Precedence is a single edge, then its axis, then `padding`.
 Containers lay their children out in a row or a column and accept `spacing`,
 its alias `gap`, `crossAxisAlign` and `mainAxisAlign`: `ButtonGroup`, `Toolbar`,
 `Carousel`, `FABMenu`, `Tabs`, `NavigationBar`, `NavigationRail`,
-`NavigationDrawer`, `List`, `Menu`, `Card`, `Dialog`, `BottomSheet`, `SideSheet`,
+`NavigationDrawer`, `Breadcrumb`, `List`, `Menu`, `Card`, `Dialog`, `BottomSheet`, `SideSheet`,
 `DatePicker`, `TimePicker`.
 
 The two axes are the Flutter pair, and they replace the old single `align`:
@@ -428,7 +430,7 @@ box.SetPadding(16)
 box.SetMargin(8)
 box.SetRadius(12)
 box.SetBackground(0x6750A4FF) // a solid colour, replacing a role or a gradient
-box.SetBorderWidth(1)
+box.SetBorderThickness(1)
 box.SetBorderColor(0x79747EFF)
 ```
 

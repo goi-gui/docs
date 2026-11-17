@@ -53,7 +53,7 @@ is always written, because it is the point of the shape.
 | `min`, `max` | number | the ends of the scale; `0` means "from zero to the value" |
 | `startAngle` | number | degrees; `0` centres the gap at the bottom |
 
-The rest of the surface is the common box: `background`, `borderWidth`,
+The rest of the surface is the common box: `background`, `borderThickness`,
 `borderColor`, `radius`, `padding` and the rest of the
 [common properties](../components.md#common-properties).
 

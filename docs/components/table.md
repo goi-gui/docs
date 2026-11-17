@@ -314,6 +314,7 @@ rebuilding the loop is the usual way to replace every row.
 | `sortAscending` | bool | `true` by default |
 | `selectable` | enum | `none` (default), `single`, `multiple`; see [Selection](#selection) |
 | `selectedRow` | number | selected row index, `-1` (default) for none; seeds single mode |
+| `selectionColor` | color | the band under selected rows; defaults to `secondaryContainer` |
 
 ### `TableColumn`
 

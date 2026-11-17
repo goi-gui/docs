@@ -72,6 +72,8 @@ still cover the older emoji.
 | `color` | color | text colour: a theme role, a hex literal or a CSS colour |
 | `align` | enum | `start`, `center`, `end`; text alignment inside the box |
 | `wrap` | bool | wrap at the node width |
+| `truncate` | bool | one line, ended with `…` when it does not fit the box; like CSS `text-overflow: ellipsis` |
+| `maxLines` | number | wrap and stop after this many lines, ending the last with `…`; 0 (default) is no clamp |
 | `role` | enum | M3 type-scale role: `displayLarge` … `labelSmall` |
 | `decoration` | keywords | any of `underline`, `overline`, `line-through`, combined with spaces; `none` clears |
 | `decorationStyle` | enum | `solid`, `wavy`, `dotted`, `double`, `dashed` |
@@ -81,6 +83,23 @@ still cover the older emoji.
 | `link` | string | makes the text a link: drawn in `primary` and underlined, and a click opens it — see [Links](richtext.md#links) |
 | `shadow` | shadow | text-shadow form: an offset copy of the glyphs per layer |
 | `fontFamily` | string | a family the app registered with `app.LoadFont`; inherited, see [Fonts](../guide/fonts.md) |
+
+`truncate` needs a box narrower than the run, so give it a `width` or a
+`maxWidth`. `maxLines` wraps on its own, without `wrap`:
+
+```goi
+Text {
+	text: "A title that is too long for one line"
+	width: 180
+	truncate: true
+}
+
+Text {
+	text: "A paragraph that may run long, clamped to two lines"
+	width: 240
+	maxLines: 2
+}
+```
 
 ## From Go
 

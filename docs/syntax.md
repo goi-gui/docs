@@ -1020,8 +1020,8 @@ instead.
 
 Common to every element: `id`, `width`, `height`, `size`, `minWidth`, `maxWidth`,
 `minHeight`, `maxHeight`, `margin`, `padding`, `paddingX`, `paddingY`,
-`background`, `borderColor`, `borderWidth`, `borderTopWidth`,
-`borderRightWidth`, `borderBottomWidth`, `borderLeftWidth`,
+`background`, `borderColor`, `borderThickness`, `borderType`, `borderTopThickness`,
+`borderRightThickness`, `borderBottomThickness`, `borderLeftThickness`,
 `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor`,
 `radius`, `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft`,
 `radiusTopLeft`, `radiusTopRight`, `radiusBottomRight`, `radiusBottomLeft`,
@@ -1124,19 +1124,32 @@ A border works the same way one step down:
 
 ```goi
 Rectangle {
-	borderWidth:       1
+	borderThickness:       1
 	borderColor:       outlineVariant
-	borderTopWidth:    2
+	borderTopThickness:    2
 	borderBottomColor: primary
 }
 ```
 
-`borderTopWidth`, `borderRightWidth`, `borderBottomWidth` and
-`borderLeftWidth` override `borderWidth` for one side, and the matching
+`borderTopThickness`, `borderRightThickness`, `borderBottomThickness` and
+`borderLeftThickness` override `borderThickness` for one side, and the matching
 `…Color` properties override `borderColor`. An uneven border is drawn as four
 bands, and layout insets content by each side's own width. Four equal sides stay
 one rounded shape; an uneven border is rounded only when all four corners share
 a radius.
+
+`borderThickness` is `-1` by default, which means "no border of my own": on a
+component that keeps the M3 outline it already draws. `borderThickness: 0`
+removes that outline, and a thickness with no colour restyles it. `borderType`
+picks the stroke: `solid` (the default), `dashed` or `dotted`.
+
+```goi
+Card {
+	borderThickness: 1
+	borderColor:     outlineVariant
+	borderType:      dashed
+}
+```
 
 ## Fonts
 

@@ -56,6 +56,18 @@ NavigationRail {
 | `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
 | `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the flow |
 
+The rail draws no edge line of its own; it sits on `surfaceContainer` so it reads
+as its own surface. A design that wants a divider asks for one, on whichever
+side it wants:
+
+```goi
+NavigationRail {
+	borderRightThickness: 1
+	borderRightColor:     theme.outlineVariant
+	// …
+}
+```
+
 ## From Go
 
 ```go
