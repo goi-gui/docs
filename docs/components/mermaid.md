@@ -56,7 +56,10 @@ a diagram costs one texture, not one draw call per shape.
   one render, a page opened again is instant, and a theme change renders once
   with the new palette.
 - The palette follows the app's scheme: surfaces, text, lines and the accent are
-  the current theme's roles, so a light/dark switch needs no reload.
+  the current theme's roles, so a light/dark switch needs no reload. The bitmap
+  is composed on the scheme's surface instead of staying transparent, and in a
+  dark scheme the series colours are lightened because Pele paints some labels
+  with the background colour.
 - A parse or render failure keeps the box and draws the error there instead of
   leaving a silent hole.
 
