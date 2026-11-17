@@ -25,7 +25,6 @@ TopAppBar {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `variant` | enum | — (no style variants) |
 | `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
 | `filledIcon` | bool | draws every icon of the element in the filled Material Symbols instance; `false` (default) keeps the outlined one |

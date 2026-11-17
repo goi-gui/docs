@@ -28,7 +28,6 @@ Badge {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `variant` | enum | — (no style variants; `label` turns the dot into a count) |
 
 ## From Go
 

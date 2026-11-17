@@ -71,7 +71,6 @@ Chip {
 | `variant` | enum | `assist` (default), `filter`, `input`, `suggestion` |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state; shows a check in place of the leading icon |
-| `checked` | bool | on/off state |
 | `labelColor` | color | the label's colour; unset follows the variant's content colour |
 | `leadingIconColor` | color | the leading glyph's colour, including the check a selected chip shows |
 | `trailingIconColor` | color | the trailing glyph's colour |

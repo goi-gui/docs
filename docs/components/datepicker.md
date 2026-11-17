@@ -25,7 +25,6 @@ DatePicker {
 |---|---|---|
 | `label` | string | the caption above the calendar |
 | `text` | string | the picked date as `YYYY-MM-DD`; empty means none |
-| `variant` | enum | — (no style variants) |
 | `spacing` | number | gap between children |
 | `gap` | number | alias of `spacing` |
 | `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |

@@ -42,7 +42,6 @@ hint belongs to a row.
 | Property | Type | Notes |
 |---|---|---|
 | `text` | string | the bubble's text; empty draws nothing |
-| `variant` | enum | — (no style variants) |
 | `spacing` | number | space between the children on the main axis |
 | `gap` | number | alias of `spacing` |
 | `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |

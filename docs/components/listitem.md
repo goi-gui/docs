@@ -83,7 +83,6 @@ it was given and keeps the row to one icon's width.
 | `trailingIconColor` | color | the trailing icon's colour; unset follows `onSurfaceVariant` |
 | `labelColor` | color | the label's colour; unset follows `onSurface` |
 | `supportingColor` | color | the supporting line's colour; unset follows `onSurfaceVariant` |
-| `variant` | enum | — (no style variants) |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state |
 

@@ -33,7 +33,6 @@ NavigationDrawer {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `variant` | enum | — (no style variants) |
 | `spacing` | number | gap between children |
 | `gap` | number | alias of `spacing` |
 | `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |

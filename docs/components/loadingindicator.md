@@ -27,7 +27,6 @@ LoadingIndicator {
 
 | Property | Type | Notes |
 |---|---|---|
-| `variant` | enum | — (no style variants) |
 | `color` | color | the shape's colour; defaults to `primary`. A role such as `theme.tertiary`, or a hex literal |
 
 The shape scales with its box: `size` is the shortcut for a square one, and a

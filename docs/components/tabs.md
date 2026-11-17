@@ -32,11 +32,14 @@ Tabs {
 
 | Property | Type | Notes |
 |---|---|---|
-| `variant` | enum | — (no style variants) |
 | `spacing` | number | gap between children |
 | `gap` | number | alias of `spacing` |
 | `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
 | `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the flow |
+
+The bar underlines the child whose own `selected` is true, so a design can open
+a page on a given tab. A `Tabs` whose `SelectedIndex` was set from Go still
+underlines that child while no tab is marked selected.
 
 ## From Go
 

@@ -42,12 +42,10 @@ ButtonGroup {
 
 	Button {
 		label:   "Day"
-		variant: outlined
 	}
 
 	Button {
 		label:   "Week"
-		variant: outlined
 	}
 }
 ```
@@ -56,8 +54,6 @@ ButtonGroup {
 
 | Property | Type | Notes |
 |---|---|---|
-| `variant` | enum | filled, tonal, elevated, outlined, text (each child button draws its own; the group adds no style) |
-| `disabled` | bool | dims the element and blocks input |
 | `spacing` | number | gap between children |
 | `gap` | number | alias of `spacing` |
 | `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |

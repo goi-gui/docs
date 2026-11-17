@@ -23,7 +23,6 @@ Snackbar {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `variant` | enum | — (no style variants) |
 
 ## From Go
 

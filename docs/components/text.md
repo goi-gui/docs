@@ -101,6 +101,11 @@ Text {
 }
 ```
 
+`padding` works on a `Text`: it is part of the box the design gives the run, so
+the glyphs wrap and align inside it and an automatic box grows by the padding.
+The line height of the wrapped run is unchanged, which keeps a card's height and
+the glyphs it paints in agreement.
+
 ## From Go
 
 ```go

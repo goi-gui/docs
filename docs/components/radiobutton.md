@@ -31,7 +31,6 @@ RadioButton {
 | Property | Type | Notes |
 |---|---|---|
 | `label` | string | the main text |
-| `variant` | enum | — (no style variants) |
 | `disabled` | bool | dims the element and blocks input |
 | `checked` | bool | on/off state |
 
