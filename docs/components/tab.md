@@ -29,6 +29,7 @@ Tab {
 |---|---|---|
 | `label` | string | the main text |
 | `leadingIcon` | string | leading Material Symbols ligature |
+| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `variant` | enum | — (no style variants) |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state |

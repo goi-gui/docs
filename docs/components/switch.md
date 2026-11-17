@@ -39,6 +39,7 @@ Switch {
 | `disabled` | bool | dims the element and blocks input |
 | `checked` | bool | on/off state |
 | `icon` | string | leading Material Symbols ligature |
+| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `iconOn` | string | thumb glyph when checked; overrides `icon` |
 | `iconOff` | string | thumb glyph when unchecked; overrides `icon` |
 

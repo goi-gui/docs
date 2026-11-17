@@ -142,6 +142,7 @@ encryption, and a field that must never be read back is a job for the backend.
 | `supporting` | string | secondary line under the label |
 | `leadingIcon` | string | leading Material Symbols ligature; wins over `$leading` |
 | `trailingIcon` | string | trailing Material Symbols ligature; wins over `$trailing` |
+| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `variant` | enum | `filled` (default), `outlined` |
 | `type` | string | what can be entered: `text` (default), `numeric`, `alpha`, `alphanumeric`, or the characters themselves |
 | `mask` | string | input mask: `#` a digit, `@` a letter, `*` either, `\` makes the next character literal, everything else literal |

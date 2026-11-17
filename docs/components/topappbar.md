@@ -28,6 +28,7 @@ TopAppBar {
 | `variant` | enum | — (no style variants) |
 | `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
+| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 
 ## From Go
 

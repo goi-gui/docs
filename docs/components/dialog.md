@@ -27,6 +27,7 @@ Dialog {
 | `label` | string | the main text |
 | `supporting` | string | secondary line under the label |
 | `leadingIcon` | string | leading Material Symbols ligature |
+| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `variant` | enum | — (no style variants) |
 | `spacing` | number | gap between children |
 | `gap` | number | alias of `spacing` |

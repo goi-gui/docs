@@ -322,6 +322,7 @@ rebuilding the loop is the usual way to replace every row.
 |---|---|---|
 | `label` | string | header text |
 | `icon` | string | Material Symbols glyph drawn before the label; alone when there is no label |
+| `filledIcon` | bool | draws the column glyph in the filled instance; `false` (default) is outlined |
 | `key` | string | name Go sorts by |
 | `width` | number | fixed width in dp, or a percentage of the table's content width (`25%`); omit to share the leftover space |
 | `align` | enum | `start`, `center`, `end` |
@@ -367,6 +368,7 @@ column's. The usual child is a single `Text`, but a `Chip`, a `Switch` or a smal
 |---|---|---|
 | `value` | string, number or bool | the sort key; a number sorts by magnitude, text by its letters |
 | `icon` | string | optional Material Symbols glyph drawn before the children |
+| `filledIcon` | bool | draws the cell glyph in the filled instance; `false` (default) is outlined |
 | `align` | enum | overrides the column's alignment for the cell's content |
 
 `value` is what `sortColumn`, `Table.Sort` and `SortBy` compare, so a column of

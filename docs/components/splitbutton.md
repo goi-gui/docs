@@ -72,6 +72,7 @@ open a menu and another can close it. The state comes back as
 | `label` | string | the main text |
 | `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | icon in the menu segment; `arrow_drop_down` when unset |
+| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `variant` | enum | `filled` (default), `tonal`, `elevated`, `outlined`, `text` |
 | `disabled` | bool | dims the element and blocks input |
 | `expanded` | bool | open state (menu, split button); set it with `id.expand(on)` from an event or from Go |

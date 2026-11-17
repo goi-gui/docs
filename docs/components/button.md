@@ -74,6 +74,7 @@ Button {
 |---|---|---|
 | `label` | string | the main text |
 | `leadingIcon` | string | leading Material Symbols ligature |
+| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `variant` | enum | `filled` (default), `tonal`, `elevated`, `outlined`, `text` |
 | `color` | color | label and icon colour; unset keeps the variant's own |
 | `disabled` | bool | dims the element and blocks input |

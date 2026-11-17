@@ -76,6 +76,7 @@ it was given and keeps the row to one icon's width.
 | `supporting` | string | secondary line under the label |
 | `leadingIcon` | string | leading Material Symbols ligature; wins over `$leading` |
 | `trailingIcon` | string | trailing Material Symbols ligature; wins over `$trailing` |
+| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `leadingIconColor` | color | the leading icon's colour; unset follows `onSurfaceVariant` |
 | `trailingIconColor` | color | the trailing icon's colour; unset follows `onSurfaceVariant` |
 | `labelColor` | color | the label's colour; unset follows `onSurface` |
