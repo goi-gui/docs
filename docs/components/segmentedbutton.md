@@ -45,7 +45,8 @@ SegmentedButton {
 |---|---|---|
 | `label` | string | the main text |
 | `leadingIcon` | string | leading Material Symbols ligature |
-| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
+| `filledIcon` | bool | draws every icon of the element in the filled Material Symbols instance; `false` (default) keeps the outlined one |
+| `filledLeadingIcon` | bool | fills only the leading icon; `filledIcon` fills both slots |
 | `variant` | enum | `single` (radio behaviour), `multi` (default; each segment toggles) |
 | `disabled` | bool | dims the element and blocks input |
 | `selected` | bool | active/selection state |

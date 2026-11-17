@@ -28,7 +28,9 @@ SearchBar {
 | `placeholder` | string | shown while the value is empty |
 | `leadingIcon` | string | leading Material Symbols ligature |
 | `trailingIcon` | string | trailing Material Symbols ligature |
-| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
+| `filledIcon` | bool | draws every icon of the element in the filled Material Symbols instance; `false` (default) keeps the outlined one |
+| `filledLeadingIcon` | bool | fills only the leading icon; `filledIcon` fills both slots |
+| `filledTrailingIcon` | bool | fills only the trailing icon; `filledIcon` fills both slots |
 | `variant` | enum | — (always an elevated pill) |
 | `disabled` | bool | dims the element and blocks input |
 

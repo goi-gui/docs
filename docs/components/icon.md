@@ -35,14 +35,18 @@ Icon {
 | Property | Type | Notes |
 |---|---|---|
 | `icon` | string | the Material Symbols ligature, such as `home` or `arrow_forward`; completion offers every name the font has |
-| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
+| `filledIcon` | bool | draws every icon of the element in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `color` | color | the glyph's colour; defaults to `onSurfaceVariant`. A role such as `theme.primary`, or a hex literal |
 | `filledIcon` | bool | draws the filled instance of the same Material Symbols glyph; `false` (default) is the outlined one |
 
 `filledIcon: true` swaps the whole icon font for its filled instance, so the
 same `home` keeps its name and its metrics and only the shape changes. Every
-component that draws an icon takes the same property; on a component with two,
-such as a `TextField` with a leading and a trailing glyph, it applies to both.
+component that draws an icon takes the same property. A component with a leading
+and a trailing glyph, such as a `TextField`, also takes `filledLeadingIcon` and
+`filledTrailingIcon`, which fill one slot; `filledIcon` still fills both, so a
+design can use either spelling. A name the filled instance does not carry — the
+two instances are cut from the same family at different times — still draws: the
+renderer falls back to the outlined glyph instead of spelling the name out.
 
 The glyph fills the shorter side of its box and stays centred, so `size: 24`
 gives the M3 default, `size: 40` a larger glyph, and a box such as `width: 80

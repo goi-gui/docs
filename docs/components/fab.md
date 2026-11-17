@@ -53,7 +53,7 @@ FAB {
 |---|---|---|
 | `label` | string | the main text |
 | `icon` | string | leading Material Symbols ligature |
-| `filledIcon` | bool | draws the element's icons in the filled Material Symbols instance; `false` (default) keeps the outlined one |
+| `filledIcon` | bool | draws every icon of the element in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `variant` | enum | `primary` (default), `secondary`, `tertiary`; `extended` with a `label` |
 | `disabled` | bool | dims the element and blocks input |
 | `expanded` | bool | open state (menu, split button) |
