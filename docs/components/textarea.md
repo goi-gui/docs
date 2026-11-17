@@ -27,6 +27,13 @@ TextArea {
 	width:       360
 	height:      140
 }
+
+TextArea {
+	label:   "Outlined notes"
+	variant: outlined
+	width:   360
+	height:  140
+}
 ```
 
 ## Properties
@@ -39,6 +46,15 @@ TextArea {
 | `supporting` | string | helper line under the field |
 | `variant` | enum | `filled` (default) or `outlined` |
 | `disabled` | bool | mutes the field and stops edits |
+
+## Filled and outlined
+
+`variant: filled` (the default) keeps the label in a top band inside the
+container, with the value starting below it. `variant: outlined` moves a
+floating label onto the border and cuts the line behind it; the value starts at
+the top padding, since the label no longer takes a band inside the box. A
+placeholder floats the label in both variants and keeps its own line, and the
+travel is animated the same way as a single-line field.
 
 ## Behaviour
 
