@@ -50,7 +50,9 @@ a diagram costs one texture, not one draw call per shape.
   rasterizer in the background (and caches the compiled module in the user cache
   directory for the next run), so the window keeps painting instead of freezing.
 - A diagram is only rendered when its box is on screen. A hidden page, or a
-  diagram below the fold, waits until it is scrolled into view.
+  diagram below the fold, waits until it is scrolled into view. Scrolling a
+  rendered diagram away drops its bitmap; the box keeps its size, and scrolling
+  back takes the bitmap from the cache or renders again.
 - The bitmap is cached by source and scheme, and rasterized at the size the box
   draws it, so a diagram that a design scales up is not a blurred enlargement. Two nodes with the same source share
   one render, a page opened again is instant, and a theme change renders once
@@ -65,6 +67,17 @@ a diagram costs one texture, not one draw call per shape.
 
 The browser (wasm) build does not carry the wasm rasterizer; a `Mermaid` there
 draws the unsupported-build message instead of taking the page down.
+
+A desktop app that does not use Mermaid can drop Pele, resvg and wazero with:
+
+```sh
+go build -tags nomermaid ./...
+```
+
+The component and its `data` property stay in the design, but the node draws the
+unsupported-build message instead of a diagram. On a typical linux/amd64 app
+this saves roughly 15 MB of binary; the wasm build never includes the rasterizer
+either way.
 
 ### Diagram types
 
