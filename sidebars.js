@@ -75,6 +75,7 @@ const sidebars = {
 						'components/richtext',
 						'components/code',
 						'components/markdown',
+						'components/mermaid',
 						'components/image',
 						'components/svg',
 						'components/rectangle',
