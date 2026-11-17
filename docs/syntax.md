@@ -1080,8 +1080,10 @@ rounded box. `zIndex` restacks an element among its
 siblings the way CSS does: a higher value paints later, so it lands on top, and
 equal values keep document order. Negative values go under siblings at the
 default `0`. It only changes paint order, never layout, so two siblings can
-overlap without affecting the flow. The scrollbar properties apply to any element
-that scrolls: `hideScrollbar` removes the bar, `autoHideScrollbar` (default
+overlap without affecting the flow. `scroll` is on by default for `Column`,
+`Row`, `Flex`, `Carousel` and `NavigationRail`, so a page column or a rail scrolls
+as soon as its content is taller than the frame; `scroll: false` restores plain
+overflow. The scrollbar properties apply to any element that scrolls: `hideScrollbar` removes the bar, `autoHideScrollbar` (default
 `true`) shows it only while the pointer is over the area or it scrolled in the
 last two seconds, `scrollbarWidth` sets its thickness (4 by default),
 `scrollbarColor` its colour, and `scrollShadow` adds a gradient at each edge the

@@ -173,7 +173,7 @@ These apply to every element and are not repeated on the component pages.
 | `ripple` | bool | press feedback on any element. Unwritten keeps the host's default: a component that ripples (buttons, icon buttons, FABs, chips, tabs, switches, menu and list rows) keeps it, a plain element has none. `true` adds one to a box or a picture — the element takes the press even without an `onClick` handler — and `false` removes it from a button. The disc is clipped to the element's own shape, so it never spills past a pill or a card |
 | `flex` | number | share of the parent's leftover main-axis space |
 | `alignSelf` | enum | `start`, `center`, `end`, `stretch`; overrides the parent's `crossAxisAlign` |
-| `scroll` | bool | scroll when content overflows the box |
+| `scroll` | bool | scroll when content overflows the box. On by default for `Column`, `Row`, `Flex`, `Carousel` and `NavigationRail`; `scroll: false` turns it off, and the rest of the elements start off |
 | `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
 | `backdropBlur` | number | radius in dp of the blur applied to what is already painted behind the element, like CSS `backdrop-filter`; 0 (default) is no blur |
 | `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected. It is the stronger claim: a modal overlay names one to stay above a page whose popover panel lifts its branch |
@@ -200,7 +200,6 @@ vertically and a `Row` or a `Carousel` sideways without an `x`/`y` suffix:
 
 ```goi
 Column {
-	scroll:            true
 	scrollSnapType:    mandatory
 	scrollSnapStop:    stop
 	scrollPadding:     10
@@ -257,7 +256,6 @@ the end is reached:
 
 ```goi
 Column {
-	scroll:            true
 	scrollShadow:      true
 	hideScrollbar:     false
 	autoHideScrollbar: true
