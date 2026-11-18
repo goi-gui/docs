@@ -15,8 +15,8 @@ also hand it a bitmap directly with `SetImage`, which needs no file at all.
 ## In a `.goi` file
 
 ```goi
-// A file inside the design's container: the fs.FS passed to LoadWindow, so an
-// embed.FS in a release build and ui.DirFS while developing.
+// A file inside the design's container: the ui directory named in goi.yaml,
+// or the embedded FS passed with WithAssets.
 Image {
 	src:    "goi://assets/cover.png"
 	fit:    cover
@@ -47,15 +47,15 @@ Image {
 
 | Form | Reads |
 |---|---|
-| `goi://assets/cover.png` | the asset container given to `LoadWindow` |
+| `goi://assets/cover.png` | the design directory, or the FS given to `WithAssets` |
 | `./cover.png`, `cover.png` | the working directory of the process |
 | `/home/me/cover.png` | that absolute path |
 | `https://…`, `http://…` | the network, in the background |
 
 `goi://` is what an embedded design wants: the same path works from an
-`embed.FS`, a `ui.DirFS` and a test's in-memory `fs.FS`. A plain path never
-touches the container, so an app that lets the user pick a photo can pass their
-path straight through.
+`embed.FS` and a test's in-memory `fs.FS` passed to `WithAssets`. A plain path
+never touches the container, so an app that lets the user pick a photo can pass
+their path straight through.
 
 ## Properties
 

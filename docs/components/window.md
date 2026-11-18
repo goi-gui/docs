@@ -145,7 +145,7 @@ click on whatever is underneath.
 ## From Go
 
 ```go
-win, err := app.LoadWindow(ui.DirFS("."), "app.goi")
+win, err := app.LoadWindow("app.goi")
 if err != nil {
 	return err
 }
@@ -179,7 +179,7 @@ w.Root().SetMaxWidth(-1)
 brand := *ui.LightTheme()
 brand.Name = "brand"
 brand.Colors.Primary = 0x00695CFF
-win, _ := app.LoadWindowFile("app.goi")
+win, _ := app.LoadWindow("app.goi")
 win.DefineTheme(&brand)
 
 // Or a whole scheme from one seed colour.

@@ -169,23 +169,26 @@ rasterized SVG icons have an 8 MB one.
 
 ## The design file next to the binary
 
-A program that calls `app.LoadWindowFile("myapp/myapp.goi", ...)` resolves that
-path relative to the process's working directory, not to the executable. Ship
-the `.goi` files next to the binary and run it from that folder, or pass an
-embedded filesystem to `LoadWindow`:
+`LoadWindow` resolves the entry against the `ui` directory in `goi.yaml`, or
+against the process's working directory when there is no `goi.yaml`. Either way
+it reads from where the app runs, not from where the executable sits. Ship the
+`.goi` files next to the binary and run it from that folder, or embed them:
 
 ```go
 //go:embed myapp.goi
 var design embed.FS
 
-win, err := app.LoadWindow(design, "myapp.goi", ui.WithSize(900, 600))
+win, err := app.LoadWindow("myapp.goi",
+	ui.WithAssets(design),
+	ui.WithSize(900, 600),
+)
 ```
 
-Embedding also means hot reload has nothing to watch, so turn it off for a
-release build:
+An embedded design has nothing to watch, so hot reload is skipped. A release
+build that ships loose files can turn it off:
 
 ```go
-win, err := app.LoadWindowFile("myapp/myapp.goi",
+win, err := app.LoadWindow("myapp.goi",
 	ui.WithHotReload(false),
 	ui.WithSize(900, 600),
 )

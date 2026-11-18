@@ -111,7 +111,7 @@ Window {
 ```
 
 ```go
-win, err := app.LoadWindow(design, "app.goi", ui.WithCanvas("hero"))
+win, err := app.LoadWindow("app.goi", ui.WithAssets(design), ui.WithCanvas("hero"))
 ```
 
 ```html

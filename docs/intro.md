@@ -46,7 +46,7 @@ var count int // outside Bind: Bind runs again after every hot reload
 
 func main() {
 	app, _ := ui.NewApp()
-	win, _ := app.LoadWindowFile("counter.goi", ui.WithHotReload(true))
+	win, _ := app.LoadWindow("counter.goi")
 
 	win.Bind(func(w *ui.Window) error {
 		ui.SetData(w, "Count", count)
@@ -73,7 +73,7 @@ goi run
 
 `goi init` writes a `cmd/main.go`, a `goi.yaml`, a Go module and a
 `ui/Main.goi` with a centred hello world; `cmd/main.go` loads it through
-`app.LoadWindowFromConfig()`, and `goi run` reads the optional feature tags from
+`app.LoadWindow("Main.goi")`, and `goi run` reads the build flags from
 `goi.yaml`. See [the goi command](guide/cli.md).
 
 ## Start here
