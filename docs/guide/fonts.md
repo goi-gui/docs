@@ -40,15 +40,58 @@ if err := app.LoadFontMany(map[string]string{
 ```
 
 Every valid file is loaded even when one path fails; the returned error joins
-the failures. Since one family is one face, give each weight or italic file its
-own name, as above.
+the failures. This form gives each file its own family name.
 
-Calling either method after the window is up also works: the next frame draws
+## One family, several files
+
+A family with weight and italic files uses the Google Fonts naming convention:
+
+```text
+assets/fonts/
+  Nunito-Regular.ttf
+  Nunito-Italic.ttf
+  Nunito-Medium.ttf
+  Nunito-SemiBold.ttf
+  Nunito-Bold.ttf
+  Nunito-BoldItalic.ttf
+  Nunito-ExtraBold.ttf
+  Nunito-Black.ttf
+```
+
+Register the prefix once:
+
+```go
+if err := app.LoadFontFamily("Nunito", "fonts/Nunito"); err != nil {
+	return err
+}
+```
+
+The design keeps one `fontFamily` and picks the file with `fontWeight` and
+`fontStyle`:
+
+```goi
+Text {
+	text:       "Nunito Bold"
+	fontFamily: "Nunito"
+	fontWeight: 700
+}
+
+Text {
+	text:       "Nunito Bold Italic"
+	fontFamily: "Nunito"
+	fontWeight: 700
+	fontStyle:  italic
+}
+```
+
+The style suffix accepts `Regular`, `Thin`, `ExtraLight`, `Light`, `Medium`,
+`SemiBold`, `Bold`, `ExtraBold`, `Black`, any of those with `Italic`, and
+`Italic` alone. If the exact weight is absent, the nearest one in the family is
+used. A family loaded with `LoadFont` has one face for every weight; use
+`LoadFontFamily` when the files differ.
+
+Calling any of these after the window is up also works: the next frame draws
 with the new face.
-
-One file serves every weight. A single face cannot vary, so `fontWeight: bold`
-on a custom family draws the same outlines as a regular run; register a family
-per weight if you need the difference.
 
 ## Using it in a design
 
@@ -96,8 +139,11 @@ text.SetFontFamily("Nunito")
 
 ## Limits
 
-- One face per family: no variable-font axes, no per-weight files, no synthetic
-  bold.
+- Variable-font axes are not exposed; use the static files through
+  `LoadFontFamily`.
+- Synthetic bold is not applied. A single `LoadFont` face therefore draws every
+  weight the same; register the real files with `LoadFontFamily` when they
+  differ.
 - Icons keep Material Symbols whatever the family; a `Text` with an `icon` on
   it still draws the icon font.
 - A family added after a window has drawn reshapes the visible text on the next
