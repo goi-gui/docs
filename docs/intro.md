@@ -15,6 +15,10 @@ behaviour. Hot reload is built in: edit a `.goi` file and the open window update
 without a restart. One project builds for every supported platform, drawing
 through Vulkan, Direct3D 12 or Metal.
 
+The components and the design language follow
+[Material 3 Expressive](https://m3.material.io/blog/building-with-m3-expressive):
+expressive colour, type, shape and motion, with light and dark schemes.
+
 ```goi
 bridge {
 	Count int
@@ -132,6 +136,7 @@ another target; the release tags come from `buildFlags`. See
 - [Conditionals](guide/conditionals.md), [loops](guide/loops.md) — showing an
   arm or repeating elements.
 - [Bridge](guide/bridge.md) — passing values and handlers from Go.
+- [Async work](guide/async.md) — updating the UI from a goroutine with `App.Post`.
 - [Fragments](guide/fragments.md) — splitting a design across files with props,
   children and named slots.
 - [Translations](guide/i18n.md) — `t(...)` from JSON catalogs in an `i18n`

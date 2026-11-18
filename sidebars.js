@@ -19,6 +19,7 @@ const sidebars = {
 				'guide/conditionals',
 				'guide/loops',
 				'guide/bridge',
+				'guide/async',
 				'guide/fragments',
 				'guide/i18n',
 				'guide/reserved',

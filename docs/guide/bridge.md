@@ -224,3 +224,9 @@ The hook runs again for every rebuilt row, so it must be safe to call twice.
 
 A single row is a loop over a one item list: keep the row in the design and call
 `ui.SetData` with a slice of one. There is no cloned prototype node.
+
+## Background work
+
+Bridge handlers run on the UI goroutine. A slow fetch belongs in a goroutine;
+post its result back with `app.Post` before touching a property or `SetData`.
+See [Async work](async.md) for the pattern and the rules.
