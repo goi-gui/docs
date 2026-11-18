@@ -25,14 +25,14 @@ Audio {
 	id:       podcast
 	width:    100%
 	height:   64
-	src:      "goi://assets/episode.mp3"
+	src:      "goi://images/episode.mp3"
 	controls: true
 	volume:   0.8
 }
 ```
 
-`src` is a path inside the design's container (`goi://`, or a relative path the
-app loaded), a path on the machine, or a URL ffmpeg can open: `http`/`https`
+`src` is a path inside the `assets` directory (`goi://`), a relative path the
+app loaded, a path on the machine, or a URL ffmpeg can open: `http`/`https`
 (including HLS), `rtmp`, `rtsp`, `srt`, `udp` and the rest.
 
 ## Interaction

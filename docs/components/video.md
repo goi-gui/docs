@@ -25,17 +25,17 @@ Video {
 	id:        clip
 	width:     100%
 	height:    320
-	src:       "goi://assets/clip.mp4"
+	src:       "goi://images/clip.mp4"
 	fit:       contain
 	controls:  true
 	loop:      true
 	volume:    0.8
-	subtitles: "goi://assets/clip.srt"
+	subtitles: "goi://images/clip.srt"
 }
 ```
 
-`src` is a path inside the design's container (`goi://`, or a relative path the
-app loaded), a path on the machine, or a URL ffmpeg can open: `http`/`https`
+`src` is a path inside the `assets` directory (`goi://`), a relative path the
+app loaded, a path on the machine, or a URL ffmpeg can open: `http`/`https`
 (including HLS and DASH), `rtmp`, `rtsp`, `srt`, `udp` and the rest.
 
 ## Interaction
@@ -226,7 +226,7 @@ cues are parsed once and drawn over the picture, centered near the bottom, each
 line on a dark scrim so it reads over a bright frame; the caption moves up when a
 control bar is showing and drops back when it hides.
 
-- A local path, a `goi://` asset from the design's container, and an `http(s)`
+- A local path, a `goi://` asset from the `assets` directory, and an `http(s)`
   URL all work.
 - `<i>`, `<b>`, `<font>` and leftover ASS override codes are stripped, because
   the caption is drawn as one plain run.

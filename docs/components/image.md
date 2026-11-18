@@ -18,7 +18,7 @@ also hand it a bitmap directly with `SetImage`, which needs no file at all.
 // A file inside the design's container: the assets directory in development,
 // embedded automatically by goi build.
 Image {
-	src:    "goi://assets/cover.png"
+	src:    "goi://images/cover.png"
 	fit:    cover
 	width:  240
 	height: 135
@@ -47,7 +47,7 @@ Image {
 
 | Form | Reads |
 |---|---|
-| `goi://assets/cover.png` | the `assets` directory, embedded by `goi build` |
+| `goi://images/cover.png` | the `assets` directory, embedded by `goi build` |
 | `./cover.png`, `cover.png` | the working directory of the process |
 | `/home/me/cover.png` | that absolute path |
 | `https://…`, `http://…` | the network, in the background |

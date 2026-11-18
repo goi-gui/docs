@@ -15,14 +15,14 @@ comes from `src` or, from Go, from `SetDataString`/`SetDataBytes`.
 
 ```goi
 SVG {
-	src:    "goi://assets/logo.svg"
+	src:    "goi://images/logo.svg"
 	width:  48
 	height: 48
 }
 
 SVG {
 	id:     mark
-	src:    "goi://assets/check.svg"
+	src:    "goi://images/check.svg"
 	color:  theme.primary
 	width:  24
 	height: 24
@@ -41,7 +41,7 @@ SVG {
 
 | Form | Reads |
 |---|---|
-| `goi://assets/icon.svg` | the asset container given to `LoadWindow` |
+| `goi://images/icon.svg` | the `assets` directory, embedded by `goi build` |
 | `./icon.svg`, `icon.svg` | the working directory of the process |
 | `/home/me/icon.svg` | that absolute path |
 | `https://…`, `http://…` | the network, in the background |
@@ -155,7 +155,7 @@ spin.Stop()
 ```go
 icon := w.MustByID[*ui.SVG]("mark")
 icon.Color.Set(0xFF0000FF) // re-rasterized on the next frame
-icon.Src.Set("goi://assets/other.svg")
+icon.Src.Set("goi://images/other.svg")
 icon.Src.Set("https://example.com/other.svg")
 ```
 
