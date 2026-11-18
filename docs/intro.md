@@ -63,6 +63,18 @@ func main() {
 `SetData` feeds `bridge.Count`; `SetHandler` supplies the body a bridge call
 runs. The label follows the value without a manual repaint.
 
+## Start a project
+
+```sh
+go install github.com/goi-gui/goi/cmd/goi@latest
+goi init example.com/hello
+goi run .
+```
+
+`goi init` writes a `main.go`, a `goi.yaml`, a Go module and a `ui/Main.goi`
+with a centred hello world; `goi run` reads the optional feature tags from
+`goi.yaml`. See [the goi command](guide/cli.md).
+
 ## Start here
 
 - [.goi syntax](syntax.md) — the language reference: declarations, imports,

@@ -8,7 +8,7 @@ const sidebars = {
 			type: 'category',
 			label: 'Getting started',
 			collapsed: false,
-			items: ['guide/build', 'guide/browser'],
+			items: ['guide/cli', 'guide/build', 'guide/browser'],
 		},
 		{
 			type: 'category',
