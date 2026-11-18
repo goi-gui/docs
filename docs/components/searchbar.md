@@ -1,6 +1,7 @@
 # SearchBar
 
-A text field shaped as a search input, with a leading search glyph.
+A text field shaped as a search input, with a leading search glyph and two
+optional icon-square slots.
 
 [All components](../components.md)
 
@@ -18,6 +19,31 @@ SearchBar {
 	width:       360
 }
 ```
+
+## Leading and trailing bodies
+
+The icon properties take a Material Symbols name. When the bar needs something
+else in one of the 40dp columns, `$leading` and `$trailing` take any element and
+layout centres it there:
+
+```goi
+SearchBar {
+	label:       "Search"
+	placeholder: "Search components"
+
+	$leading {
+		IconButton { icon: tune }
+	}
+
+	$trailing {
+		IconButton { icon: close }
+	}
+}
+```
+
+A `$leading` body replaces the built-in search glyph; the query keeps the same
+52dp start, so the text does not jump. An explicit `trailingIcon` wins over
+`$trailing`, so one design can use either without a condition.
 
 ## Properties
 
