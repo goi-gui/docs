@@ -33,9 +33,12 @@ The design settings live in [`goi.yaml`](goi-yaml.md).
 | [`goi build`](build.md) | build `dist/<os>-<arch>/<name>` with `buildFlags` |
 | `goi setup` / `goi update` | install goi, `goipls` and `goifmt`; bump the dependency in a module |
 | `goi doctor` | show the toolchain, SDL3, Vulkan and the companion tools |
+| `goi version` | print the installed goi version |
 
 The CLI is a cobra tree: `goi --help`, `goi <command> --help` and shell
-completion work as usual.
+completion work as usual. `goi version` prints the version recorded in the
+binary; a local `go build` reports `devel` (or a pseudo-version with `+dirty`
+when the checkout has changes).
 
 ## Set up or update the tools
 
