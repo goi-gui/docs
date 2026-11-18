@@ -71,6 +71,9 @@ buildFlags: [all]
 
 # Where LoadWindow finds the design files.
 ui: ui
+
+# Directory goi run and goi build execute.
+entrypoint: cmd
 ```
 
 `name` is the executable name `goi build` writes. `id` is the application's
@@ -104,6 +107,10 @@ the working directory instead. `LoadWindow` takes the usual options; hot reload
 is on by default and `ui.WithHotReload(false)` turns it off. A design embedded
 in the binary, usually for a wasm build, is loaded with `ui.WithAssets(fsys)`.
 
+`entrypoint` is the Go package directory `goi run` and `goi build` execute. It
+defaults to `cmd`, and the generated project writes it out so the layout is
+visible. Changing it to `app` moves the package and the commands follow it.
+
 ## Run a project
 
 ```sh
@@ -113,12 +120,12 @@ goi run
 `run` loads `goi.yaml` from the project root, composes
 
 ```text
-go run -tags nofakecgo,<buildFlags...> ./cmd
+go run -tags nofakecgo,<buildFlags...> ./<entrypoint>
 ```
 
 with `CGO_ENABLED=0`, and leaves the program's output and exit status alone.
-Hot reload stays on. It expects `cmd/main.go`; a project without one or without a
-`goi.yaml` gets a hint from the command.
+Hot reload stays on. It expects `<entrypoint>/main.go`; a project without one or
+without a `goi.yaml` gets a hint from the command.
 
 ## Build a project
 
@@ -141,6 +148,7 @@ GOOS=linux GOARCH=arm64 goi build   # dist/linux-arm64/myapp
 GOOS=windows goi build              # dist/windows-<host arch>/myapp.exe
 ```
 
-The build uses the same tags as `run`, plus `nohotreload`: the binary does not
+The build compiles the package named by `entrypoint` with the same tags as
+`run`, plus `nohotreload`: the binary does not
 watch its design files, so editing `ui/Main.goi` no longer changes a shipped
 window. `nofakecgo` and `CGO_ENABLED=0` are still applied.
