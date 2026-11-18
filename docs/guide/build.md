@@ -39,8 +39,8 @@ The binary is stripped and reproducible: the command adds `-trimpath` and
 `-ldflags "-s -w"`. A Windows target also gets `-H windowsgui`, so the GUI
 subsystem is used and double-clicking the executable does not open a console.
 
-The command copies the `ui` directory into the build and embeds it, so the
-binary is self-contained and does not watch its design files. No `//go:embed`
+The command declares a `go:embed` for the `assets` directory and registers it,
+so the binary is self-contained and does not watch its design files. No `//go:embed`
 directive and no hot reload option are needed in the app. Assets reached through
 `goi://` are embedded with the design; plain paths still read the process's
 working directory. The tags in `buildFlags` are the only feature tags the build
@@ -200,7 +200,7 @@ rasterized SVG icons have an 8 MB one.
 Two commands catch the mistakes a compile cannot:
 
 ```sh
-go run -tags all github.com/goi-gui/goi/cmd/goicheck@latest -layout ui/*.goi
+go run -tags all github.com/goi-gui/goi/cmd/goicheck@latest -layout assets/ui/*.goi
 goifmt -l .
 ```
 

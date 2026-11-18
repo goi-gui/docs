@@ -109,8 +109,9 @@ goi run
 ```
 
 `goi init` asks for any value a flag did not give, then writes a `cmd/main.go`,
-a [`goi.yaml`](guide/goi-yaml.md), a Go module and a `ui/Main.goi` with a centred
-hello world. `cmd/main.go` loads it through `app.LoadWindow("Main.goi")`, and
+a [`goi.yaml`](guide/goi-yaml.md), a Go module and an `assets/ui/Main.goi` with
+a centred hello world. `cmd/main.go` loads it through
+`app.LoadWindow("ui/Main.goi")`, and
 `goi run` reads the development tags from `goi.yaml`. See
 [goi init](guide/init.md) and [goi run](guide/run.md).
 

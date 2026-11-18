@@ -15,7 +15,7 @@ also hand it a bitmap directly with `SetImage`, which needs no file at all.
 ## In a `.goi` file
 
 ```goi
-// A file inside the design's container: the ui directory in development,
+// A file inside the design's container: the assets directory in development,
 // embedded automatically by goi build.
 Image {
 	src:    "goi://assets/cover.png"
@@ -47,13 +47,13 @@ Image {
 
 | Form | Reads |
 |---|---|
-| `goi://assets/cover.png` | the `ui` directory, embedded by `goi build` |
+| `goi://assets/cover.png` | the `assets` directory, embedded by `goi build` |
 | `./cover.png`, `cover.png` | the working directory of the process |
 | `/home/me/cover.png` | that absolute path |
 | `https://…`, `http://…` | the network, in the background |
 
 `goi://` is the form that works the same in development and in a build:
-`goi run` reads the `ui` directory and `goi build` embeds it, with no embed
+`goi run` reads the `assets` directory and `goi build` embeds it, with no embed
 directive in the app. A plain path never touches the container, so an app that
 lets the user pick a photo can pass their path straight through.
 

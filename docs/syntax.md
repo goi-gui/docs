@@ -1388,7 +1388,7 @@ modifier.
 and the language server formats on save.
 
 ```sh
-goifmt -w ui/        # rewrite every .goi under a directory
+goifmt -w assets/ui/        # rewrite every .goi under a directory
 goifmt -l .          # list the files that would change
 goifmt -d file.goi   # print a diff
 ```

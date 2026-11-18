@@ -21,8 +21,8 @@ runFlags: [all]
 # Build tags passed to goi build.
 buildFlags: [all]
 
-# Where LoadWindow finds the design files.
-ui: ui
+# Where LoadWindow finds the design files and their assets.
+assets: assets
 
 # Directory goi run and goi build execute.
 entrypoint: cmd
@@ -82,24 +82,36 @@ The values are the optional feature tags:
 A tag can also be a space- or comma-separated group inside one entry
 (`"emoji svg"`), which is useful when a flag list comes from a script.
 
-## `ui`
+## `assets`
 
-The one directory holding the `.goi` files, relative to `goi.yaml`. It defaults
-to `ui`. The entry file is not configuration: the program names it, and it is
-resolved inside `ui`:
+The one directory holding the designs and their assets, relative to `goi.yaml`.
+It defaults to `assets`. The `.goi` files live in its `ui/` subdirectory, while
+`goi://` assets can sit anywhere under it:
+
+```text
+assets/
+├── ui/
+│   └── Main.goi
+└── images/
+    └── cover.png
+```
+
+The entry file is not configuration: the program names it, and it is resolved
+inside `assets`:
 
 ```go
-win, err := app.LoadWindow("Main.goi")
+win, err := app.LoadWindow("ui/Main.goi")
 ```
 
 Without a `goi.yaml`, such as a single-file program, the entry is resolved from
-the working directory instead. The container is automatic: `goi run` watches
-this directory, and `goi build` copies it into the binary and reads it from
-there. No Go call chooses between them.
+the working directory instead. The container is automatic: `goi run` reads the
+`assets` directory, and `goi build` declares a `go:embed` for it and reads the
+embedded copy. No Go call chooses between them.
 
-Asset paths that start with `goi://` resolve against this directory. Plain
-paths resolve against the process's working directory, which is also where
-`goi run` starts the app.
+Asset paths that start with `goi://` resolve against the `assets` directory, so
+`goi://images/cover.png` is `assets/images/cover.png`. Plain paths resolve
+against the process's working directory, which is also where `goi run` starts
+the app.
 
 ## `entrypoint`
 

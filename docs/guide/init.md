@@ -6,8 +6,8 @@ sidebar_label: goi init
 # goi init
 
 `goi init` creates a project in the current directory: a Go module, a
-`cmd/main.go`, a [`goi.yaml`](goi-yaml.md) and `ui/Main.goi` with a centred
-hello world.
+`cmd/main.go`, a [`goi.yaml`](goi-yaml.md) and `assets/ui/Main.goi` with a
+centred hello world.
 
 ```sh
 mkdir hello
@@ -19,13 +19,14 @@ It asks for the application name, id and Go module in the terminal, then writes:
 
 ```text
 hello/
+├── assets/
+│   └── ui/
+│       └── Main.goi
 ├── cmd/
 │   └── main.go
 ├── go.mod
 ├── go.sum
-├── goi.yaml
-└── ui/
-    └── Main.goi
+└── goi.yaml
 ```
 
 Start it with [`goi run`](run.md):
@@ -40,7 +41,7 @@ The prompts are only there for a first project. For a script or when the values
 are already known, pass them as flags and the terminal is skipped:
 
 ```sh
-goi init --name hello --id com.example.hello --module example.com/hello --ui ui
+goi init --name hello --id com.example.hello --module example.com/hello --assets assets
 ```
 
 | Flag | Sets | Example |
@@ -48,11 +49,11 @@ goi init --name hello --id com.example.hello --module example.com/hello --ui ui
 | `--name` | the application and executable name | `myapp` |
 | `--id` | a reverse-DNS application id | `com.example.myapp` |
 | `--module` | the Go module path for `go mod init` | `github.com/you/myapp` |
-| `--ui` | the directory holding the `.goi` files | `ui` |
+| `--assets` | the directory holding the designs and their assets | `assets` |
 
 Only the values a flag did not give are asked for, so
-`goi init --name myapp` prompts for the id and the module. `--ui` defaults to
-`ui`, so it does not prompt unless a different directory is wanted. The fully
+`goi init --name myapp` prompts for the id and the module. `--assets` defaults
+to `assets`, so it does not prompt unless a different directory is wanted. The fully
 flagged form is safe for a script; the bare form is friendly for a first
 project.
 
@@ -65,13 +66,14 @@ files are still written and tidy can be run later.
 `cmd/main.go` calls:
 
 ```go
-win, err := app.LoadWindow("Main.goi")
+win, err := app.LoadWindow("ui/Main.goi")
 ```
 
-The entry is resolved inside the `ui` directory named in `goi.yaml`, so the file
-it opens is `ui/Main.goi`. Hot reload is on by default, so editing that file
-updates the open window. `Main.goi` is a centred "Hello, world!" — the smallest
-complete design.
+The entry is resolved inside the `assets` directory named in `goi.yaml`, so the
+file it opens is `assets/ui/Main.goi`. Hot reload is on by default, so editing
+that file updates the open window. `Main.goi` is a centred "Hello, world!" — the
+smallest complete design.
 
-The generated `goi.yaml` also gives the app a name and id, names `cmd` as the
-entrypoint and sets both [`runFlags` and `buildFlags`](goi-yaml.md) to `all`.
+The generated `goi.yaml` also gives the app a name and id, names `assets` as the
+assets directory, `cmd` as the entrypoint, and sets both
+[`runFlags` and `buildFlags`](goi-yaml.md) to `all`.

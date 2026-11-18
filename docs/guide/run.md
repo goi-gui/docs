@@ -42,7 +42,7 @@ logger, is untouched. A normal run prints startup and window loading:
 
 ```text
 INF ui: starting service=goi
-INF ui: window loaded file=Main.goi service=goi took=98.2ms
+INF ui: window loaded file=ui/Main.goi service=goi took=98.2ms
 ```
 
 Set `GOI_DEBUG` yourself to keep them quiet:
@@ -70,7 +70,7 @@ when the Windows logs themselves are what is being debugged.
 
 ## Hot reload
 
-Hot reload is automatic: `goi run` watches the `ui` directory, so editing a
+Hot reload is automatic: `goi run` watches the `assets` directory, so editing a
 `.goi` file rebuilds the tree, carries over the state the framework owns and runs
 `Bind` again. Application state must therefore live outside `Bind`.
 

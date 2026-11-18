@@ -20,7 +20,7 @@ if err := app.LoadFont("Inter", inter); err != nil {
 	return err
 }
 
-win, err := app.LoadWindow("Main.goi")
+win, err := app.LoadWindow("ui/Main.goi")
 ```
 
 `LoadFont` takes the name a design will write and the font bytes; a
