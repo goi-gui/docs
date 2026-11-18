@@ -20,50 +20,84 @@ The components and the design language follow
 expressive colour, type, shape and motion, with light and dark schemes.
 
 ```goi
+// assets/ui/Main.goi
+
 bridge {
-	Count int
-	onInc func()
+	Count   int
+	onInc   func()
+	onDec   func()
+	onReset func()
 }
 
 Window {
 	title: "Counter"
 
 	Column {
-		padding:        24
-		spacing:        16
 		crossAxisAlign: center
+		mainAxisAlign:  center
+		gap:            20
 
 		Text {
-			text: formatf("%d", bridge.Count)
-			role: displayLarge
+			text: "Counter"
+			role: titleLarge
 		}
 
-		Button {
-			id:      inc
-			label:   "+"
-			onClick: bridge.onInc()
+		Row {
+			gap:            20
+			crossAxisAlign: center
+			mainAxisAlign:  center
+
+			Button {
+				label:    "-"
+				onClick:  bridge.onDec()
+				disabled: bridge.Count == 0
+			}
+
+			Text {
+				text: formatf("%02d", bridge.Count)
+				role: displayLarge
+			}
+
+			Button {
+				label:   "+"
+				onClick: bridge.onInc()
+			}
+		}
+
+		IconButton {
+			icon:     refresh
+			onClick:  bridge.onReset()
+			disabled: bridge.Count == 0
 		}
 	}
 }
 ```
 
 ```go
-var count int // outside Bind: Bind runs again after every hot reload
+app, _ := ui.NewApp()
+win, _ := app.LoadWindow("ui/Main.goi")
 
-func main() {
-	app, _ := ui.NewApp()
-	win, _ := app.LoadWindow("counter.goi")
+// count lives outside Bind: Bind runs again after every hot reload
+count := 0
 
-	win.Bind(func(w *ui.Window) error {
+win.Bind(func(w *ui.Window) error {
+	ui.SetData(w, "Count", count)
+	ui.SetHandler(w, "onInc", func() {
+		count++
 		ui.SetData(w, "Count", count)
-		return ui.SetHandler(w, "onInc", func() {
-			count++
-			ui.SetData(w, "Count", count)
-		})
 	})
+	ui.SetHandler(w, "onDec", func() {
+		count--
+		ui.SetData(w, "Count", count)
+	})
+	ui.SetHandler(w, "onReset", func() {
+		count = 0
+		ui.SetData(w, "Count", count)
+	})
+	return nil
+})
 
-	app.Run()
-}
+app.Run()
 ```
 
 `SetData` feeds `bridge.Count`; `SetHandler` supplies the body a bridge call
