@@ -1,7 +1,9 @@
 # Fonts
 
-A design names a font family; Go supplies the file. The built-in Roboto is
-always there, and anything else comes from `App.LoadFont`.
+A design names a font family; Go registers the file. The built-in Roboto is
+always there, and anything else comes from `App.LoadFont`. Font files live in the
+same `assets` directory as the design, so `fonts/Nunito.ttf` means
+`assets/fonts/Nunito.ttf`.
 
 ## Registering a family
 
@@ -12,21 +14,18 @@ if err != nil {
 }
 defer app.Close()
 
-inter, err := os.ReadFile("assets/Inter.ttf")
-if err != nil {
-	return err
-}
-if err := app.LoadFont("Inter", inter); err != nil {
+if err := app.LoadFont("Nunito", "fonts/Nunito.ttf"); err != nil {
 	return err
 }
 
 win, err := app.LoadWindow("ui/Main.goi")
 ```
 
-`LoadFont` takes the name a design will write and the font bytes; a
-`//go:embed` asset works the same way. The name is the handle, not the font's
-own family name, so `app.LoadFont("Brand", data)` is reached with
-`fontFamily: "Brand"`.
+`LoadFont` takes the name a design will write and a path inside the `assets`
+directory. `goi run` reads the file from disk; `goi build` embeds it in the
+binary, so the same call works in a release. The name is the handle, not the
+font's own family name, so `app.LoadFont("Brand", "fonts/Brand.ttf")` is reached
+with `fontFamily: "Brand"`.
 
 Calling it after the window is up also works: the next frame draws with the new
 face.
@@ -41,29 +40,30 @@ On the window, for every element that inherits it:
 
 ```goi
 Window {
-	fontFamily: "Inter"
+	fontFamily: "Nunito"
 
 	Column {
 		Text {
-			text: "Everything here is Inter"
+			text:       "Nunito"
+			fontFamily: "Nunito"
+		}
+
+		Text {
+			text:       "Roboto"
+			fontFamily: "Roboto"
 		}
 	}
 }
 ```
 
-On one element, to override what it would inherit:
-
-```goi
-Text {
-	text:       "Example"
-	fontFamily: "Inter"
-}
-```
+Roboto is built in, so the second line needs no `LoadFont`. Use `fontFamily` on
+one element to override what it would inherit.
 
 `fontFamily` is a common property, so it works on any element and a child
-inherits the nearest one that set it. An unknown or empty name falls back to
-Roboto rather than drawing nothing, so a design is still readable when the app
-forgot to load the font.
+inherits the nearest one that set it. `Roboto` is always available without a
+registration; a name that is neither Roboto nor registered falls back to Roboto
+and logs one warning per family, so a typo is visible rather than silent. An
+empty name simply inherits.
 
 Measurement follows the same face the painter draws, so a wrapped paragraph
 breaks where it is measured; a wide custom face changes a label's size, and
@@ -73,7 +73,7 @@ layout sees that.
 
 ```go
 text := w.MustByID[*ui.Text]("label")
-text.SetFontFamily("Inter")
+text.SetFontFamily("Nunito")
 ```
 
 `SetFontFamily("")` hands the element back to its parent's family.

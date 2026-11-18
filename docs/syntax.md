@@ -1163,9 +1163,9 @@ Card {
 
 ## Fonts
 
-`fontFamily` names a family the app registered with `App.LoadFont`; an element
-without one inherits its nearest ancestor's, and the window is the last place it
-can come from:
+`fontFamily` names a family the app registered with `App.LoadFont`, or the
+built-in `Roboto`; an element without one inherits its nearest ancestor's, and
+the window is the last place it can come from:
 
 ```goi
 Window {

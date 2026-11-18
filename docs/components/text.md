@@ -132,11 +132,11 @@ outlines the letters. See [Shadows](../guide/shadows.md).
 
 ## A custom font
 
-Roboto is embedded; anything else is a file the app hands over, named in the
-design:
+Roboto is embedded; anything else is a file in the `assets` directory, named in
+the design:
 
 ```go
-if err := app.LoadFont("Inter", interTTF); err != nil {
+if err := app.LoadFont("Inter", "fonts/Inter.ttf"); err != nil {
 	return err
 }
 ```
