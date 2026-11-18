@@ -63,7 +63,9 @@ GOI_DEBUG=TRUE ./dist/linux-amd64/myapp
 ```
 
 A built app does not get `LOGGER_OUTPUT_FORMAT=logfmt` from `goi build`; set it
-if that format is wanted.
+if that format is wanted. A Windows build is a GUI-subsystem executable, so it
+has no console of its own; redirect its output when the debug lines are needed
+there.
 
 ## Hot reload
 

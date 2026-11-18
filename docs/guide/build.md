@@ -36,9 +36,10 @@ so it can share purego's fake C runtime instead of shipping a second one. A cgo
 build is not supported.
 
 The binary is stripped and reproducible: the command adds `-trimpath` and
-`-ldflags "-s -w"`. It also adds `nohotreload`, so the shipped app does not
-watch its design files. The tags in `buildFlags` are the only feature tags the
-build receives.
+`-ldflags "-s -w"`. A Windows target also gets `-H windowsgui`, so the GUI
+subsystem is used and double-clicking the executable does not open a console.
+It also adds `nohotreload`, so the shipped app does not watch its design files.
+The tags in `buildFlags` are the only feature tags the build receives.
 
 ## Cross-compiling
 
@@ -92,6 +93,10 @@ brew install sdl3
 The executable needs `SDL3.dll` next to it, from the SDL3 release archive or
 MSYS2's `mingw-w64-x86_64-sdl3` package. No MSYS2 shell, C toolchain or
 `pkg-config` is needed for the build.
+
+`goi build --os windows` links the GUI subsystem (`-H windowsgui`), so a
+double-click does not open a terminal. A GUI binary has no console of its own;
+redirect its output if `GOI_DEBUG` logs are wanted without one.
 
 `goi doctor` reports the library it finds, the Vulkan loader and the toolchain.
 
