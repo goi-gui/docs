@@ -65,19 +65,20 @@ a diagram costs one texture, not one draw call per shape.
 - A parse or render failure keeps the box and draws the error there instead of
   leaving a silent hole.
 
-The browser (wasm) build does not carry the wasm rasterizer; a `Mermaid` there
-draws the unsupported-build message instead of taking the page down.
-
-A desktop app that does not use Mermaid can drop Pele, resvg and wazero with:
+Rendering is an opt-in feature: a plain build has the `Mermaid` element but no
+renderer, and the node reports that the build has no support. Enable it with:
 
 ```sh
-go build -tags nomermaid ./...
+go build -tags mermaid ./...
 ```
 
-The component and its `data` property stay in the design, but the node draws the
-unsupported-build message instead of a diagram. On a typical linux/amd64 app
-this saves roughly 15 MB of binary; the wasm build never includes the rasterizer
-either way.
+or take every optional feature with `-tags all`. A component that is present in
+a design but not enabled never takes the page down; it draws the message in its
+box.
+
+The browser (wasm) build never carries the wasm rasterizer, even with `all`, so
+a `Mermaid` there draws the unsupported-build message instead of taking the page
+down.
 
 ### Diagram types
 

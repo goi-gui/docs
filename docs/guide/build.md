@@ -85,46 +85,69 @@ A GUI app usually should not open a console window:
 CGO_ENABLED=0 go build -tags nofakecgo -ldflags="-H windowsgui" -o myapp.exe ./cmd/myapp
 ```
 
-## Smaller binaries
+## Features and binary size
 
-A release build usually wants `-s -w`: it drops the symbol table and DWARF
-debug info, which is about 13 MB on a Linux amd64 build. The colour emoji font
-is the single largest embedded asset: Noto Color Emoji, about 10.7 MB, and it
-is what makes every emoji render offline. A build that does not need colour
-emoji can leave it out with `-tags noemoji`; text falls back to the font's
-monochrome glyphs where they exist.
+The core build is the window, renderer, layout and text. The optional features
+are **off unless their tag is given**; `-tags all` turns every one on:
 
-The rest of the binary is optional features. Each has a build tag; they
-compose, and an app that does not use the feature also loses the dependency:
+| Tag | Adds |
+| --- | --- |
+| `emoji` | Noto Color Emoji, about 10.7 MB, for every emoji offline |
+| `mermaid` | Pele, resvg and wazero for `Mermaid` diagrams, about 11 MB |
+| `code` | Chroma and its regexp engine for a `Code` block's highlighting |
+| `net` | `net/http` and TLS: remote `Image`, `SVG` and map tiles |
+| `svg` | oksvg/rasterx for `SVG` elements |
+| `markdown` | goldmark for `Markdown` documents |
+| `dialog` | zenity/beeep and D-Bus for file dialogs and `Notify` |
 
-| Tag | Drops | Native, `-s -w` |
-| --- | --- | ---: |
-| `noemoji` | the 10.7 MB colour emoji font | 40 → 30 MB |
-| `nonet` | `net/http` and TLS: remote `Image`, `SVG` and map tiles fail | 40 → 38 MB |
-| `nocode` | Chroma and its regexp engine: a `Code` block draws as plain text | 40 → 36 MB |
-| `nosvg` | oksvg/rasterx: `SVG` elements report an error | 40 → 39 MB |
-| `nomarkdown` | goldmark: `Markdown` draws nothing | 40 → 39 MB |
-| `nodialog` | zenity/beeep and D-Bus: file dialogs and `Notify` report an error | 40 → 40 MB |
+Compose the ones the app uses:
 
-Approximate sizes, Linux amd64 with Go 1.27 and the `examples/counter` app:
+```sh
+# a normal app with pictures, emoji and remote sources
+CGO_ENABLED=0 go build -tags "nofakecgo emoji svg net dialog" -o myapp ./cmd/myapp
+
+# everything, including Mermaid and Markdown
+CGO_ENABLED=0 go build -tags "nofakecgo all" -o myapp ./cmd/myapp
+```
+
+Without a tag the design still parses: an `SVG` reports an error, `Markdown`
+draws nothing, `Code` draws plain text, a remote `Image` fails to fetch, file
+dialogs and `Notify` report an error, and `Mermaid` reports that the build has no
+renderer. Text falls back to the font's monochrome glyphs when `emoji` is off.
+
+Approximate sizes for `examples/counter`, Linux amd64, Go 1.27, built with
+`-ldflags="-s -w"`:
 
 | Build | Native |
 | --- | ---: |
-| default, unstripped | 53 MB |
-| default, `-s -w` | 40 MB |
-| `noemoji`, `-s -w` | 30 MB |
-| all six tags, `-s -w` | **22 MB** |
+| core, `-tags nofakecgo` | **26.4 MB** |
+| `-tags "nofakecgo all"` | **56.1 MB** |
 
+The per-feature cost of adding one tag to the core build:
+
+| Tag | Binary | Adds |
+| --- | ---: | ---: |
+| `emoji` | 37.2 MB | +10.7 MB |
+| `mermaid` | 37.3 MB | +10.9 MB |
+| `code` | 30.3 MB | +3.8 MB |
+| `net` | 28.6 MB | +2.1 MB |
+| `svg` | 27.6 MB | +1.1 MB |
+| `markdown` | 27.3 MB | +0.9 MB |
+| `dialog` | 26.8 MB | +0.3 MB |
+
+Without `-s -w`, the core build is 38.7 MB and the `all` build is 74.6 MB.
 The wasm numbers are larger because they include the Go runtime and the app's
-embedded assets; compare builds of the same app. There is no native
-`libwgpu_native.so` in a current build: the renderer talks to Vulkan/DX12/Metal
-through `gogpu/wgpu`'s pure-Go backends, so the only runtime libraries are the
-display driver and SDL3 itself.
+embedded assets; a wasm build passes `-tags all` if it needs the same features.
+The browser never carries Mermaid's wasm rasterizer, so a `Mermaid` there draws
+the unsupported-build message even with `all`.
+
+There is no native `libwgpu_native.so` in a current build: the renderer talks to
+Vulkan/DX12/Metal through `gogpu/wgpu`'s pure-Go backends, so the only runtime
+libraries are the display driver and SDL3 itself.
 
 The biggest fixed costs are the Go runtime, the WebGPU binding (`wgpu`, `naga`
-and `goffi`), text shaping (`go-text/typesetting`) and the two fonts. A
-`noemoji` build is the easiest large cut; the feature tags remove a dependency
-each without changing the design.
+and `goffi`) and text shaping (`go-text/typesetting`). `emoji` and `mermaid` are
+the two large optional cuts; neither changes an existing `.goi` file.
 
 ## Memory
 
@@ -140,7 +163,7 @@ quality:
 The image and glyph atlases start small and grow on demand (512² and 1024²),
 so an app that never draws a picture does not pay for a 2048² texture. The
 colour emoji font is parsed the first time a glyph needs it, not at startup; a
-build with `noemoji` never carries it. Animations are capped at 32 MB each and
+build without `emoji` never carries it. Animations are capped at 32 MB each and
 count against the image cache, map tiles have their own 32 MB budget, and
 rasterized SVG icons have an 8 MB one.
 
@@ -184,20 +207,25 @@ The wasm build swaps the window layer and the WebGPU backend and needs no
 display:
 
 ```sh
-GOOS=js GOARCH=wasm go build -o web/dist/goi.wasm ./cmd/myapp
+GOOS=js GOARCH=wasm go build -tags all -o web/dist/goi.wasm ./cmd/myapp
 ```
+
+Name only the features the page uses if it does not need all; the browser
+never carries Mermaid's rasterizer, even with `all`.
 
 ## Checking a build
 
 Two commands catch the mistakes a compile cannot:
 
 ```sh
-go run github.com/goi-gui/goi/cmd/goicheck@latest -layout myapp/*.goi
+go run -tags all github.com/goi-gui/goi/cmd/goicheck@latest -layout myapp/*.goi
 go run github.com/goi-gui/goi/cmd/goifmt@latest -l .
 ```
 
 `goicheck` validates every file and, with `-layout`, renders the layout headlessly
-so a node that collapses to zero size is reported. `goifmt -l` lists files that
+so a node that collapses to zero size is reported. The `all` tag lets the check
+measure Markdown, Code and the other optional features; a core build would see a
+`Markdown` as an empty box. `goifmt -l` lists files that
 are not formatted; `-w` rewrites them.
 
 ## Troubleshooting

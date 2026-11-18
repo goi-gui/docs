@@ -99,18 +99,21 @@ only requirement.
 ```sh
 # Linux (the runtime package; libsdl3-0 on Debian/Ubuntu, sdl3 on Arch)
 sudo apt install libsdl3-0
-CGO_ENABLED=0 go build -tags nofakecgo ./...
+CGO_ENABLED=0 go build -tags "nofakecgo all" ./...
 
 # macOS
 brew install sdl3
-CGO_ENABLED=0 go build -tags nofakecgo ./...
+CGO_ENABLED=0 go build -tags "nofakecgo all" ./...
 
 # Windows (put SDL3.dll next to the executable)
-CGO_ENABLED=0 go build -tags nofakecgo ./...
+CGO_ENABLED=0 go build -tags "nofakecgo all" ./...
 ```
 
 `CGO_ENABLED=0` keeps cgo out, and `-tags nofakecgo` lets goffi and purego share
-one fake C runtime; both are required. The same binary asks SDL which video
+one fake C runtime; both are required. `-tags all` turns on the optional
+features (emoji, SVG, Markdown, code, network, dialogs and Mermaid); a build
+without them stays small, and each has its own tag. See
+[Building](guide/build.md#features-and-binary-size). The same binary asks SDL which video
 driver it got and draws through Vulkan (Wayland, X11), Direct3D 12 (Windows) or
 Metal (macOS); no GPU SDK is needed beyond the driver. See
 [Building](guide/build.md) for the optional build tags and the memory knobs.
