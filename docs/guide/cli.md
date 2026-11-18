@@ -152,3 +152,41 @@ The build compiles the package named by `entrypoint` with the same tags as
 `run`, plus `nohotreload`: the binary does not
 watch its design files, so editing `ui/Main.goi` no longer changes a shipped
 window. `nofakecgo` and `CGO_ENABLED=0` are still applied.
+
+## Update the tools
+
+```sh
+goi update
+```
+
+It runs, in order:
+
+```text
+go get github.com/goi-gui/goi@latest
+go install github.com/goi-gui/goi/cmd/goipls@latest
+go install github.com/goi-gui/goi/cmd/goifmt@latest
+```
+
+The first updates the goi dependency in the current module, so the project
+builds against the newest release. The two installs put the language server and
+the formatter in `GOBIN`. The `goi` binary itself is a separate install:
+
+```sh
+go install github.com/goi-gui/goi/cmd/goi@latest
+```
+
+## Check the setup
+
+```sh
+goi doctor
+```
+
+It prints the OS and architecture, the distribution and kernel when available,
+the Go toolchain and `CGO_ENABLED`, the `goi`, `goipls` and `goifmt` versions,
+the SDL3 runtime library, the Vulkan loader and its ICDs, and the optional
+`ffmpeg` and `git` tools. A row is `ok`, `missing` or `optional`; the command
+still exits successfully when an optional tool is absent.
+
+A desktop build needs Go, SDL3 and a GPU backend: Vulkan on Linux and Windows,
+Metal on macOS. `SDL3` is loaded at run time, not linked, which is why the doctor
+looks for the shared library rather than a compiler or development package.
