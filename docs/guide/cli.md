@@ -46,18 +46,18 @@ written and tidy can be run later.
 ```yaml
 # Feature tags passed to goi run. nofakecgo and CGO_ENABLED=0 are always used.
 # Add emoji, svg, mermaid, markdown, code, net, dialog, or all.
-extensions: []
+buildFlags: []
 
 # Where LoadWindowFromConfig finds the design and which file is the entry.
 ui: [ui]
 entry: Main.goi
 ```
 
-`extensions` is a list of build tags. `goi run` always adds `nofakecgo` and sets
+`buildFlags` is a list of build tags. `goi run` always adds `nofakecgo` and sets
 `CGO_ENABLED=0`; the entries in the list add optional features:
 
 ```yaml
-extensions: [emoji, svg, net, dialog]
+buildFlags: [emoji, svg, net, dialog]
 ```
 
 Use `all` to turn every optional feature on. A tag can also be a space- or
@@ -87,7 +87,7 @@ goi run
 `run` loads `goi.yaml` from the project root, composes
 
 ```text
-go run -tags nofakecgo,<extensions...> ./cmd
+go run -tags nofakecgo,<buildFlags...> ./cmd
 ```
 
 with `CGO_ENABLED=0`, and leaves the program's output and exit status alone.
