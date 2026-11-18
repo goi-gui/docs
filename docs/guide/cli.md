@@ -5,7 +5,8 @@ sidebar_label: CLI
 
 # The goi command
 
-`goi` starts a project and runs it with the features the project asks for.
+`goi` starts, runs and builds goi projects with the features the project asks
+for.
 
 ```sh
 go install github.com/goi-gui/goi/cmd/goi@latest
@@ -16,10 +17,10 @@ go install github.com/goi-gui/goi/cmd/goi@latest
 ```sh
 mkdir hello
 cd hello
-goi init example.com/hello
+goi init --name hello --id com.example.hello --module example.com/hello
 ```
 
-It writes:
+`init` writes:
 
 ```text
 hello/
@@ -32,32 +33,54 @@ hello/
     └── Main.goi
 ```
 
+The flags are optional. Run `goi init` without them and the command asks for the
+missing values in the terminal:
+
+| Flag | Asks for | Example |
+| --- | --- | --- |
+| `--name` | the application and executable name | `myapp` |
+| `--id` | a reverse-DNS application id | `com.example.myapp` |
+| `--module` | the Go module path for `go mod init` | `github.com/you/myapp` |
+| `--ui` | the directory holding the `.goi` files | `ui` |
+
+Only the values a flag did not give are asked for, so
+`goi init --name myapp` prompts for the id and the module. `--ui` defaults to
+`ui`. This makes the fully flagged form safe for a script and the bare form
+friendly for a first project.
+
 `cmd/main.go` calls `app.LoadWindow("Main.goi")`. The method reads the `ui`
 directory from `goi.yaml` and resolves the entry inside it, so the file it opens
 is `ui/Main.goi`. Hot reload is on by default, so editing that file updates the
 open window. `Main.goi` is a centred "Hello, world!" — the smallest complete
 design.
 
-`init` runs `go mod init` and then `go mod tidy`, so the new module has the goi
-dependency and a `go.sum`. If the machine is offline, the files are still
-written and tidy can be run later.
+`init` runs `go mod init` with the module flag and then `go mod tidy`, so the new
+module has the goi dependency and a `go.sum`. If the machine is offline, the
+files are still written and tidy can be run later.
 
 ## `goi.yaml`
 
 ```yaml
-# Build tags passed to goi run. nofakecgo and CGO_ENABLED=0 are always used.
-# all turns on every optional feature: emoji, svg, mermaid, markdown, code,
-# net and dialog.
+# Application name and id, used by goi build and packaging.
+name: myapp
+id: com.example.myapp
+
+# Build tags passed to goi run and goi build. nofakecgo and
+# CGO_ENABLED=0 are always used; all turns on every optional feature.
 buildFlags: [all]
 
 # Where LoadWindow finds the design files.
 ui: ui
 ```
 
+`name` is the executable name `goi build` writes. `id` is the application's
+reverse-DNS id; it is the app's identity rather than a build setting. Both lead
+the file because they name the project.
+
 `buildFlags` is a list of build tags. It defaults to `[all]` when the key is
-missing, and the generated file writes that value. `goi run` always adds
-`nofakecgo` and sets `CGO_ENABLED=0`; the entries in the list add optional
-features:
+missing, and the generated file writes that value. `goi run` and `goi build`
+always add `nofakecgo` and set `CGO_ENABLED=0`; the entries in the list add
+optional features:
 
 ```yaml
 buildFlags: [emoji, svg, net, dialog]
@@ -94,5 +117,30 @@ go run -tags nofakecgo,<buildFlags...> ./cmd
 ```
 
 with `CGO_ENABLED=0`, and leaves the program's output and exit status alone.
-It expects `cmd/main.go`; a project without one or without a `goi.yaml` gets a
-hint from the command.
+Hot reload stays on. It expects `cmd/main.go`; a project without one or without a
+`goi.yaml` gets a hint from the command.
+
+## Build a project
+
+```sh
+goi build
+```
+
+`build` writes the executable to
+
+```text
+dist/<os>-<arch>/<name>
+```
+
+where `<os>` and `<arch>` are `GOOS` and `GOARCH` and `<name>` is the `name` in
+`goi.yaml`. A Windows target gets the `.exe` suffix; every other target does not.
+The target defaults to the host when either variable is unset:
+
+```sh
+GOOS=linux GOARCH=arm64 goi build   # dist/linux-arm64/myapp
+GOOS=windows goi build              # dist/windows-<host arch>/myapp.exe
+```
+
+The build uses the same tags as `run`, plus `nohotreload`: the binary does not
+watch its design files, so editing `ui/Main.goi` no longer changes a shipped
+window. `nofakecgo` and `CGO_ENABLED=0` are still applied.

@@ -67,14 +67,17 @@ runs. The label follows the value without a manual repaint.
 
 ```sh
 go install github.com/goi-gui/goi/cmd/goi@latest
-goi init example.com/hello
+goi init
 goi run
 ```
 
-`goi init` writes a `cmd/main.go`, a `goi.yaml`, a Go module and a
-`ui/Main.goi` with a centred hello world; `cmd/main.go` loads it through
-`app.LoadWindow("Main.goi")`, and `goi run` reads the build flags from
-`goi.yaml`. See [the goi command](guide/cli.md).
+`goi init` asks for the app name, id and Go module, then writes a `cmd/main.go`,
+a `goi.yaml`, a Go module and a `ui/Main.goi` with a centred hello world;
+`cmd/main.go` loads it through `app.LoadWindow("Main.goi")`, and `goi run` reads
+the build flags from `goi.yaml`. `goi build` writes a release binary under
+`dist/`. Flags can replace the prompts:
+`goi init --name myapp --id com.example.myapp --module example.com/myapp`. See
+[the goi command](guide/cli.md).
 
 ## Start here
 
