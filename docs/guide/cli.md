@@ -124,6 +124,7 @@ go run -tags nofakecgo,<buildFlags...> ./<entrypoint>
 ```
 
 with `CGO_ENABLED=0`, and leaves the program's output and exit status alone.
+The caller's environment is forwarded to `go`; only `CGO_ENABLED` is replaced.
 Hot reload stays on. It expects `<entrypoint>/main.go`; a project without one or
 without a `goi.yaml` gets a hint from the command.
 
@@ -139,19 +140,15 @@ goi build
 dist/<os>-<arch>/<name>
 ```
 
-where `<os>` and `<arch>` are `GOOS` and `GOARCH` and `<name>` is the `name` in
-`goi.yaml`. A Windows target gets the `.exe` suffix; every other target does not.
-The target defaults to the host when either variable is unset:
+where `<os>` and `<arch>` are the running system and `<name>` is the `name` in
+`goi.yaml`. It builds for the host: `GOOS` and `GOARCH` from the environment are
+ignored, so a cross target needs a direct `go build`. A Windows host gets the
+`.exe` suffix; every other host does not.
 
-```sh
-GOOS=linux GOARCH=arm64 goi build   # dist/linux-arm64/myapp
-GOOS=windows goi build              # dist/windows-<host arch>/myapp.exe
-```
-
-The build compiles the package named by `entrypoint` with the same tags as
-`run`, plus `nohotreload`: the binary does not
-watch its design files, so editing `ui/Main.goi` no longer changes a shipped
-window. `nofakecgo` and `CGO_ENABLED=0` are still applied.
+The binary is stripped and reproducible: the command adds `-trimpath` and
+`-ldflags "-s -w"`. It compiles the package named by `entrypoint` with the same
+tags as `run`, plus `nohotreload`, so the binary does not watch its design
+files. `nofakecgo` and `CGO_ENABLED=0` are still applied.
 
 ## Set up the tools
 
