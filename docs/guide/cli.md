@@ -70,11 +70,16 @@ release.
 goi doctor
 ```
 
-It prints the OS and architecture, the distribution and kernel when available,
-the Go toolchain and `CGO_ENABLED`, the `goi`, `goipls` and `goifmt` versions,
-the SDL3 runtime library, the Vulkan loader and its ICDs, and the optional
-`ffmpeg` and `git` tools. A row is `ok`, `missing` or `optional`; the command
-still exits successfully when an optional tool is absent.
+The first row asks the GitHub releases API whether a newer release exists. It
+shows `ok`, `available` with the tag and the `goi update` hint, `devel` for a
+local build, or `?` when GitHub cannot be reached. The check has a short timeout
+and does not stop the rest of the report.
+
+The remaining rows show the OS and architecture, the distribution and kernel
+when available, the Go toolchain and `CGO_ENABLED`, the `goi`, `goipls` and
+`goifmt` versions, the SDL3 runtime library, the Vulkan loader and its ICDs, and
+the optional `ffmpeg` and `git` tools. A row is `ok`, `missing` or `optional`;
+the command still exits successfully when an optional tool is absent.
 
 A desktop build needs Go, SDL3 and a GPU backend: Vulkan on Linux and Windows,
 Metal on macOS. `SDL3` is loaded at run time, not linked, which is why the doctor

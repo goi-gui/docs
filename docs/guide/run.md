@@ -70,8 +70,10 @@ when the Windows logs themselves are what is being debugged.
 
 ## Hot reload
 
-Hot reload is on by default. Editing a `.goi` file rebuilds the tree, carries
-over the state the framework owns and runs `Bind` again. Application state must
-therefore live outside `Bind`. `goi build` adds the `nohotreload` tag, so a
-shipped binary does not watch files; `ui.WithHotReload(false)` does the same from
-Go.
+Hot reload is automatic: `goi run` watches the `ui` directory, so editing a
+`.goi` file rebuilds the tree, carries over the state the framework owns and runs
+`Bind` again. Application state must therefore live outside `Bind`.
+
+No Go code is involved, and there is no switch to set. `goi build` copies the
+design into the binary and skips the watcher, so development reloads and a
+shipped app stay in one project without separate builds.

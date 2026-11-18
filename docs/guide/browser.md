@@ -6,17 +6,24 @@ sidebar_label: In the browser
 # In the browser
 
 A goi app builds to WebAssembly and runs in a canvas. The design file, the tree,
-layout, painting and text are the same code as on the desktop: `GOOS=js` swaps
+layout, painting and text are the same code as on the desktop: the browser swaps
 the window layer and the WebGPU backend, and nothing else.
 
 ```sh
-GOOS=js GOARCH=wasm go build -o web/goi.wasm ./myapp
+goi build --os js --arch wasm
 ```
 
-This is the one target outside [`goi build`](build.md): the browser swaps the
-window layer and the WebGPU backend, so the desktop command does not apply. The
-Go command stays cgo-free and uses `-tags all` when the page needs the optional
-features.
+That writes `dist/js-wasm/<name>.wasm` with the design embedded, just like a
+desktop build. Put the page next to it and copy the runtime shim:
+
+```sh
+cd dist/js-wasm
+cp "$(go env GOROOT)/lib/wasm/wasm_exec.js" .
+python3 -m http.server
+```
+
+The page is then available at `http://localhost:8000`. WebGPU needs a secure
+context, so `http://localhost` works and a plain-HTTP host name does not.
 
 ## The page
 
@@ -37,7 +44,7 @@ The browser has no window, so the page's canvas is the window:
 <script src="wasm_exec.js"></script>
 <script>
 	const go = new Go();
-	WebAssembly.instantiateStreaming(fetch("goi.wasm"), go.importObject)
+	WebAssembly.instantiateStreaming(fetch("myapp.wasm"), go.importObject)
 		.then((result) => go.run(result.instance));
 </script>
 </body>
@@ -116,7 +123,7 @@ Window {
 ```
 
 ```go
-win, err := app.LoadWindow("app.goi", ui.WithAssets(design), ui.WithCanvas("hero"))
+win, err := app.LoadWindow("app.goi", ui.WithCanvas("hero"))
 ```
 
 ```html
@@ -155,15 +162,9 @@ hears the keys, so several apps on one page do not type at once. The browser
 draws its own focus ring around a focused canvas; `canvas:focus { outline: none }`
 turns it off when the app's own focus ring is enough.
 
-The [`examples/web`](https://github.com/goi-gui/examples/tree/main/web) app is a
-working page: `make -C examples web` builds it into `examples/web/dist`, then
-
-```sh
-python3 -m http.server -d examples/web/dist
-```
-
-serves it. WebGPU needs a secure context, so `http://localhost` works and a
-plain-HTTP host name does not.
+The wasm file, `wasm_exec.js` and `index.html` are the whole page; serving that
+directory is enough. `goi build` adds `buildFlags` and embeds the design, so the
+browser and desktop builds start from the same `goi.yaml`.
 
 ## What a design can rely on
 

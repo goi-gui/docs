@@ -38,8 +38,13 @@ build is not supported.
 The binary is stripped and reproducible: the command adds `-trimpath` and
 `-ldflags "-s -w"`. A Windows target also gets `-H windowsgui`, so the GUI
 subsystem is used and double-clicking the executable does not open a console.
-It also adds `nohotreload`, so the shipped app does not watch its design files.
-The tags in `buildFlags` are the only feature tags the build receives.
+
+The command copies the `ui` directory into the build and embeds it, so the
+binary is self-contained and does not watch its design files. No `//go:embed`
+directive and no hot reload option are needed in the app. Assets reached through
+`goi://` are embedded with the design; plain paths still read the process's
+working directory. The tags in `buildFlags` are the only feature tags the build
+receives.
 
 ## Cross-compiling
 
@@ -54,12 +59,17 @@ goi build --os linux --arch arm64
 ```
 
 `GOOS` and `GOARCH` in the environment do not choose the target; pass `--os` and
-`--arch`, or let them default to the host. The design directory is not copied:
-ship the `.goi` files (and any `goi://` assets) next to the binary, or embed
-them. See [the design file next to the binary](#the-design-file-next-to-the-binary).
+`--arch`, or let them default to the host. The design is embedded in every
+target, so there is nothing to copy next to the binary.
 
-The browser is the one target outside `goi build`: a wasm page swaps the window
-layer and the WebGPU backend. See [Browser](browser.md) for that command.
+The browser is a target too:
+
+```sh
+goi build --os js --arch wasm    # dist/js-wasm/<name>.wasm
+```
+
+The wasm build swaps the window layer and the WebGPU backend and embeds the same
+design. See [Browser](browser.md) for the page that loads it.
 
 ## Platform requirements
 
@@ -184,33 +194,6 @@ colour emoji font is parsed the first time a glyph needs it, not at startup; a
 build without `emoji` never carries it. Animations are capped at 32 MB each and
 count against the image cache, map tiles have their own 32 MB budget, and
 rasterized SVG icons have an 8 MB one.
-
-## The design file next to the binary
-
-`LoadWindow` resolves the entry against the `ui` directory in `goi.yaml`, or
-against the process's working directory when there is no `goi.yaml`. Either way
-it reads from where the app runs, not from where the executable sits. Ship the
-`.goi` files next to the binary and run it from that folder, or embed them:
-
-```go
-//go:embed myapp.goi
-var design embed.FS
-
-win, err := app.LoadWindow("myapp.goi",
-	ui.WithAssets(design),
-	ui.WithSize(900, 600),
-)
-```
-
-An embedded design has nothing to watch, so hot reload is skipped. A release
-build that ships loose files can turn it off:
-
-```go
-win, err := app.LoadWindow("myapp.goi",
-	ui.WithHotReload(false),
-	ui.WithSize(900, 600),
-)
-```
 
 ## Checking a build
 

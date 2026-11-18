@@ -93,9 +93,9 @@ win, err := app.LoadWindow("Main.goi")
 ```
 
 Without a `goi.yaml`, such as a single-file program, the entry is resolved from
-the working directory instead. `LoadWindow` takes the usual options; hot reload
-is on by default and `ui.WithHotReload(false)` turns it off. A design embedded
-in the binary, usually for a wasm build, is loaded with `ui.WithAssets(fsys)`.
+the working directory instead. The container is automatic: `goi run` watches
+this directory, and `goi build` copies it into the binary and reads it from
+there. No Go call chooses between them.
 
 Asset paths that start with `goi://` resolve against this directory. Plain
 paths resolve against the process's working directory, which is also where

@@ -12,10 +12,10 @@ hello world.
 ```sh
 mkdir hello
 cd hello
-goi init --name hello --id com.example.hello --module example.com/hello
+goi init
 ```
 
-It writes:
+It asks for the application name, id and Go module in the terminal, then writes:
 
 ```text
 hello/
@@ -28,18 +28,22 @@ hello/
     └── Main.goi
 ```
 
-Then start it with [`goi run`](run.md):
+Start it with [`goi run`](run.md):
 
 ```sh
 goi run
 ```
 
-## Flags and prompts
+## Flags instead of the prompt
 
-The flags are optional. Run `goi init` without them and the command asks for the
-missing values in the terminal with a text field per value:
+The prompts are only there for a first project. For a script or when the values
+are already known, pass them as flags and the terminal is skipped:
 
-| Flag | Asks for | Example |
+```sh
+goi init --name hello --id com.example.hello --module example.com/hello --ui ui
+```
+
+| Flag | Sets | Example |
 | --- | --- | --- |
 | `--name` | the application and executable name | `myapp` |
 | `--id` | a reverse-DNS application id | `com.example.myapp` |
