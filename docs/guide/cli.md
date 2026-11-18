@@ -153,6 +153,23 @@ The build compiles the package named by `entrypoint` with the same tags as
 watch its design files, so editing `ui/Main.goi` no longer changes a shipped
 window. `nofakecgo` and `CGO_ENABLED=0` are still applied.
 
+## Set up the tools
+
+```sh
+goi setup
+```
+
+It installs the Go-side CLI tools a goi project uses:
+
+```text
+go install github.com/goi-gui/goi/cmd/goipls@latest
+go install github.com/goi-gui/goi/cmd/goifmt@latest
+```
+
+`goipls` is the editor language server and `goifmt` is the design-file
+formatter. `setup` leaves the project's `go.mod` alone; use `goi update` when the
+goi dependency should move too.
+
 ## Update the tools
 
 ```sh
