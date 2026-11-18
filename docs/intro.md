@@ -68,11 +68,12 @@ runs. The label follows the value without a manual repaint.
 ```sh
 go install github.com/goi-gui/goi/cmd/goi@latest
 goi init example.com/hello
-goi run .
+goi run
 ```
 
-`goi init` writes a `main.go`, a `goi.yaml`, a Go module and a `ui/Main.goi`
-with a centred hello world; `goi run` reads the optional feature tags from
+`goi init` writes a `cmd/main.go`, a `goi.yaml`, a Go module and a
+`ui/Main.goi` with a centred hello world; `cmd/main.go` loads it through
+`app.LoadWindowFromConfig()`, and `goi run` reads the optional feature tags from
 `goi.yaml`. See [the goi command](guide/cli.md).
 
 ## Start here
