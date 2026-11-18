@@ -14,14 +14,15 @@ go install github.com/goi-gui/goi/cmd/goi@latest
 goi setup
 ```
 
-`goi setup` installs the two Go-side tools a project uses:
+`goi setup` installs the CLI and the two Go-side tools a project uses:
 
+- `goi`, the command itself
 - `goipls`, the language server for editors
 - `goifmt`, the `.goi` formatter
 
-Run `goi setup` once on a new machine. It does not touch a project; the design
-settings live in [`goi.yaml`](goi-yaml.md). `goi update` later refreshes the
-project's goi dependency and both tools.
+Run `goi setup` once on a new machine. Inside a Go module it also bumps the
+project's goi dependency; `goi update` is the same command under the other name.
+The design settings live in [`goi.yaml`](goi-yaml.md).
 
 ## Commands
 
@@ -30,34 +31,35 @@ project's goi dependency and both tools.
 | [`goi init`](init.md) | create a project with `cmd/main.go`, `goi.yaml` and `ui/Main.goi` |
 | [`goi run`](run.md) | run the entrypoint package with hot reload and `runFlags` |
 | [`goi build`](build.md) | build `dist/<os>-<arch>/<name>` with `buildFlags` |
-| `goi setup` | install `goipls` and `goifmt` |
-| `goi update` | update the goi dependency, `goipls` and `goifmt` |
+| `goi setup` / `goi update` | install goi, `goipls` and `goifmt`; bump the dependency in a module |
 | `goi doctor` | show the toolchain, SDL3, Vulkan and the companion tools |
 
 The CLI is a cobra tree: `goi --help`, `goi <command> --help` and shell
 completion work as usual.
 
-## Update the tools
+## Set up or update the tools
 
 ```sh
+goi setup
 goi update
 ```
 
-It runs, in order:
+The two commands are aliases and do the same work:
 
 ```text
-go get github.com/goi-gui/goi@latest
+go install github.com/goi-gui/goi/cmd/goi@latest
 go install github.com/goi-gui/goi/cmd/goipls@latest
 go install github.com/goi-gui/goi/cmd/goifmt@latest
+go get -u github.com/goi-gui/goi@latest
 ```
 
-The first updates the goi dependency in the current module, so the project
-builds against the newest release. The two installs put the language server and
-the formatter in `GOBIN`. The `goi` binary itself is a separate install:
+The last line runs only when the current directory has a `go.mod`, so a project
+gets the newest goi dependency while a machine-wide setup outside a module just
+refreshes the three binaries.
 
-```sh
-go install github.com/goi-gui/goi/cmd/goi@latest
-```
+`goipls` is the editor language server and `goifmt` is the `.goi` formatter.
+`goi` itself is reinstalled too, which keeps the CLI and the tools on the same
+release.
 
 ## Check the setup
 
