@@ -27,8 +27,24 @@ binary, so the same call works in a release. The name is the handle, not the
 font's own family name, so `app.LoadFont("Brand", "fonts/Brand.ttf")` is reached
 with `fontFamily: "Brand"`.
 
-Calling it after the window is up also works: the next frame draws with the new
-face.
+For several files, use one map:
+
+```go
+if err := app.LoadFontMany(map[string]string{
+	"Nunito Regular": "fonts/Nunito-Regular.ttf",
+	"Nunito Bold":    "fonts/Nunito-Bold.ttf",
+	"Nunito Italic":  "fonts/Nunito-Italic.ttf",
+}); err != nil {
+	return err
+}
+```
+
+Every valid file is loaded even when one path fails; the returned error joins
+the failures. Since one family is one face, give each weight or italic file its
+own name, as above.
+
+Calling either method after the window is up also works: the next frame draws
+with the new face.
 
 One file serves every weight. A single face cannot vary, so `fontWeight: bold`
 on a custom family draws the same outlines as a regular run; register a family
