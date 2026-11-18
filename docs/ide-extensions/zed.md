@@ -61,17 +61,21 @@ Hover explains declarations, shape fields, loop variables and fragments.
 `Ctrl`-click on an `import` path, its alias or an id jumps to its declaration,
 and formatting on save uses the same rules as `goifmt`.
 
-`goipls` is a Go binary, so it is not bundled with the extension. Install it once
-and keep it on `PATH`:
+`goipls` is a Go binary, so it is not bundled with the extension. `goi setup`
+installs it with the formatter and keeps both on `PATH`:
+
+```sh
+goi setup
+```
+
+If only the server is wanted:
 
 ```sh
 go install github.com/goi-gui/goi/cmd/goipls@latest
 ```
 
-The module lives in a private repository, so set
-`GOPRIVATE=github.com/goi-gui/*` (and have a git credential for it) before
-installing. If Zed reports "goipls not found on PATH", the install has not run or
-its directory is not on `PATH`; restart the server from the language server menu
+If Zed reports "goipls not found on PATH", the install has not run or its
+directory is not on `PATH`; restart the server from the language server menu
 after reinstalling.
 
 ## Installing the extension

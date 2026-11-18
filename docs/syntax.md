@@ -1384,13 +1384,13 @@ modifier.
 
 ## Formatting
 
-`goifmt` formats a design the way gofmt formats Go. It ships two ways: the
-`goifmt` command, and the language server, so an editor formats on save.
+`goifmt` formats a design the way gofmt formats Go. `goi setup` installs it,
+and the language server formats on save.
 
 ```sh
-go run ./cmd/goifmt -w ui/        # rewrite every .goi under a directory
-go run ./cmd/goifmt -l .          # list the files that would change
-go run ./cmd/goifmt -d file.goi   # print a diff
+goifmt -w ui/        # rewrite every .goi under a directory
+goifmt -l .          # list the files that would change
+goifmt -d file.goi   # print a diff
 ```
 
 The layout is fixed, and running it twice changes nothing:

@@ -13,6 +13,11 @@ the window layer and the WebGPU backend, and nothing else.
 GOOS=js GOARCH=wasm go build -o web/goi.wasm ./myapp
 ```
 
+This is the one target outside [`goi build`](build.md): the browser swaps the
+window layer and the WebGPU backend, so the desktop command does not apply. The
+Go command stays cgo-free and uses `-tags all` when the page needs the optional
+features.
+
 ## The page
 
 The browser has no window, so the page's canvas is the window:

@@ -1,47 +1,72 @@
 ---
 title: Building
-sidebar_label: Building
+sidebar_label: goi build
 ---
 
-# Building
+# goi build
 
-A goi app is one ordinary Go program, and the build is **cgo-free on every
-platform**. The window layer loads the [SDL3](https://libsdl.org) runtime
-library through [purego](https://github.com/ebitengine/purego), so nothing needs
-a C compiler, SDL3 headers or `pkg-config`; the runtime library is the only
-requirement. Everything in the tree — the parser, layout, paint list, text, the
-WebGPU renderer and the window itself — is pure Go.
-
-The build is always the same:
+Install the CLI, set up its tools, then build from the project root:
 
 ```sh
-CGO_ENABLED=0 go build -tags nofakecgo -o myapp ./cmd/myapp
+go install github.com/goi-gui/goi/cmd/goi@latest
+goi setup
+goi build
 ```
 
-- **`CGO_ENABLED=0`** keeps cgo out. A cgo build is not supported.
-- **`-tags nofakecgo`** is required because the WebGPU renderer (`goffi`) and
-  purego each ship a fake C runtime; without the tag the linker sees two
-  `_cgo_init`/`dlopen` implementations. `nofakecgo` tells goffi to use purego's
-  copy, and the single runtime serves both.
+`goi build` writes:
 
-There is no build tag to pick a platform. `platform.SurfaceHandles` asks SDL
-which video driver it got and hands the renderer the matching native handle, so
-one code path covers all of them:
+```text
+dist/<os>-<arch>/<name>
+```
 
-| Driver | Native handles | Renderer backend |
-| --- | --- | --- |
-| `wayland` | `wl_display`, `wl_surface` | Vulkan |
-| `x11` | X11 `Display`, `Window` | Vulkan |
-| `windows` | `HINSTANCE`, `HWND` | Direct3D 12 |
-| `cocoa` | `CAMetalLayer` | Metal |
+`<name>` is the `name` in [`goi.yaml`](goi-yaml.md), `<os>` and `<arch>` are the
+target platform. The host is the default; `--os` and `--arch` choose another
+one. A Windows target gets the `.exe` suffix; every other target does not.
 
-No GPU SDK is needed beyond the display driver: the backends come from
-[`gogpu/wgpu`](https://github.com/gogpu/wgpu) and are pure Go.
+```sh
+goi build                              # host
+goi build --os windows --arch amd64    # dist/windows-amd64/<name>.exe
+goi build --os darwin --arch arm64     # dist/darwin-arm64/<name>
+goi build --os linux --arch arm64      # dist/linux-arm64/<name>
+```
 
-## Linux
+Every build is **cgo-free on every platform**. The command sets
+`CGO_ENABLED=0` and adds `nofakecgo`, which the WebGPU renderer (`goffi`) needs
+so it can share purego's fake C runtime instead of shipping a second one. A cgo
+build is not supported.
 
-Install the SDL3 runtime library. The package name varies by distribution; SDL3
-built from source and installed works too:
+The binary is stripped and reproducible: the command adds `-trimpath` and
+`-ldflags "-s -w"`. It also adds `nohotreload`, so the shipped app does not
+watch its design files. The tags in `buildFlags` are the only feature tags the
+build receives.
+
+## Cross-compiling
+
+Everything is pure Go, so one machine builds every target. The target's C
+toolchain, SDL3 headers and `pkg-config` are not needed; only the runtime
+library where the app will run is:
+
+```sh
+goi build --os windows --arch amd64
+goi build --os darwin --arch arm64
+goi build --os linux --arch arm64
+```
+
+`GOOS` and `GOARCH` in the environment do not choose the target; pass `--os` and
+`--arch`, or let them default to the host. The design directory is not copied:
+ship the `.goi` files (and any `goi://` assets) next to the binary, or embed
+them. See [the design file next to the binary](#the-design-file-next-to-the-binary).
+
+The browser is the one target outside `goi build`: a wasm page swaps the window
+layer and the WebGPU backend. See [Browser](browser.md) for that command.
+
+## Platform requirements
+
+The window layer loads the [SDL3](https://libsdl.org) runtime library through
+[purego](https://github.com/ebitengine/purego), so the build needs no C compiler,
+SDL3 headers or `pkg-config`. The runtime library is required where the app runs.
+
+### Linux
 
 ```sh
 # Debian/Ubuntu (the runtime package; the -dev package is not needed)
@@ -54,41 +79,39 @@ sudo dnf install SDL3
 sudo pacman -S sdl3
 ```
 
-Then build:
+SDL3 built from source and installed also works.
 
-```sh
-CGO_ENABLED=0 go build -tags nofakecgo -o myapp ./cmd/myapp
-```
-
-## macOS
-
-Homebrew installs the runtime library:
+### macOS
 
 ```sh
 brew install sdl3
-CGO_ENABLED=0 go build -tags nofakecgo -o myapp ./cmd/myapp
 ```
 
-## Windows
+### Windows
 
 The executable needs `SDL3.dll` next to it, from the SDL3 release archive or
 MSYS2's `mingw-w64-x86_64-sdl3` package. No MSYS2 shell, C toolchain or
-`pkg-config` is needed for the build:
+`pkg-config` is needed for the build.
 
-```sh
-CGO_ENABLED=0 go build -tags nofakecgo -o myapp.exe ./cmd/myapp
-```
-
-A GUI app usually should not open a console window:
-
-```sh
-CGO_ENABLED=0 go build -tags nofakecgo -ldflags="-H windowsgui" -o myapp.exe ./cmd/myapp
-```
+`goi doctor` reports the library it finds, the Vulkan loader and the toolchain.
 
 ## Features and binary size
 
 The core build is the window, renderer, layout and text. The optional features
-are **off unless their tag is given**; `-tags all` turns every one on:
+are **off unless their tag is given**. Put the tags in `buildFlags`:
+
+```yaml
+buildFlags: [emoji, svg, net, dialog]
+```
+
+or take every one:
+
+```yaml
+buildFlags: [all]
+```
+
+For a development run, the separate [`runFlags`](goi-yaml.md#runflags) list is
+the one `goi run` uses.
 
 | Tag | Adds |
 | --- | --- |
@@ -100,28 +123,18 @@ are **off unless their tag is given**; `-tags all` turns every one on:
 | `markdown` | goldmark for `Markdown` documents |
 | `dialog` | zenity/beeep and D-Bus for file dialogs and `Notify` |
 
-Compose the ones the app uses:
-
-```sh
-# a normal app with pictures, emoji and remote sources
-CGO_ENABLED=0 go build -tags "nofakecgo emoji svg net dialog" -o myapp ./cmd/myapp
-
-# everything, including Mermaid and Markdown
-CGO_ENABLED=0 go build -tags "nofakecgo all" -o myapp ./cmd/myapp
-```
-
 Without a tag the design still parses: an `SVG` reports an error, `Markdown`
 draws nothing, `Code` draws plain text, a remote `Image` fails to fetch, file
 dialogs and `Notify` report an error, and `Mermaid` reports that the build has no
 renderer. Text falls back to the font's monochrome glyphs when `emoji` is off.
 
 Approximate sizes for `examples/counter`, Linux amd64, Go 1.27, built with
-`-ldflags="-s -w"`:
+`goi build` (which always passes `-ldflags "-s -w"`):
 
 | Build | Native |
 | --- | ---: |
-| core, `-tags nofakecgo` | **26.4 MB** |
-| `-tags "nofakecgo all"` | **56.1 MB** |
+| core, `buildFlags: []` | **26.4 MB** |
+| `buildFlags: [all]` | **56.1 MB** |
 
 The per-feature cost of adding one tag to the core build:
 
@@ -194,53 +207,31 @@ win, err := app.LoadWindow("myapp.goi",
 )
 ```
 
-## Cross-compiling
-
-Everything is pure Go, so one machine builds every target. The build does not
-need the target's C toolchain or SDL3 headers; it only needs the runtime library
-where the app will run:
-
-```sh
-CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -tags nofakecgo ./cmd/myapp
-CGO_ENABLED=0 GOOS=darwin  GOARCH=arm64 go build -tags nofakecgo ./cmd/myapp
-CGO_ENABLED=0 GOOS=linux   GOARCH=arm64 go build -tags nofakecgo ./cmd/myapp
-```
-
-The wasm build swaps the window layer and the WebGPU backend and needs no
-display:
-
-```sh
-GOOS=js GOARCH=wasm go build -tags all -o web/dist/goi.wasm ./cmd/myapp
-```
-
-Name only the features the page uses if it does not need all; the browser
-never carries Mermaid's rasterizer, even with `all`.
-
 ## Checking a build
 
 Two commands catch the mistakes a compile cannot:
 
 ```sh
-go run -tags all github.com/goi-gui/goi/cmd/goicheck@latest -layout myapp/*.goi
-go run github.com/goi-gui/goi/cmd/goifmt@latest -l .
+go run -tags all github.com/goi-gui/goi/cmd/goicheck@latest -layout ui/*.goi
+goifmt -l .
 ```
 
 `goicheck` validates every file and, with `-layout`, renders the layout headlessly
 so a node that collapses to zero size is reported. The `all` tag lets the check
 measure Markdown, Code and the other optional features; a core build would see a
-`Markdown` as an empty box. `goifmt -l` lists files that
-are not formatted; `-w` rewrites them.
+`Markdown` as an empty box. `goifmt -l` lists files that are not formatted; `-w`
+rewrites them. `goifmt` comes from `goi setup`.
 
 ## Troubleshooting
 
 **`libSDL3.so.0: cannot open shared object file` (or `SDL3.dll` not found).**
 The runtime library is missing or not on the loader's path. Install the SDL3
 runtime package, put `SDL3.dll` next to the executable, or set
-`LD_LIBRARY_PATH`/`DYLD_LIBRARY_PATH` to its folder.
+`LD_LIBRARY_PATH`/`DYLD_LIBRARY_PATH` to its folder. `goi doctor` shows the
+library it finds.
 
-**`duplicated definition of symbol _cgo_init`.** The build has cgo on or is
-missing `-tags nofakecgo`. Use exactly
-`CGO_ENABLED=0 go build -tags nofakecgo`.
+**`duplicated definition of symbol _cgo_init`.** A manual `go build` has cgo on
+or is missing `-tags nofakecgo`. Use `goi build`, which sets both correctly.
 
 **The window is black while resizing on a Wayland session.** SDL 3.4 keeps its
 Wayland driver only on a compositor that offers `fifo-v1`, and otherwise

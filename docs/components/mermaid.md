@@ -66,14 +66,16 @@ a diagram costs one texture, not one draw call per shape.
   leaving a silent hole.
 
 Rendering is an opt-in feature: a plain build has the `Mermaid` element but no
-renderer, and the node reports that the build has no support. Enable it with:
+renderer, and the node reports that the build has no support. Enable it in
+[`goi.yaml`](../guide/goi-yaml.md):
 
-```sh
-go build -tags mermaid ./...
+```yaml
+runFlags: [mermaid]
+buildFlags: [mermaid]
 ```
 
-or take every optional feature with `-tags all`. A component that is present in
-a design but not enabled never takes the page down; it draws the message in its
+or take every optional feature with `all`. A component that is present in a
+design but not enabled never takes the page down; it draws the message in its
 box.
 
 The browser (wasm) build never carries the wasm rasterizer, even with `all`, so

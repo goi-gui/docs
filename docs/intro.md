@@ -63,21 +63,64 @@ func main() {
 `SetData` feeds `bridge.Count`; `SetHandler` supplies the body a bridge call
 runs. The label follows the value without a manual repaint.
 
-## Start a project
+## Install
+
+Install the CLI, then the tools it uses:
 
 ```sh
 go install github.com/goi-gui/goi/cmd/goi@latest
-goi init
+goi setup
+goi doctor
+```
+
+`goi setup` installs `goipls` (the editor language server) and `goifmt` (the
+`.goi` formatter). `goi doctor` checks those tools, the Go toolchain, the SDL3
+runtime library and the GPU backend. Run `goi setup` once on a new machine; see
+[the goi command](guide/cli.md).
+
+goi runs on Linux (Wayland and X11), Windows and macOS. The window layer loads
+the SDL3 runtime library through purego, so the build is cgo-free and needs no C
+compiler, `pkg-config` or SDL3 development files; the runtime library is the
+only requirement.
+
+```sh
+# Linux (the runtime package; libsdl3-0 on Debian/Ubuntu, sdl3 on Arch)
+sudo apt install libsdl3-0
+
+# macOS
+brew install sdl3
+
+# Windows: put SDL3.dll next to the executable
+```
+
+The same binary asks SDL which video driver it got and draws through Vulkan
+(Wayland, X11), Direct3D 12 (Windows) or Metal (macOS); no GPU SDK is needed
+beyond the driver.
+
+## Start a project
+
+```sh
+mkdir hello
+cd hello
+goi init --name hello --id com.example.hello --module example.com/hello
 goi run
 ```
 
-`goi init` asks for the app name, id and Go module, then writes a `cmd/main.go`,
-a `goi.yaml`, a Go module and a `ui/Main.goi` with a centred hello world;
-`cmd/main.go` loads it through `app.LoadWindow("Main.goi")`, and `goi run` reads
-the build flags from `goi.yaml`. `goi build` writes a release binary under
-`dist/`. Flags can replace the prompts:
-`goi init --name myapp --id com.example.myapp --module example.com/myapp`. See
-[the goi command](guide/cli.md).
+`goi init` asks for any value a flag did not give, then writes a `cmd/main.go`,
+a [`goi.yaml`](guide/goi-yaml.md), a Go module and a `ui/Main.goi` with a centred
+hello world. `cmd/main.go` loads it through `app.LoadWindow("Main.goi")`, and
+`goi run` reads the development tags from `goi.yaml`. See
+[goi init](guide/init.md) and [goi run](guide/run.md).
+
+When the app is ready, build it:
+
+```sh
+goi build
+```
+
+That writes `dist/<os>-<arch>/<name>` for the host. `--os` and `--arch` choose
+another target; the release tags come from `buildFlags`. See
+[goi build](guide/build.md).
 
 ## Start here
 
@@ -95,41 +138,3 @@ the build flags from `goi.yaml`. `goi build` writes a release binary under
 - [Icons](icons.md) — every Material Symbols name the renderer can draw.
 - [Zed extension](ide-extensions/zed.md) — highlighting, completion and
   diagnostics for `.goi` files.
-
-## Install
-
-```sh
-go get github.com/goi-gui/goi/ui
-```
-
-The WebGPU renderer and the SDL3 window layer live behind the `ui` package.
-Only `ui` is imported by an application.
-
-### Platform requirements
-
-goi runs on Linux (Wayland and X11), Windows and macOS. The window layer loads
-the SDL3 runtime library through purego, so the build is cgo-free and needs no C
-compiler, `pkg-config` or SDL3 development files; the runtime library is the
-only requirement.
-
-```sh
-# Linux (the runtime package; libsdl3-0 on Debian/Ubuntu, sdl3 on Arch)
-sudo apt install libsdl3-0
-CGO_ENABLED=0 go build -tags "nofakecgo all" ./...
-
-# macOS
-brew install sdl3
-CGO_ENABLED=0 go build -tags "nofakecgo all" ./...
-
-# Windows (put SDL3.dll next to the executable)
-CGO_ENABLED=0 go build -tags "nofakecgo all" ./...
-```
-
-`CGO_ENABLED=0` keeps cgo out, and `-tags nofakecgo` lets goffi and purego share
-one fake C runtime; both are required. `-tags all` turns on the optional
-features (emoji, SVG, Markdown, code, network, dialogs and Mermaid); a build
-without them stays small, and each has its own tag. See
-[Building](guide/build.md#features-and-binary-size). The same binary asks SDL which video
-driver it got and draws through Vulkan (Wayland, X11), Direct3D 12 (Windows) or
-Metal (macOS); no GPU SDK is needed beyond the driver. See
-[Building](guide/build.md) for the optional build tags and the memory knobs.
