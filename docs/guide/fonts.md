@@ -58,13 +58,26 @@ assets/fonts/
   Nunito-Black.ttf
 ```
 
-Register the prefix once:
+Register the pattern once:
 
 ```go
-if err := app.LoadFontFamily("Nunito", "fonts/Nunito"); err != nil {
+if err := app.LoadFontFamily("Nunito", "fonts/Nunito-*.ttf"); err != nil {
 	return err
 }
 ```
+
+For several families, use one map:
+
+```go
+if err := app.LoadFontFamilyMany(map[string]string{
+	"Nunito": "fonts/Nunito-*.ttf",
+	"Inter":  "fonts/Inter-*.ttf",
+}); err != nil {
+	return err
+}
+```
+
+Every valid pattern loads even when another one fails; the errors are joined.
 
 The design keeps one `fontFamily` and picks the file with `fontWeight` and
 `fontStyle`:
@@ -84,10 +97,11 @@ Text {
 }
 ```
 
-The style suffix accepts `Regular`, `Thin`, `ExtraLight`, `Light`, `Medium`,
-`SemiBold`, `Bold`, `ExtraBold`, `Black`, any of those with `Italic`, and
-`Italic` alone. If the exact weight is absent, the nearest one in the family is
-used. A family loaded with `LoadFont` has one face for every weight; use
+The pattern is an assets-relative glob, so `fonts/Nunito-*.ttf` picks every
+static file. The style suffix accepts `Regular`, `Thin`, `ExtraLight`, `Light`,
+`Medium`, `SemiBold`, `Bold`, `ExtraBold`, `Black`, any of those with `Italic`,
+and `Italic` alone. If the exact weight is absent, the nearest one in the family
+is used. A family loaded with `LoadFont` has one face for every weight; use
 `LoadFontFamily` when the files differ.
 
 Calling any of these after the window is up also works: the next frame draws
