@@ -63,7 +63,7 @@ lets the user pick a photo can pass their path straight through.
 |---|---|---|
 | `src` | string | `goi://` container path, a machine path, or an `http`/`https` URL |
 | `fit` | enum | `cover`, `contain` or `fill` |
-| `crossfadeSrc` | bool | fade from the old picture to the new one when `src` changes; `false` by default |
+| `crossfadeSrc` | duration | fade from the old picture to the new one when `src` changes; `0` by default, no fade |
 | `paused` | bool | holds a GIF or APNG where it is; `false` by default |
 | `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
 | `lazy` | bool | defer reading and decoding `src` until the box is on screen; `false` by default |
@@ -74,9 +74,10 @@ scrolling area shows only part of an image, the rounded corners stay on the
 image's own box, so the edge the viewport cuts is straight rather than rounded
 again.
 
-`crossfadeSrc: true` blends the outgoing picture into the new one over 300ms
-when `src` changes, including a change from an expression or `SetImage` from Go.
-The first load has nothing to fade from, and `SetImage(nil)` clears at once.
+`crossfadeSrc: 500ms` blends the outgoing picture into the new one over that
+duration when `src` changes, including a change from an expression or `SetImage`
+from Go. The default `0` switches at once; the first load has nothing to fade
+from, and `SetImage(nil)` clears at once.
 
 A local path is read and decoded while the window is built, so the first frame
 already has it; the decoded bitmap is cached by `src`, so a reload does not read
