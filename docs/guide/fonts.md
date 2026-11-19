@@ -114,10 +114,19 @@ if err := app.LoadVariableFont("Nunito", "fonts/Nunito[wght].ttf", nil); err != 
 }
 ```
 
+An italic variable file joins the same family:
+
+```go
+if err := app.LoadVariableFont("Nunito", "fonts/Nunito-Italic[wght].ttf", nil); err != nil {
+	return err
+}
+```
+
 `fontWeight` drives the `wght` axis; `axes` pins any other axis, for example
-`"wdth": 90` or `"opsz": 14`. The `axes` map does not control `wght`.
-`fontStyle: italic` slants the upright face: `ital` and `slnt` are not driven
-separately. For real italic files, use `LoadFontFamily` instead.
+`"wdth": 90` or `"opsz": 14`. The `axes` map does not control `wght`. A file
+whose own style is italic fills the family's italic slot, so `fontStyle: italic`
+uses its outlines. Without an italic file, `fontStyle: italic` slants the
+upright face; `ital` and `slnt` axes are not driven separately.
 
 The file must have a `wght` axis. A static file is rejected instead of being
 registered as a variable font. If the font's outlines cannot be read, the call
@@ -173,7 +182,8 @@ text.SetFontFamily("Nunito")
 ## Limits
 
 - `LoadVariableFont` maps `fontWeight` to `wght`; extra axes are fixed per call.
-  Italic is synthetic, so a variable font's `ital`/`slnt` axis is not used.
+  Italic uses a second variable file when the family has one; otherwise it is
+  synthetic, and the `ital`/`slnt` axes are not used.
 - A variable font needs a `wght` axis; a static file is an error. Some CFF2
   variable fonts have outlines the parser cannot read and return an error too.
 - Synthetic bold is not applied. A single `LoadFont` face therefore draws every
