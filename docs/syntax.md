@@ -578,10 +578,11 @@ And        = Equality { "&&" Equality }
 Equality   = Compare { ("==" | "!=") Compare }
 Compare    = Sum { ("<" | "<=" | ">" | ">=") Sum }
 Sum        = Term { ("+" | "-") Term }
-Term       = Unary { ("*" | "/") Unary }
+Term       = Unary { ("*" | "/" | "%") Unary }
 Unary      = ("!" | "-") Unary | Factor
-Factor     = Number | Number "%" | String | Bool | Color | Ident
+Factor     = Percentage | Number | String | Bool | Color | Ident
            | Ident "." Ident | "(" Expression ")"
+Percentage = Number "%"
 ```
 
 Newlines are not tokens. A member is a property when the identifier is followed
@@ -1192,15 +1193,18 @@ when the app forgot the font. [Fonts](guide/fonts.md) covers the Go side.
 Every property accepts an expression, not just the numeric ones: a color, a
 string, a bool or an enum can be conditional too. A reference reads another
 element's property by id (`id.property`), so the value follows that element
-automatically. Operators are `+ - * /`, comparisons `== != < <= > >=`, `&& ||
+automatically. Operators are `+ - * / %`, comparisons `== != < <= > >=`, `&& ||
 !`, a conditional `cond ? a : b` and parentheses, with the usual precedence.
+`%` is modulo between two values, so `if i % 2 == 0` works. A percentage is the
+`%` that touches its number, `50%`; with a space before it, `%` is modulo.
 Percentages resolve only for `width`, `height` (against the parent's space) and
 `opacity` (against the 0..1 range).
 
 `+` adds two numbers and joins anything else as text, so `bridge.Price *
 float64(bridge.Count)` is arithmetic while `"n: " + bridge.Count` is a string.
-`-`, `*` and `/` are numeric only. A type mismatch, division by zero or a reference cycle
-leaves the property at its previous value instead of failing the frame.
+`-`, `*`, `/` and `%` are numeric only. A type mismatch, division or modulo by
+zero, or a reference cycle leaves the property at its previous value instead of
+failing the frame.
 
 ### formatf
 
