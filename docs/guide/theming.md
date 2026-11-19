@@ -47,7 +47,8 @@ Window {
 Replacing a registered seed with `DefineTheme` is a scheme change too, so the
 same transition runs when a colour swatch picks a new seed. `crossfade` blends
 every role; `wipe` reveals the new scheme from the top down behind a wide
-gradient edge; `none` turns the transition off.
+gradient edge whose content melts in a progressive blur; `none` turns the
+transition off.
 
 `theme: app.systemMode` reads the desktop's preference on every frame, so a
 design follows the OS when it switches at night. On Linux the preference comes
