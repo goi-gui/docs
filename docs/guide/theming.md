@@ -39,13 +39,15 @@ Window {
 }
 
 Window {
-	theme:           app.systemMode // follow the desktop setting
-	crossfadeTheme:  500ms          // fade the whole scheme over half a second
+	theme:           app.systemMode     // follow the desktop setting
+	themeTransition: crossfade 500ms   // or wipe 500ms; none turns it off
 }
 ```
 
 Replacing a registered seed with `DefineTheme` is a scheme change too, so the
-same crossfade runs when a colour swatch picks a new seed.
+same transition runs when a colour swatch picks a new seed. `crossfade` blends
+every role; `wipe` reveals the new scheme from the top down; `none` turns the
+transition off.
 
 `theme: app.systemMode` reads the desktop's preference on every frame, so a
 design follows the OS when it switches at night. On Linux the preference comes
