@@ -1246,7 +1246,8 @@ Rectangle {
 - Width and height animate through layout; colours animate through the painter.
   Numbers and colours are the rule, so `padding`, `margin`, `borderThickness`,
   `borderColor`, `radius`, `opacity` and the other box properties can be listed
-  too.
+  too. `rotate`, `scale` and `shadow` are interpolated as well; a shadow list
+  with a different layer count fades layers in or out.
 - The first value is written directly, and later values ease from the current
   one, so an expression or a conditional can drive the change.
 - Go setters such as `box.SetWidth(320)` and `box.SetBackground(color)` animate
