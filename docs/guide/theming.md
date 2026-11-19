@@ -46,7 +46,9 @@ Window {
 `theme: app.systemMode` reads the desktop's preference on every frame, so a
 design follows the OS when it switches at night. On Linux the preference comes
 from the desktop portal, and its setting change is watched separately, so the
-window follows it even while another window has focus. From Go,
+window follows it even while another window has focus. When the portal reports
+no colour-scheme preference, the GTK theme name decides light or dark, and a
+one-second check covers a theme manager that only changes that name. From Go,
 `Window.SystemMode()` reports what the desktop says, and `Window.Mode()` reports
 what the window is actually showing.
 

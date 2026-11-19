@@ -43,8 +43,10 @@ Rectangle {
   `app.mode == "dark"` keeps working when the app renames its scheme.
 - `app.dark` is the bool for conditions; `if app.dark { … }` and
   `switch app.mode { case "dark": … }` say the same thing.
-- `app.systemMode` is `unknown` when the platform does not report a preference,
-  which is why `app.dark` follows the resolved theme rather than the desktop.
+- `app.systemMode` is `unknown` when the platform does not report a preference.
+  On Linux a missing colour-scheme preference falls back to the GTK theme name,
+  so a light or dark theme still reads correctly; `app.dark` follows the
+  resolved theme rather than the desktop.
 - All five theme members re-resolve when the app changes the theme, so a value
   that uses them updates on the next frame with no reload.
 - `app.systemLanguage` is read at startup and again when the desktop reports a
