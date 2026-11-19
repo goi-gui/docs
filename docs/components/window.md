@@ -40,6 +40,7 @@ Window {
 |---|---|---|
 | `title` | string | window title |
 | `theme` | string | `light`, `dark`, or any name the app registered with `DefineTheme` |
+| `crossfadeTheme` | duration | blend from the old scheme to the new one over this time; `0` (default) switches at once |
 | `titleBar` | enum | `system` (default) or `custom` |
 | `minWidth`, `minHeight` | number | the smallest the user can drag the window |
 | `maxWidth`, `maxHeight` | number | the largest; `-1` (default) means no limit |

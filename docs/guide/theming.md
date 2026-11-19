@@ -39,7 +39,8 @@ Window {
 }
 
 Window {
-	theme: app.systemMode // follow the desktop setting
+	theme:           app.systemMode // follow the desktop setting
+	crossfadeTheme:  500ms          // fade the whole scheme over half a second
 }
 ```
 
