@@ -1379,8 +1379,8 @@ for i, l := range team.lastFiveResults {
 ```
 
 The values are checked against the property, so `gap` takes numbers above and
-`text` takes strings. When no condition holds the property keeps the value it
-had, the way a `switch` with no matching case changes nothing. Like a
+`text` takes strings. When no condition holds the property returns to its own
+default, so a colour or label set by a condition does not outlive it. Like a
 responsive value, a conditional property is re-evaluated every frame, and a
 value set from Go is not overwritten.
 
