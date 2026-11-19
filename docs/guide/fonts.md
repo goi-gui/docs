@@ -1,9 +1,9 @@
 # Fonts
 
 A design names a font family; Go registers the file. The built-in Roboto is
-always there, and anything else comes from `App.LoadFont`. Font files live in the
-same `assets` directory as the design, so `fonts/Nunito.ttf` means
-`assets/fonts/Nunito.ttf`.
+always there, and anything else comes from `App.LoadFont`, `LoadFontFamily` or
+`LoadVariableFont`. Font files live in the same `assets` directory as the
+design, so `fonts/Nunito.ttf` means `assets/fonts/Nunito.ttf`.
 
 ## Registering a family
 
@@ -128,8 +128,9 @@ whose own style is italic fills the family's italic slot, so `fontStyle: italic`
 uses its outlines. Without an italic file, `fontStyle: italic` slants the
 upright face; `ital` and `slnt` axes are not driven separately.
 
-The file must have a `wght` axis. A static file is rejected instead of being
-registered as a variable font. If the font's outlines cannot be read, the call
+The file must be a variable font. A static file is rejected instead of being
+registered as a variable font. `fontWeight` needs a `wght` axis; a font without
+one keeps its default instance. If the outlines cannot be read, the call
 returns an error rather than drawing blank text.
 
 Calling any of these after the window is up also works: the next frame draws
@@ -184,8 +185,9 @@ text.SetFontFamily("Nunito")
 - `LoadVariableFont` maps `fontWeight` to `wght`; extra axes are fixed per call.
   Italic uses a second variable file when the family has one; otherwise it is
   synthetic, and the `ital`/`slnt` axes are not used.
-- A variable font needs a `wght` axis; a static file is an error. Some CFF2
-  variable fonts have outlines the parser cannot read and return an error too.
+- A variable font needs a `wght` axis for `fontWeight` to change anything; a
+  static file is an error. Some CFF2 variable fonts have outlines the parser
+  cannot read and return an error too.
 - Synthetic bold is not applied. A single `LoadFont` face therefore draws every
   weight the same; use `LoadFontFamily` for static files or `LoadVariableFont`
   for a weight axis.

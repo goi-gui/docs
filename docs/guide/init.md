@@ -6,8 +6,8 @@ sidebar_label: goi init
 # goi init
 
 `goi init` creates a project in the current directory: a Go module, a
-`cmd/main.go`, a [`goi.yaml`](goi-yaml.md) and `assets/ui/Main.goi` with a
-centred hello world.
+`cmd/main.go`, a [`goi.yaml`](goi-yaml.md) and the `hello` example under
+`assets/` — the goi logo and a greeting.
 
 ```sh
 mkdir hello
@@ -20,6 +20,8 @@ It asks for the application name, id and Go module in the terminal, then writes:
 ```text
 hello/
 ├── assets/
+│   ├── images/
+│   │   └── goi.svg
 │   └── ui/
 │       └── Main.goi
 ├── cmd/
@@ -71,8 +73,9 @@ win, err := app.LoadWindow("ui/Main.goi")
 
 The entry is resolved inside the `assets` directory named in `goi.yaml`, so the
 file it opens is `assets/ui/Main.goi`. Hot reload is on by default, so editing
-that file updates the open window. `Main.goi` is a centred "Hello, world!" — the
-smallest complete design.
+that file updates the open window. `Main.goi` is the `hello` example: an SVG
+logo from `assets/images/goi.svg` above a greeting. It is the same screen as
+`examples/hello`, so there is a working starting point to edit.
 
 The generated `goi.yaml` also gives the app a name and id, names `assets` as the
 assets directory, `cmd` as the entrypoint, and sets both

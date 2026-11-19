@@ -28,7 +28,7 @@ The design settings live in [`goi.yaml`](goi-yaml.md).
 
 | Command | Does |
 | --- | --- |
-| [`goi init`](init.md) | create a project with `cmd/main.go`, `goi.yaml` and `assets/ui/Main.goi` |
+| [`goi init`](init.md) | create a project with `cmd/main.go`, `goi.yaml` and the `hello` example under `assets/` |
 | [`goi run`](run.md) | run the entrypoint package with hot reload and `runFlags` |
 | [`goi build`](build.md) | build `dist/<os>-<arch>/<name>` with `buildFlags` |
 | `goi setup` / `goi update` | install goi, `goipls` and `goifmt`; bump the dependency in a module |
