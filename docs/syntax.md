@@ -419,10 +419,11 @@ Column {
   ```
 - A nested loop can walk a loop variable that holds a list
   (`range imageList` above); the outer variable carries the slice.
-- Rows are rebuilt when the list is set with `ui.SetData`, and they keep their
-  ids on the nodes rather than registering them, so two rows do not collide.
-  A loop also rebuilds when a variable its body reads changes, so a
-  `continue` or `break` condition on bridge data follows `SetData`.
+- Rows are rebuilt when the list is set with `ui.SetData`, and when a variable
+  a `continue` or `break` condition reads changes. Other expressions in the body
+  update in place, so a running transition or a typed value is not reset. Rows
+  keep their ids on the nodes rather than registering them, so two rows do not
+  collide.
 
 ### Declarations: values and handlers
 
