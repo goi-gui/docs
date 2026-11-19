@@ -54,6 +54,7 @@ The rules are the same as for [Image](image.md#where-a-src-points).
 |---|---|---|
 | `src` | string | `goi://` container path, a machine path, or an `http`/`https` URL |
 | `fit` | enum | `contain` (default), `cover` or `fill` |
+| `crossfadeSrc` | bool | fade from the old drawing to the new one when `src` changes; `false` by default |
 | `color` | color | replaces the file's `currentColor`; a role name or a hex literal |
 | `paused` | bool | holds a SMIL animation where it is; `false` by default |
 | `loop` | bool | repeats the animation; `true` by default, `false` plays one pass |
@@ -62,7 +63,8 @@ The rules are the same as for [Image](image.md#where-a-src-points).
 The file is parsed and rasterized with the SVG's own `viewBox` aspect, at most
 1024 px on the long edge, so `fit` behaves the same as on [Image](image.md). If
 `width` and `height` are omitted, the `viewBox` size is the element's intrinsic
-size; a declared `width` or `height` overrides it.
+size; a declared `width` or `height` overrides it. With `crossfadeSrc: true`, a
+new `src` or `color` fades the old raster into the new one over 300ms.
 
 `color` is a normal colour property, which means a Material role works:
 
