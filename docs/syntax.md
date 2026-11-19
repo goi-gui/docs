@@ -1195,8 +1195,9 @@ string, a bool or an enum can be conditional too. A reference reads another
 element's property by id (`id.property`), so the value follows that element
 automatically. Operators are `+ - * / %`, comparisons `== != < <= > >=`, `&& ||
 !`, a conditional `cond ? a : b` and parentheses, with the usual precedence.
-`%` is modulo between two values, so `if i % 2 == 0` works. A percentage is the
-`%` that touches its number, `50%`; with a space before it, `%` is modulo.
+`%` is modulo between two values, so `if i % 2 == 0` works. A percentage is a
+number followed by `%`: `50%` and `50 %` both work. When another value follows
+the `%` on the same line (`50 % 2`), it is modulo.
 Percentages resolve only for `width`, `height` (against the parent's space) and
 `opacity` (against the 0..1 range).
 
