@@ -82,7 +82,7 @@ still cover the older emoji.
 | `selectable` | bool | pointer selection and Ctrl+C |
 | `link` | string | makes the text a link: drawn in `primary` and underlined, and a click opens it — see [Links](richtext.md#links) |
 | `shadow` | shadow | text-shadow form: an offset copy of the glyphs per layer |
-| `fontFamily` | string | a family the app registered with `app.LoadFont`; inherited, see [Fonts](../guide/fonts.md) |
+| `fontFamily` | string | a family the app registered with `LoadFont`, `LoadFontFamily` or `LoadVariableFont`; inherited, see [Fonts](../guide/fonts.md) |
 
 `truncate` needs a box narrower than the run, so give it a `width` or a
 `maxWidth`. `maxLines` wraps on its own, without `wrap`:

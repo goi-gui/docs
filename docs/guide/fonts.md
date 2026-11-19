@@ -104,6 +104,25 @@ and `Italic` alone. If the exact weight is absent, the nearest one in the family
 is used. A family loaded with `LoadFont` has one face for every weight; use
 `LoadFontFamily` when the files differ.
 
+## Variable fonts
+
+One variable font file can cover every weight:
+
+```go
+if err := app.LoadVariableFont("Nunito", "fonts/Nunito[wght].ttf", nil); err != nil {
+	return err
+}
+```
+
+`fontWeight` drives the `wght` axis; `axes` pins any other axis, for example
+`"wdth": 90` or `"opsz": 14`. The `axes` map does not control `wght`.
+`fontStyle: italic` slants the upright face: `ital` and `slnt` are not driven
+separately. For real italic files, use `LoadFontFamily` instead.
+
+The file must have a `wght` axis. A static file is rejected instead of being
+registered as a variable font. If the font's outlines cannot be read, the call
+returns an error rather than drawing blank text.
+
 Calling any of these after the window is up also works: the next frame draws
 with the new face.
 
@@ -153,11 +172,13 @@ text.SetFontFamily("Nunito")
 
 ## Limits
 
-- Variable-font axes are not exposed; use the static files through
-  `LoadFontFamily`.
+- `LoadVariableFont` maps `fontWeight` to `wght`; extra axes are fixed per call.
+  Italic is synthetic, so a variable font's `ital`/`slnt` axis is not used.
+- A variable font needs a `wght` axis; a static file is an error. Some CFF2
+  variable fonts have outlines the parser cannot read and return an error too.
 - Synthetic bold is not applied. A single `LoadFont` face therefore draws every
-  weight the same; register the real files with `LoadFontFamily` when they
-  differ.
+  weight the same; use `LoadFontFamily` for static files or `LoadVariableFont`
+  for a weight axis.
 - Icons keep Material Symbols whatever the family; a `Text` with an `icon` on
   it still draws the icon font.
 - A family added after a window has drawn reshapes the visible text on the next

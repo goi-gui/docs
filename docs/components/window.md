@@ -207,5 +207,5 @@ Window {
 }
 ```
 
-The family has to be registered first with `App.LoadFont`, except the built-in
-Roboto; see [Fonts](../guide/fonts.md).
+The family has to be registered first with `LoadFont`, `LoadFontFamily` or
+`LoadVariableFont`, except the built-in Roboto; see [Fonts](../guide/fonts.md).

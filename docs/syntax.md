@@ -1163,8 +1163,8 @@ Card {
 
 ## Fonts
 
-`fontFamily` names a family the app registered with `App.LoadFont`, or the
-built-in `Roboto`; an element without one inherits its nearest ancestor's, and
+`fontFamily` names a family the app registered with `LoadFont`, `LoadFontFamily`
+or `LoadVariableFont`, or the built-in `Roboto`; an element without one inherits its nearest ancestor's, and
 the window is the last place it can come from:
 
 ```goi
