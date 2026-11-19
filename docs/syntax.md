@@ -404,8 +404,25 @@ Column {
 - `for range list` is legal when neither name is needed, and `_` ignores one:
   `for _, row := range bridge.rows`.
 - A single name binds the key, as in Go: `for i := range bridge.rows`.
+- `continue` skips the rest of the current iteration and `break` stops the
+  later ones. Both are written directly in the loop body (or in an `if` arm
+  there), never inside an element:
+  ```goi
+  for i, imageList := range bridge.images {
+      if i != bridge.selectedColorIndex {
+          continue
+      }
+      for _, path := range imageList {
+          Image { src: path }
+      }
+  }
+  ```
+- A nested loop can walk a loop variable that holds a list
+  (`range imageList` above); the outer variable carries the slice.
 - Rows are rebuilt when the list is set with `ui.SetData`, and they keep their
   ids on the nodes rather than registering them, so two rows do not collide.
+  A loop also rebuilds when a variable its body reads changes, so a
+  `continue` or `break` condition on bridge data follows `SetData`.
 
 ### Declarations: values and handlers
 
