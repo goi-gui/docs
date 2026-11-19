@@ -1240,14 +1240,27 @@ Rectangle {
 }
 ```
 
-- Names are the properties on the same element, and durations use `ms` or `s`.
-  A comma separates the entries; `all 200ms` is the fallback for any property
-  not named explicitly.
+Each entry follows CSS order, and only the property and duration are required:
+
+```goi
+transition: width 500ms ease-out 100ms, opacity 300ms linear
+```
+
+`<property> <duration> <timing-function> <delay>`
+
+- `duration` and `delay` use `ms` or `s`. A negative delay starts the entry
+  partway through, like CSS.
+- `timing-function` is `linear`, `ease`, `ease-in`, `ease-out` or
+  `ease-in-out`. Without one, the entry uses goi's cubic ease-out.
+- Names are the properties on the same element. A comma separates the entries;
+  `all 200ms` is the fallback for any property not named explicitly.
 - Width and height animate through layout; colours animate through the painter.
   Numbers and colours are the rule, so `padding`, `margin`, `borderThickness`,
   `borderColor`, `radius`, `opacity` and the other box properties can be listed
   too. `rotate`, `scale` and `shadow` are interpolated as well; a shadow list
   with a different layer count fades layers in or out.
+- `size` animates both width and height, and `gap` and `spacing` are the same
+  cell, so either spelling transitions both.
 - The first value is written directly, and later values ease from the current
   one, so an expression or a conditional can drive the change.
 - Go setters such as `box.SetWidth(320)` and `box.SetBackground(color)` animate
