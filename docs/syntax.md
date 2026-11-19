@@ -518,6 +518,10 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   The value is always a handler call — `bridge.Name(...)` in a design,
   `props.Name(...)` inside the fragment that declares it; a literal is
   rejected.
+- **A child click bubbles.** A click on a child with no handler of its own
+  activates the nearest ancestor that has one, so `onClick` on a `Row` answers a
+  click on its label, icon or picture. A child with its own `onClick` keeps the
+  click, and a disabled control swallows it instead of passing it up.
 - **A call on an id.** An event may drive an element directly instead of going
   through Go: `onClick: spin.pause()`. An `Image` or `SVG` answers `play()`,
   `pause()` and `stop()`. `Audio` and `Video` answer the same three plus
