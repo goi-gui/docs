@@ -1249,6 +1249,8 @@ Rectangle {
   too.
 - The first value is written directly, and later values ease from the current
   one, so an expression or a conditional can drive the change.
+- Go setters such as `box.SetWidth(320)` and `box.SetBackground(color)` animate
+  too; the transition belongs to the property, not to the source of the value.
 - A property without a transition changes at once, as before.
 
 ### formatf
