@@ -49,6 +49,8 @@ a diagram costs one texture, not one draw call per shape.
 - Rendering runs off the UI goroutine. The first visible diagram compiles the
   rasterizer in the background (and caches the compiled module in the user cache
   directory for the next run), so the window keeps painting instead of freezing.
+  While a diagram waits for its render, the box shows the skeleton shimmer,
+  which keeps moving until the bitmap lands.
 - A diagram is only rendered when its box is on screen. A hidden page, or a
   diagram below the fold, waits until it is scrolled into view. Scrolling a
   rendered diagram away drops its bitmap; the box keeps its size, and scrolling
