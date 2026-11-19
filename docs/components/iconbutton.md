@@ -57,6 +57,7 @@ IconButton {
 | Property | Type | Notes |
 |---|---|---|
 | `icon` | string | leading Material Symbols ligature |
+| `iconColor` | color | overrides the glyph colour; zero keeps the variant's foreground |
 | `filledIcon` | bool | draws every icon of the element in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `variant` | enum | `standard` (default), `filled`, `tonal`, `outlined` |
 | `disabled` | bool | dims the element and blocks input |
@@ -76,5 +77,8 @@ star.OnClick(func(ui.ClickEvent) {
 	}
 })
 ```
+
+`iconColor` tints only the glyph. The container, border and state layer keep the
+colour the variant gives them.
 
 Every element also accepts the [common properties](../components.md#common-properties).
