@@ -1244,7 +1244,10 @@ Rectangle {
   A comma separates the entries; `all 200ms` is the fallback for any property
   not named explicitly.
 - Width and height animate through layout; colours animate through the painter.
-  The first value is written directly, and later values ease from the current
+  Numbers and colours are the rule, so `padding`, `margin`, `borderThickness`,
+  `borderColor`, `radius`, `opacity` and the other box properties can be listed
+  too.
+- The first value is written directly, and later values ease from the current
   one, so an expression or a conditional can drive the change.
 - A property without a transition changes at once, as before.
 
