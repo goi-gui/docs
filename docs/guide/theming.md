@@ -44,6 +44,9 @@ Window {
 }
 ```
 
+Replacing a registered seed with `DefineTheme` is a scheme change too, so the
+same crossfade runs when a colour swatch picks a new seed.
+
 `theme: app.systemMode` reads the desktop's preference on every frame, so a
 design follows the OS when it switches at night. On Linux the preference comes
 from the desktop portal, and its setting change is watched separately, so the
