@@ -1224,6 +1224,30 @@ float64(bridge.Count)` is arithmetic while `"n: " + bridge.Count` is a string.
 zero, or a reference cycle leaves the property at its previous value instead of
 failing the frame.
 
+### Transitions
+
+`transition` names the properties that animate when their value changes:
+
+```goi
+Rectangle {
+	width:       bridge.isCollapsed ? 200 : 500
+	height:      bridge.isCollapsed ? 150 : 400
+	background:  conditional {
+		#411f89ff: bridge.isCollapsed
+		#ff0000ff: !bridge.isCollapsed
+	}
+	transition: width 500ms, height 500ms, background 1s
+}
+```
+
+- Names are the properties on the same element, and durations use `ms` or `s`.
+  A comma separates the entries; `all 200ms` is the fallback for any property
+  not named explicitly.
+- Width and height animate through layout; colours animate through the painter.
+  The first value is written directly, and later values ease from the current
+  one, so an expression or a conditional can drive the change.
+- A property without a transition changes at once, as before.
+
 ### formatf
 
 `formatf` builds a string with Go's `fmt` verbs:

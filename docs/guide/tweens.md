@@ -2,8 +2,18 @@
 
 A **tween** runs a function with eased progress from 0 to 1 over a duration. It
 is how a goi app animates anything a property can hold: a sheet sliding in, a bar
-growing, a colour's opacity, a `translateX`. There is no animation syntax in
-`.goi`; a tween is Go, next to the state it animates.
+growing, a colour's opacity, a `translateX`. A tween is Go, next to the state it
+animates.
+
+For a property that changes with its expression or conditional value, use the
+design's [transition](../syntax.md#transitions) instead:
+
+```goi
+Rectangle {
+	width:      bridge.collapsed ? 200 : 500
+	transition: width 500ms
+}
+```
 
 ```go
 app.Tween(250*time.Millisecond, ui.Standard, func(p float64) {

@@ -183,6 +183,7 @@ These apply to every element and are not repeated on the component pages.
 | `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected. It is the stronger claim: a modal overlay names one to stay above a page whose popover panel lifts its branch |
 | `cursor` | enum | pointer shape, named the way CSS names it: `pointer`, `text`, `move`, `grab`, `not-allowed`, the resize arrows, `wait`, `none`, … |
 | `rotate` | rotate | CSS `rotate`: `45deg`, `0.25turn`, `x 90deg`, `1 1 1 90deg`; turns the element and its subtree |
+| `transition` | transition | properties that animate when their value changes, e.g. `width 500ms, background 1s`; see [Transitions](syntax.md#transitions) |
 | `scale` | scale | CSS `scale`: `2`, `50%`, `2 0.5`, `200% 50% 200%`; stretches the element and its subtree about its centre, and layout is unaffected — see [Scale](guide/scale.md) |
 | `hideScrollbar` | bool | removes the scrollbar entirely |
 | `autoHideScrollbar` | bool | `true` (default) shows the bar only while the pointer is over the area or it scrolled in the last two seconds; `false` keeps it up |
