@@ -888,6 +888,7 @@ The [Scale guide](guide/scale.md) has the worked example and the Go side
 | `TitleBar` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign`; a press that misses its clickable children moves the window |
 | `Stack` | yes | `crossAxisAlign`, `mainAxisAlign` |
 | `ClipRRect` | yes | `crossAxisAlign`, `mainAxisAlign`; clips its children to its rounded box |
+| `Hero` | yes | `tag`, `duration`; a shared element that flies to the same tag on another page (see [Hero](components/hero.md)) |
 | `GestureDetector` | yes | `onDoubleTap`, `onLongPress`, `onPanStart`, `onPanUpdate`, `onPanEnd`; lays children out like a `Stack` |
 | `Positioned` | yes | `left`, `top`, `right`, `bottom`, `translateX`, `translateY` |
 | `Wrap` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
