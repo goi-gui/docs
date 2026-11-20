@@ -72,9 +72,10 @@ was typed before completion was used.
 
 Inside a quoted import path or a `src:` value, completion follows the path as
 you type. A path that starts with `goi://` lists the assets directory, so
-`goi://images/` completes `goi://images/cover.png`. A relative path lists the
-document's directory and its subdirectories, so `./Side.goi` and
-`../shared/Other.goi` complete where they resolve. Imports list `.goi` files and
+`goi://images/` completes `goi://images/cover.png`. A relative import lists the
+document's directory, so `./Side.goi` and `../shared/Other.goi` complete where
+they resolve. A relative `src` lists the project directory, where `goi run`
+starts the program and a plain path is read. Imports list `.goi` files and
 folders; `src` lists every file.
 
 ### Wrap with component
