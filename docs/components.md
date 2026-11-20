@@ -248,8 +248,8 @@ Column {
 	scroll:  true
 
 	Button {
-		label:   "Jump to the last card"
-		onClick: page.scrollToNthChildSmooth(10, 400ms)
+		label:   "Center the fifth card"
+		onClick: page.scrollToNthChildSmooth(5, center, 400ms)
 	}
 
 	Button {
@@ -266,140 +266,34 @@ Column {
 }
 ```
 
-The smooth forms take a duration such as `300ms` and ease with the default
-curve; a duration of `0` jumps. A wheel, a drag or a scrollbar grab cancels the
-flight where it is, because that gesture takes over the offset.
+A child-scroll call takes an optional alignment after the child: `start` (the
+default), `center` or `end`. `center` puts the child's middle in the middle of
+the viewport, and `end` lines its trailing edge up with the far edge, so the
+last rows can be brought fully into view. The smooth forms take a duration such
+as `300ms`; a duration of `0` jumps. A wheel, a drag or a scrollbar grab cancels
+the flight where it is, because that gesture takes over the offset.
 
 | In a design | From Go | Moves to |
 |---|---|---|
 | `page.scrollTo(200)` | `page.ScrollTo(200)` | offset 200 |
 | `page.scrollToSmooth(200, 300ms)` | `page.ScrollToSmooth(200, 300*time.Millisecond)` | offset 200, eased |
-| `page.scrollToNthChild(5)` | `page.ScrollToNthChild(5)` | the fifth visible direct child |
-| `page.scrollToNthChildSmooth(5, 300ms)` | `page.ScrollToNthChildSmooth(5, 300*time.Millisecond)` | the fifth child, eased |
-| `page.scrollToChild("row7")` | `page.ScrollToChild("row7")` | an element anywhere inside the area |
-| `page.scrollToChildSmooth("row7", 300ms)` | `page.ScrollToChildSmooth("row7", 300*time.Millisecond)` | that element, eased |
+| `page.scrollToNthChild(5)` | `page.ScrollToNthChild(5)` | the fifth visible direct child, at the start |
+| `page.scrollToNthChild(5, center)` | `page.ScrollToNthChild(5, ui.ScrollCenter)` | the fifth child, centered |
+| `page.scrollToNthChildSmooth(5, center, 300ms)` | `page.ScrollToNthChildSmooth(5, 300*time.Millisecond, ui.ScrollCenter)` | the fifth child, centered and eased |
+| `page.scrollToChild("row7")` | `page.ScrollToChild("row7")` | an element anywhere inside the area, at the start |
+| `page.scrollToChild("row7", end)` | `page.ScrollToChild("row7", ui.ScrollEnd)` | that element, end-aligned |
+| `page.scrollToChildSmooth("row7", end, 300ms)` | `page.ScrollToChildSmooth("row7", 300*time.Millisecond, ui.ScrollEnd)` | that element, end-aligned and eased |
 
-The child forms line the child's leading edge up with the top (or left) of the
-viewport. `NthChild` counts from one among the direct children that are
-visible, and the id form finds a descendant at any depth. The Go methods return
-`false` when the element does not scroll, the index is out of range or the id
-is not inside it, so a caller can tell a miss from a move. An offset past the end
-clamps when it is read, so it follows the content if the content later grows.
+A design writes the alignment between the child and the duration, matching the
+first example. Go keeps the duration next to the other required argument and
+takes the alignment last, so a plain `ScrollToNthChildSmooth(5, 300*time.Millisecond)`
+still starts-aligned.
 
-A scroll position is UI state, not a design value: a hot reload keeps the page
-where the reader left it. The node is matched by its `id` when it has one, and by
-its place in the tree otherwise, so an edit to a style does not jump a scroller
-back to the top.
-
-A drag locks to the axis the hand moved along, the way touch scrolling does: a
-sideways pull on a `Row` or a `Carousel` does not nudge the page it sits in, and
-a diagonal pull on a two-axis `Table` still takes both.
-
-A scrolling element takes a gesture along its own axis only: a notched wheel
-scrolls vertically and **Shift + wheel** scrolls a sideways element, while a
-touchpad's two-finger swipe needs no modifier and keeps whichever axis the hand
-moved. A gesture that reaches the end of a child carries on into the page above
-it, so the pointer never looks stuck over a small scroller.
-
-Padding spaces the moving content only. Nothing keeps a fixed inset at any
-edge: the scrollbar and the scroll shadows attach to the element's frame, and
-content slides under the padding as you scroll. The padding is the gap at the
-start (above the first child) and at the end (below the last one), so the end
-padding appears only once you scroll all the way there, and the start padding
-scrolls away as soon as you leave the top. The scrollbar itself is a draggable
-thumb: press it and pull, and the content follows the handle 1:1. `autoHideScrollbar` follows the pointer, and
-`scrollShadow` adds a gradient at each edge the content has scrolled away from,
-so it is present at the top once the content moves down and at the bottom until
-the end is reached:
-
-```goi
-Column {
-	scrollShadow:      true
-	hideScrollbar:     false
-	autoHideScrollbar: true
-	scrollbarWidth:    6
-	scrollbarColor:    #6750a4
-}
-```
-
-`cursor` takes any CSS cursor value, so a draggable card can say `cursor: grab`
-and a disabled control `not-allowed`:
-
-```goi
-Card {
-	cursor: grab
-}
-
-Button {
-	cursor:   not-allowed
-	disabled: true
-}
-```
-
-A child inherits the nearest declared cursor, and `cursor: auto` asks for the
-framework's own shape again (an I-beam over text, a hand over anything that
-activates). Press feedback alone does not change the pointer: `ripple: true` on
-a plain box keeps the arrow until the design names a cursor. Hyphenated names
-are written bare, the way CSS writes them.
-
-Values the platform has no system shape for fall back to the closest one:
-`zoom-in`, `zoom-out`, `help`, `copy`, `alias` and `context-menu` show the
-arrow, `vertical-text` the I-beam, and `grab`, `grabbing` and `all-scroll` the
-move cursor, because SDL has no open hand. `cursor: none` hides the pointer for
-a design that draws its own.
-
-`opacity` multiplies the alpha of the element and everything under it. There is
-no offscreen pass, so two overlapping children inside a translucent container
-still show through each other; for a card or a fading list the difference does
-not show.
-
-`backdropBlur` softens what is already painted behind the element, which is how
-a translucent panel reads as frosted glass. The element's own `background` then
-tints the blurred copy, so a low-alpha fill is usually what you want:
-
-```goi
-Column {
-	background:   #00000044
-	backdropBlur: 6
-	radius:       16
-}
-```
-
-The blur is measured in logical pixels and only covers the element's rounded
-box. It costs an offscreen pass, so it is off (0) unless a design asks for it.
-
-`backdropBlur` also takes a gradient of radii, so the glass can be sharp at one
-edge and frosted in the middle. The stops are dp values, with a percentage, a
-`dp` length or a bare length above 1 as their positions:
-
-```goi
-Column {
-	background:   #00000033
-	backdropBlur: linear-gradient(90deg, 0 0%, 6 60%, 0 100%)
-}
-
-Column {
-	background:   #00000033
-	backdropBlur: radial-gradient(circle, 0 0, 6 100, 0 260)
-	radius:       16
-}
-```
-
-`marginTop`, `marginRight`, `marginBottom`, `marginLeft` (and the same four for
-`padding`) override one edge and leave the others following `margin`/`padding`.
-`paddingX` and `paddingY` set the two horizontal and the two vertical sides at
-once, which is the usual way to set a rhythm:
-
-```goi
-Column {
-	paddingX: 24 // left and right
-	paddingY: 8  // top and bottom
-	paddingTop: 16 // still wins over paddingY
-}
-```
-
-Precedence is a single edge, then its axis, then `padding`.
-
+`NthChild` counts from one among the direct children that are visible, and the
+id form finds a descendant at any depth. The Go methods return `false` when the
+element does not scroll, the index is out of range or the id is not inside it,
+so a caller can tell a miss from a move. An offset past the end clamps when it is
+read, so it follows the content if the content later grows.
 ## Containers and `gap`
 
 Containers lay their children out in a row or a column and accept `spacing`,

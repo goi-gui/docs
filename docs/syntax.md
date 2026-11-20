@@ -531,8 +531,9 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   `scrollTo(offset)`, `scrollToSmooth(offset, duration)`, `scrollToNthChild(n)`,
   `scrollToNthChildSmooth(n, duration)`, `scrollToChild(id)` and
   `scrollToChildSmooth(id, duration)`, with the duration written as `300ms` or
-  `1s`. Anything else is a checker error, and so is an argument of the wrong
-  type.
+  `1s`. The child forms also take an optional `start`, `center` or `end`
+  alignment before the duration. Anything else is a checker error, and so is an
+  argument of the wrong type.
 - **Any file may declare them.** A fragment owns its own `bridge { ... }` block
   and the types its loops walk; the declarations merge into the one design the
   app sees, so `ui.SetData(w, "Rows", …)` feeds a list a fragment drew.
