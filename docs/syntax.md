@@ -629,7 +629,7 @@ declaration. A function call appears either as an event property's whole value
 | `white`, `rebeccapurple` | color | any of the 148 CSS colour names, written bare or quoted |
 | `"rgb(42, 123, 155)"`, `"rgba(42, 123, 155, .5)"` | color | CSS `rgb()`/`rgba()`; the modern `rgb(42 123 155 / 50%)` form works too |
 | `"hsl(200 40% 50%)"` | color | CSS `hsl()`/`hsla()` |
-| `"linear-gradient(90deg, red, blue 60%)"` | color | CSS gradient fill; `background` only, see [Colours and gradients](#colours-and-gradients) |
+| `linear-gradient(90deg, red, blue 60%)` | color | CSS gradient fill, quoted or unquoted; stops may be `%`, `dp` or a bare length; `background` only, see [Colours and gradients](#colours-and-gradients) |
 | `theme.surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
 | `customColor.myBrand` | custom color | a name the app defines with `ui.SetCustomColor`; an undefined one warns and falls back to `onSurface` |
 | `90deg`, `x 90deg`, `1 1 1 90deg` | rotate | the `rotate` property only: CSS form, see [Rotate](#rotate) |
@@ -782,18 +782,25 @@ Column {
 - `radial-gradient(size, stops…)`: the shape goes out from the box's centre to
   its farthest corner. `circle`, `ellipse` and `closest-side` are accepted and the
   element's own box is the circle.
-- Every stop may carry a position (`0%`, `50%`, `100%`, or a `0`–`1` number). A
-  stop without one is spread evenly between its neighbours, and the ends default
-  to 0% and 100%.
+- Every stop may carry a position: a percentage (`0%`, `50%`, `100%`), a `dp`
+  length (`80dp`), or a bare length above 1 (`80` is 80dp). A bare number from 0
+  to 1 is the old fraction spelling, so `0.5` and `50%` mean the same. A stop
+  without a position is spread evenly between its neighbours, and the ends
+  default to 0% and 100%.
+- A gradient can be written quoted or unquoted; `goifmt` writes the unquoted
+  form.
 - The box keeps its `radius` and its border, which are drawn on top of the fill.
 - A stop may be a colour variable: `theme.primary` or `customColor.brand`. It
   follows the scheme and `SetCustomColor`, so one gradient can mix a role with a
   literal.
-- A gradient is a whole value: write it quoted, since the commas inside belong to
-  the gradient, not to `.goi`.
-- Only `background` takes one. A gradient on `color` or `borderColor` is a checker
-  error rather than a silently empty fill, because a gradient is a box, not a
-  stroke or a glyph colour.
+- A gradient is a whole value. It can be quoted or unquoted; the parser captures
+  commas, percentages and colours as part of the value either way.
+- Only `background` takes a colour gradient. A gradient on `color` or
+  `borderColor` is a checker error rather than a silently empty fill, because a
+  gradient is a box, not a stroke or a glyph colour.
+- `backdropBlur` takes the same shapes, but its stops are blur radii in dp: for
+  example `linear-gradient(90deg, 0 0%, 6 60%, 0 100%)`. The peak radius is
+  blurred and the stops fade between it and the sharp scene.
 
 ## Rotate
 
@@ -1100,8 +1107,8 @@ Column {
 }
 ```
 
-It is 0 by default, costs an offscreen pass, and only covers the element's
-rounded box. `zIndex` restacks an element among its
+It also takes a gradient of radii, so the blur fades across the box. It is 0 by
+default, costs an offscreen pass, and only covers the element's rounded box. `zIndex` restacks an element among its
 siblings the way CSS does: a higher value paints later, so it lands on top, and
 equal values keep document order. Negative values go under siblings at the
 default `0`. It only changes paint order, never layout, so two siblings can

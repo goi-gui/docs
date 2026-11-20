@@ -131,9 +131,10 @@ Column {
 - **radial** runs out from the box's centre to its farthest corner. `circle`,
   `ellipse`, `closest-side` and the other size words are accepted, and the
   element's own box is the circle.
-- A stop may carry a position (`0%`, `50%`, `100%`, or `0`–`1`). A stop without
-  one is spread evenly between its neighbours, and the ends default to 0% and
-  100%.
+- A stop may carry a position: a percentage (`0%`, `50%`, `100%`), a `dp` length
+  (`80dp`), or a bare number above 1, which is also dp (`80`). A bare `0`–`1`
+  number is the old fraction spelling, so `0.5` is `50%`. A stop without one is
+  spread evenly between its neighbours, and the ends default to 0% and 100%.
 - A stop may name a colour variable instead of a literal: `theme.primary` or
   `customColor.brand`. The gradient follows the scheme and `SetCustomColor` like
   any other colour, and a literal and a role can sit in one gradient.
@@ -142,13 +143,26 @@ Column {
 - Only `background` takes a gradient. A gradient on `color` or `borderColor` is a
   checker error: it fills a box, not a stroke or a glyph.
 
-A gradient is a whole value, so write it quoted:
+A gradient is a whole value and can be quoted or unquoted:
 
 ```goi
 Card {
-	background: "linear-gradient(90deg, theme.primary, customColor.brand 80%)"
+	background: linear-gradient(90deg, theme.primary, customColor.brand 80%)
 }
 ```
+
+`backdropBlur` takes the same gradient shapes, but its stops are blur radii in
+dp instead of colours:
+
+```goi
+Column {
+	background:   #00000033
+	backdropBlur: linear-gradient(90deg, 0 0%, 6 60%, 0 100%)
+}
+```
+
+The peak radius is blurred and the stops fade it in and out, so the glass can be
+sharp at the edges and frosted in the middle.
 
 ## Rotating a colour
 
