@@ -78,7 +78,8 @@ What a page shows: text, documents, glyphs, media and plain boxes. These are nod
 - [Snackbar](components/snackbar.md) — A short, transient message at the bottom of the screen.
 - [Tooltip](components/tooltip.md) — A hint that wraps the control it explains and floats above it on hover.
 - [Table](components/table.md) — A sortable data grid with declared columns and rows, selectable and sortable from a design or from Go.
-- [Carousel](components/carousel.md) — A horizontally scrolling row of cards.
+- [Carousel](components/carousel.md) — A horizontally snapping strip of cards.
+- [CarouselItem](components/carouselitem.md) — One card in a carousel: clipped child, label over a scrim, and press feedback.
 
 ## Navigation
 

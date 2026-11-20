@@ -135,6 +135,7 @@ const sidebars = {
 						'components/tooltip',
 						'components/table',
 						'components/carousel',
+						'components/carouselitem',
 					],
 				},
 				{
