@@ -234,6 +234,58 @@ Column {
   `Row`, a `List`, a `Carousel`, a `Table` and the panels that scroll on their
   own. `scrollSnapAlign` on a child of a non-scrolling parent does nothing.
 
+### Scrolling from a design or Go
+
+Every scrolling element answers the same six shortcuts: a raw offset, a child
+by position, or a child by id, each with an instant and a smooth form. The axis
+is the element's own, so a `Column` moves down, a `Row` or a `Carousel` moves
+sideways, and a `Table` uses its vertical axis.
+
+```goi
+Column {
+	id:      page
+	height:  320
+	scroll:  true
+
+	Button {
+		label:   "Jump to the last card"
+		onClick: page.scrollToNthChildSmooth(10, 400ms)
+	}
+
+	Button {
+		label:   "Back to the top"
+		onClick: page.scrollToSmooth(0, 300ms)
+	}
+
+	for range 10 {
+		Rectangle {
+			width:  100%
+			height: 80
+		}
+	}
+}
+```
+
+The smooth forms take a duration such as `300ms` and ease with the default
+curve; a duration of `0` jumps. A wheel, a drag or a scrollbar grab cancels the
+flight where it is, because that gesture takes over the offset.
+
+| In a design | From Go | Moves to |
+|---|---|---|
+| `page.scrollTo(200)` | `page.ScrollTo(200)` | offset 200 |
+| `page.scrollToSmooth(200, 300ms)` | `page.ScrollToSmooth(200, 300*time.Millisecond)` | offset 200, eased |
+| `page.scrollToNthChild(5)` | `page.ScrollToNthChild(5)` | the fifth visible direct child |
+| `page.scrollToNthChildSmooth(5, 300ms)` | `page.ScrollToNthChildSmooth(5, 300*time.Millisecond)` | the fifth child, eased |
+| `page.scrollToChild("row7")` | `page.ScrollToChild("row7")` | an element anywhere inside the area |
+| `page.scrollToChildSmooth("row7", 300ms)` | `page.ScrollToChildSmooth("row7", 300*time.Millisecond)` | that element, eased |
+
+The child forms line the child's leading edge up with the top (or left) of the
+viewport. `NthChild` counts from one among the direct children that are
+visible, and the id form finds a descendant at any depth. The Go methods return
+`false` when the element does not scroll, the index is out of range or the id
+is not inside it, so a caller can tell a miss from a move. An offset past the end
+clamps when it is read, so it follows the content if the content later grows.
+
 A scroll position is UI state, not a design value: a hot reload keeps the page
 where the reader left it. The node is matched by its `id` when it has one, and by
 its place in the tree otherwise, so an edit to a style does not jump a scroller

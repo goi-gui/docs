@@ -527,8 +527,12 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   through Go: `onClick: spin.pause()`. An `Image` or `SVG` answers `play()`,
   `pause()` and `stop()`. `Audio` and `Video` answer the same three plus
   `seek(seconds)`, `volume(level)`, `audioTrack(index)`, `fullscreen()` and
-  `windowed()`; `Switch` answers `toggle()`. Anything else is a checker error,
-  and so is an argument of the wrong type.
+  `windowed()`; `Switch` answers `toggle()`. A scrolling element answers
+  `scrollTo(offset)`, `scrollToSmooth(offset, duration)`, `scrollToNthChild(n)`,
+  `scrollToNthChildSmooth(n, duration)`, `scrollToChild(id)` and
+  `scrollToChildSmooth(id, duration)`, with the duration written as `300ms` or
+  `1s`. Anything else is a checker error, and so is an argument of the wrong
+  type.
 - **Any file may declare them.** A fragment owns its own `bridge { ... }` block
   and the types its loops walk; the declarations merge into the one design the
   app sees, so `ui.SetData(w, "Rows", …)` feeds a list a fragment drew.
