@@ -1279,6 +1279,9 @@ transition: width 500ms ease-out 100ms, opacity 300ms linear
   too; the transition belongs to the property, not to the source of the value.
 - A property without a transition changes at once, as before.
 
+The full guide, with timing functions, delays and examples, is
+[Transitions](guide/transitions.md).
+
 ### formatf
 
 `formatf` builds a string with Go's `fmt` verbs:
