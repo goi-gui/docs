@@ -21,6 +21,7 @@ outline, a file icon and the `goipls` language server.
 | Diagnostics, completion, hover, go-to-definition | `goipls` |
 | Icon name completion (Material Symbols) | `goipls` |
 | `app.` / `window.` completion | `goipls` |
+| Wrap an element in a new element | `goipls` code action |
 | `.goi` file icon | `icons/` + `icon_themes/goi.json` |
 
 The editor treats element names as types, property names as fields, and value
@@ -56,6 +57,28 @@ client that reports snippet support gets the whole thing — `Text { }` with the
 caret between the braces, indented under the element around it, and the argument
 placeholder of `t()` or `formatf()` — while a text-only client still gets the
 colon and the name.
+
+### Wrap with element
+
+Put the caret inside an element, or select it, and run **Wrap with element**
+from the code-action menu (`editor: toggle code actions`). The action wraps the
+element in a new one, indents its body one level and leaves the closing brace at
+the element's old indentation. The new element's name is a snippet placeholder,
+selected and ready to be typed over: `Row`, `Card`, `Stack` or anything else.
+
+```goi
+Column {
+	${1:Column} {
+		Text { text: "hi" }
+	}
+}
+```
+
+Selecting a whole line, indentation and trailing newline included, still wraps
+that element rather than its parent. The window itself is not offered, because
+a wrapper around the root would replace the design's root element. A client that
+cannot apply snippet edits still gets the wrap, with a literal `Column` and no
+caret.
 
 Hover explains declarations, shape fields, loop variables and fragments.
 `Ctrl`-click on an `import` path, its alias or an id jumps to its declaration,
