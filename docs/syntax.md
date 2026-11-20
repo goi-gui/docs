@@ -61,9 +61,23 @@ Window {
 
 With no alias, the base name without `.goi` is the element name. A name that is
 not an identifier is folded into one — `my-card.goi` becomes `MyCard` — and a
-purely numeric name gets a `File` prefix (`123.goi` becomes `File123`). The
-editor offers a sibling fragment in completion and as a quick fix on the
-unknown-element diagnostic; both write the unnamed form.
+purely numeric name gets a `File` prefix (`123.goi` becomes `File123`).
+
+A path may also start at the asset container root, the `assets` directory
+`goi.yaml` names, instead of the importing file:
+
+```goi
+import "goi://shared/Other.goi"
+import "../parts/Card.goi"
+```
+
+`goi://shared/Other.goi` is `assets/shared/Other.goi` from every file. A path
+with no scheme is relative to the importing file, so `../parts/Card.goi` can
+reach another directory as long as it stays inside the container. The editor
+completes both forms: container paths from the assets root, relative paths from
+the file. Auto import writes the container form and searches the whole assets
+directory, not just the file's folder; it is offered in element completion and
+as a quick fix on the unknown-element diagnostic.
 
 `props` declares the typed values the fragment expects, the way Go
 declares a field; the fragment reads them as `props.Name`:
@@ -1497,9 +1511,9 @@ goifmt -d file.goi   # print a diff
 
 The layout is fixed, and running it twice changes nothing:
 
-- An import keeps the spelling the design chose, named or unnamed, and the
-  imports are followed by one blank line, then each of `props`, `bridge` and
-  every `type` block separated by one blank line.
+- An import keeps the spelling the design chose, named or unnamed and relative
+  or `goi://`, and the imports are followed by one blank line, then each of
+  `props`, `bridge` and every `type` block separated by one blank line.
 - A declaration's names and types line up in one column, the way gofmt aligns a
   struct:
 

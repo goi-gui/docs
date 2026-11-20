@@ -109,9 +109,12 @@ the working directory instead. The container is automatic: `goi run` reads the
 embedded copy. No Go call chooses between them.
 
 Asset paths that start with `goi://` resolve against the `assets` directory, so
-`goi://images/cover.png` is `assets/images/cover.png`. Plain paths resolve
+`goi://images/cover.png` is `assets/images/cover.png`. Imports use the same
+scheme: `import "goi://shared/Other.goi"` names a fragment from every file, while
+a plain path stays relative to the importing file. Plain image paths resolve
 against the process's working directory, which is also where `goi run` starts
-the app.
+the app. The editor's auto import searches this directory, and its path
+completion offers container paths from it.
 
 ## `entrypoint`
 

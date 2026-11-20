@@ -61,11 +61,21 @@ colon and the name.
 
 ### Auto import
 
-Typing at an element position offers the `.goi` files beside the document that
-are not imported yet. Accepting one writes the element and adds
-`import "./Name.goi"`: the import is unnamed, so the element name is the file's
-base name. An unknown element also carries a quick fix with the same edit, for
-when the name was typed before completion was used.
+Typing at an element position offers the `.goi` files under the project's
+`assets` directory that are not imported yet. Accepting one writes the element
+and adds `import "goi://dir/Name.goi"`: the import is unnamed, so the element
+name is the file's base name, and the container path works from every file. An
+unknown element also carries a quick fix with the same edit, for when the name
+was typed before completion was used.
+
+### Path completion
+
+Inside a quoted import path or a `src:` value, completion follows the path as
+you type. A path that starts with `goi://` lists the assets directory, so
+`goi://images/` completes `goi://images/cover.png`. A relative path lists the
+document's directory and its subdirectories, so `./Side.goi` and
+`../shared/Other.goi` complete where they resolve. Imports list `.goi` files and
+folders; `src` lists every file.
 
 ### Wrap with component
 
