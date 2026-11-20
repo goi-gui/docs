@@ -21,6 +21,7 @@ outline, a file icon and the `goipls` language server.
 | Diagnostics, completion, hover, go-to-definition | `goipls` |
 | Icon name completion (Material Symbols) | `goipls` |
 | `app.` / `window.` completion | `goipls` |
+| Auto-import a sibling fragment | `goipls` completion + quick fix |
 | Wrap a component in a new component | `goipls` code action |
 | `.goi` file icon | `icons/` + `icon_themes/goi.json` |
 
@@ -57,6 +58,14 @@ client that reports snippet support gets the whole thing — `Text { }` with the
 caret between the braces, indented under the element around it, and the argument
 placeholder of `t()` or `formatf()` — while a text-only client still gets the
 colon and the name.
+
+### Auto import
+
+Typing at an element position offers the `.goi` files beside the document that
+are not imported yet. Accepting one writes the element and adds
+`import "./Name.goi"`: the import is unnamed, so the element name is the file's
+base name. An unknown element also carries a quick fix with the same edit, for
+when the name was typed before completion was used.
 
 ### Wrap with component
 

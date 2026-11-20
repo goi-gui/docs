@@ -38,16 +38,32 @@ Window {
 ## Splitting a design across files
 
 A file may start with its `import` lines, one `props` block and its
-declarations, before its root element. An import names the alias first, the way
-Go writes it:
+declarations, before its root element. An import may leave the element name to
+the file's base name:
 
 ```goi
-import Sidebar "./Sidebar.goi"
+import "./Sidebar.goi"
 
 Window {
 	Sidebar {}
 }
 ```
+
+An explicit alias still works when another name reads better:
+
+```goi
+import Inbox "./Sidebar.goi"
+
+Window {
+	Inbox {}
+}
+```
+
+With no alias, the base name without `.goi` is the element name. A name that is
+not an identifier is folded into one — `my-card.goi` becomes `MyCard` — and a
+purely numeric name gets a `File` prefix (`123.goi` becomes `File123`). The
+editor offers a sibling fragment in completion and as a quick fix on the
+unknown-element diagnostic; both write the unnamed form.
 
 `props` declares the typed values the fragment expects, the way Go
 declares a field; the fragment reads them as `props.Name`:
@@ -1481,9 +1497,9 @@ goifmt -d file.goi   # print a diff
 
 The layout is fixed, and running it twice changes nothing:
 
-- An import names its alias first, and the imports are followed by one blank
-  line, then each of `props`, `bridge` and every `type` block separated by one
-  blank line.
+- An import keeps the spelling the design chose, named or unnamed, and the
+  imports are followed by one blank line, then each of `props`, `bridge` and
+  every `type` block separated by one blank line.
 - A declaration's names and types line up in one column, the way gofmt aligns a
   struct:
 
