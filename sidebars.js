@@ -60,6 +60,7 @@ const sidebars = {
 						'components/stack',
 						'components/positioned',
 						'components/cliprrect',
+						'components/hero',
 						'components/gesturedetector',
 						'components/wrap',
 						'components/grid',

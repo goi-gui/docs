@@ -182,6 +182,7 @@ property transition only moves the properties that have an entry.
 
 - [syntax](../syntax.md#transitions) — the terse reference.
 - [Tweens](tweens.md) — Go-driven animation.
+- [Hero](../components/hero.md) — a shared element that flies between two pages.
 - [Theming](theming.md) — `themeTransition`, schemes and seeds.
 - [Shadows](shadows.md), [Rotate](rotate.md) and [Scale](scale.md) — the values a
   transition can interpolate.

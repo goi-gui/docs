@@ -18,6 +18,7 @@ components. They all share one property set and one way of being driven from Go.
 - [Stack](components/stack.md) — Overlays children on top of each other, last child on top.
 - [Positioned](components/positioned.md) — Anchors a child inside a Stack.
 - [ClipRRect](components/cliprrect.md) — Cuts its children to a rounded box.
+- [Hero](components/hero.md) — Flies a shared element from one page to the same tag on another.
 - [GestureDetector](components/gesturedetector.md) — Wraps a child and reports a double tap, a long press and a pan.
 - [Wrap](components/wrap.md) — Flows children left to right and starts a new run when the next child does not fit.
 - [Grid](components/grid.md) — Places children in equal-width columns, as rows or packed like a pinboard.
