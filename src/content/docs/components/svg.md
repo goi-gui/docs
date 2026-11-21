@@ -126,8 +126,9 @@ It also draws the common finishing layers:
   background layer. Remote `http(s)` image sources are not fetched inside the
   SVG.
 - **Patterns.** A pattern fill on a top-level element is tiled in
-  `userSpaceOnUse`, including a pattern that inherits its content through
-  `xlink:href`.
+  `userSpaceOnUse` or `objectBoundingBox` (the latter with
+  `patternContentUnits="objectBoundingBox"`), including a pattern that inherits
+  its content through `xlink:href`.
 - **Clip and mask.** A simple `clipPath` or `mask` on the document's single
   top-level group, or one shared by every top-level element, is honoured by
   masking the finished picture.
@@ -137,10 +138,10 @@ It also draws the common finishing layers:
 
 The limits that remain are about layout and effects, not missing whole
 categories: text is one fallback face without shaping, letter-spacing or stroked
-glyphs; only embedded data-URI images are read; pattern units must be
-`userSpaceOnUse`; clips and masks on several differently clipped nested groups
-are not composited element by element; and filter primitives other than the
-Gaussian blur and drop shadow are ignored. The filter's `x`/`y`/`width`/`height`
+glyphs; only embedded data-URI images and local files are read, not remote image
+sources; clips and masks on several differently clipped nested groups are not
+composited element by element; and filter primitives other than the Gaussian
+blur and drop shadow are ignored. The filter's `x`/`y`/`width`/`height`
 region is applied when it is written. Outline text and flatten such effects in the editor
 when a file needs them.
 
