@@ -1,5 +1,7 @@
 ---
-title: "Conditionals"
+title: "Conditional"
+sidebar:
+  label: "Conditional"
 ---
 
 `if` picks one arm of elements, written the way Go writes it. It switches
@@ -146,9 +148,9 @@ both colours, or both bools.
 
 ## Choosing between more than two values
 
-`conditional` is the value form of a `switch`: each line is `condition: value`,
-and the first condition that holds picks the value. A `default: value` line is
-the fallback when none of them holds.
+The `conditional` modifier is the value form of a `switch`: each line is
+`condition: value`, and the first condition that holds picks the value. A
+`default: value` line is the fallback when none of them holds.
 
 ```goi
 Column {

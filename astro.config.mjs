@@ -69,8 +69,22 @@ export default defineConfig({
 				"slug": "syntax"
 			},
 			{
-				"label": "Conditionals",
-				"slug": "guide/conditionals"
+				"label": "Modifiers",
+				"items": [
+					{
+						"label": "Conditional",
+						"slug": "guide/conditionals"
+					},
+					{
+						"label": "Responsive",
+						"slug": "guide/responsive"
+					},
+					{
+						"label": "State",
+						"slug": "guide/states"
+					}
+				],
+				"collapsed": false
 			},
 			{
 				"label": "Loops",
@@ -113,10 +127,6 @@ export default defineConfig({
 			{
 				"label": "Custom colours",
 				"slug": "guide/custom-colors"
-			},
-			{
-				"label": "States",
-				"slug": "guide/states"
 			},
 			{
 				"label": "Fonts",

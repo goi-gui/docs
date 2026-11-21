@@ -1,7 +1,7 @@
 ---
-title: "States"
+title: "State"
 sidebar:
-  label: "States"
+  label: "State"
 ---
 
 A `state` modifier picks a property value from the element's interaction or

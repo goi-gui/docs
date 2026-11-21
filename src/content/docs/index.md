@@ -165,10 +165,10 @@ another target; the release tags come from `buildFlags`. See
 
 - [.goi syntax](/syntax/) — the language reference: declarations, imports,
   props, slots and literals.
-- [Conditionals](/guide/conditionals/), [loops](/guide/loops/) — showing an
-  arm or repeating elements.
-- [States](/guide/states/) — a property per hover, press, focus or control
-  state, nested with the other modifiers.
+- [Conditionals](/guide/conditionals/), [responsive](/guide/responsive/) and
+  [states](/guide/states/) — a property per condition, window width or
+  interaction state, nested together.
+- [Loops](/guide/loops/) — repeating elements from a list.
 - [Bridge](/guide/bridge/) — passing values and handlers from Go.
 - [Async work](/guide/async/) — updating the UI from a goroutine with `App.Post`.
 - [Fragments](/guide/fragments/) — splitting a design across files with props,
