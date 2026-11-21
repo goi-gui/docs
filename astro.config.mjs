@@ -4,6 +4,9 @@ import goi from "./src/languages/goi.mjs";
 
 export default defineConfig({
 	site: "https://goi.kaanksc.com",
+	// Cloudflare Pages builds this repository into `build`, the directory the
+	// Docusaurus site used, so the dashboard needs no change.
+	outDir: "./build",
 	integrations: [
 		starlight({
 			title: "goi",
