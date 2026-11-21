@@ -67,7 +67,14 @@ process with `StartWithSize`, and passes the returned file to both setters.
 - Covers the common VT100/ANSI commands: cursor movement, erase, insert/delete,
   scrolling regions, save/restore, SGR colours (16, 256 and truecolour),
   bold/faint/italic/underline/reverse/strike, the alternate screen and cursor
-  visibility.
+  visibility. DEC modes include origin mode, the application cursor keys, a
+  blinking cursor, save/restore (`1048`) and focus reporting (`1004`).
+- Text is measured in cells: East Asian wide characters take two cells, and
+  combining marks attach to the character before them.
+- OSC 8 hyperlinks underline their cells; a click opens the target with the
+  desktop, the same way a link in `Text` does.
+- A sixel bitmap is decoded and drawn at the cursor cell, where a program put
+  it. Images scroll with the line they were anchored to.
 - Output that runs past the bottom scrolls into `scrollback`; the wheel over the
   terminal moves through it.
 - Click the terminal to give it keyboard focus. Tab, Escape, the arrows and the
@@ -75,8 +82,10 @@ process with `StartWithSize`, and passes the returned file to both setters.
 - Drag across cells to select; `Ctrl+Shift+C` copies and `Ctrl+Shift+V` pastes
   (Command on macOS). A bracketed-paste program receives the
   `200~`/`201~` wrapper it asked for.
-- A program can enable the DEC mouse modes; clicks, releases, drags and the
-  wheel are then forwarded to it instead of selecting text.
+- A program can enable the DEC mouse modes (`9`, `1000`, `1002`, `1003`) with
+  the SGR (`1006`), UTF-8 (`1005`) or urxvt (`1015`) encoding; clicks,
+  releases, drags and the wheel are then forwarded to it instead of selecting
+  text.
 - `onResize` fires when the measured grid changes, which is where a pty's window
   size stays in sync with the box.
 
