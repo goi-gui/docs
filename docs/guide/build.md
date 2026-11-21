@@ -117,7 +117,7 @@ The core build is the window, renderer, layout and text. The optional features
 are **off unless their tag is given**. Put the tags in `buildFlags`:
 
 ```yaml
-buildFlags: [emoji, svg, net, dialog]
+buildFlags: [emoji, svg, net]
 ```
 
 or take every one:
@@ -137,12 +137,12 @@ the one `goi run` uses.
 | `net` | `net/http` and TLS: remote `Image`, `SVG` and map tiles |
 | `svg` | oksvg/rasterx for `SVG` elements |
 | `markdown` | goldmark for `Markdown` documents |
-| `dialog` | zenity/beeep and D-Bus for file dialogs and `Notify` |
 
 Without a tag the design still parses: an `SVG` reports an error, `Markdown`
-draws nothing, `Code` draws plain text, a remote `Image` fails to fetch, file
-dialogs and `Notify` report an error, and `Mermaid` reports that the build has no
-renderer. Text falls back to the font's monochrome glyphs when `emoji` is off.
+draws nothing, `Code` draws plain text, a remote `Image` fails to fetch, and
+`Mermaid` reports that the build has no renderer. Text falls back to the font's
+monochrome glyphs when `emoji` is off. File dialogs and `Notify` are always
+available on the desktop; the browser stubs them.
 
 Approximate sizes for `examples/counter`, Linux amd64, Go 1.27, built with
 `goi build` (which always passes `-ldflags "-s -w"`):
@@ -162,7 +162,6 @@ The per-feature cost of adding one tag to the core build:
 | `net` | 28.6 MB | +2.1 MB |
 | `svg` | 27.6 MB | +1.1 MB |
 | `markdown` | 27.3 MB | +0.9 MB |
-| `dialog` | 26.8 MB | +0.3 MB |
 
 Without `-s -w`, the core build is 38.7 MB and the `all` build is 74.6 MB.
 The wasm numbers are larger because they include the Go runtime and the app's

@@ -60,7 +60,7 @@ feature that a release build leaves out, or the other way round:
 
 ```yaml
 runFlags: [all]
-buildFlags: [emoji, svg, net, dialog]
+buildFlags: [emoji, svg, net]
 ```
 
 `buildFlags` is not read by `goi run`; `runFlags` is not read by `goi build`.
@@ -76,7 +76,6 @@ The values are the optional feature tags:
 | `net` | remote `Image`, `SVG` and map tiles |
 | `svg` | `SVG` elements |
 | `markdown` | `Markdown` documents |
-| `dialog` | file dialogs and `Notify` |
 | `all` | every one of the above |
 
 A tag can also be a space- or comma-separated group inside one entry
@@ -102,11 +101,10 @@ buildFlags: [auto, abc, myflag]
 | `Map`, or an `http(s)://` URL | `net` |
 | an emoji in any `.goi` string | `emoji` |
 
-`auto` also drops a stale managed tag when the design stops using it. `dialog`
-is never inferred, because it is a Go API rather than a design element; add it
-to the list yourself when the app opens native pickers or notifications. A tag
-you write yourself that is not one of the managed features (`abc`, `myflag`,
-`nohotreload`, …) is always kept.
+`auto` also drops a stale managed tag when the design stops using it. File
+dialogs and `Notify` no longer have a tag: they are part of every desktop build.
+A tag you write yourself that is not one of the managed features (`abc`,
+`myflag`, `nohotreload`, …) is always kept. An old `dialog` entry is ignored.
 
 `all` wins over `auto`: it already turns every feature on, so the design is not
 scanned and the custom tags are kept.
