@@ -34,9 +34,11 @@ how many lines of history the wheel can reach, 1000 by default.
 | `foreground` | color | default text colour; the theme's onSurface by default |
 
 `background`, `padding`, `radius` and the other common box properties work as on
-every element. The terminal uses the embedded **Meslo LG S NF Mono** face when the app is built
-with the `terminal` tag (`all` includes it), and Roboto Mono otherwise. A design
-can still override `fontFamily`.
+every element. The terminal uses the embedded **Maple Mono NF CN** face when the app is built
+with the `terminal` tag (`all` includes it), and Roboto Mono otherwise. Maple
+covers Latin, Greek, Cyrillic, Nerd Font icons and CJK in one OFL-licensed file,
+so wide characters draw instead of a box. It is about 20 MB, which is why the
+tag is opt-in. A design can still override `fontFamily`.
 
 ## From Go
 

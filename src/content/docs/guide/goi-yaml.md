@@ -73,7 +73,7 @@ The values are the optional feature tags:
 | `net` | remote `Image`, `SVG` and map tiles |
 | `svg` | `SVG` elements |
 | `markdown` | `Markdown` documents |
-| `terminal` | the Meslo LG S NF Mono face for a terminal |
+| `terminal` | the Maple Mono NF CN face for a terminal |
 | `all` | every one of the above |
 
 A tag can also be a space- or comma-separated group inside one entry
