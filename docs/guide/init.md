@@ -6,8 +6,11 @@ sidebar_label: goi init
 # goi init
 
 `goi init` creates a project in the current directory: a Go module, a
-`cmd/main.go`, a [`goi.yaml`](goi-yaml.md) and the `hello` example under
-`assets/` — the goi logo and a greeting.
+`cmd/main.go`, a [`goi.yaml`](goi-yaml.md), a `.gitignore` and the `hello`
+example under `assets/` — the goi logo and a greeting. It also asks whether to
+initialize a git repository (No by default) and, when the directory already has
+files, whether to overwrite the project files (No by default; `-w` skips the
+question).
 
 ```sh
 mkdir hello
@@ -26,6 +29,7 @@ hello/
 │       └── Main.goi
 ├── cmd/
 │   └── main.go
+├── .gitignore
 ├── go.mod
 ├── go.sum
 └── goi.yaml
@@ -52,12 +56,20 @@ goi init --name hello --id com.example.hello --module example.com/hello --assets
 | `--id` | a reverse-DNS application id | `com.example.myapp` |
 | `--module` | the Go module path for `go mod init` | `github.com/you/myapp` |
 | `--assets` | the directory holding the designs and their assets | `assets` |
+| `-g`, `--git` | initialize a git repository; the prompt defaults to No | `--git` |
+| `-w`, `--overwrite` | replace project files in a non-empty directory | `-w` |
 
 Only the values a flag did not give are asked for, so
 `goi init --name myapp` prompts for the id and the module. `--assets` defaults
-to `assets`, so it does not prompt unless a different directory is wanted. The fully
-flagged form is safe for a script; the bare form is friendly for a first
-project.
+to `assets`, so it does not prompt unless a different directory is wanted. The
+git question appears when the name, id or module still needs asking; when all
+three are passed the prompt is skipped, so use `--git` to initialize a
+repository in a script. A non-empty directory asks before its project files are
+replaced; `-w` skips that question.
+
+The generated `.gitignore` ignores the project's `dist/` directory, where
+`goi build` writes its output. If the file already exists, the line is added
+without dropping the entries that were there.
 
 `init` runs `go mod init` with the module value and then `go mod tidy`, so the
 new module has the goi dependency and a `go.sum`. If the machine is offline, the
