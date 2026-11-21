@@ -104,6 +104,23 @@ What happens to a remote SVG:
 - A fetch that lands after a hot reload fills in the new nodes; the tree is
   searched by `src` when the data arrives rather than holding old pointers.
 
+## What it draws
+
+The renderer covers the shapes an icon and a logo use: paths, rects, circles,
+ellipses, lines and polygons; transforms, including the single-argument
+`scale(2)` a hand-edited file often writes; nested `<svg>` viewports; `use` and
+`symbol`; and linear/radial gradients, including the `xlink:href` inheritance
+and `style` stops Inkscape exports. Inline `style` declarations and class rules
+are folded into the presentation attributes the rasterizer reads, and a negative
+`viewBox` origin is moved to zero.
+
+A simple `clipPath` or `mask` on the document's one top-level group is honoured
+by masking the finished picture; a clip or mask on several nested elements is
+not. The rasterizer has no text or filter engine: `<text>` and filters such as
+`feGaussianBlur` are ignored, and so are `<pattern>` fills and embedded raster
+`<image>` elements. Outline text and flatten filters in the editor if a file
+needs them.
+
 ## Animation
 
 A document that declares a SMIL animation plays on its own. The supported subset
