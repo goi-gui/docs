@@ -114,12 +114,30 @@ and `style` stops Inkscape exports. Inline `style` declarations and class rules
 are folded into the presentation attributes the rasterizer reads, and a negative
 `viewBox` origin is moved to zero.
 
-A simple `clipPath` or `mask` on the document's one top-level group is honoured
-by masking the finished picture; a clip or mask on several nested elements is
-not. The rasterizer has no text or filter engine: `<text>` and filters such as
-`feGaussianBlur` are ignored, and so are `<pattern>` fills and embedded raster
-`<image>` elements. Outline text and flatten filters in the editor if a file
-needs them.
+It also draws the common finishing layers:
+
+- **Text.** `<text>` and `tspan` text use one embedded fallback face (Go
+  Regular), with `x`, `y`, `font-size`, `text-anchor`, `fill`, opacity and
+  transforms. Text is painted over the shapes.
+- **Embedded images.** A `data:image/png`, `jpeg` or `gif` URI is decoded and
+  placed at the element's box; it is painted as a background layer.
+- **Patterns.** A pattern fill on a top-level element is tiled in
+  `userSpaceOnUse`, including a pattern that inherits its content through
+  `xlink:href`.
+- **Clip and mask.** A simple `clipPath` or `mask` on the document's single
+  top-level group, or one shared by every top-level element, is honoured by
+  masking the finished picture.
+- **Filters.** A `feGaussianBlur` or `feDropShadow` on an element or a root
+  group is applied to that element's own layer; the element is rendered through
+  the filter and then composited in the document.
+
+The limits that remain are about layout and effects, not missing whole
+categories: text is one fallback face without shaping, letter-spacing or stroked
+glyphs; only embedded data-URI images are read; pattern units must be
+`userSpaceOnUse`; clips and masks on several differently clipped nested groups
+are not composited element by element; and filter primitives other than the
+Gaussian blur and drop shadow are ignored. Outline text and flatten such effects in the editor
+when a file needs them.
 
 ## Animation
 
