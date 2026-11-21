@@ -6,6 +6,13 @@ A character-cell terminal with ANSI/VT100 colours, cursor movement, scrollback
 and an alternate screen. The design gives it a box; the app attaches a tty with
 `SetReader` and `SetWriter`.
 
+[All components](/components/)
+
+<p align="center">
+  <img src="/img/components/terminal-light.png" alt="Terminal in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/terminal-dark.png" alt="Terminal in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi
