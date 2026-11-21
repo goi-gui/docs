@@ -35,6 +35,7 @@ What a page shows: text, documents, glyphs, media and plain boxes. These are nod
 - [Icon](/components/icon/) — One Material Symbols glyph, sized and tinted on its own.
 - [RichText](/components/richtext/) — One paragraph of styled runs.
 - [Code](/components/code/) — A syntax-highlighted code block.
+- [Terminal](/components/terminal/) — A character-cell terminal backed by an app-supplied tty.
 - [Markdown](/components/markdown/) — A markdown document, rendered as elements.
 - [Mermaid](/components/mermaid/) — A Mermaid diagram, drawn from its source.
 - [Image](/components/image/) — Draws a decoded bitmap.

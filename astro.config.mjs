@@ -241,6 +241,10 @@ export default defineConfig({
 						"slug": "components/code"
 					},
 					{
+						"label": "Terminal",
+						"slug": "components/terminal"
+					},
+					{
 						"label": "Markdown",
 						"slug": "components/markdown"
 					},
