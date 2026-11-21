@@ -47,9 +47,11 @@ and a `Positioned` child anchors itself inside it.
   stays readable over a picture. The scrim and the label paint above the child.
 - The card ripples from the pointer when it has an `onClick`, the same feedback
   a button gives.
-- Inside a `Carousel` the card fills the strip's height; without a declared
-  width it takes the 180dp card default. An `Image` or other child with no size
-  fills the card.
+- Inside a `Carousel` the card fills the strip's height, and the width it
+  declares is the width it takes while it leads. A card that is not leading is
+  `shrink` of that width (70% by default); the next card grows back to full as
+  it comes in. Without a declared width it takes the 180dp card default. An
+  `Image` or other child with no size fills the card.
 
 ## From Go
 
