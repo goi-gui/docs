@@ -50,7 +50,7 @@ export default {
 		},
 		keywords: {
 			match:
-				'\\b(?:import|props|bridge|data|type|func|if|else|for|range|switch|case|default|responsive|conditional|inset|none|normal|bold|bolder|lighter|italic|underline|overline|line-through)\\b',
+				'\\b(?:import|props|bridge|data|type|func|if|else|for|range|switch|case|default|responsive|conditional|state|inset|none|normal|bold|bolder|lighter|italic|underline|overline|line-through)\\b',
 			name: 'keyword.control.goi',
 		},
 		booleans: {

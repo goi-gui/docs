@@ -539,11 +539,14 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   so `ticket.ID` is the row that exists at click time.
 - **`event`.** The event's own payload is available as `event`: `onToggle`
   passes a bool, `onChange` a number, `onEdit`, `onSubmit`, `onOK` and
-  `onCancel` a string, `onSelect` an index. `onClick`, `onClickOutside`, the
-  mouse events and the gestures carry no scalar value.
-- **Events.** Every element accepts `onClick` and `onClickOutside`, which fires
-  on a press outside the element's subtree (the anchor and a popover's panel are
-  both inside). Components also accept
+  `onCancel` a string, `onSelect` an index. `onScroll` is a struct, so its
+  fields are read as `event.x`, `event.y`, `event.maxX`, `event.maxY`,
+  `event.progress` and `event.byUser`. `onClick`, `onClickOutside`, the mouse
+  events and the gestures carry no scalar value.
+- **Events.** Every element accepts `onClick`, `onClickOutside` and the scroll
+  events `onScroll`, `onScrollToEnd` and `onScrollToStart`; `onClickOutside`
+  fires on a press outside the element's subtree (the anchor and a popover's
+  panel are both inside). Components also accept
   `onToggle`, `onChange`, `onEdit`, `onSubmit`, `onSelect`, `onPlay`, `onPause`
   and `onEnd` where they emit them; a chart adds `onHover` for the point under
   the pointer, a `TimePicker` or `ColorPicker` adds `onOK` and `onCancel`, and a
@@ -562,7 +565,8 @@ bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
   `windowed()`; `Switch` answers `toggle()`. A scrolling element answers
   `scrollTo(offset)`, `scrollToSmooth(offset, duration)`, `scrollToNthChild(n)`,
   `scrollToNthChildSmooth(n, duration)`, `scrollToChild(id)` and
-  `scrollToChildSmooth(id, duration)`, with the duration written as `300ms` or
+  `scrollToChildSmooth(id, duration)`, plus `autoScroll(true)` and
+  `autoScrollSmooth(true, duration)`, with the duration written as `300ms` or
   `1s`. The child forms also take an optional `start`, `center` or `end`
   alignment before the duration. Anything else is a checker error, and so is an
   argument of the wrong type.

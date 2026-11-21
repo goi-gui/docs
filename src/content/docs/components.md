@@ -319,9 +319,9 @@ List {
 content allows as `maxX` and `maxY`, and `byUser`, which is `true` for a wheel,
 drag, fling or scrollbar grab and `false` for a programmatic move or an
 auto-scroll. `progress` is the primary axis from `0` at the start to `1` at the
-end, and `0` when the content does not overflow. `onScrollToEnd` and `onScrollToStart` fire once when the
-primary axis arrives at that edge; a short area that does not overflow counts as
-both. The same handlers are on every element, because any element with
+end, and `0` when the content does not overflow. `onScrollToEnd` and
+`onScrollToStart` fire once when the primary axis arrives at that edge; a short
+area that does not overflow counts as both. The same handlers are on every element, because any element with
 `scroll: true` can move.
 
 From Go the subscription is the same shape:
