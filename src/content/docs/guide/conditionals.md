@@ -146,14 +146,16 @@ both colours, or both bools.
 
 ## Choosing between more than two values
 
-`conditional` is the value form of a `switch`: each line is `value: condition`,
-and the first condition that holds picks the value.
+`conditional` is the value form of a `switch`: each line is `condition: value`,
+and the first condition that holds picks the value. A `default: value` line is
+the fallback when none of them holds.
 
 ```goi
 Column {
 	gap: conditional {
-		10: !bridge.isWide
-		20: bridge.isWide
+		!bridge.isWide: 10
+		bridge.isWide: 20
+		default: 4
 	}
 }
 ```
@@ -162,19 +164,23 @@ Column {
 for i, l := range bridge.results {
 	Text {
 		text: conditional {
-			"✅": l == "W"
-			"🏁": l == "D"
-			"❌": l == "L"
+			l == "W": "✅"
+			l == "D": "🏁"
+			l == "L": "❌"
 		}
 	}
 }
 ```
 
 - The first true condition wins and the rest are never evaluated.
-- When no condition holds, the property keeps the value it already had, the way
-  a `switch` with no matching case changes nothing.
+- `default` is the fallback when no condition holds; without one the property
+  keeps the value it already had, the way a `switch` with no matching case
+  changes nothing.
 - Any property takes one, and each value is checked against that property's type.
 - Like an `if`, it re-evaluates every frame, so a bridge field or a Go-set
   property changes it without a reload.
 
-[Conditional values](/syntax/#conditional-values) has the full form.
+`conditional`, [`responsive`](/syntax/#responsive-values) and [`state`](/guide/states/)
+nest in any order, so a value can follow the window width, the data and the
+pointer together. [Conditional values](/syntax/#conditional-values) has the full
+form.

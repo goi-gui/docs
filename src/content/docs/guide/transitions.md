@@ -11,8 +11,8 @@ Rectangle {
 	width:      bridge.isCollapsed ? 200 : 500
 	height:     bridge.isCollapsed ? 80 : 260
 	background: conditional {
-		theme.primaryContainer: !bridge.isCollapsed
-		theme.surfaceContainer: bridge.isCollapsed
+		!bridge.isCollapsed: theme.primaryContainer
+		bridge.isCollapsed: theme.surfaceContainer
 	}
 	transition: size 300ms, background 200ms
 }
@@ -109,8 +109,8 @@ Window {
 			padding:    20
 			radius:     16
 			background: conditional {
-				theme.primaryContainer: bridge.open
-				theme.surfaceContainer: !bridge.open
+				bridge.open: theme.primaryContainer
+				!bridge.open: theme.surfaceContainer
 			}
 			transition: size 300ms ease-out, background 200ms
 

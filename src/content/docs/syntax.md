@@ -221,7 +221,7 @@ Window {
 - `len($children)` is how many elements the instance passed: the direct children
   of the call, before they expand into anything. A slot nobody filled is `0`, so
   `if len($children) > 0 { $children }` hides the hole without a second file, and
-  `spacing: conditional { 16: len($children) > 0 }` can react to it as well.
+  `spacing: conditional { len($children) > 0: 16 }` can react to it as well.
 
 ### Named slots
 
@@ -673,7 +673,8 @@ declaration. A function call appears either as an event property's whole value
 | `2`, `50%`, `2 0.5`, `200% 50% 200%` | scale | the `scale` property only: CSS form, see [Scale](#scale) |
 | `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form, a colour variable as `theme.<role>` or `customColor.<name>`; `none` clears it, see [Shadows](/guide/shadows/) |
 | `responsive { base: 8 md: 16 }` | modifier | responsive value, one entry per breakpoint; see [Responsive values](#responsive-values) |
-| `conditional { 10: bridge.isWide }` | modifier | first true condition picks the value; see [Conditional values](#conditional-values) |
+| `conditional { bridge.isWide: 20 default: 10 }` | modifier | first true condition picks the value, `default` is the fallback; see [Conditional values](#conditional-values) |
+| `state { default: red hover: blue }` | modifier | one value per interaction state; see [State values](#state-values) |
 | `[1, 2, 3]`, `["Jan", "Feb"]` | list | a property whose value is a list, such as a chart's `categories`, `values` or `colors`; a trailing comma is allowed, see [Lists](#lists) |
 
 ## Multi-line strings
@@ -1283,8 +1284,8 @@ Rectangle {
 	width:       bridge.isCollapsed ? 200 : 500
 	height:      bridge.isCollapsed ? 150 : 400
 	background:  conditional {
-		#411f89ff: bridge.isCollapsed
-		#ff0000ff: !bridge.isCollapsed
+		bridge.isCollapsed: #411f89ff
+		!bridge.isCollapsed: #ff0000ff
 	}
 	transition: width 500ms, height 500ms, background 1s
 }
@@ -1450,8 +1451,9 @@ The `base` entry, when present, is applied as soon as the file is loaded, so it
 also sizes the initial window when used on `Window.width`.
 
 `base` is optional. Without it the property keeps its normal default below the
-lowest tier that is present. `id` cannot be responsive and a tier cannot contain
-another modifier.
+lowest tier that is present. `id` cannot be responsive, but a tier may hold a
+`state` or `conditional` block, so one value can follow the width and the
+pointer or the data together.
 
 The tree stores the tiers; the frame loop rewrites those properties before
 layout whenever the window width changes. The file owns a responsive property: a
@@ -1463,42 +1465,111 @@ working; `goifmt` converts it to the modifier form.
 
 ## Conditional values
 
-`conditional` picks the first value whose condition is true, and ignores the
-ones after it:
+`conditional` picks the value of the first condition that is true, and ignores
+the ones after it:
 
 ```goi
 Column {
 	gap: conditional {
-		10: !bridge.isWide
-		20: bridge.isWide
+		!bridge.isWide: 10
+		bridge.isWide: 20
+		default: 4
 	}
 }
 ```
 
-Each line is `value: condition`, and the condition is any bool expression:
-a bridge field, a property reference, a comparison. A `for … range` row can use
-the loop variable the same way:
+Each line is `condition: value`, and the condition is any bool expression: a
+bridge field, a property reference, a comparison. A `default: value` entry has
+no condition and is the fallback when none of the arms holds; without one the
+property returns to its own default. A `for … range` row can use the loop
+variable the same way:
 
 ```goi
 for i, l := range team.lastFiveResults {
 	Text {
 		text: conditional {
-			"✅": l == "W"
-			"🏁": l == "D"
-			"❌": l == "L"
+			l == "W": "✅"
+			l == "D": "🏁"
+			l == "L": "❌"
 		}
 	}
 }
 ```
 
 The values are checked against the property, so `gap` takes numbers above and
-`text` takes strings. When no condition holds the property returns to its own
-default, so a colour or label set by a condition does not outlive it. Like a
-responsive value, a conditional property is re-evaluated every frame, and a
-value set from Go is not overwritten.
+`text` takes strings. When no condition and no default holds, the property
+returns to its own default, so a colour or label set by a condition does not
+outlive it. Like a responsive value, a conditional property is re-evaluated
+every frame.
 
-Nothing nests: a conditional value or a breakpoint value cannot be another
-modifier.
+## State values
+
+`state` picks a value from the element's interaction and control state, the way
+a CSS pseudo-class does:
+
+```goi
+Column {
+	padding: 20
+	radius:  16
+	background: state {
+		default: theme.surfaceContainer
+		hover:   theme.surfaceContainerHigh
+		active:  theme.primaryContainer
+	}
+}
+```
+
+A state block accepts:
+
+| Key | Active when |
+| --- | --- |
+| `default` | no other entry matched; it is the fallback |
+| `hover` | the pointer is over the element or one of its children |
+| `active` | a pointer press is held on the element (`pressed` is an alias) |
+| `focus` | the element has keyboard focus, which is what a text field uses |
+| `disabled` | the component is disabled |
+| `enabled` | the component is not disabled |
+| `checked` | a switch, checkbox or radio button is checked |
+| `unchecked` | that control is not checked |
+| `selected` | the component is selected, as a chip or tab can be |
+| `expanded` | the component is expanded, as a menu or sheet can be |
+| `collapsed` | the component is not expanded |
+
+The last matching entry wins, so order the block by priority: `hover` before
+`active`, and `disabled` last. A plain element reacts to `hover` and `active`
+too, not only the Material components. On a built-in component the state sets
+the property before the component paints, so a `Button` can take its own
+background per state.
+
+`state`, `responsive` and `conditional` nest in any order, so a value can follow
+the window width and the pointer at once:
+
+```goi
+Column {
+	background: responsive {
+		base: theme.surface
+		sm: state {
+			default: theme.surfaceContainer
+			hover:   theme.surfaceContainerHigh
+		}
+	}
+}
+```
+
+```goi
+Column {
+	background: responsive {
+		base: theme.surface
+		sm: conditional {
+			bridge.selected: state { default: theme.primaryContainer hover: theme.primary }
+			default:         theme.surfaceContainer
+		}
+	}
+}
+```
+
+Each entry is resolved from the outside in; an inner block that matches no
+entry falls back to the nearest `default`, then to the property's own value.
 
 ## Formatting
 

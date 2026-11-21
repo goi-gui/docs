@@ -115,6 +115,10 @@ export default defineConfig({
 				"slug": "guide/custom-colors"
 			},
 			{
+				"label": "States",
+				"slug": "guide/states"
+			},
+			{
 				"label": "Fonts",
 				"slug": "guide/fonts"
 			},
