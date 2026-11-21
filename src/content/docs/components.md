@@ -182,6 +182,7 @@ These apply to every element and are not repeated on the component pages.
 | `flex` | number | share of the parent's leftover main-axis space |
 | `alignSelf` | enum | `start`, `center`, `end`, `stretch`; overrides the parent's `crossAxisAlign` |
 | `scroll` | bool | scroll when content overflows the box. On by default for `Column`, `Row`, `Flex`, `Carousel` and `NavigationRail`; `scroll: false` turns it off, and the rest of the elements start off |
+| `autoScroll` | bool | follow the end as content grows, which keeps a chat's newest row in view. The follow pauses when the reader scrolls away and resumes at the end |
 | `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
 | `backdropBlur` | number or blur gradient | radius in dp of the blur applied to what is already painted behind the element, like CSS `backdrop-filter`, or a `linear-gradient`/`radial-gradient` of radii that fades the blur across the box; 0 (default) is no blur |
 | `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected. It is the stronger claim: a modal overlay names one to stay above a page whose popover panel lifts its branch |
@@ -239,8 +240,9 @@ Column {
 
 ### Scrolling from a design or Go
 
-Every scrolling element answers the same six shortcuts: a raw offset, a child
-by position, or a child by id, each with an instant and a smooth form. The axis
+Every scrolling element answers the same shortcuts: a raw offset, a child by
+position, or a child by id, each with an instant and a smooth form, plus
+auto-scroll. The axis
 is the element's own, so a `Column` moves down, a `Row` or a `Carousel` moves
 sideways, and a `Table` uses its vertical axis.
 
@@ -286,6 +288,8 @@ the flight where it is, because that gesture takes over the offset.
 | `page.scrollToChild("row7")` | `page.ScrollToChild("row7")` | an element anywhere inside the area, at the start |
 | `page.scrollToChild("row7", end)` | `page.ScrollToChild("row7", ui.ScrollEnd)` | that element, end-aligned |
 | `page.scrollToChildSmooth("row7", end, 300ms)` | `page.ScrollToChildSmooth("row7", 300*time.Millisecond, ui.ScrollEnd)` | that element, end-aligned and eased |
+| `page.autoScroll(true)` | `page.AutoScroll(true)` | follow the end as content grows and jump there now |
+| `page.autoScrollSmooth(true, 300ms)` | `page.AutoScrollSmooth(true, 300*time.Millisecond)` | the same, eased over the duration |
 
 A design writes the alignment between the child and the duration, matching the
 first example. Go keeps the duration next to the other required argument and
@@ -297,6 +301,62 @@ id form finds a descendant at any depth. The Go methods return `false` when the
 element does not scroll, the index is out of range or the id is not inside it,
 so a caller can tell a miss from a move. An offset past the end clamps when it is
 read, so it follows the content if the content later grows.
+
+### Scroll events
+
+A scroll area reports every movement and both edges:
+
+```goi
+List {
+	id:              chat
+	onScroll:        bridge.onChatScroll(event.x, event.y, event.byUser)
+	onScrollToEnd:   bridge.onChatAtEnd()
+	onScrollToStart: bridge.onChatAtStart()
+}
+```
+
+`onScroll` carries the clamped `x` and `y` offsets and `byUser`, which is `true`
+for a wheel, drag, fling or scrollbar grab and `false` for a programmatic move
+or an auto-scroll. `onScrollToEnd` and `onScrollToStart` fire once when the
+primary axis arrives at that edge; a short area that does not overflow counts as
+both. The same handlers are on every element, because any element with
+`scroll: true` can move.
+
+From Go the subscription is the same shape:
+
+```go
+chat := w.MustByID[*ui.List](w, "chat")
+chat.OnScroll(func(e ui.ScrollEvent) {
+	fmt.Println(e.X, e.Y, e.ByUser)
+})
+chat.OnScrollToEnd(func() { showJumpToLatest(false) })
+```
+
+### Auto-scroll
+
+`autoScroll: true` follows the end of the content as it grows. The follow pauses
+the moment the reader scrolls away and starts again when the end is reached, so
+a chat can append messages without pulling someone back from the history they
+are reading.
+
+```goi
+List {
+	id:         chat
+	autoScroll: true
+}
+```
+
+From Go, call `AutoScroll(true)` to enable it and jump to the current end, or
+`AutoScrollSmooth(true, 300ms)` to ease there and keep that duration for later
+growth. `AutoScroll(false)` stops it. The methods return nothing; the property
+is readable as `autoScroll` and the state via `AutoScrollEnabled` and
+`ScrollAtEnd`.
+
+```go
+chat := w.MustByID[*ui.List](w, "chat")
+chat.AutoScrollSmooth(true, 300*time.Millisecond)
+```
+
 ## Containers and `gap`
 
 Containers lay their children out in a row or a column and accept `spacing`,
