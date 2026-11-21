@@ -90,5 +90,6 @@ logo from `assets/images/goi.svg` above a greeting. It is the same screen as
 `examples/hello`, so there is a working starting point to edit.
 
 The generated `goi.yaml` also gives the app a name and id, names `assets` as the
-assets directory, `cmd` as the entrypoint, and sets both
-[`runFlags` and `buildFlags`](goi-yaml.md) to `all`.
+assets directory, `cmd` as the entrypoint, sets [`runFlags`](goi-yaml.md) to
+`all` for development, and `buildFlags` to `auto`, so a build carries only the
+features the design uses.
