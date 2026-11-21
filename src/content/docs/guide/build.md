@@ -136,12 +136,15 @@ the one `goi run` uses.
 | `net` | `net/http` and TLS: remote `Image`, `SVG` and map tiles |
 | `svg` | oksvg/rasterx for `SVG` elements |
 | `markdown` | goldmark for `Markdown` documents |
+| `terminal` | Meslo LG S NF Mono, the terminal's default monospace face |
 
 Without a tag the design still parses: an `SVG` reports an error, `Markdown`
 draws nothing, `Code` draws plain text, a remote `Image` fails to fetch, and
 `Mermaid` reports that the build has no renderer. Text falls back to the font's
-monochrome glyphs when `emoji` is off. File dialogs and `Notify` are always
-available on the desktop; the browser stubs them.
+monochrome glyphs when `emoji` is off. A `Terminal` still works without its
+tag, using Roboto Mono; `terminal` embeds the Meslo face it uses by default.
+File dialogs and `Notify` are always available on the desktop; the browser stubs
+them.
 
 Approximate sizes for `examples/counter`, Linux amd64, Go 1.27, built with
 `goi build` (which always passes `-ldflags "-s -w"`):

@@ -13,8 +13,6 @@ Terminal {
 	width:      720
 	height:     400
 	fontSize:   14
-	cols:       100
-	rows:       24
 	scrollback: 5000
 	padding:    10
 	radius:     12
@@ -24,23 +22,21 @@ Terminal {
 ```
 
 The content is left-aligned in a monospace face, so columns and rows line up.
-`cols` and `rows` pin the character grid; leave them out and the painter fits
-the grid to the box. `scrollback` is how many lines of history the wheel can
-reach; the default is 1000.
+The character grid follows the component's width and height; `scrollback` is
+how many lines of history the wheel can reach, 1000 by default.
 
 ## Properties
 
 | Property | Type | Notes |
 |---|---|---|
 | `fontSize` | number | cell text size; 13 by default |
-| `cols` | number | fixed column count; 0 fits the box |
-| `rows` | number | fixed row count; 0 fits the box |
 | `scrollback` | number | history lines kept for the wheel; 1000 by default |
 | `foreground` | color | default text colour; the theme's onSurface by default |
 
 `background`, `padding`, `radius` and the other common box properties work as on
-every element. The terminal uses `Roboto Mono` when the design does not name a
-`fontFamily`.
+every element. The terminal uses the embedded **Meslo LG S NF Mono** face when the app is built
+with the `terminal` tag (`all` includes it), and Roboto Mono otherwise. A design
+can still override `fontFamily`.
 
 ## From Go
 
