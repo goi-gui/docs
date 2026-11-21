@@ -72,6 +72,11 @@ process with `StartWithSize`, and passes the returned file to both setters.
   terminal moves through it.
 - Click the terminal to give it keyboard focus. Tab, Escape, the arrows and the
   control letters go to the shell, not to focus traversal or the app.
+- Drag across cells to select; `Ctrl+Shift+C` copies and `Ctrl+Shift+V` pastes
+  (Command on macOS). A bracketed-paste program receives the
+  `200~`/`201~` wrapper it asked for.
+- A program can enable the DEC mouse modes; clicks, releases, drags and the
+  wheel are then forwarded to it instead of selecting text.
 - `onResize` fires when the measured grid changes, which is where a pty's window
   size stays in sync with the box.
 
