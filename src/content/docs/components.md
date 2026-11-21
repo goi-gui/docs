@@ -1,0 +1,468 @@
+---
+title: "Components"
+---
+
+Every element the `.goi` format knows, grouped by what it is for. Each name links
+to its own page with a `.goi` example, its properties and a Go example.
+
+The framework has three layers: layout primitives (`Column`, `Row`, `Stack`, …),
+plain drawing nodes (`Rectangle`, `Image`, `SVG`, `Text`) and the Material 3
+components. They all share one property set and one way of being driven from Go.
+
+
+## Layout and structure
+
+- [Window](/components/window/) — The root of the tree.
+- [Column](/components/column/) — Stacks children vertically, top to bottom.
+- [Flex](/components/flex/) — A Row or a Column, chosen by its `direction` property.
+- [Row](/components/row/) — Places children left to right.
+- [TitleBar](/components/titlebar/) — A Row that moves the window when dragged.
+- [Stack](/components/stack/) — Overlays children on top of each other, last child on top.
+- [Positioned](/components/positioned/) — Anchors a child inside a Stack.
+- [ClipRRect](/components/cliprrect/) — Cuts its children to a rounded box.
+- [Hero](/components/hero/) — Flies a shared element from one page to the same tag on another.
+- [GestureDetector](/components/gesturedetector/) — Wraps a child and reports a double tap, a long press and a pan.
+- [Wrap](/components/wrap/) — Flows children left to right and starts a new run when the next child does not fit.
+- [Grid](/components/grid/) — Places children in equal-width columns, as rows or packed like a pinboard.
+- [AspectRatio](/components/aspectratio/) — Sizes its box from a width/height ratio and lets the other axis follow.
+- [Divider](/components/divider/) — A one-pixel rule between content.
+
+## Content
+
+What a page shows: text, documents, glyphs, media and plain boxes. These are nodes rather than Material components, so they take the common box properties and nothing else unless their page says so.
+
+- [Text](/components/text/) — One run of text at a Material 3 type-scale role.
+- [Icon](/components/icon/) — One Material Symbols glyph, sized and tinted on its own.
+- [RichText](/components/richtext/) — One paragraph of styled runs.
+- [Code](/components/code/) — A syntax-highlighted code block.
+- [Markdown](/components/markdown/) — A markdown document, rendered as elements.
+- [Mermaid](/components/mermaid/) — A Mermaid diagram, drawn from its source.
+- [Image](/components/image/) — Draws a decoded bitmap.
+- [SVG](/components/svg/) — Draws an SVG file, with `currentColor` set from the design.
+- [Rectangle](/components/rectangle/) — A plain colored box.
+
+## Actions
+
+- [Button](/components/button/) — The ordinary Material 3 button.
+- [IconButton](/components/iconbutton/) — A square button that holds only an icon.
+- [FAB](/components/fab/) — The floating action button: the primary action of a page.
+- [FABMenu](/components/fabmenu/) — A FAB that expands into a column of actions.
+- [ButtonGroup](/components/buttongroup/) — A row of related buttons that share one shape and one gap.
+- [SplitButton](/components/splitbutton/) — A primary action with an attached menu trigger.
+- [SegmentedButton](/components/segmentedbutton/) — A horizontal set of segments.
+- [Chip](/components/chip/) — A compact, rounded element for filters, inputs, suggestions and tags.
+- [Toolbar](/components/toolbar/) — A horizontal strip of compact controls.
+
+## Selection controls
+
+- [Checkbox](/components/checkbox/) — A binary choice with an optional label.
+- [RadioButton](/components/radiobutton/) — One option in a set where exactly one is chosen.
+- [Switch](/components/switch/) — A single on/off control with an optional label and optional glyph in the thumb.
+- [Slider](/components/slider/) — A continuous value control.
+
+## Text input
+
+- [TextField](/components/textfield/) — An editable single-line field with a floating label.
+- [SearchBar](/components/searchbar/) — A text field shaped as a search input, with a leading search glyph.
+- [TextArea](/components/textarea/) — A multiline text field.
+
+## Containment
+
+- [Card](/components/card/) — A Material 3 surface that groups related content.
+- [Dialog](/components/dialog/) — A modal surface for a decision or a short form.
+- [BottomSheet](/components/bottomsheet/) — A surface anchored to the bottom edge.
+- [SideSheet](/components/sidesheet/) — A surface anchored to a side edge, for settings or detail.
+- [List](/components/list/) — A vertical container for `ListItem`s and `MenuItem`s.
+- [ListItem](/components/listitem/) — One row in a list: leading icon, label, optional supporting line, trailing affordance.
+- [Menu](/components/menu/) — A popup list of `MenuItem`s.
+- [MenuItem](/components/menuitem/) — One row in a menu.
+- [Popover](/components/popover/) — A panel that floats against the box of its children.
+- [Snackbar](/components/snackbar/) — A short, transient message at the bottom of the screen.
+- [Tooltip](/components/tooltip/) — A hint that wraps the control it explains and floats above it on hover.
+- [Table](/components/table/) — A sortable data grid with declared columns and rows, selectable and sortable from a design or from Go.
+- [Carousel](/components/carousel/) — A horizontally snapping strip of cards.
+- [CarouselItem](/components/carouselitem/) — One card in a carousel: clipped child, label over a scrim, and press feedback.
+
+## Navigation
+
+- [TopAppBar](/components/topappbar/) — The bar at the top of a screen: a leading icon, a title and a trailing icon.
+- [NavigationBar](/components/navigationbar/) — The bottom navigation bar for the compact window class.
+- [NavigationRail](/components/navigationrail/) — The side navigation rail for medium and expanded windows.
+- [NavigationDrawer](/components/navigationdrawer/) — A modal drawer that lists the same destinations as the rail and bar.
+- [NavigationItem](/components/navigationitem/) — One destination in a navigation bar, rail or drawer.
+- [Breadcrumb](/components/breadcrumb/) — A trail of destinations, with the separators between them.
+- [Tabs](/components/tabs/) — A tab bar that groups `Tab` children.
+- [Tab](/components/tab/) — One tab in a tab bar.
+
+## Status and progress
+
+- [Badge](/components/badge/) — A small count or status dot, usually overlaid on an icon with `Positioned` or `Stack`.
+- [LinearProgress](/components/linearprogress/) — A horizontal progress bar.
+- [CircularProgress](/components/circularprogress/) — A circular progress ring.
+- [LoadingIndicator](/components/loadingindicator/) — The M3 indeterminate loading shape.
+- [Skeleton](/components/skeleton/) — A shimmering placeholder for content that has not arrived.
+
+## Date, time and colour
+
+- [DatePicker](/components/datepicker/) — A calendar surface for picking a date.
+- [TimePicker](/components/timepicker/) — An M3 time picker with a clock dial or two typed fields, a 12-hour display and AM/PM.
+- [ColorPicker](/components/colorpicker/) — A saturation/value square, hue and alpha bars, and a hex field for picking a colour.
+
+## Media
+
+Both play through ffmpeg, which has to be on `PATH`; both can hide their controls and be driven from `.goi` (`clip.play()`) or Go (`app.PlayMedia(clip)`).
+
+- [Audio](/components/audio/) — A sound player with a built-in transport bar.
+- [Video](/components/video/) — A video player, decoded with ffmpeg.
+
+## Maps
+
+- [Map](/components/map/) — OpenStreetMap tiles with pan, zoom and overlay children.
+- [Geom](/components/geom/) — One filled and stroked polygon on a map.
+- [Point](/components/point/) — A marker on a map, with any children.
+- [Path](/components/path/) — An open polyline between coordinates on a map.
+
+## Charts
+
+- [LineChart](/components/linechart/) — A line per series through the points.
+- [AreaChart](/components/areachart/) — A line with the space under it filled.
+- [BarChart](/components/barchart/) — Grouped, stacked or horizontal bars.
+- [PieChart](/components/piechart/) — Slices, or a donut with a hole.
+- [ScatterChart](/components/scatterchart/) — One dot per value, no line.
+- [RadarChart](/components/radarchart/) — One polygon per series over a spoke per category.
+- [GaugeChart](/components/gaugechart/) — One value as an arc, with the number inside.
+
+Every chart takes `ChartSeries` children, so a design holds its own data:
+`categories: ["Jan", "Feb"]` names the points and one child per line carries
+`label`, `values` and `color`. See
+[LineChart's data](/components/linechart/#the-data).
+
+Every chart draws its chrome from
+[`grid`](/components/linechart/#properties), `axis`, `legend` and `values`, and
+is interactive: hovering shows a tooltip, clicking fires `onSelect` with the
+point index. An app whose numbers move replaces the design's data with `SetData`.
+
+A legend is a switch as well as a key: clicking an entry hides that series (or
+that slice, on a pie) and clicking it again brings it back. A hidden entry stays
+in place, dimmed, and the value scale and the pie's shares follow what is left.
+The last visible entry cannot be turned off, so a chart never ends up with
+nothing to click.
+
+## Common properties
+
+These apply to every element and are not repeated on the component pages.
+
+| Property | Type | Notes |
+|---|---|---|
+| `id` | string | assigned by the builder; the handle Go looks up |
+| `width, height` | number | declared size; `-1` (default) means auto |
+| `size` | number | both axes at once: `size: 32` is a 32 by 32 box, the same as `width: 32 height: 32` |
+| `minWidth, maxWidth` | number | bounds for the resolved width; `SetMinWidth`/`SetMaxWidth` from Go |
+| `minHeight, maxHeight` | number | bounds for the resolved height; `SetMinHeight`/`SetMaxHeight` from Go |
+| `margin` | number | outer spacing on all sides |
+| `marginX`, `marginY` | number | left+right, top+bottom; unset follows `margin` |
+| `marginTop`, `marginRight`, `marginBottom`, `marginLeft` | number | per-side override; unset follows `marginX`/`marginY`, then `margin` |
+| `padding` | number | inner spacing on all sides |
+| `paddingX`, `paddingY` | number | left+right, top+bottom; unset follows `padding` |
+| `paddingTop`, `paddingRight`, `paddingBottom`, `paddingLeft` | number | per-side override; unset follows its axis, then `padding` |
+| `background` | color | theme role, `#RRGGBB`, or a gradient; on a component it replaces the built-in surface, on a selection control it fills the box behind the control |
+| `borderColor`, `borderThickness` | color, number | outline around the box; `-1` (default) draws none and keeps a component's own outline, `0` removes that outline |
+| `borderType` | enum | `solid` (default), `dashed` or `dotted`; a thickness without a colour restyles the outline a component already draws |
+| `borderXThickness`, `borderYThickness` | number | left+right, top+bottom; unset follows `borderThickness` |
+| `borderTopThickness`, `borderRightThickness`, `borderBottomThickness`, `borderLeftThickness` | number | per-side override; unset follows its axis, then `borderThickness` |
+| `borderXColor`, `borderYColor` | color | left+right, top+bottom; unset follows `borderColor` |
+| `borderTopColor`, `borderRightColor`, `borderBottomColor`, `borderLeftColor` | color | per-side override; unset follows its axis colour, then `borderColor` |
+| `radius` | number | corner radius on all four corners |
+| `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft` | number | rounds both corners on that side; unset follows `radius` |
+| `radiusTopLeft`, `radiusTopRight`, `radiusBottomRight`, `radiusBottomLeft` | number | rounds one corner; unset follows the side, then `radius` |
+| `fontFamily` | string | a family the app registered with `LoadFont`, `LoadFontFamily` or `LoadVariableFont`, or built-in `Roboto`; inherited by children; see [Fonts](/guide/fonts/) |
+| `shadow` | shadow | CSS-style shadow: the box everywhere, the glyphs on `Text`; see [Shadows](/guide/shadows/) |
+| `visible` | bool | removes the element from layout, painting and hit-testing |
+| `ripple` | bool | press feedback on any element. Unwritten keeps the host's default: a component that ripples (buttons, icon buttons, FABs, chips, tabs, switches, menu and list rows) keeps it, a plain element has none. `true` adds one to a box or a picture — the element takes the press even without an `onClick` handler — and `false` removes it from a button. The disc is clipped to the element's own shape, so it never spills past a pill or a card; a press on a child that is not itself a control counts as a press on the rippling element |
+| `flex` | number | share of the parent's leftover main-axis space |
+| `alignSelf` | enum | `start`, `center`, `end`, `stretch`; overrides the parent's `crossAxisAlign` |
+| `scroll` | bool | scroll when content overflows the box. On by default for `Column`, `Row`, `Flex`, `Carousel` and `NavigationRail`; `scroll: false` turns it off, and the rest of the elements start off |
+| `opacity` | number | 0 to 1, or a percentage such as `50%`; fades the element and its subtree |
+| `backdropBlur` | number or blur gradient | radius in dp of the blur applied to what is already painted behind the element, like CSS `backdrop-filter`, or a `linear-gradient`/`radial-gradient` of radii that fades the blur across the box; 0 (default) is no blur |
+| `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected. It is the stronger claim: a modal overlay names one to stay above a page whose popover panel lifts its branch |
+| `cursor` | enum | pointer shape, named the way CSS names it: `pointer`, `text`, `move`, `grab`, `not-allowed`, the resize arrows, `wait`, `none`, … |
+| `rotate` | rotate | CSS `rotate`: `45deg`, `0.25turn`, `x 90deg`, `1 1 1 90deg`; turns the element and its subtree |
+| `transition` | transition | properties that animate when their value changes, e.g. `width 500ms, background 1s`; see [Transitions](/guide/transitions/) |
+| `scale` | scale | CSS `scale`: `2`, `50%`, `2 0.5`, `200% 50% 200%`; stretches the element and its subtree about its centre, and layout is unaffected — see [Scale](/guide/scale/) |
+| `hideScrollbar` | bool | removes the scrollbar entirely |
+| `autoHideScrollbar` | bool | `true` (default) shows the bar only while the pointer is over the area or it scrolled in the last two seconds; `false` keeps it up |
+| `scrollbarWidth` | number | bar thickness in dp; 4 by default |
+| `scrollbarColor` | color | bar colour; defaults to the theme's muted onSurfaceVariant |
+| `scrollShadow` | bool | fades an edge when there is content scrolled away from it |
+| `scrollShadowColor` | color | colour of that edge gradient; defaults to the scheme's shadow colour |
+| `scrollSnapType` | enum | `none` (default), `mandatory` or `proximity`: snap the scroll to the children's snap points, always or only when the gesture ends near one |
+| `scrollSnapAlign` | enum | `none` (default), `start`, `center` or `end`: the edge of this child that lines up with the frame |
+| `scrollSnapStop` | enum | `normal` (default) lets a gesture pass several snap points; `stop` ends it at the next one |
+| `scrollPadding` | number | inset between the frame and a `start`/`end` snap line, the way CSS `scroll-padding` insets it |
+
+### Scroll snapping
+
+A scroll container can settle on its children. The container says how strictly
+(`scrollSnapType`) and each child says which edge lines up
+(`scrollSnapAlign`); the axis is the container's own, so a `Column` snaps
+vertically and a `Row` or a `Carousel` sideways without an `x`/`y` suffix:
+
+```goi
+Column {
+	scrollSnapType:    mandatory
+	scrollSnapStop:    stop
+	scrollPadding:     10
+	width:             100%
+	height:            300
+
+	for range 10 {
+		Rectangle {
+			width:           100%
+			height:          200
+			scrollSnapAlign: start
+		}
+	}
+}
+```
+
+- `mandatory` always settles on a snap point; `proximity` takes one only when
+  the gesture ends within a quarter of the frame of it, so a hand that stops
+  mid-block keeps that place.
+- A notched wheel moves one snap point per notch. A touchpad swipe, a drag and
+  a fling scroll freely and settle when they end; `scrollSnapStop: stop` stops a
+  fling at the first point it reaches instead of coasting through several.
+- `scrollPadding` insets the `start` and `end` lines from the frame, which is
+  what keeps a card from sitting flush against the edge. `center` ignores it.
+- Snapping is a property of any scrolling element, so it works on a `Column`, a
+  `Row`, a `List`, a `Carousel`, a `Table` and the panels that scroll on their
+  own. `scrollSnapAlign` on a child of a non-scrolling parent does nothing.
+
+### Scrolling from a design or Go
+
+Every scrolling element answers the same six shortcuts: a raw offset, a child
+by position, or a child by id, each with an instant and a smooth form. The axis
+is the element's own, so a `Column` moves down, a `Row` or a `Carousel` moves
+sideways, and a `Table` uses its vertical axis.
+
+```goi
+Column {
+	id:      page
+	height:  320
+	scroll:  true
+
+	Button {
+		label:   "Center the fifth card"
+		onClick: page.scrollToNthChildSmooth(5, center, 400ms)
+	}
+
+	Button {
+		label:   "Back to the top"
+		onClick: page.scrollToSmooth(0, 300ms)
+	}
+
+	for range 10 {
+		Rectangle {
+			width:  100%
+			height: 80
+		}
+	}
+}
+```
+
+A child-scroll call takes an optional alignment after the child: `start` (the
+default), `center` or `end`. `center` puts the child's middle in the middle of
+the viewport, and `end` lines its trailing edge up with the far edge, so the
+last rows can be brought fully into view. The smooth forms take a duration such
+as `300ms`; a duration of `0` jumps. A wheel, a drag or a scrollbar grab cancels
+the flight where it is, because that gesture takes over the offset.
+
+| In a design | From Go | Moves to |
+|---|---|---|
+| `page.scrollTo(200)` | `page.ScrollTo(200)` | offset 200 |
+| `page.scrollToSmooth(200, 300ms)` | `page.ScrollToSmooth(200, 300*time.Millisecond)` | offset 200, eased |
+| `page.scrollToNthChild(5)` | `page.ScrollToNthChild(5)` | the fifth visible direct child, at the start |
+| `page.scrollToNthChild(5, center)` | `page.ScrollToNthChild(5, ui.ScrollCenter)` | the fifth child, centered |
+| `page.scrollToNthChildSmooth(5, center, 300ms)` | `page.ScrollToNthChildSmooth(5, 300*time.Millisecond, ui.ScrollCenter)` | the fifth child, centered and eased |
+| `page.scrollToChild("row7")` | `page.ScrollToChild("row7")` | an element anywhere inside the area, at the start |
+| `page.scrollToChild("row7", end)` | `page.ScrollToChild("row7", ui.ScrollEnd)` | that element, end-aligned |
+| `page.scrollToChildSmooth("row7", end, 300ms)` | `page.ScrollToChildSmooth("row7", 300*time.Millisecond, ui.ScrollEnd)` | that element, end-aligned and eased |
+
+A design writes the alignment between the child and the duration, matching the
+first example. Go keeps the duration next to the other required argument and
+takes the alignment last, so a plain `ScrollToNthChildSmooth(5, 300*time.Millisecond)`
+still starts-aligned.
+
+`NthChild` counts from one among the direct children that are visible, and the
+id form finds a descendant at any depth. The Go methods return `false` when the
+element does not scroll, the index is out of range or the id is not inside it,
+so a caller can tell a miss from a move. An offset past the end clamps when it is
+read, so it follows the content if the content later grows.
+## Containers and `gap`
+
+Containers lay their children out in a row or a column and accept `spacing`,
+its alias `gap`, `crossAxisAlign` and `mainAxisAlign`: `ButtonGroup`, `Toolbar`,
+`Carousel`, `FABMenu`, `Tabs`, `NavigationBar`, `NavigationRail`,
+`NavigationDrawer`, `Breadcrumb`, `List`, `Menu`, `Card`, `Dialog`, `BottomSheet`, `SideSheet`,
+`DatePicker`, `TimePicker`.
+
+The two axes are the Flutter pair, and they replace the old single `align`:
+
+| Property | Where it acts | Values |
+|---|---|---|
+| `crossAxisAlign` | across the flow: sideways in a `Column`, up and down in a `Row` | `start`, `center`, `end`, `stretch` |
+| `mainAxisAlign` | along the flow, on the leftover space | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly` |
+
+Both default to `start`. A child that is a container still fills the cross axis
+of its parent, so a `Column` inside a `Column` is full width; `stretch` forces
+that for a leaf too. `mainAxisAlign` only has room to work when the children do
+not already fill the axis, and in a `Wrap` it spreads each run; a `Stack` and a
+`ClipRRect` overlay one box at a time, so they accept only the four geometric
+values. `alignSelf` overrides the parent's `crossAxisAlign` for one child.
+
+## Events
+
+A design declares its handlers in a `bridge` block and calls them from an event
+property; Go registers the body with `ui.SetHandler`:
+
+```goi
+bridge {
+	OnOpen func(id string)
+}
+
+Window {
+	Button {
+		label:   "Open"
+		onClick: bridge.OnOpen("42")
+	}
+}
+```
+
+| Design property | Go call | Emitted by |
+|---|---|---|
+| `onClick: bridge.Handler(...)` | `OnClick(func(ui.ClickEvent))` | every element; `ClickEvent` has `X`, `Y`, `Button` |
+| `onClickOutside: bridge.Handler(...)` | `OnClickOutside(func(ui.ClickEvent))` | every element; a primary press outside its subtree, on the press itself |
+| `onToggle: bridge.Handler(event)` | `OnToggle(func(bool))` | Checkbox, RadioButton, Switch, Chip |
+| `onChange: bridge.Handler(event)` | `OnChangeValue(func(float64))` | Slider |
+| `onEdit: bridge.Handler(event)` | `OnEdit(func(string))` | TextField, SearchBar (every keystroke); ColorPicker (every change) |
+| `onSubmit: bridge.Handler(event)` | `OnSubmit(func(string))` | TextField, SearchBar (Enter); DatePicker, TimePicker, ColorPicker (the picked value) |
+| `onSelect: bridge.Handler(event)` | `OnSelect(func(int))` | Tabs, NavigationBar, NavigationRail, List, Menu, Table, SegmentedButton, Carousel, and every chart (the slice or point) |
+| `onHover: bridge.Handler(event)` | `OnHoverPoint(func(int))` | charts: the point under the pointer, -1 when it leaves |
+| `onPlay: bridge.Handler(event)` | `OnPlay(func(float64))` | Audio, Video (payload: position in seconds) |
+| `onPause: bridge.Handler(event)` | `OnPause(func(float64))` | Audio, Video |
+| `onEnd: bridge.Handler(event)` | `OnEnd(func(float64))` | Audio, Video |
+| `onCancel: bridge.Handler(event)` | `OnCancel(func(string))` | TimePicker, ColorPicker |
+| `onOK: bridge.Handler(event)` | `OnOK(func(string))` | TimePicker, ColorPicker |
+| `onDoubleTap: bridge.Handler()` | `OnDoubleTap(func(ui.ClickEvent))` | GestureDetector |
+| `onLongPress: bridge.Handler()` | `OnLongPress(func(ui.ClickEvent))` | GestureDetector |
+| `onPanStart`, `onPanUpdate`, `onPanEnd` | `OnPanStart/Update/End(func(ui.PanEvent))` | GestureDetector |
+| `onMouseEnter`, `onMouseMove`, `onMouseLeave` | `OnMouseEnter/Move/Leave(func(ui.MouseEvent))` | GestureDetector: the pointer entering, moving over, or leaving its box |
+
+The value of an event property is always a handler call. Its arguments are
+evaluated when the event fires; `event` is the event's own payload. A fragment
+can also declare a handler prop (`props { OnOpen func(id string) }`) and call
+it, with the instance deciding which bridge handler that is. See
+`syntax.md` for the bridge block, handler types and runtime errors.
+
+## Themes and custom colours
+
+`theme` names a colour scheme: `light` and `dark` are built in, and the app adds
+more on the window with `Window.DefineTheme`, either edited by hand or derived
+from one seed colour. Every colour a component draws comes from the resolved
+scheme, so switching it recolours the whole window.
+
+An app can also name its own colours and use them under `customColor.`; they
+resolve on every frame, so setting one again recolours every element that uses
+it without a reload.
+
+Both are covered on their own pages: [Theming](/guide/theming/) and
+[Custom colours](/guide/custom-colors/).
+
+## Finding elements from Go
+
+```go
+btn, err := w.ByID[*ui.Button]("save")   // typed, fails when missing or mistyped
+btn := w.MustByID[*ui.Button]("save")    // panics; fine in Bind
+node, err := w.ByID[ui.Node]("save")     // untyped
+
+ui.SetHandler(w, "onOpen", func(id string) { open(id) })  // body of a bridge handler
+```
+
+The lookup is a generic method, so the window comes first and the type argument
+says what the id must be. The package form does the same and stays for a helper
+that only holds the window and the id: `ui.ByID[*ui.Button](w, "save")` and
+`ui.MustByID[*ui.Button](w, "save")`.
+
+The common box is a Go API as well as a design property, so a size or a colour
+decided at run time needs no reload:
+
+```go
+box := w.MustByID[*ui.Column]("page")
+box.SetWidth(320)   // dp; a negative value returns it to auto
+box.SetHeight(180)
+box.SetSize(320, 180) // both at once, like the design's `size`
+box.SetPadding(16)
+box.SetMargin(8)
+box.SetRadius(12)
+box.SetBackground(0x6750A4FF) // a solid colour, replacing a role or a gradient
+box.SetBorderThickness(1)
+box.SetBorderColor(0x79747EFF)
+```
+
+One side of a box is settable too, and `-1` removes the override so the side
+follows its aggregate again:
+
+```go
+box.SetPaddingX(16)     // left and right
+box.SetPaddingY(8)      // top and bottom
+box.SetMarginX(24)      // left and right
+box.SetMarginY(12)      // top and bottom
+box.SetMarginTop(24)
+box.SetBorderXThickness(2) // left and right
+box.SetBorderYThickness(1) // top and bottom
+box.SetBorderLeftThickness(2)
+box.SetBorderXColor(0x79747EFF)
+box.SetBorderTopColor(0x6750A4FF)
+box.SetRadiusTopLeft(0) // a flat top-left corner
+box.SetRadiusBottom(12)
+```
+
+Every setter marks the tree dirty, so the next frame lays out and repaints
+without a manual call. A size is dp, not a percentage: a percentage depends on
+the parent the node is built in, which is a design-time fact. A colour is a
+literal, because a role or a gradient has to be resolved against the scheme; the
+getters (`Width`, `Height`, `Background`, …) read back what was set.
+
+`ui.SetHandler` supplies the Go function a `bridge { OnOpen func(id string) }`
+declaration calls; register it from `Bind` so a hot reload registers it again.
+The design can read a node's property by id as well (`width: panel.width`), which
+needs no Go code at all.
+
+A list of unknown length is usually a `for` loop the app feeds with
+`ui.SetData`; the row stays in the design and the type it reads is declared, so
+`goicheck` and the editor check every field (see [SYNTAX](/syntax/#declarations-values-and-handlers)).
+
+```goi
+bridge {
+	Tickets []Ticket
+}
+
+type Ticket {
+	Title  string
+	Unread bool
+}
+
+Window {
+	Column {
+		for _, ticket := range bridge.Tickets {
+			ListItem {
+				label:    ticket.Title
+				selected: ticket.Unread
+			}
+		}
+	}
+}
+```
+
+A row built by hand is a loop over a one item list, not a cloned node: the
+design keeps the row and `ui.SetData` supplies it. `ui.Remove` detaches a node
+whose subtree should simply go away.

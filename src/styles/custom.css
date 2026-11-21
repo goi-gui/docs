@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'goi-icons';
+  src: url('/fonts/material-symbols.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+
+/* The icon table uses the same font goi ships, so every name on the page draws. */
+.goi-icon {
+  font-family: 'goi-icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --sl-color-accent-low: #e0f2fe;
+  --sl-color-accent: #0284c7;
+  --sl-color-accent-high: #075985;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #082f49;
+  --sl-color-accent: #2dd4f0;
+  --sl-color-accent-high: #a5f3fc;
+}

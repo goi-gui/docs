@@ -1,0 +1,112 @@
+---
+title: "PieChart"
+---
+
+One wedge per value of the first series, with an optional hole for a donut.
+
+[All components](/components/)
+
+<p align="center">
+  <img src="/img/components/piechart-light.png" alt="PieChart in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/piechart-dark.png" alt="PieChart in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+## In a `.goi` file
+
+```goi
+PieChart {
+	id:          channels
+	width:       260
+	height:      240
+	innerRadius: 0.55
+	legend:      true
+	values:      true
+	startAngle:  -90
+	categories:  ["Direct", "Search", "Social", "Email"]
+
+	ChartSeries {
+		values: [42, 27, 18, 13]
+	}
+}
+```
+
+## Slices
+
+The wedges read the **first** series only, and each category is one slice, so
+`categories` is what names the legend and the tooltip. An app whose numbers move
+fills the same picture from Go:
+
+```go
+pie := w.MustByID[*ui.PieChart]("channels")
+pie.SetData(ui.ChartData{
+	Categories: []string{"Direct", "Search", "Social", "Email"},
+	Series:     []ui.Series{{Values: []float64{42, 27, 18, 13}}},
+})
+```
+
+Each slice takes the next colour from the scheme's accents. To fix them, list one
+colour per slice on the series, and a theme role there keeps following the
+scheme:
+
+```goi
+PieChart {
+	categories: ["Direct", "Search", "Social", "Email"]
+
+	ChartSeries {
+		values: [42, 27, 18, 13]
+		colors: [theme.primary, theme.tertiary, theme.secondary, #c62828]
+	}
+}
+```
+
+`colors` is a colour list, so each entry names its namespace: a theme role
+(`theme.primary`), an app colour (`customColor.brand`), a hex literal, a CSS name
+or `rgb()`. A single `color` on a `ChartSeries` — or `Series.Color` in Go — paints
+the whole pie one colour instead.
+
+A negative or zero value is skipped, so a gap in the data does not tilt the
+others. The centre of a pie is not a slice: a press there picks nothing.
+
+## Properties
+
+| Property | Type | Notes |
+|---|---|---|
+| `innerRadius` | number | 0 (default) is a pie; 0.5 is a donut with half the radius open |
+| `startAngle` | number | where the first wedge begins, in degrees; 0 is 12 o'clock |
+| `legend` | bool | a key for the categories; off by default |
+| `categories` | list | the labels along the value axis: `["Direct", "Search"]`; empty falls back to numbers |
+| `textColor` | color | every label the chart writes: axis ticks, categories, values, the legend, the gauge number; unset follows the scheme |
+| `gridColor` | color | the value lines, a radar's rings and spokes, the gauge's track; unset follows the scheme |
+| `values` | bool | the value written inside each wedge; off by default |
+| `grid` | bool | has no effect on a pie |
+| `axis` | bool | has no effect on a pie |
+| `min`, `max` | number | pin the scale the shares are read against; `0` follows the data |
+
+The rest of the surface is the common box: `background`, `borderThickness`,
+`borderColor`, `radius`, `padding` and the rest of the
+[common properties](/components/#common-properties).
+
+## Events
+
+A press fires `onSelect` with the point's index, and the hover reports through
+`onHover` with the point under the pointer or `-1`:
+
+```goi
+bridge {
+	onPick  func(index int)
+	onHover func(index int)
+}
+```
+
+```goi
+PieChart {
+	onSelect: bridge.onPick(event)
+	onHover:  bridge.onHover(event)
+}
+```
+
+## The data
+
+`ChartData` and `Series` are shared by every chart, so the table on the
+[LineChart](/components/linechart/#the-data) page applies here too. Hover, click, the
+tooltip and `onSelect`/`onHover` work the same way on every kind.

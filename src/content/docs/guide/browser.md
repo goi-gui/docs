@@ -1,0 +1,253 @@
+---
+title: "In the browser"
+---
+
+A goi app builds to WebAssembly and runs in a canvas. The design file, the tree,
+layout, painting and text are the same code as on the desktop: the browser swaps
+the window layer and the WebGPU backend, and nothing else.
+
+```sh
+goi build --os js --arch wasm
+```
+
+That writes `dist/js-wasm/<name>.wasm` with the design embedded, just like a
+desktop build. Put the page next to it and copy the runtime shim:
+
+```sh
+cd dist/js-wasm
+cp "$(go env GOROOT)/lib/wasm/wasm_exec.js" .
+python3 -m http.server
+```
+
+The page is then available at `http://localhost:8000`. WebGPU needs a secure
+context, so `http://localhost` works and a plain-HTTP host name does not.
+
+## The page
+
+The browser has no window, so the page's canvas is the window:
+
+```html
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+	html, body { margin: 0; height: 100%; }
+	canvas { width: 100%; height: 100%; display: block; }
+</style>
+</head>
+<body>
+<canvas></canvas>
+<script src="wasm_exec.js"></script>
+<script>
+	const go = new Go();
+	WebAssembly.instantiateStreaming(fetch("myapp.wasm"), go.importObject)
+		.then((result) => go.run(result.instance));
+</script>
+</body>
+</html>
+```
+
+Copy `wasm_exec.js` from your Go installation:
+
+```sh
+cp "$(go env GOROOT)/lib/wasm/wasm_exec.js" web/
+```
+
+- The stylesheet sizes the window. A `canvas { width: 100%; height: 100% }` fills
+  the page, and changing the page's size resizes the app; a canvas with no size
+  of its own falls back to the design's `width` and `height`.
+- If the page has no `<canvas>`, one is created and appended to `<body>`.
+- The canvas becomes a WebGPU context; a browser without WebGPU shows nothing.
+
+## Waiting for the first frame
+
+The canvas is blank until the wasm module starts and presents its first frame.
+The framework dispatches a `goi-ready` event on the canvas at that point, once,
+so a page can cover the gap with its own loading indicator:
+
+```html
+<div id="goi-loading" role="status" aria-live="polite" aria-label="Loading">
+	<div class="spinner" aria-hidden="true"></div>
+</div>
+<canvas id="hero"></canvas>
+
+<style>
+	#goi-loading {
+		position: fixed; inset: 0; display: grid; place-items: center;
+		background: #f6f3fb; transition: opacity .2s ease;
+	}
+	#goi-loading.done { opacity: 0; pointer-events: none; }
+	.spinner {
+		width: 48px; height: 48px; border-radius: 50%;
+		border: 4px solid #e8def8; border-top-color: #6750a4;
+		animation: spin .9s linear infinite;
+	}
+	@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+
+<script src="wasm_exec.js"></script>
+<script>
+	const canvas = document.getElementById("hero");
+	const loading = document.getElementById("goi-loading");
+	canvas.addEventListener("goi-ready", () => {
+		loading.classList.add("done");
+		loading.setAttribute("aria-hidden", "true");
+	}, { once: true });
+
+	const go = new Go();
+	WebAssembly.instantiateStreaming(fetch("app.wasm"), go.importObject)
+		.then((result) => go.run(result.instance));
+</script>
+```
+
+The event fires on the canvas that presented the frame and bubbles, so a page
+with several apps can listen once on `document` and hide the loader that matches
+`event.target`. If the app cannot start, no frame is presented and the loader
+stays, which is the honest state to show.
+
+## Choosing the canvas
+
+By default the app takes the page's first canvas. A page that holds more than one
+names the one it wants, by id:
+
+```goi
+// app.goi — the design is ordinary; only the Go call names the canvas.
+Window {
+	title: "goi"
+	Column { Text { text: "Hello" } }
+}
+```
+
+```go
+win, err := app.LoadWindow("app.goi", ui.WithCanvas("hero"))
+```
+
+```html
+<canvas id="hero"></canvas>
+```
+
+A canvas with the id is used as it is; when the page has none, one with that id
+is created and appended, so a page can be as small as the script. The id is a
+page concern only: the same binary runs in whichever canvas it is told to, and a
+desktop build ignores the option.
+
+To show two apps on one page, give each canvas an id and run one app per canvas.
+Each needs its own WebAssembly instance, because an instance has one window:
+
+```html
+<canvas id="hero"></canvas>
+<canvas id="sidebar"></canvas>
+<script src="wasm_exec.js"></script>
+<script>
+	// Each module is its own program with its own ui.WithCanvas call.
+	async function start(src) {
+		const go = new Go();
+		const result = await WebAssembly.instantiateStreaming(fetch(src), go.importObject);
+		go.run(result.instance);
+	}
+	start("hero.wasm");
+	start("sidebar.wasm");
+</script>
+```
+
+Two apps in one page cost two Go runtimes and two WebGPU devices. For a page
+that only needs one, keep one canvas.
+
+Each canvas is a tab stop: a press moves the keyboard to it, and only that app
+hears the keys, so several apps on one page do not type at once. The browser
+draws its own focus ring around a focused canvas; `canvas:focus { outline: none }`
+turns it off when the app's own focus ring is enough.
+
+The wasm file, `wasm_exec.js` and `index.html` are the whole page; serving that
+directory is enough. `goi build` adds `buildFlags` and embeds the design, so the
+browser and desktop builds start from the same `goi.yaml`.
+
+## What a design can rely on
+
+Everything the painter draws works the same way: shapes, gradients, shadows,
+text and icons, images and SVG, charts, `backdropBlur`, animation. Input works
+through the DOM:
+
+| Desktop | Browser |
+| --- | --- |
+| mouse move, press, release | `mousemove`, `mousedown`, `mouseup` on the canvas, and `mouseup` on the page so a drag that leaves the canvas still ends |
+| wheel | `wheel`, with `Shift` for a sideways gesture |
+| typing | `keydown` for the named keys, an invisible textarea for text and the input method |
+| focus, blur | `focus`, `blur` on the page |
+| system theme | `prefers-color-scheme` |
+
+`Copy`, `Paste` and `Cut` use the page's clipboard: the app caches the text from
+the page's own `copy`/`paste` events, so Ctrl+V inside a text field works.
+
+## Picking a file
+
+A browser cannot block on a dialog, so the picker is a callback:
+
+```go
+app.PickFiles(func(files []string) {
+	if len(files) > 0 {
+		preview.Src.Set(files[0]) // `goi://picked/0/photo.png`
+	}
+}, ui.DialogFilters(ui.FileFilter{Name: "Images", Patterns: []string{"*.png", "*.jpg"}}))
+```
+
+The same call works on the desktop, where the native dialog runs off the UI
+goroutine. Each chosen file gets a `goi://picked/…` src that every reader
+understands, so an `Image`, a `Video` or a caption file can take one directly.
+
+`ui.OpenFile` and its siblings still exist for desktop code, but they return
+`ErrDialogCanceled` in a page, and `ui.DialogsAvailable()` is `false` there.
+
+## Media
+
+`Audio` and `Video` play through the page's own decoder: a hidden `<video>` or
+`<audio>` element holds the file, and the frame loop copies its picture into the
+node's bitmap. Paint, hover, the control bar and fullscreen therefore behave the
+way they do on the desktop, with the browser's container support, its hardware
+decoding and its audio device — no ffmpeg on the machine.
+
+- A `goi://…` asset or a picked file becomes a blob URL, so a design's `src`
+  works unchanged; an `http(s)` URL is used as written.
+- A live feed plays when the browser can play it, and the scrubber follows the
+  element's clock.
+- Subtitles are parsed and drawn by goi, so an SRT behaves as it does on the
+  desktop.
+- `audioTrack` is recorded but does not switch a stream: a page cannot select an
+  embedded audio track.
+
+## Keyboard and the input method
+
+Typing goes through an invisible `<textarea>` that the window keeps off screen
+and moves under the caret, which is what gives the browser's input method
+somewhere to compose:
+
+- a printable key types into that element and its `input` event commits the text,
+  so dead keys, AltGr and a composition all take one path;
+- `compositionstart`/`compositionupdate`/`compositionend` become the same preedit
+  and commit calls SDL's IME produces, so `Preedit` and `CommitText` behave
+  identically on both platforms.
+
+## What it cannot do
+
+- **Blocking dialogs.** `ui.OpenFile` and friends return `ErrDialogCanceled`; use
+  `app.PickFiles`.
+- **Window management.** Minimize, maximize, resize edges and size limits are
+  recorded and reported back, but the tab is the window: `SetFullscreen` asks the
+  browser for fullscreen on the canvas, and the rest is a no-op.
+- **More than one window.** One canvas per page is the model.
+- **Switching an embedded audio track.** `audioTrack` is recorded only.
+
+## Frames
+
+The app paints on every `requestAnimationFrame`, so an animation follows the
+display and a hidden tab stops painting (the browser throttles it). A desktop
+build waits for something to change instead, which is why an idle desktop app
+sits at 0% CPU and a browser tab does not.
+
+## Serving it
+
+A `.wasm` file is served as `application/wasm` so
+`instantiateStreaming` can stream it; most static servers get that right, and a
+server that does not can fall back to `instantiate`. There is nothing else to
+configure: no runtime, no JavaScript API to bind.
