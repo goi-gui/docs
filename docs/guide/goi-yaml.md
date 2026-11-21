@@ -82,6 +82,46 @@ The values are the optional feature tags:
 A tag can also be a space- or comma-separated group inside one entry
 (`"emoji svg"`), which is useful when a flag list comes from a script.
 
+### `auto`
+
+`auto` scans every `.goi` file under `assets` and adds the feature tags the
+design actually uses. It only manages the feature tags below, so flags of your
+own stay where they are:
+
+```yaml
+runFlags: [auto, abc, myflag]
+buildFlags: [auto, abc, myflag]
+```
+
+| Found in a design | Tag |
+|---|---|
+| `SVG` | `svg` |
+| `Mermaid` | `mermaid` |
+| `Markdown` | `markdown` |
+| `Code` | `code` |
+| `Map`, or an `http(s)://` URL | `net` |
+| an emoji in any `.goi` string | `emoji` |
+
+`auto` also drops a stale managed tag when the design stops using it. `dialog`
+is never inferred, because it is a Go API rather than a design element; add it
+to the list yourself when the app opens native pickers or notifications. A tag
+you write yourself that is not one of the managed features (`abc`, `myflag`,
+`nohotreload`, …) is always kept.
+
+`all` wins over `auto`: it already turns every feature on, so the design is not
+scanned and the custom tags are kept.
+
+With `auto`, `goi build` scans before it builds. `goi run` keeps scanning while
+it runs: when a saved `.goi` changes which features are needed, it stops `go run`
+and starts it again with the new tags. The first run and every restart print
+the resolved tags, with `all` expanded:
+
+```text
+goi: run tags: mermaid, abc, myflag
+```
+
+Without `auto`, the flags are used as written and the same line prints them.
+
 ## `assets`
 
 The one directory holding the designs and their assets, relative to `goi.yaml`.

@@ -44,7 +44,8 @@ so the binary is self-contained and does not watch its design files. No `//go:em
 directive and no hot reload option are needed in the app. Assets reached through
 `goi://` are embedded with the design; plain paths still read the process's
 working directory. The tags in `buildFlags` are the only feature tags the build
-receives.
+receives; `auto` scans the design and adds the ones it needs before the build,
+and prints the resolved list.
 
 ## Cross-compiling
 

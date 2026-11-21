@@ -19,6 +19,9 @@ go run -tags nofakecgo,<runFlags...> ./<entrypoint>
 ```
 
 - `runFlags` is the tag list for a development run. It defaults to `[all]`.
+  `auto` makes it follow the features the `.goi` files use and restart the run
+  when that set changes; see [`auto`](goi-yaml.md#auto). The resolved tags are
+  printed at the start and on every restart.
 - `entrypoint` is the package directory, `cmd` by default.
 - `CGO_ENABLED=0` is set. `nofakecgo` is always added.
 - The caller's environment is forwarded to `go`; `CGO_ENABLED` is the only
