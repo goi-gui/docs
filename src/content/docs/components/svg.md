@@ -116,11 +116,15 @@ are folded into the presentation attributes the rasterizer reads, and a negative
 
 It also draws the common finishing layers:
 
-- **Text.** `<text>` and `tspan` text use one embedded fallback face (Go
-  Regular), with `x`, `y`, `font-size`, `text-anchor`, `fill`, opacity and
-  transforms. Text is painted over the shapes.
-- **Embedded images.** A `data:image/png`, `jpeg` or `gif` URI is decoded and
-  placed at the element's box; it is painted as a background layer.
+- **Text.** `<text>` and `tspan` text use embedded Go Regular/Bold/Italic faces,
+  with `x`, `y`, `font-size`, `font-weight`, `font-style`, `text-anchor`,
+  `letter-spacing`, `fill`, `stroke`/`stroke-width`, opacity and transforms.
+  Text is painted over the shapes; shaping and letter-spacing across a ligature
+  are basic.
+- **Embedded images.** A `data:image/png`, `jpeg` or `gif` URI, or a local
+  file path, is decoded and placed at the element's box; it is painted as a
+  background layer. Remote `http(s)` image sources are not fetched inside the
+  SVG.
 - **Patterns.** A pattern fill on a top-level element is tiled in
   `userSpaceOnUse`, including a pattern that inherits its content through
   `xlink:href`.
@@ -136,7 +140,8 @@ categories: text is one fallback face without shaping, letter-spacing or stroked
 glyphs; only embedded data-URI images are read; pattern units must be
 `userSpaceOnUse`; clips and masks on several differently clipped nested groups
 are not composited element by element; and filter primitives other than the
-Gaussian blur and drop shadow are ignored. Outline text and flatten such effects in the editor
+Gaussian blur and drop shadow are ignored. The filter's `x`/`y`/`width`/`height`
+region is applied when it is written. Outline text and flatten such effects in the editor
 when a file needs them.
 
 ## Animation
