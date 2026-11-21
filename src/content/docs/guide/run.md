@@ -38,11 +38,12 @@ LOGGER_OUTPUT_FORMAT=logfmt
 ```
 
 Only the framework's lines are affected. The app's own output, including its own
-logger, is untouched. A normal run prints startup and window loading:
+logger, is untouched. Routine messages are debug level, so a normal run prints startup and window
+loading only because `GOI_DEBUG` is on:
 
 ```text
-INF ui: starting service=goi
-INF ui: window loaded file=ui/Main.goi service=goi took=98.2ms
+DBG ui: starting service=goi
+DBG ui: window loaded file=ui/Main.goi service=goi took=98.2ms
 ```
 
 Set `GOI_DEBUG` yourself to keep them quiet:
