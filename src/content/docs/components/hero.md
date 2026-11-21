@@ -115,10 +115,15 @@ node changes between frames, it starts one flight:
 
 - The source Hero is hidden immediately, as is the rest of the old page if the
   design hid it.
-- The **old content** is kept as a snapshot and flies from the old box to the
-  new box, growing, shrinking and moving. Text and rounded corners scale with it.
+- The **destination content** is laid out in its final box and painted at the
+  flight box: it grows, shrinks and moves from the old copy's place. Because the
+  last frame is already the real destination Hero, nothing swaps or pops when
+  the flight lands.
+- The flight uses Material's fast-out-slow-in curve and takes a shallow arc when
+  both axes change, so a diagonal move travels around the page instead of
+  cutting a straight line. A flight that changes only one axis stays straight.
 - The destination Hero stays hidden while the copy is in the air. When the
-  flight ends, the new content appears in place.
+  flight ends, it paints in place.
 - The flight paints above the page, so it is not clipped by the page that
   contains the destination.
 
