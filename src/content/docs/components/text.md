@@ -155,4 +155,4 @@ and drawing all use the same face, so a wide custom font changes layout as it
 should, and an unknown name falls back to Roboto. [Fonts](/guide/fonts/) has
 the details.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

@@ -45,4 +45,4 @@ div := w.MustByID[*ui.Divider]("divider")
 div.SetVisible(hasResults)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

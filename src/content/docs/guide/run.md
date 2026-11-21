@@ -69,6 +69,21 @@ GUI-subsystem executable with no console: `GOI_DEBUG` lines have nowhere to go
 there. Build on another platform, or use a manual `go build` without that flag,
 when the Windows logs themselves are what is being debugged.
 
+`DEBUG_UI=TRUE` is a separate switch: it logs every input event except pointer
+motion. It is useful when a click, a key or a focus change is not reaching the
+element you expect, and it works without turning the rest of the framework's
+debug lines on.
+
+`ui.SetLogger` sends the framework's lines to a logger the app owns instead:
+
+```go
+ui.SetLogger(myLogger) // *logger.Logger from github.com/ksckaan1/logger
+defer ui.SetLogger(nil) // back to the default, which follows GOI_DEBUG
+```
+
+The logger is the same module `goi run` configures with
+`LOGGER_OUTPUT_FORMAT`; passing nil restores the default.
+
 ## Hot reload
 
 Hot reload is automatic: `goi run` watches the `assets` directory, so editing a

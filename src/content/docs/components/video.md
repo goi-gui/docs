@@ -161,13 +161,22 @@ From Go:
 ```go
 clip := w.MustByID[*ui.Video]("clip")
 app.PlayMedia(clip)
+app.PauseMedia(clip)
+app.ToggleMedia(clip)
+app.StopMedia(clip)
 app.SeekMedia(clip, 12*time.Second)
 app.SetMediaVolume(clip, 0.5)
+app.SetVideoFullscreen(clip, true)
 ```
 
 The state is on the node too: `Playing`, `Paused`, `Ended`, `Position`,
 `Duration`, `Live`, `AudioTracks`, `Hardware`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
 to the changes, and a design spells those `onPlay`, `onPause` and `onEnd`.
+
+`ui.FullscreenVideo(w)` returns the video currently filling the window, or nil.
+`ui.MediaPosition`, `ui.MediaError`, `ui.IsPlayingMedia` and
+`ui.MediaAvailable` work exactly as they do for [Audio](/components/audio/#go-helpers);
+the fullscreen state is also on the node as `Fullscreen`.
 
 ## Buffering
 

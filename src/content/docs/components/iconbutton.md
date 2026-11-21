@@ -83,4 +83,4 @@ star.OnClick(func(ui.ClickEvent) {
 `iconColor` tints only the glyph. The container, border and state layer keep the
 colour the variant gives them.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

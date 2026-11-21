@@ -54,12 +54,7 @@ Window {
 
 ## Properties
 
-| Property | Type | Notes |
-|---|---|---|
-| `spacing` | number | gap between children |
-| `gap` | number | alias of `spacing` |
-| `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
-| `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the flow |
+This is a container: `spacing` and its alias `gap`, `crossAxisAlign` and `mainAxisAlign` are the shared container properties described on [Common properties](/guide/common-properties/#containers-and-spacing).
 
 ## From Go
 
@@ -90,4 +85,4 @@ borders.
 `TitleBar` is otherwise just a `Row`; `visible: app.os == "linux"` picks a
 platform-specific design.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

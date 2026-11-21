@@ -82,4 +82,4 @@ area.SetText("loaded from disk")
 area.Caret = len(area.Text.Get())
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

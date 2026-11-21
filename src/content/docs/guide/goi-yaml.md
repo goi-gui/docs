@@ -151,7 +151,8 @@ scheme: `import "goi://shared/Other.goi"` names a fragment from every file, whil
 a plain path stays relative to the importing file. Plain image paths resolve
 against the process's working directory, which is also where `goi run` starts
 the app. The editor's auto import searches this directory, and its path
-completion offers container paths from it.
+completion offers container paths from it. See [Assets](/guide/assets/) for the
+path forms and the files a picker returns.
 
 ## `entrypoint`
 

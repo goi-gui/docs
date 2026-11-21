@@ -76,4 +76,4 @@ carousel.Spacing.Set(16)
 carousel.ScrollToChild("last")
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

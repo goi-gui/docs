@@ -148,7 +148,10 @@ click on whatever is underneath.
 ## From Go
 
 ```go
-win, err := app.LoadWindow("app.goi")
+// WithSize sets the fallback client size; WithAssets reads an embedded file
+// system and skips hot reload; WithHotReload(false) keeps the watcher off;
+// WithCanvas names the browser canvas.
+win, err := app.LoadWindow("app.goi", ui.WithSize(900, 700))
 if err != nil {
 	return err
 }
@@ -172,6 +175,16 @@ w.SetMinimizable(false)
 w.SetMaximizable(false)
 w.SetFullscreen(true)
 resizable := w.Resizable()
+fmt.Println(w.Size())  // client size in logical pixels
+fmt.Println(w.Title()) // the title the design declared
+
+// Key presses, whether or not a field has focus.
+off := w.OnKey(func(e ui.KeyEvent) {
+	if e.Mods.Control() && e.Key == ui.KeyEnter {
+		submit()
+	}
+})
+_ = off // see Keyboard: do not unsubscribe at the end of Bind
 
 // The size limits are properties, so state lives where every other property
 // does.
@@ -189,6 +202,14 @@ win.DefineTheme(&brand)
 win.DefineTheme(ui.NewThemeFromSeed(0x6750A4FF, true)) // darkFromSeed
 ```
 
+`app.Run()` starts the event loop and blocks until the window closes or
+`app.Quit()` is called. `defer app.Close()` releases the file watcher and the
+platform resources; `app.Post` runs a function on the UI goroutine, which is how
+a background goroutine updates the window (see [Async work](/guide/async/)).
+
+`OnKey` reports every key press without consuming it; see
+[Keyboard](/system/keyboard/) for the key list and the editing shortcuts.
+
 The desktop's language is available to both sides as
 `app.systemLanguage` / `Window.SystemLanguage()`:
 
@@ -198,7 +219,7 @@ Text {
 }
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).
 
 ## A window-wide font
 

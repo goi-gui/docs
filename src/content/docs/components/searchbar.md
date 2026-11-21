@@ -66,4 +66,4 @@ search := w.MustByID[*ui.SearchBar]("search")
 search.OnEdit(func(q string) { filter(q) })
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

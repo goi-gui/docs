@@ -87,4 +87,4 @@ off := tap.OnLongPress(func(ui.ClickEvent) { hold(true) })
 off() // unsubscribe
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

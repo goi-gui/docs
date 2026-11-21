@@ -197,4 +197,4 @@ img.SetImage(gradient(240, 135)) // an image.Image from anywhere
 Call it from `Bind`, which runs again after every hot reload. The bitmap itself
 is not carried over, so a `SetImage` outside `Bind` is lost on the next save.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

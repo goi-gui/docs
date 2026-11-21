@@ -94,7 +94,7 @@ away.
 | `subtitleShadow` | shadow | a shadow behind the caption glyphs, for busy video |
 | `subtitleBackground` | color | a plate behind each caption line; 0 draws none |
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).
 
 ## Methods
 
@@ -123,6 +123,9 @@ From Go:
 ```go
 podcast := w.MustByID[*ui.Audio]("podcast")
 app.PlayMedia(podcast)
+app.PauseMedia(podcast)
+app.ToggleMedia(podcast)
+app.StopMedia(podcast)
 app.SeekMedia(podcast, 12*time.Second)
 app.SetMediaVolume(podcast, 0.5)
 ```
@@ -130,6 +133,27 @@ app.SetMediaVolume(podcast, 0.5)
 The state is on the node too: `Playing`, `Paused`, `Ended`, `Position`,
 `Duration`, and `LoadErr`. `OnPlay`, `OnPause`, `OnEnd` and `OnSeeked` subscribe
 to the changes, and a design spells those `onPlay`, `onPause` and `onEnd`.
+
+## Go helpers
+
+The player state is also readable without touching a prop:
+
+```go
+at, total, ok := ui.MediaPosition(podcast) // both durations, ok when loaded
+if err := ui.MediaError(podcast); err != nil {
+	log.Print(err)
+}
+if ui.IsPlayingMedia(podcast) {
+	// the transport is running
+}
+if !ui.MediaAvailable() {
+	// ffmpeg was not found; MediaError explains what was tried
+}
+```
+
+`MediaPosition` returns the current position and total duration. `MediaError`
+is the same reason the player failed to open or decode, and `MediaAvailable`
+reports whether an ffmpeg binary was found for this process.
 
 ## Audio tracks
 

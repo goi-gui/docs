@@ -195,6 +195,13 @@ app.PickFiles(func(files []string) {
 The same call works on the desktop, where the native dialog runs off the UI
 goroutine. Each chosen file gets a `goi://picked/…` src that every reader
 understands, so an `Image`, a `Video` or a caption file can take one directly.
+The prefix is the constant `ui.PickPrefix`, for code that wants to test a src:
+
+```go
+if strings.HasPrefix(src, ui.PickPrefix) {
+	// a file the user picked this session
+}
+```
 
 `ui.OpenFile` and its siblings still exist for desktop code, but they return
 `ErrDialogCanceled` in a page, and `ui.DialogsAvailable()` is `false` there.

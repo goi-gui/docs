@@ -170,13 +170,23 @@ another target; the release tags come from `buildFlags`. See
   interaction state, nested together.
 - [Loops](/guide/loops/) — repeating elements from a list.
 - [Bridge](/guide/bridge/) — passing values and handlers from Go.
+- [Events](/guide/events/) — the handler properties and their Go subscriptions.
 - [Async work](/guide/async/) — updating the UI from a goroutine with `App.Post`.
+- [Finding elements](/guide/finding-elements/) — `ByID`, `MustByID` and
+  `Descendant`.
 - [Fragments](/guide/fragments/) — splitting a design across files with props,
   children and named slots.
 - [Translations](/guide/i18n/) — `t(...)` from JSON catalogs in an `i18n`
   folder, with a language switch from Go.
+- [Assets](/guide/assets/) — the `assets` container, `goi://` paths and embedded files.
+- [Common properties](/guide/common-properties/) — the box every element shares.
+- [Scrolling](/guide/scrolling/) — offsets, snap points and auto-scroll.
+- [Colours](/guide/colours/), [Theming](/guide/theming/) and
+  [Fonts](/guide/fonts/) — the visual language.
 - [Components](/components/) — every element, grouped by purpose, with a
   `.goi` example and its properties.
 - [Icons](/icons/) — every Material Symbols name the renderer can draw.
 - [Zed extension](/ide-extensions/zed/) — highlighting, completion and
   diagnostics for `.goi` files.
+- [Troubleshooting](/guide/troubleshooting/) — the common startup, layout and
+  runtime failures.

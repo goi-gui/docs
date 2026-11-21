@@ -181,10 +181,10 @@ Column {
 }
 ```
 
-See [syntax](/syntax/#rotate) for every rotate form.
+See [Rotate](/guide/rotate/) for every rotate form.
 
 ## See also
 
 - [Theming](/guide/theming/) — the scheme, and how to build one.
 - [Custom colours](/guide/custom-colors/) — colours the app defines in Go.
-- [syntax](/syntax/#colours-and-gradients) — the terse reference table.
+- [syntax](/syntax/#colours-and-gradients) — the short reference.

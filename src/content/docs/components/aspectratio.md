@@ -64,4 +64,4 @@ box := w.MustByID[*ui.AspectRatio]("cover")
 box.Ratio.Set(1.5)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

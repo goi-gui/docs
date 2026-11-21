@@ -43,4 +43,4 @@ scrim.OnClick(func(ui.ClickEvent) { closeSheet() })
 `shadow` takes the CSS form, and a `Rectangle` follows its own `radius`, so a
 round panel gets a round shadow. See [Shadows](/guide/shadows/).
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

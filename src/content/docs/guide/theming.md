@@ -107,6 +107,10 @@ Window {
 }
 ```
 
+`LightTheme()` and `DarkTheme()` both return a fresh `*ui.Theme`, so editing
+one never changes the other design that uses the built-in scheme. `Theme.Dark`
+records the mood for a hand-built scheme.
+
 `DefineTheme` may run after `LoadWindow` — inside `Bind` is the usual place — and
 a design may name the scheme before it exists. The frame after the call resolves
 the name, so no reload is needed. Defining the same name again replaces it, which
@@ -203,4 +207,4 @@ wants a different body size sets it there instead of in every `Text`.
 
 - [Colours](/guide/colours/) — every colour form, and gradients.
 - [Custom colours](/guide/custom-colors/) — colours the app defines.
-- [syntax](/syntax/#colours-and-gradients) — the reference table.
+- [syntax](/syntax/#colours-and-gradients) — the short reference.

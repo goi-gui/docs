@@ -87,7 +87,7 @@ custom colour when the value is the app's to decide, not the scheme's.
 `goipls` completes the `customColor` prefix in a colour position, but it cannot
 list the names: they are declared in Go, and the language server reads one
 `.goi` file at a time. Hovering `customColor.brand` explains that the app defines
-it with `ui.SetCustomColor`.
+it with `Window.SetCustomColor`.
 
 ## See also
 

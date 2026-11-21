@@ -50,16 +50,14 @@ Flex {
 | Property | Type | Notes |
 |---|---|---|
 | `direction` | enum | `row` (default) or `column`; which axis the children run along |
-| `spacing` | number | gap between children |
-| `gap` | number | alias of `spacing` |
-| `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the axis |
-| `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the axis |
 
 Everything else is a Row's or Column's: `flex` on a child shares the leftover
 space along the axis, a child's `alignSelf` overrides the cross alignment, and
 the box accepts the common sizing, padding, border and scrolling properties. A
 Flex is a `Row` or a `Column` at paint time, so a design can swap one for the
 other without changing how the page looks.
+
+This is a container: `spacing` and its alias `gap`, `crossAxisAlign` and `mainAxisAlign` are the shared container properties described on [Common properties](/guide/common-properties/#containers-and-spacing).
 
 ## From Go
 
@@ -68,4 +66,4 @@ actions := w.MustByID[*ui.Flex]("actions")
 actions.Direction.Set("column") // and "row" again on a wide window
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

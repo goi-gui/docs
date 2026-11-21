@@ -83,4 +83,4 @@ accent.SetHSV(30, 1, 1)    // the same colour, set from the controls' own space
 accent.SetHSVA(30, 1, 1, 0.5) // the same colour at half opacity
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

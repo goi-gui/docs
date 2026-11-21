@@ -104,7 +104,7 @@ labels, icon packs and TeX typesetting are not interactive or typeset here.
 |---|---|---|
 | `data` | string | the Mermaid source; a block string may span lines |
 
-Every element also accepts the [common properties](/components/#common-properties),
+Every element also accepts the [common properties](/guide/common-properties/),
 including `width`, `height`, `background`, `radius` and the box border.
 
 ## From Go

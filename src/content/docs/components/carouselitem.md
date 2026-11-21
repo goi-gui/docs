@@ -62,4 +62,4 @@ card := w.MustByID[*ui.CarouselItem]("card")
 card.Label.Set("Last month")
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

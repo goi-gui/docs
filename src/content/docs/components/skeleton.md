@@ -69,8 +69,8 @@ The usual switch is to hide the placeholder and show the real node when the
 data arrives, which is one property on each side of a `Stack`:
 
 ```go
-sk.Base().SetVisible(false)
-w.MustByID[*ui.Column](w, "loaded").Base().SetVisible(true)
+sk.SetVisible(false)
+w.MustByID[*ui.Column]("loaded").SetVisible(true)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

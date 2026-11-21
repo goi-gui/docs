@@ -133,4 +133,4 @@ rangeSlider.Range()              // lo, hi
 | `step` | number | snap interval; 0 means continuous |
 | `showTooltip` | bool | shows the value above the handle while hovered or dragged; off by default |
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

@@ -180,4 +180,4 @@ carried across a hot reload.
 with interaction. A new `Src` re-reads (or re-fetches) the file and re-runs
 layout when its `viewBox` changes the intrinsic size.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

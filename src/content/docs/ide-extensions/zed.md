@@ -34,7 +34,7 @@ draws also type-checks. Diagnostics land on the property they blame, even when
 it lives in an imported fragment. Completion knows:
 
 - the element you are inside and the values its properties accept;
-- the theme's colour roles and any `ui.SetCustomColor` name the app defines;
+- the theme's colour roles and any `Window.SetCustomColor` name the app defines;
 - the `id`s the file declares, and their properties after `panel.`;
 - `bridge.` and `props.` declarations with their Go types;
 - handler calls valid for an event property, and the builtins `formatf`, `len`,

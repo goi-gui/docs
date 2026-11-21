@@ -15,10 +15,12 @@ off := w.OnKey(func(e ui.KeyEvent) {
 		closeDrawer()
 	}
 })
-defer off() // unsubscribe
+_ = off // keep it only to unsubscribe before the next reload
 ```
 
-`OnKey` belongs in `Bind`, so it is registered again after every hot reload.
+`OnKey` belongs in `Bind`, so it is registered again after every hot reload. Do
+not `defer off()` inside `Bind`: that would unsubscribe as soon as `Bind`
+returns.
 
 ## The event
 

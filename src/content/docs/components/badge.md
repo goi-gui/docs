@@ -38,4 +38,4 @@ badge := w.MustByID[*ui.Badge]("unread")
 badge.Label.Set(strconv.Itoa(count))
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

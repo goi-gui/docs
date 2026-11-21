@@ -34,6 +34,21 @@ if err != nil {
 A dismissed dialog returns `ui.ErrDialogCanceled`, so test it with `errors.Is`
 rather than comparing the error directly.
 
+The calls above block. `app.PickFiles` is the non-blocking form, used by the
+browser and available on the desktop:
+
+```go
+app.PickFiles(func(files []string) {
+	open(files)
+}, ui.DialogFilters(ui.FileFilter{Name: "Data", Patterns: []string{"*.json"}}))
+```
+
+The callback runs on the UI goroutine and is not called when the picker is
+dismissed; when it runs, the slice holds at least one file. A picked file gets a
+`goi://picked/…` src, whose prefix is the constant `ui.PickPrefix`, so an
+`Image`, a `Video` or a caption can take it directly. See
+[Picking a file](/guide/browser/#picking-a-file).
+
 ## Options
 
 | Option | Effect |
@@ -43,6 +58,9 @@ rather than comparing the error directly.
 | `ui.DialogFilename(name)` | name a save dialog starts with, or the file an open dialog selects |
 | `ui.DialogFilters(...)` | limits the files the dialog shows |
 | `ui.DialogContext(ctx)` | dismisses the dialog when `ctx` is done |
+
+Each option is a `ui.DialogOption`; a helper that accepts a list can take
+`opts ...ui.DialogOption` and pass it through.
 
 `ui.FileFilter` takes a display name and one or more glob patterns:
 

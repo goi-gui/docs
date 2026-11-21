@@ -36,4 +36,4 @@ cb.OnToggle(func(v bool) { remember = v })
 cb.Checked.Set(true)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

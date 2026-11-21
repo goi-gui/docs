@@ -46,6 +46,40 @@ working directory. The tags in `buildFlags` are the only feature tags the build
 receives; `auto` scans the design and adds the ones it needs before the build,
 and prints the resolved list.
 
+## Embedding by hand
+
+`goi build` writes the `go:embed` for you. A manual `go build` can carry the
+same assets with `ui.RegisterAssets`:
+
+```go
+import "embed"
+
+//go:embed assets
+var assets embed.FS
+
+func main() {
+	ui.RegisterAssets(assets)
+	// ... NewApp and LoadWindow as usual
+}
+```
+
+`RegisterAssets` is global and is preferred over the `ui` directory in
+`goi.yaml`. For one window, scope the same file system with
+`ui.WithAssets`:
+
+```go
+win, err := app.LoadWindow("ui/Main.goi", ui.WithAssets(assets))
+if err != nil {
+	log.Fatal(err)
+}
+defer win.Close()
+```
+
+`WithAssets` reads the design from the file system and skips hot reload,
+because there is no directory to watch. `ui.WithHotReload(false)` turns the
+watcher off for a window loaded from disk when a debugger should not race a
+reload.
+
 ## Cross-compiling
 
 Everything is pure Go, so one machine builds every target. The target's C
@@ -152,7 +186,7 @@ Approximate sizes for `examples/counter`, Linux amd64, Go 1.27, built with
 | Build | Native |
 | --- | ---: |
 | core, `buildFlags: []` | **26.4 MB** |
-| `buildFlags: [all]` | **56.1 MB** |
+| `buildFlags: [all]` | **76.8 MB** |
 
 The per-feature cost of adding one tag to the core build:
 
@@ -164,8 +198,9 @@ The per-feature cost of adding one tag to the core build:
 | `net` | 28.6 MB | +2.1 MB |
 | `svg` | 27.6 MB | +1.1 MB |
 | `markdown` | 27.3 MB | +0.9 MB |
+| `terminal` | 47.0 MB | +20.6 MB |
 
-Without `-s -w`, the core build is 38.7 MB and the `all` build is 74.6 MB.
+Without `-s -w`, the core build is 38.7 MB and the `all` build is 95.3 MB.
 The wasm numbers are larger because they include the Go runtime and the app's
 embedded assets; a wasm build passes `-tags all` if it needs the same features.
 The browser never carries Mermaid's wasm rasterizer, so a `Mermaid` there draws
@@ -197,6 +232,14 @@ build without `emoji` never carries it. Animations are capped at 32 MB each and
 count against the image cache, map tiles have their own 32 MB budget, and
 rasterized SVG icons have an 8 MB one.
 
+## Frame rate
+
+`app.VSync(true)` is the default: the frame loop follows the display refresh.
+`app.MaxFPS(n)` caps the drawn frames per second when vsync is off, which is
+useful to measure how much headroom an animation leaves. `app.ShowFPS(true)`
+draws the current rate in the top-right corner; it is a debug overlay, so leave
+it off in a release.
+
 ## Checking a build
 
 Two commands catch the mistakes a compile cannot:
@@ -214,22 +257,6 @@ rewrites them. `goifmt` comes from `goi setup`.
 
 ## Troubleshooting
 
-**`libSDL3.so.0: cannot open shared object file` (or `SDL3.dll` not found).**
-The runtime library is missing or not on the loader's path. Install the SDL3
-runtime package, put `SDL3.dll` next to the executable, or set
-`LD_LIBRARY_PATH`/`DYLD_LIBRARY_PATH` to its folder. `goi doctor` shows the
-library it finds.
-
-**`duplicated definition of symbol _cgo_init`.** A manual `go build` has cgo on
-or is missing `-tags nofakecgo`. Use `goi build`, which sets both correctly.
-
-**The window is black while resizing on a Wayland session.** SDL 3.4 keeps its
-Wayland driver only on a compositor that offers `fifo-v1`, and otherwise
-silently falls back to X11 through XWayland, where an interactive resize shows
-the window black until the drag ends. goi sets `SDL_HINT_VIDEO_DRIVER=wayland`
-itself, so this only appears if `SDL_VIDEODRIVER` is set in the environment.
-Unset it, or set it to `wayland`.
-
-**The app starts and exits with `no WebGPU surface for the "…" video driver`.**
-SDL picked a driver goi has no surface for — usually `dummy` or `offscreen`
-because no display was available.
+The common failures — a missing SDL3 library, cgo symbols, a black Wayland
+resize and a missing WebGPU surface — are collected on
+[Troubleshooting](/guide/troubleshooting/).

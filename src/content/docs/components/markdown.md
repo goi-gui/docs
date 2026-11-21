@@ -83,7 +83,7 @@ Table alignment markers (`:---`, `:---:`, `---:`) become the column and cell
 
 The rest is the common box, so a Markdown element takes `width`, `padding`,
 `background`, `scroll` and the rest of the
-[common properties](/components/#common-properties). A long document usually
+[common properties](/guide/common-properties/). A long document usually
 lives in a scrolling `Column` with `width: 100%`.
 
 ## What it does not do

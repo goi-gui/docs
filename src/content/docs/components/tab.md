@@ -43,4 +43,4 @@ tab := w.MustByID[*ui.Tab]("specs")
 tab.Selected.Set(true)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

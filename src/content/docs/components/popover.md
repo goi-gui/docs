@@ -78,7 +78,7 @@ Popover {
 ```
 
 `onClickOutside` is on every element, not only this one; see the
-[events table](/components/#events). While the panel is hidden the handler
+[events table](/guide/events/). While the panel is hidden the handler
 stays quiet, so a popover that stays mounted does not hear every press on the
 page.
 
@@ -99,4 +99,4 @@ pop := w.MustByID[*ui.Popover]("pop")
 pop.Align.Set("end")
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

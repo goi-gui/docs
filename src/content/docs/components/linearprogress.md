@@ -71,4 +71,4 @@ bar := w.MustByID[*ui.LinearProgress]("upload")
 app.Animate(&bar.Value, 1, 900*time.Millisecond, ui.Standard)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

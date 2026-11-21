@@ -71,4 +71,4 @@ trail.Separator.Set("chevron_right")
 trail.SeparatorColor.Set(0x49454FFF)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

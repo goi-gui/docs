@@ -62,10 +62,8 @@ Tabs {
 | Property | Type | Notes |
 |---|---|---|
 | `variant` | enum | `secondary` (default) or `primary`; the indicator and the bar's height |
-| `spacing` | number | gap between children |
-| `gap` | number | alias of `spacing` |
-| `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
-| `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the flow |
+
+This is a container: `spacing` and its alias `gap`, `crossAxisAlign` and `mainAxisAlign` are the shared container properties described on [Common properties](/guide/common-properties/#containers-and-spacing).
 
 ## Primary and secondary
 
@@ -87,4 +85,4 @@ tabs := w.MustByID[*ui.Tabs]("tabs")
 tabs.OnSelect(func(i int) { showPanel(i) })
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

@@ -62,4 +62,4 @@ seg.OnClick(func(ui.ClickEvent) {
 })
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

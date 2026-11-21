@@ -162,448 +162,26 @@ Window {
   declare is an error too, with a "did you mean" hint.
 - A prop's declared type is checked against every property it feeds.
 
-### Passing children into a fragment
+### Passing children and slots
 
-A fragment can take children, not just values. It marks where they go with
-`$children`, and an instance puts its own child elements there:
-
-```goi
-// Card.goi
-
-Column {
-	gap: 5
-
-	$children
-}
-```
-
-```goi
-// Main.goi
-
-import Card "./Card.goi"
-
-Window {
-	Card {
-		width: 300
-
-		Text {
-			text: "selam"
-		}
-
-		Button {
-			label: "Tamam"
-		}
-	}
-}
-```
-
-- `$children` is a slot, not an element: it is written **bare**, takes no
-  properties, and only an instance puts braces on it. A slot is written once; a
-  second `$children` is an error, because the same children cannot live in two
-  places, and a child with an `id` would be declared twice.
-- Braces in a fragment body are an error, `$children { … }` included: that shape
-  is how an instance fills a slot, and the content inside would belong to
-  nobody.
-- Children may be anything, including other fragments. They resolve their
-  imports in the **file they were written in**, so a child can use an alias that
-  only `Main.goi` imports.
-- Passing children to a fragment that has no `$children` is an error, reported
-  where the children were written. A fragment with a slot but no children just
-  draws nothing there, so it can still be previewed on its own.
-- A slot may sit anywhere in the fragment body, including inside a block arm.
-  Inside a nested fragment call, a bare slot forwards this fragment's children
-  to that call; a `$name { … }` there is that call's own argument and is left
-  alone.
-- A `Window` cannot declare a slot: the file a program loads has no caller to
-  fill it.
-- Like a file with props, a file with a slot is a fragment: `goicheck` and the
-  language server do not require it to be a `Window`.
-- `len($children)` is how many elements the instance passed: the direct children
-  of the call, before they expand into anything. A slot nobody filled is `0`, so
-  `if len($children) > 0 { $children }` hides the hole without a second file, and
-  `spacing: conditional { len($children) > 0: 16 }` can react to it as well.
-
-### Named slots
-
-A fragment can take more than one group of children, one per slot. Any
-`$name` in member position is a slot; `$children` is the unnamed one that
-plain children go to:
-
-```goi
-// Card.goi
-
-Column {
-	$header
-
-	$children
-
-	$footer
-}
-```
-
-```goi
-// Main.goi
-
-Card {
-	$header {
-		Text {
-			text: "Inbox"
-		}
-	}
-
-	Text {
-		text: "The body" // goes to $children
-	}
-
-	$footer {
-		Button {
-			label: "OK"
-		}
-	}
-}
-```
-
-- A `$header` in a fragment body declares a slot, and `$header { … }` at a call
-  fills it: the braces are the instance's. `$header {}` in a fragment body is
-  therefore an error, with the bare form as its hint.
-- A slot fill carries elements only; a property on it is an error rather than
-  being ignored, and a bare `$name` at a call (no braces) passes nothing, so it is
-  an error outside a fragment, where it forwards instead.
-- `len($header)` counts what the instance passed, one per direct element, so a
-  header that nothing filled reads `0`.
-- A slot is written once per fragment.
-- Passing a slot the fragment does not declare is an error, reported in the
-  caller. An empty `$header { }` still counts as filling the slot.
-- As with `$children`, a slot with nothing passed draws nothing, so the fragment
-  previews on its own.
-
-A built-in component can declare a slot of its own. `Popover` takes its panel as
-`$popover`, written directly under it with braces, the way an instance fills a
-slot; the elements are ordinary children:
-
-```goi
-Popover {
-	align: start
-
-	Button { label: "Share" }
-
-	$popover {
-		Card { label: "Anyone with the link" }
-	}
-}
-```
-
-### Ids and instances
-
-An instance that sets `id` namespaces every id inside the fragment, so one
-fragment can be used any number of times and each copy still carries its own
-behaviour:
-
-```goi
-Column {
-	Card {
-		id: first
-	}
-
-	Card {
-		id: second
-	}
-}
-```
-
-`Card.goi`'s `Text { id: title }` is `first.title` in the first copy and
-`second.title` in the second, and `w.ByID[*ui.Text]("first.title")` finds
-them. References inside the fragment follow the instance, so `side.width` still
-points at that copy's own `side`. Ids written in the caller — its own children,
-including the ones it passes to a slot — are not scoped, because they belong to
-the caller. An instance without an `id` scopes nothing, so two such instances
-still collide.
-
-An id in a `for` row is scoped too, so `ui.Descendant` needs the prefixed name
-inside a scoped instance.
-
-A design reads another node by its id, the same way it reads `window.width`:
-`width: panel.width`. The id must be declared in the same file, and the
-reference reads the property at the time the value is evaluated.
-
-The language server knows these ids: typing a value offers them, `panel.` lists
-the element's properties, hover explains either half, and go-to-definition jumps
-to the `id:` that declares the name.
+A fragment can take `$children` and named slots as well as props. The [Fragments
+guide](/guide/fragments/#passing-children) has the syntax, the props rules and
+how ids are scoped to an instance.
 
 ### Conditional blocks
 
-`if` picks one arm of elements, written the way Go writes it. The condition is an
-ordinary expression and must be a bool; every arm is built when the window loads
-and only the matching one is shown, so a block costs no layout for the arm it
-hides.
-
-```goi
-Window {
-	Column {
-		if app.dark {
-			Text {
-				text: "Dark"
-			}
-		} else if window.width > 900 {
-			Text {
-				text: "Wide"
-			}
-		} else {
-			Text {
-				text: "Light"
-			}
-		}
-	}
-}
-```
-
-- Conditions may read `app.theme`, `app.dark`, `app.os`, `app.language`,
-  `app.systemLanguage`,
-  `window.width`, `window.height`, the `window.*` state flags, `bridge.*`,
-  `props.*` and any `id.prop` that is a bool, and combine them with comparisons,
-  `&&`, `||`, `!` and `?:`. The reserved names and every member they expose are
-  listed in [Reserved names](/guide/reserved/).
-- An arm holds elements and blocks only. An `if` inside a `Text` is an error,
-  because a leaf has no children to switch.
-- Blocks nest: an inner `if` shows only where its outer arm also shows.
-- A Go-set bool property re-evaluates the condition on the next frame, so
-  `id.checked` is a fully reactive condition without any extra wiring.
-- Ids inside arms are registered like any other id, so two arms cannot declare
-  the same one.
-- An `if` inside a `for` body sees the loop variables.
-
-### Switch blocks
-
-`switch` shows the first arm holding a value equal to its subject, written the
-way Go writes it. Cases take a comma-separated list, and `default` shows when
-none matches; like `if`, every arm is built when the window loads and only the
-matching one is shown.
-
-```goi
-Column {
-	switch bridge.Error {
-	case "not found":
-		Text {
-			text: "Missing"
-		}
-	case "denied":
-		Text {
-			text: "No access"
-		}
-	default:
-		Text {
-			text: "Something else"
-		}
-	}
-}
-```
-
-- The subject is an ordinary expression, so `switch app.dark ? "dark" : "light"`
-  works; string, number, bool and colour values compare.
-- A switch has at most one `default`, and an arm holds elements and blocks only.
-- It nests inside `if` and `for` bodies, and an inner block sees the loop
-  variables.
+`if`, `else if`, `else` and `switch` choose which elements show. See
+[Conditional](/guide/conditionals/), including the value form `conditional { … }`.
 
 ### Loops
 
-`for` repeats a body with Go's range rules:
-
-```goi
-Column {
-	for i, ticket := range bridge.Tickets {
-		if ticket.Unread {
-			Text {
-				text: formatf("%d. %s", i + 1, ticket.Title)
-			}
-		}
-	}
-}
-```
-
-- A slice gives the index and the element (`for i, row := range bridge.rows`).
-- A map gives the key and the value, in sorted key order so a frame is stable.
-- The variables are typed the way Go types them: a slice's index is an `int`, a
-  map's first name has the key's type, and a scalar list's element has the
-  element's type. So `onClick: bridge.onPick(i)` works with
-  `onPick func(index int)`, `onKey(k)` with a `string` map key, and
-  `onValue(v)` with a `map[string]int`. A row is not a scalar: pass its fields
-  (`row.Name`), not the row.
-- A number counts from zero: `for i := range 5`, or `for range 5` when the index
-  is not needed.
-- The count may be an expression or a number from the bridge:
-  `for i := range len(bridge.rows)`, `for i := range 2 * bridge.columns` and
-  `for i := range bridge.count` all work.
-- `for range list` is legal when neither name is needed, and `_` ignores one:
-  `for _, row := range bridge.rows`.
-- A single name binds the key, as in Go: `for i := range bridge.rows`.
-- `continue` skips the rest of the current iteration and `break` stops the
-  later ones. Both are written directly in the loop body (or in an `if` arm
-  there), never inside an element:
-  ```goi
-  for i, imageList := range bridge.images {
-      if i != bridge.selectedColorIndex {
-          continue
-      }
-      for _, path := range imageList {
-          Image { src: path }
-      }
-  }
-  ```
-- A nested loop can walk a loop variable that holds a list
-  (`range imageList` above); the outer variable carries the slice.
-- Rows are rebuilt when the list is set with `ui.SetData`, and when a variable
-  a `continue` or `break` condition reads changes. Other expressions in the body
-  update in place, so a running transition or a typed value is not reset. Rows
-  keep their ids on the nodes rather than registering them, so two rows do not
-  collide.
+`for _, item := range bridge.Items` repeats elements. See [Loops](/guide/loops/).
 
 ### Declarations: values and handlers
 
-A design declares the values it reads and the handlers it calls in one `bridge`
-block. `data { ... }` is the original spelling and still works; `type` and
-`data <Name>` work alike for a row type. Declarations are written like Go fields:
-`Name Type`, with no colon and no default.
-
-```goi
-bridge {
-	Loading  bool
-	Error    string
-	Count    int
-	Tickets  []Ticket
-	OnOpen   func(id string)
-	OnFilter func(query string, limit uint)
-}
-
-// The shape of one row. A list names the type it holds.
-type Ticket {
-	ID        string
-	Title     string
-	Requester string
-	Unread    bool
-}
-```
-
-```goi
-Window {
-	Column {
-		if bridge.Loading {
-			Text {
-				text: "Loading…"
-			}
-		} else {
-			Text {
-				text: formatf("%d tickets", bridge.Count)
-			}
-
-			for _, ticket := range bridge.Tickets {
-				ListItem {
-					label:      ticket.Title
-					supporting: ticket.Requester
-					selected:   ticket.Unread
-					onClick:    bridge.OnOpen(ticket.ID)
-				}
-			}
-		}
-	}
-}
-```
-
-Go supplies the values and the handler bodies:
-
-```go
-ui.SetData(w, "Loading", true)
-ui.SetData(w, "Count", 3)
-ui.SetData(w, "Tickets", items)          // any slice
-ui.SetHandler(w, "OnOpen", func(id string) { open(id) })
-```
-
-`ui.SetHandler` belongs in `Bind`, which runs again after every hot reload, so
-re-registering there is enough. A handler is any Go function; its parameters are
-converted from the design's values: a number may feed any Go numeric type, a
-bool and a color may feed a `string` (as `true`/`false` and `#rrggbb`).
-
-- **Types.** Every primitive Go has is accepted: `bool`, `string`, `int`,
-  `int8`…`int64`, `uint`…`uint64`, `uintptr`, `float32`, `float64`, `byte`,
-  `rune`, plus `color` for an M3 colour. A list is `[]T`, a map is `map[K]V`
-  (the key is a string), and a handler is `func(a string)`.
-- **Zero values.** A variable the app never sets reads its type's zero value:
-  `""`, `0`, `false`, transparent black, an empty list or map. No declaration
-  takes a default; Go is the only place a value starts.
-- **Handlers.** `OnOpen func(id string)` declares a handler with its parameters;
-  `func()` takes none. A handler is never a value: it can only be called in an
-  event property.
-- **Calls.** `bridge.OnOpen(ticket.ID)` is the whole value of an event property.
-  It is not an expression: you cannot use it inside `+`, a comparison or a
-  non-event property.
-- **Fire time.** Arguments are evaluated when the event fires, not every frame,
-  so `ticket.ID` is the row that exists at click time.
-- **`event`.** The event's own payload is available as `event`: `onToggle`
-  passes a bool, `onChange` a number, `onEdit`, `onSubmit`, `onOK` and
-  `onCancel` a string, `onSelect` an index. `onScroll` is a struct, so its
-  fields are read as `event.x`, `event.y`, `event.maxX`, `event.maxY`,
-  `event.progress` and `event.byUser`. `onClick`, `onClickOutside`, the mouse
-  events and the gestures carry no scalar value.
-- **Events.** Every element accepts `onClick`, `onClickOutside` and the scroll
-  events `onScroll`, `onScrollToEnd` and `onScrollToStart`; `onClickOutside`
-  fires on a press outside the element's subtree (the anchor and a popover's
-  panel are both inside). Components also accept
-  `onToggle`, `onChange`, `onEdit`, `onSubmit`, `onSelect`, `onPlay`, `onPause`
-  and `onEnd` where they emit them; a chart adds `onHover` for the point under
-  the pointer, a `TimePicker` or `ColorPicker` adds `onOK` and `onCancel`, and a
-  `GestureDetector` adds `onDoubleTap`, `onLongPress` and the three pan events.
-  The value is always a handler call — `bridge.Name(...)` in a design,
-  `props.Name(...)` inside the fragment that declares it; a literal is
-  rejected.
-- **A child click bubbles.** A click on a child with no handler of its own
-  activates the nearest ancestor that has one, so `onClick` on a `Row` answers a
-  click on its label, icon or picture. A child with its own `onClick` keeps the
-  click, and a disabled control swallows it instead of passing it up.
-- **A call on an id.** An event may drive an element directly instead of going
-  through Go: `onClick: spin.pause()`. An `Image` or `SVG` answers `play()`,
-  `pause()` and `stop()`. `Audio` and `Video` answer the same three plus
-  `seek(seconds)`, `volume(level)`, `audioTrack(index)`, `fullscreen()` and
-  `windowed()`; `Switch` answers `toggle()`. A scrolling element answers
-  `scrollTo(offset)`, `scrollToSmooth(offset, duration)`, `scrollToNthChild(n)`,
-  `scrollToNthChildSmooth(n, duration)`, `scrollToChild(id)` and
-  `scrollToChildSmooth(id, duration)`, plus `autoScroll(true)` and
-  `autoScrollSmooth(true, duration)`, with the duration written as `300ms` or
-  `1s`. The child forms also take an optional `start`, `center` or `end`
-  alignment before the duration. Anything else is a checker error, and so is an
-  argument of the wrong type.
-- **Any file may declare them.** A fragment owns its own `bridge { ... }` block
-  and the types its loops walk; the declarations merge into the one design the
-  app sees, so `ui.SetData(w, "Rows", …)` feeds a list a fragment drew.
-- **Go values.** `ui.SetData` takes a slice of structs — a field is matched by its
-  `goi` tag, then by the field name with a lower first letter. An **unexported
-  field is ignored**, and so is a field tagged `goi:"-"`. A slice of
-  `map[string]any` works too. Numbers are converted, so an `int` field reads in
-  a `number` position. A `nil` slice is an empty list, which is what the first
-  frame has before the fetch returns.
-
-```go
-type User struct {
-    ID        string `goi:"id"`
-    FullName  string `goi:"fullName"`
-    Points    []int  `goi:"points"`
-    private   bool   // ignored: unexported
-    Ignored   string `goi:"-"` // ignored: the tag says so
-}
-```
-
-- **Rebuilding.** A list variable rebuilds only the loops that walk it, and only
-  when it is set. A scalar keeps its nodes and just re-reads the value, which is
-  why `if bridge.Loading` costs one visibility toggle.
-- **Row ids** are not registered, because every row would otherwise collide:
-  reach a part of a row with `ui.Descendant`.
-- **Hooks.** `ui.OnEach` runs for every row the loop builds, including rebuilt
-  ones, and gets the item the row was built from. It must be safe to call twice.
-- **Validation.** `goicheck` and the language server check the declarations, the
-  value a loop walks, every `row.Field` against its type, the type a field feeds,
-  and every handler call: the name, the argument count, the argument types and
-  the `event` payload.
-- **Runtime errors.** Calling a handler that Go never registered, or passing it
-  arguments it cannot accept, is reported through the app's error hook instead
-  of killing the frame.
+A design declares its `bridge` values, handlers and `type` rows before the root
+element. [Bridge](/guide/bridge/) covers the declarations, `SetData`,
+`SetHandler` and the type table.
 
 ## Grammar
 
@@ -672,7 +250,7 @@ declaration. A function call appears either as an event property's whole value
 | `"hsl(200 40% 50%)"` | color | CSS `hsl()`/`hsla()` |
 | `linear-gradient(90deg, red, blue 60%)` | color | CSS gradient fill, quoted or unquoted; stops may be `%`, `dp` or a bare length; `background` only, see [Colours and gradients](#colours-and-gradients) |
 | `theme.surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
-| `customColor.myBrand` | custom color | a name the app defines with `ui.SetCustomColor`; an undefined one warns and falls back to `onSurface` |
+| `customColor.myBrand` | custom color | a name the app defines with `Window.SetCustomColor`; an undefined one warns and falls back to `onSurface` |
 | `90deg`, `x 90deg`, `1 1 1 90deg` | rotate | the `rotate` property only: CSS form, see [Rotate](#rotate) |
 | `2`, `50%`, `2 0.5`, `200% 50% 200%` | scale | the `scale` property only: CSS form, see [Scale](#scale) |
 | `2 2 5 #000000 inset` | shadow | the `shadow` property only: CSS form, a colour variable as `theme.<role>` or `customColor.<name>`; `none` clears it, see [Shadows](/guide/shadows/) |
@@ -762,168 +340,42 @@ to write: `theme.primary`. Lists are stricter only in reporting it earlier.
 
 ## Colours and gradients
 
-A colour has four forms: a theme role (`theme.primary`), a CSS literal (a name,
-a function or a hex value), or an app-defined name (`customColor.brand`). The
-first follows light and dark; the rest are fixed.
-
-A colour is written the way CSS writes it. A role follows the scheme; a literal
-does not:
-
-```goi
-Column {
-	Text {
-		text:  "named"
-		color: white
-	}
-
-	Text {
-		text:  "quoted"
-		color: "red"
-	}
-
-	Text {
-		text:  "rgb"
-		color: "rgb(42, 123, 155)"
-	}
-
-	Text {
-		text:  "hsl"
-		color: "hsl(200 40% 50%)"
-	}
-
-	Text {
-		text:  "role"
-		color: theme.primary
-	}
-}
-```
-
-The checker accepts the full CSS list: the 148 names (`white`, `black`,
-`rebeccapurple`, `darkslategray`, …), `rgb()`/`rgba()` in both the comma and the
-`/ alpha` spelling, `hsl()`/`hsla()`, and every hex form. A scheme colour is
-written `theme.<role>`; the bare spelling (`primary`, `onSurface`) is a
-diagnostic, because a role is a reference and not a literal. A CSS keyword such
-as `white` is a literal and stays white in either scheme.
-
-A gradient is a colour value, and it fills a box, so `background` is where it
-goes:
+A colour is a theme role (`theme.primary`), a CSS literal (a name, `rgb()`/`hsl()`
+or a hex value), or an app-defined name (`customColor.brand`). The first follows
+light and dark; the rest are fixed. A gradient is a colour value and belongs on
+`background`; `backdropBlur` takes the same shape with blur radii as stops. Only
+`background` takes a colour gradient.
 
 ```goi
 Column {
-	background: "linear-gradient(90deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)"
-}
-
-Column {
-	background: "radial-gradient(circle, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%, rgba(237, 221, 83, 1) 100%)"
+	background: linear-gradient(90deg, theme.primary, customColor.brand 80%)
 }
 ```
 
-- `linear-gradient(angle, stops…)`: the angle is in degrees, `0deg` pointing up
-  and `90deg` right, as in CSS. Direction words work too: `to right`,
-  `to bottom left`. The default is `to bottom`.
-- `radial-gradient(size, stops…)`: the shape goes out from the box's centre to
-  its farthest corner. `circle`, `ellipse` and `closest-side` are accepted and the
-  element's own box is the circle.
-- Every stop may carry a position: a percentage (`0%`, `50%`, `100%`), a `dp`
-  length (`80dp`), or a bare length above 1 (`80` is 80dp). A bare number from 0
-  to 1 is the old fraction spelling, so `0.5` and `50%` mean the same. A stop
-  without a position is spread evenly between its neighbours, and the ends
-  default to 0% and 100%.
-- A gradient can be written quoted or unquoted; `goifmt` writes the unquoted
-  form.
-- The box keeps its `radius` and its border, which are drawn on top of the fill.
-- A stop may be a colour variable: `theme.primary` or `customColor.brand`. It
-  follows the scheme and `SetCustomColor`, so one gradient can mix a role with a
-  literal.
-- A gradient is a whole value. It can be quoted or unquoted; the parser captures
-  commas, percentages and colours as part of the value either way.
-- Only `background` takes a colour gradient. A gradient on `color` or
-  `borderColor` is a checker error rather than a silently empty fill, because a
-  gradient is a box, not a stroke or a glyph colour.
-- `backdropBlur` takes the same shapes, but its stops are blur radii in dp: for
-  example `linear-gradient(90deg, 0 0%, 6 60%, 0 100%)`. The peak radius is
-  blurred and the stops fade between it and the sharp scene.
+The full rules, including the 148 CSS names, gradient stops and the checker
+diagnostics, are on [Colours](/guide/colours/).
 
 ## Rotate
 
-`rotate` is CSS `rotate`: it turns the element and everything under it about the
-element's own centre. Layout ignores it, so the box keeps its place and its
-siblings do not move.
+`rotate` is CSS `rotate`: `90deg`, `0.25turn`, `x 90deg`, or `1 1 1 90deg`;
+`none` clears it. Layout ignores it and a nested turn composes. Only the z-axis
+turn is projected by the flat renderer.
 
-```goi
-Column {
-	rotate: none // the default
-}
-
-Column {
-	rotate: 90deg // an angle alone turns about the z axis
-}
-
-Column {
-	rotate: x 90deg // about the x axis
-}
-
-Column {
-	rotate: 1 1 1 90deg // about a vector
-}
-```
-
-An angle may be written as `deg`, `rad`, `turn` or `grad`; they are the same
-value and goifmt writes it back in degrees (`0.25turn` is `90deg`, `1.57rad` is
-`89.95437deg`).
-
-- The keyword `none` clears it.
-- A turn about a non-z axis is a three-dimensional rotation. The renderer is
-  two-dimensional, so only the z axis (the angle-only and `z` forms) shows as a
-  turn; an x, y or vector rotation is stored but not projected.
-- Nested rotations compose: an inner 45° inside an outer 90° turns 135°, and the
-  inner pivot follows the outer frame.
+See [Rotate](/guide/rotate/) for the forms and the Go setter.
 
 ## Scale
 
-`scale` is CSS `scale`: it stretches the element and everything under it about
-the element's own centre. Layout ignores it, so the box keeps its place and its
-siblings do not move.
+`scale` is CSS `scale`: `2`, `50%`, `2 0.5`, or `200% 50% 200%`; `none` clears
+it. Layout ignores it, everything the element draws stretches, and a scale
+applies before a rotation on the same element.
 
-```goi
-Column {
-	scale: none // the default
-}
-
-Column {
-	scale: 2 // both axes
-}
-
-Column {
-	scale: 50% // a percentage is a factor: 0.5
-}
-
-Column {
-	scale: 2 0.5 // x, y
-}
-
-Column {
-	scale: 200% 50% 200% // x, y, z
-}
-```
-
-- One value scales both axes, two are x and y, three add z.
-- A percentage is its factor, so `50%` is `0.5`; goifmt writes the factor back.
-- Everything the element draws stretches with it: corners become ellipses under
-  a non-uniform scale, and glyphs, images and border widths follow the axes.
-- Nested scales multiply, and scale applies before `rotate` on the same element.
-- The renderer is two-dimensional, so z is kept and does not show.
-- Hit-testing stays on the layout box, like `rotate`.
-- `scale` paints: changing it repaints without a re-layout.
-
-The [Scale guide](/guide/scale/) has the worked example and the Go side
-(`SetScale`).
+See [Scale](/guide/scale/) for the worked example and the Go setter.
 
 ## Elements
 
 | Element | Children | Properties beyond the common set |
 |---|---|---|
-| `Window` | yes | `title`, `theme` (`light`, `dark`, or a name the app registered), `titleBar` (`system`, `custom`), `resizable`, `minimizable`, `maximizable`, `minimized`, `maximized`, `fullscreen` (all bool; `disableResize` is the older inverse of `resizable`) |
+| `Window` | yes | `title`, `theme` (`light`, `dark`, or a name the app registered), `themeTransition`, `titleBar` (`system`, `custom`), `resizable`, `minimizable`, `maximizable`, `minimized`, `maximized`, `fullscreen` (all bool; `disableResize` is the older inverse of `resizable`) |
 | `Column` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
 | `Row` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
 | `Flex` | yes | `direction` (`row`, `column`), and the Row/Column layout properties: `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
@@ -931,18 +383,29 @@ The [Scale guide](/guide/scale/) has the worked example and the Go side
 | `Stack` | yes | `crossAxisAlign`, `mainAxisAlign` |
 | `ClipRRect` | yes | `crossAxisAlign`, `mainAxisAlign`; clips its children to its rounded box |
 | `Hero` | yes | `tag`, `duration`; a shared element that flies to the same tag on another page (see [Hero](/components/hero/)) |
-| `GestureDetector` | yes | `onDoubleTap`, `onLongPress`, `onPanStart`, `onPanUpdate`, `onPanEnd`; lays children out like a `Stack` |
+| `GestureDetector` | yes | `onDoubleTap`, `onLongPress`, `onPanStart`, `onPanUpdate`, `onPanEnd`, `onMouseEnter`, `onMouseMove`, `onMouseLeave`; lays children out like a `Stack` |
 | `Positioned` | yes | `left`, `top`, `right`, `bottom`, `translateX`, `translateY` |
 | `Wrap` | yes | `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
 | `Grid` | yes | `columns`, `variant` (`normal`, `masonry`), `spacing` (`gap`), `crossAxisAlign`, `mainAxisAlign` |
 | `AspectRatio` | yes | `aspectRatio` (width / height); the parent gives the width and the height follows, or the height in a row and the width follows |
 | `Rectangle` | no | — |
-| `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), plus `radius` |
-| `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`) |
+| `Image` | no | `src` (`goi://` container, a machine path, or an `http(s)` URL), `fit` (`cover`, `contain`, `fill`), `crossfadeSrc`, `paused`, `loop`, `lazy`; see [Image](/components/image/) |
+| `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`), `crossfadeSrc`, `paused`, `loop`, `lazy`; see [SVG](/components/svg/) |
+| `Code` | no | `text`, `language`, `showCopy`, `variant`; see [Code](/components/code/) |
+| `Terminal` | no | `fontSize`, `scrollback`, `foreground`; see [Terminal](/components/terminal/) |
+| `Mermaid` | no | `data`; see [Mermaid](/components/mermaid/) |
+| `Map` | yes | `tiles`, `attribution`, `center`, `zoom`, `bbox`, `reverseTileColors`, `disablePan`, `disableZoom`; see [Map](/components/map/) |
+| `Geom` | no | `data`, `fillColor`, `lineColor`; see [Geom](/components/geom/) |
+| `Point` | yes | `coordinate`; see [Point](/components/point/) |
+| `Path` | no | `coordinates`, `lineColor`; see [Path](/components/path/) |
 | `Text` | no | `text`, `fontSize`, `weight`, `fontWeight`, `fontStyle`, `decoration`, `decorationStyle`, `decorationThickness`, `decorationColor`, `color`, `align`, `wrap`, `truncate`, `maxLines`, `role`, `selectable`, `link` |
 | `RichText` | yes (`Text` runs) | `text`, `role`, `fontSize`, `color`, `align`, `wrap`; each `Text` child is one styled run, see [RichText](/components/richtext/) |
 | `Markdown` | no (built from the source) | `text`; the document becomes ordinary elements, see [Markdown](/components/markdown/) |
 | `ChartSeries` | no | inside a chart: `label`, `values` (comma-separated numbers), `color`; the series becomes the chart's data and leaves the tree, see [LineChart](/components/linechart/#the-data) |
+
+The Material 3 components, the audio and video players, and the seven chart
+elements are not repeated here; each has its own page under
+[Components](/components/) with the properties it adds.
 
 Every element takes the common set, which includes `shadow`: on `Text` it
 shadows the glyphs (CSS `text-shadow`), everywhere else the box (CSS
@@ -1165,7 +628,7 @@ last two seconds, `scrollbarWidth` sets its thickness (4 by default),
 content has scrolled away from, tinted by `scrollShadowColor`. A scrolling element
 can also settle on its children: `scrollSnapType`, `scrollSnapStop` and
 `scrollPadding` on the container, `scrollSnapAlign` on a child, all documented in
-[Scroll snapping](/components/#scroll-snapping). Padding spaces
+[Scroll snapping](/guide/scrolling/#scroll-snapping). Padding spaces
 only the moving content: the bar and the shadows stay against the frame, and
 content slides under the padding, so the start padding leaves the view once you
 scroll and the end padding appears after the last child at the end.
@@ -1236,29 +699,26 @@ Card {
 
 ## Fonts
 
-`fontFamily` names a family the app registered with `LoadFont`, `LoadFontFamily`
-or `LoadVariableFont`, or the built-in `Roboto`; an element without one inherits its nearest ancestor's, and
-the window is the last place it can come from:
+`fontFamily` names a family the app registered with `LoadFont`,
+`LoadFontFamily` or `LoadVariableFont`, or the built-in `Roboto`. It inherits
+from the nearest ancestor, and an unknown name falls back to Roboto.
 
 ```goi
 Window {
 	fontFamily: "Inter"
 
-	Column {
-		Text {
-			text: "Inter, from the window"
-		}
+	Text {
+		text:       "Inter"
+	}
 
-		Text {
-			text:       "Roboto again"
-			fontFamily: "Roboto"
-		}
+	Text {
+		text:       "Roboto again"
+		fontFamily: "Roboto"
 	}
 }
 ```
 
-A name nobody registered falls back to Roboto, so a design is still readable
-when the app forgot the font. [Fonts](/guide/fonts/) covers the Go side.
+See [Fonts](/guide/fonts/) for registering files, weights and variable fonts.
 
 ## Expressions and percentages
 
@@ -1408,113 +868,47 @@ Rectangle {
 
 ## Responsive values
 
-A property can follow the window width with the `responsive` modifier:
+`responsive` picks a value from the window width. Breakpoints are min-widths in
+logical pixels: `base`, `sm` (640), `md` (768), `lg` (1024) and `xl` (1280). The
+largest minimum not above the width wins; `base` is optional.
 
 ```goi
 Column {
 	padding: responsive {
 		base: 8
-		md: 16
-	}
-
-	Grid {
-		columns: responsive {
-			base: 1
-			md: 2
-			lg: 3
-		}
-
-		Card {
-			label: "One"
-		}
-
-		Card {
-			label: "Two"
-		}
+		md:   16
 	}
 }
 ```
 
-A one-line block is accepted too: `padding: responsive { base: 8 md: 16 }`.
-The entries need no commas. `goifmt` rewrites a block to the multi-line form,
-one breakpoint per line.
-
-Breakpoints are min-widths in logical pixels, like Tailwind. The entry with the
-largest minimum that is not above the window width wins.
-
-| Tier | Applies from |
-|---|---|
-| `base` | 0 |
-| `sm` | 640 |
-| `md` | 768 |
-| `lg` | 1024 |
-| `xl` | 1280 |
-
-The block above is therefore 1 column below 768, 2 from 768 and 3 from 1024.
-The `base` entry, when present, is applied as soon as the file is loaded, so it
-also sizes the initial window when used on `Window.width`.
-
-`base` is optional. Without it the property keeps its normal default below the
-lowest tier that is present. `id` cannot be responsive, but a tier may hold a
-`state` or `conditional` block, so one value can follow the width and the
-pointer or the data together.
-
-The tree stores the tiers; the frame loop rewrites those properties before
-layout whenever the window width changes. The file owns a responsive property: a
-value set from Go with `Prop.Set` is replaced on the next frame.
-
-`responsive { … }` is the spelling to write. The older brace map
-`padding: { base: 8, md: 16 }` still parses, so an existing design keeps
-working; `goifmt` converts it to the modifier form.
+A one-line block is accepted too, and the older brace map still parses:
+`padding: responsive { base: 8 md: 16 }`. See [Responsive](/guide/responsive/).
 
 ## Conditional values
 
-`conditional` picks the value of the first condition that is true, and ignores
-the ones after it:
+`conditional` picks the first true arm, with an optional `default`:
 
 ```goi
 Column {
 	gap: conditional {
 		!bridge.isWide: 10
-		bridge.isWide: 20
-		default: 4
+		bridge.isWide:  20
+		default:        4
 	}
 }
 ```
 
-Each line is `condition: value`, and the condition is any bool expression: a
-bridge field, a property reference, a comparison. A `default: value` entry has
-no condition and is the fallback when none of the arms holds; without one the
-property returns to its own default. A `for … range` row can use the loop
-variable the same way:
-
-```goi
-for i, l := range team.lastFiveResults {
-	Text {
-		text: conditional {
-			l == "W": "✅"
-			l == "D": "🏁"
-			l == "L": "❌"
-		}
-	}
-}
-```
-
-The values are checked against the property, so `gap` takes numbers above and
-`text` takes strings. When no condition and no default holds, the property
-returns to its own default, so a colour or label set by a condition does not
-outlive it. Like a responsive value, a conditional property is re-evaluated
-every frame.
+Without a matching arm or a default, the property returns to its own declared
+value. See [Conditional](/guide/conditionals/#choosing-between-more-than-two-values).
 
 ## State values
 
-`state` picks a value from the element's interaction and control state, the way
-a CSS pseudo-class does:
+`state` picks a value from interaction and control state: `default`, `hover`,
+`active`, `focus`, `disabled`, `enabled`, `checked`, `unchecked`, `selected`,
+`expanded` or `collapsed`. The last matching entry wins.
 
 ```goi
 Column {
-	padding: 20
-	radius:  16
 	background: state {
 		default: theme.surfaceContainer
 		hover:   theme.surfaceContainerHigh
@@ -1523,57 +917,8 @@ Column {
 }
 ```
 
-A state block accepts:
-
-| Key | Active when |
-| --- | --- |
-| `default` | no other entry matched; it is the fallback |
-| `hover` | the pointer is over the element or one of its children |
-| `active` | a pointer press is held on the element (`pressed` is an alias) |
-| `focus` | the element has keyboard focus, which is what a text field uses |
-| `disabled` | the component is disabled |
-| `enabled` | the component is not disabled |
-| `checked` | a switch, checkbox or radio button is checked |
-| `unchecked` | that control is not checked |
-| `selected` | the component is selected, as a chip or tab can be |
-| `expanded` | the component is expanded, as a menu or sheet can be |
-| `collapsed` | the component is not expanded |
-
-The last matching entry wins, so order the block by priority: `hover` before
-`active`, and `disabled` last. A plain element reacts to `hover` and `active`
-too, not only the Material components. On a built-in component the state sets
-the property before the component paints, so a `Button` can take its own
-background per state.
-
-`state`, `responsive` and `conditional` nest in any order, so a value can follow
-the window width and the pointer at once:
-
-```goi
-Column {
-	background: responsive {
-		base: theme.surface
-		sm: state {
-			default: theme.surfaceContainer
-			hover:   theme.surfaceContainerHigh
-		}
-	}
-}
-```
-
-```goi
-Column {
-	background: responsive {
-		base: theme.surface
-		sm: conditional {
-			bridge.selected: state { default: theme.primaryContainer hover: theme.primary }
-			default:         theme.surfaceContainer
-		}
-	}
-}
-```
-
-Each entry is resolved from the outside in; an inner block that matches no
-entry falls back to the nearest `default`, then to the property's own value.
+`responsive`, `conditional` and `state` nest in any order. See
+[State](/guide/states/) for the table and the built-in component behaviour.
 
 ## Formatting
 

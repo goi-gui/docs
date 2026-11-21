@@ -97,4 +97,4 @@ initial window before the first frame.
   and [`state`](/guide/states/). Each block resolves from the outside in and
   falls back to its own `default`, then to the property's value.
 
-The full value grammar is in the [syntax reference](/syntax/#responsive-values).
+The [syntax reference](/syntax/#responsive-values) has the short form.

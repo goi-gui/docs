@@ -91,4 +91,4 @@ split.OnClick(func(ui.ClickEvent) {
 split.Trailing.Set("arrow_upward") // the menu segment's icon
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

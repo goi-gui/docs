@@ -58,4 +58,4 @@ slide := app.Animate(&frame.TranslateX, 0, 250*time.Millisecond, ui.Emphasized)
 slide.Stop() // and it can chain with .Then(d, ease, fn)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

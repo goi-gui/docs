@@ -176,13 +176,14 @@ for i, l := range bridge.results {
 
 - The first true condition wins and the rest are never evaluated.
 - `default` is the fallback when no condition holds; without one the property
-  keeps the value it already had, the way a `switch` with no matching case
-  changes nothing.
+  returns to its own declared value, the way an `if` with no matching arm shows
+  nothing.
 - Any property takes one, and each value is checked against that property's type.
 - Like an `if`, it re-evaluates every frame, so a bridge field or a Go-set
   property changes it without a reload.
 
 `conditional`, [`responsive`](/syntax/#responsive-values) and [`state`](/guide/states/)
 nest in any order, so a value can follow the window width, the data and the
-pointer together. [Conditional values](/syntax/#conditional-values) has the full
-form.
+pointer together. The [syntax reference](/syntax/#conditional-values) has the
+short form, and [State](/guide/states/) and [Responsive](/guide/responsive/) show
+the nesting.

@@ -54,4 +54,4 @@ clip := w.MustByID[*ui.ClipRRect]("avatar")
 clip.Radius.Set(48)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

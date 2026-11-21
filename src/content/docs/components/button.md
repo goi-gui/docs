@@ -86,7 +86,7 @@ The design can style the box itself: `background` (solid or a gradient),
 `borderColor`, `borderThickness` and the per-side border properties, `radius` and
 `shadow` replace the variant's own fill, outline, shape and elevation. The
 common properties are listed once in
-[Common properties](/components/#common-properties).
+[Common properties](/guide/common-properties/).
 
 ## From Go
 
@@ -98,4 +98,4 @@ btn.OnClick(func(ui.ClickEvent) {
 })
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

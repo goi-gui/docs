@@ -107,4 +107,4 @@ ring := w.MustByID[*ui.CircularProgress]("ring")
 app.Animate(&ring.Value, 0.9, 900*time.Millisecond, ui.Emphasized)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

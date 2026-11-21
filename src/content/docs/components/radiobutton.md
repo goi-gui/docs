@@ -55,4 +55,4 @@ for i, r := range radios {
 }
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

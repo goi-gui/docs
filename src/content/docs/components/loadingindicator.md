@@ -45,4 +45,4 @@ spinner.Color.Set(0x6750A4FF) // any hex, or the role the design named
 spinner.SetWidth(64)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

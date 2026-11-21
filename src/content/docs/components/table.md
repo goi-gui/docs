@@ -391,4 +391,4 @@ values compare as numbers whether or not the column says `numeric`, so `9` sorts
 before `42`; anything else compares as text. A column marked `numeric` still
 parses the number out of a string, so `"1,200"` orders as 1200.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

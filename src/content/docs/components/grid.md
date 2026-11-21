@@ -47,10 +47,8 @@ Grid {
 |---|---|---|
 | `columns` | number | number of equal-width columns |
 | `variant` | enum | `normal` (default) fills row by row; `masonry` puts each child in the shortest column |
-| `spacing` | number | gap between children |
-| `gap` | number | alias of `spacing` |
-| `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
-| `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the flow |
+
+This is a container: `spacing` and its alias `gap`, `crossAxisAlign` and `mainAxisAlign` are the shared container properties described on [Common properties](/guide/common-properties/#containers-and-spacing).
 
 ## Masonry
 
@@ -81,4 +79,4 @@ grid := w.MustByID[*ui.Grid]("grid")
 grid.Columns.Set(2)
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

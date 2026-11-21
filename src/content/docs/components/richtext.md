@@ -39,8 +39,9 @@ is bold, `fontStyle: italic` slants, `decoration` carries `underline` and
 `line-through`, `link` makes the run a clickable target, and `color` does either
 of two things. A literal is fixed; a
 theme role such as `primary` or `tertiary` stays a role, so the run follows the
-scheme when the theme changes. A `custom:` colour does not reach a run, because
-the painter resolves roles only — use a literal there.
+scheme when the theme changes. A `customColor.` name does not reach a run,
+because the painter resolves theme roles only — use a literal or a theme role
+there.
 
 The children are a way to author the runs, not nodes: they are turned into spans
 when the file is built and dropped from the tree, so their `id`s are not
@@ -141,7 +142,7 @@ opener goi uses, for a link the app owns.
 
 The rest is the common box, so a RichText takes `width`, `padding`,
 `background` and the rest of the
-[common properties](/components/#common-properties).
+[common properties](/guide/common-properties/).
 
 ## What it does not do
 

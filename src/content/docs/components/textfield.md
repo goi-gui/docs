@@ -244,4 +244,4 @@ password := w.MustByID[*ui.TextField]("password")
 password.SetObscureText(true) // and false to reveal the value again
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

@@ -86,6 +86,32 @@ The `Terminal` component has no pty dependency. An app that wants a shell adds
 one itself, usually [`creack/pty`](https://github.com/creack/pty), opens the
 process with `StartWithSize`, and passes the returned file to both setters.
 
+## Reading the screen
+
+`View` returns the visible grid with scrollback applied, which is what a
+custom exporter, a test or a screenshot needs:
+
+```go
+view := term.View(term.Grid().Rows)
+for _, row := range view.Lines {
+	for _, cell := range row {
+		// cell.R, cell.Comb, cell.Cont, cell.FG, cell.BG, cell.Link
+	}
+}
+```
+
+`TerminalView` also has `CursorRow`, `CursorCol`, `CursorOn`, `CursorBlink`,
+`Cols` and `Rows`. A `TerminalCell` carries the rune, its combining marks, the
+continuation flag of a wide character, a sixel bitmap in `Image`, an OSC 8
+`Link`, the colours and the bold/faint/italic/underline/reverse/strike/hidden
+flags. `term.Selection()` and `SelectedText(rows)` read the current cell
+selection, and `ClearSelection` drops it.
+
+`Feed`/`FeedString` parse bytes without a reader, `WriteInput` sends text as if
+typed, `ScrollBy` moves the view and `ScrollLines` reports how much history is
+above it. `Grid` is the measured column and row count, and `Fit` resizes the
+grid when an app paints outside the normal flow.
+
 ## Behaviour
 
 - Covers the common VT100/ANSI commands: cursor movement, erase, insert/delete,
@@ -110,9 +136,9 @@ process with `StartWithSize`, and passes the returned file to both setters.
   the SGR (`1006`), UTF-8 (`1005`) or urxvt (`1015`) encoding; clicks,
   releases, drags and the wheel are then forwarded to it instead of selecting
   text.
-- `onResize` fires when the measured grid changes, which is where a pty's window
-  size stays in sync with the box. `onExit` fires when the reader ends, with
+- `OnResize` fires when the measured grid changes, which is where a pty's window
+  size stays in sync with the box. `OnExit` fires when the reader ends, with
   the read error and, when a waiter is set, the process exit code; a shell that
   exits closes the window from the app's handler.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

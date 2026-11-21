@@ -1,7 +1,7 @@
 ---
 title: "Reserved names"
 sidebar:
-  label: "Reserved Names"
+  label: "Reserved names"
 ---
 
 Some names in a `.goi` file are not declared anywhere: the framework supplies
@@ -119,7 +119,7 @@ covered on their own pages; this table is just where they fit:
 | `data.Name` | the original spelling of `bridge`; both read the same values | [Bridge](/guide/bridge/) |
 | `props.Name` | the instance of a fragment, read from the fragment's `props` block | [Fragments](/guide/fragments/) |
 | `event` | an event property's payload, only inside a handler call | [Events](#event) |
-| `id.prop` | another element's property, by the `id` it declares | [Ids and instances](/syntax/#ids-and-instances) |
+| `id.prop` | another element's property, by the `id` it declares | [Ids and instances](/guide/fragments/#ids-and-instances) |
 
 ### `event`
 

@@ -53,15 +53,13 @@ FABMenu {
 | `variant` | enum | `primary`, `secondary`, `tertiary` |
 | `disabled` | bool | dims the element and blocks input |
 | `expanded` | bool | open state (menu, split button) |
-| `spacing` | number | gap between children |
-| `gap` | number | alias of `spacing` |
-| `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
-| `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the flow |
 
 While `expanded` is true the FAB sits at the bottom of its own box and the
 actions stack above it, right-aligned with a 16dp gap, the last declared action
 closest to the FAB. While it is closed the box is just the FAB and the actions
 have no bounds at all, so they neither draw nor take a click.
+
+This is a container: `spacing` and its alias `gap`, `crossAxisAlign` and `mainAxisAlign` are the shared container properties described on [Common properties](/guide/common-properties/#containers-and-spacing).
 
 ## From Go
 
@@ -72,4 +70,4 @@ menu.OnClick(func(ui.ClickEvent) {
 })
 ```
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

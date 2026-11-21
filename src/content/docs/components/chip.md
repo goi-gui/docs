@@ -97,4 +97,4 @@ selected chip shows instead) sits 8dp from the edge with an 8dp gap, and a
 inside the pill. Selecting a chip therefore relayouts it: the check needs the
 same room an icon does.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).

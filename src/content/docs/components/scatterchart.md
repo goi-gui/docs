@@ -39,7 +39,7 @@ ScatterChart {
 
 The rest of the surface is the common box: `background`, `borderThickness`,
 `borderColor`, `radius`, `padding` and the rest of the
-[common properties](/components/#common-properties).
+[common properties](/guide/common-properties/).
 
 ## Events
 

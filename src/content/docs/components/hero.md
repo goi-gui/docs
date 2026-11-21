@@ -144,4 +144,4 @@ cover.Duration.Set(450 * time.Millisecond)
 The tag is usually a design constant. Changing it starts a new shared name for
 the next frame; changing it to `""` turns the flight off.
 
-Every element also accepts the [common properties](/components/#common-properties).
+Every element also accepts the [common properties](/guide/common-properties/).
