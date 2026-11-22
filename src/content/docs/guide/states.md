@@ -20,15 +20,18 @@ Column {
 }
 ```
 
-`default` is the fallback when no other entry matches. The last matching entry
-wins, so write the states in priority order: `hover` before `active`, and
-`disabled` last.
+`default` is the fallback when no other entry matches. It is optional: without
+it, the block writes only while a state matches, and the property otherwise
+keeps its normal value. For a component that value is its variant colour, so a
+filled Button's background comes back as `primary`, not transparent. The last
+matching entry wins, so write the states in priority order: `hover` before
+`active`, and `disabled` last.
 
 ## States
 
 | Key | Active when |
 | --- | --- |
-| `default` | no other entry matched |
+| `default` | no other entry matched; without it the property keeps its normal value |
 | `hover` | the pointer is over the element or one of its children |
 | `active` | a pointer press is held on the element (`pressed` is an alias) |
 | `focus` | the element has keyboard focus; a text field uses this |
@@ -46,7 +49,22 @@ of its area, so hovering a label inside a `Column` also hovers the `Column`.
 ## Built-in components
 
 The state writes the property before the component paints, so a Material
-component can take its own colours per state:
+component can take its own colours per state. A block with only `hover` leaves
+the component's own fill alone at rest; with a transition it animates from that
+fill:
+
+```goi
+Button {
+	label: "Hover me"
+	background: state {
+		hover: red
+	}
+	transition: background 500ms
+}
+```
+
+A filled Button starts that animation from `theme.primary`. Add `default` only
+when the resting colour should differ from the variant's own.
 
 ```goi
 Button {
@@ -120,4 +138,5 @@ Column {
 ```
 
 The entry is resolved from the outside in. An inner block with no matching entry
-falls back to its own `default`, then to the property's own value.
+falls back to its own `default`, then to the property's own value; a component
+with a variant colour uses that colour when the property was never written.

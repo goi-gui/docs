@@ -905,7 +905,9 @@ value. See [Conditional](/guide/conditionals/#choosing-between-more-than-two-val
 
 `state` picks a value from interaction and control state: `default`, `hover`,
 `active`, `focus`, `disabled`, `enabled`, `checked`, `unchecked`, `selected`,
-`expanded` or `collapsed`. The last matching entry wins.
+`expanded` or `collapsed`. The last matching entry wins. `default` is optional:
+without it the property keeps its normal value when no state matches, including
+a component's variant colour.
 
 ```goi
 Column {
