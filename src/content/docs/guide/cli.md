@@ -29,6 +29,7 @@ The design settings live in [`goi.yaml`](/guide/goi-yaml/).
 | --- | --- |
 | [`goi init`](/guide/init/) | create a project with `cmd/main.go`, `goi.yaml` and the `hello` example under `assets/` |
 | [`goi run`](/guide/run/) | run the entrypoint package with hot reload and `runFlags` |
+| `goi serve` | build the browser target and serve it with hot reload; see [In the browser](/guide/browser/#development-server) |
 | [`goi build`](/guide/build/) | build `dist/<os>-<arch>/<name>` with `buildFlags` |
 | `goi setup` / `goi update` | install goi, `goipls` and `goifmt`; bump the dependency in a module |
 | `goi doctor` | show the toolchain, SDL3, Vulkan and the companion tools |

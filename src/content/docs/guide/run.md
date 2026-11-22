@@ -93,3 +93,7 @@ Hot reload is automatic: `goi run` watches the `assets` directory, so editing a
 No Go code is involved, and there is no switch to set. `goi build` copies the
 design into the binary and skips the watcher, so development reloads and a
 shipped app stay in one project without separate builds.
+
+The browser build has its own path: [`goi serve`](/guide/browser/#development-server)
+streams design and i18n edits into the open page with the same state carry-over,
+and rebuilds the wasm for a Go change.

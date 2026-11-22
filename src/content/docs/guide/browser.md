@@ -10,6 +10,9 @@ the window layer and the WebGPU backend, and nothing else.
 goi build --os js --arch wasm
 ```
 
+For development, [`goi serve`](#development-server) builds the same target and
+keeps the open page in step with the design.
+
 That writes `dist/js-wasm/<name>.wasm` with the design embedded, just like a
 desktop build. Put the page next to it and copy the runtime shim:
 
@@ -251,6 +254,33 @@ The app paints on every `requestAnimationFrame`, so an animation follows the
 display and a hidden tab stops painting (the browser throttles it). A desktop
 build waits for something to change instead, which is why an idle desktop app
 sits at 0% CPU and a browser tab does not.
+
+## Development server
+
+`goi serve` builds the browser target, copies `wasm_exec.js` next to it and
+starts a small server:
+
+```sh
+goi serve
+# goi: serving http://127.0.0.1:8080
+```
+
+The page is `index.html` at the project root. Without one, the server writes a
+minimal page for the built wasm. `--port` and `--host` change the address; the
+default host is local only.
+
+Editing a `.goi` file or an i18n catalog updates the live page without a reload.
+The tree is rebuilt through the same path as a desktop hot reload, so Go state
+held outside `Bind` survives, along with focus, text field contents and scroll
+position. An edit that adds a component needing an optional feature tag rebuilds
+the wasm instead, because the tag set is chosen at build time.
+
+A Go change cannot update the running wasm, so it rebuilds the file and reloads
+the page. The same happens for other assets, such as images or fonts, whose
+bytes the wasm embeds.
+
+The server injects a small marker into the page. A `goi build` page has no
+marker, so a shipped browser app never opens a development stream.
 
 ## Serving it
 
