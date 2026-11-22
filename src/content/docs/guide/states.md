@@ -23,8 +23,9 @@ Column {
 `default` is the fallback when no other entry matches. It is optional: without
 it, the block writes only while a state matches, and the property otherwise
 keeps its normal value. For a component that value is its variant colour, so a
-filled Button's background comes back as `primary`, not transparent. The last
-matching entry wins, so write the states in priority order: `hover` before
+filled Button's background comes back as `primary`, not transparent; an auto
+`width` or `height` animates from the size it is laid out at, not from zero. The
+last matching entry wins, so write the states in priority order: `hover` before
 `active`, and `disabled` last.
 
 ## States
@@ -65,6 +66,19 @@ Button {
 
 A filled Button starts that animation from `theme.primary`. Add `default` only
 when the resting colour should differ from the variant's own.
+
+The same holds for a size: a button whose width is auto grows from the width it
+has on screen, and shrinks back to it when the pointer leaves.
+
+```goi
+Button {
+	label: "Hover me"
+	width: state {
+		hover: 300
+	}
+	transition: width 500ms
+}
+```
 
 ```goi
 Button {

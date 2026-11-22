@@ -907,7 +907,7 @@ value. See [Conditional](/guide/conditionals/#choosing-between-more-than-two-val
 `active`, `focus`, `disabled`, `enabled`, `checked`, `unchecked`, `selected`,
 `expanded` or `collapsed`. The last matching entry wins. `default` is optional:
 without it the property keeps its normal value when no state matches, including
-a component's variant colour.
+a component's variant colour and an auto size's laid-out width or height.
 
 ```goi
 Column {
