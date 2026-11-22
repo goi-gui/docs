@@ -50,6 +50,7 @@ needs no reload.
 | `backdropBlur` | number or blur gradient | radius in dp of the blur applied to what is already painted behind the element, like CSS `backdrop-filter`, or a `linear-gradient`/`radial-gradient` of radii that fades the blur across the box; 0 (default) is no blur |
 | `zIndex` | number | paint order among siblings; a higher value paints on top, layout is unaffected. It is the stronger claim: a modal overlay names one to stay above a page whose popover panel lifts its branch |
 | `cursor` | enum | pointer shape, named the way CSS names it: `pointer`, `text`, `move`, `grab`, `not-allowed`, the resize arrows, `wait`, `none`, … |
+| `pointerEvents` | enum | `auto` (default) or `none`; `none` lets the pointer pass through the element and its subtree, and a child can set `auto` to take presses again, like CSS |
 | `rotate` | rotate | CSS `rotate`: `45deg`, `0.25turn`, `x 90deg`, `1 1 1 90deg`; turns the element and its subtree |
 | `transition` | transition | properties that animate when their value changes, e.g. `width 500ms, background 1s`; see [Transitions](/guide/transitions/) |
 | `scale` | scale | CSS `scale`: `2`, `50%`, `2 0.5`, `200% 50% 200%`; stretches the element and its subtree about its centre, and layout is unaffected — see [Scale](/guide/scale/) |
@@ -63,6 +64,11 @@ needs no reload.
 | `scrollSnapAlign` | enum | `none` (default), `start`, `center` or `end`: the edge of this child that lines up with the frame |
 | `scrollSnapStop` | enum | `normal` (default) lets a gesture pass several snap points; `stop` ends it at the next one |
 | `scrollPadding` | number | inset between the frame and a `start`/`end` snap line, the way CSS `scroll-padding` insets it |
+
+`pointerEvents: none` removes the element from hit-testing without changing how
+it paints: a press lands on whatever is drawn underneath. The value inherits, so
+a subtree is skipped until a child sets `auto`. From Go the effective state is
+`PointerEventsEnabled()`, and `SetPointerEvents` sets the property.
 
 Scrolling, snap points and the Go shortcuts have their own page:
 [Scrolling](/guide/scrolling/).
