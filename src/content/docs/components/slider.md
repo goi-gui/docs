@@ -29,8 +29,8 @@ each end.
 
 <p align="center">
   <strong>end icons</strong><br />
-  <img src="/img/components/slider-icons-light.png" alt="Slider with a leading and trailing icon in light mode" style="max-width:80%; height:auto; margin:0 1%;" />
-  <img src="/img/components/slider-icons-dark.png" alt="Slider with a leading and trailing icon in dark mode" style="max-width:80%; height:auto; margin:0 1%;" />
+  <img src="/img/components/slider-icons-light.gif" alt="Range slider with an icon at each end in light mode" style="max-width:80%; height:auto; margin:0 1%;" />
+  <img src="/img/components/slider-icons-dark.gif" alt="Range slider with an icon at each end in dark mode" style="max-width:80%; height:auto; margin:0 1%;" />
 </p>
 
 <p align="center">
@@ -87,7 +87,7 @@ Slider {
 }
 
 Slider {
-	showTooltip: true // the value above the handle, while hovered or dragged
+	showTooltip: true // the value while hovered or dragged
 	value:       0.4
 	min:         0
 	max:         1
@@ -152,8 +152,9 @@ track is a capsule, or an 8dp rounded strip when it carries icons.
 
 ## Value tooltip
 
-`showTooltip: true` puts the handle's value in a small bubble above it while the
-pointer is over the slider or a drag is in progress. A range slider names the
+`showTooltip: true` puts the handle's value in a small bubble beside it while
+the pointer is over the slider or a drag is in progress: above a horizontal
+handle, to its right for a vertical one. A range slider names the
 handle nearest the pointer, and the grabbed one while dragging, so the bubble
 always shows the number that is about to change. It is off by default, and a
 disabled slider shows nothing.
@@ -190,6 +191,6 @@ rangeSlider.Range()              // lo, hi
 | `min` | number | lowest value |
 | `max` | number | highest value |
 | `step` | number | snap interval; 0 means continuous |
-| `showTooltip` | bool | shows the value above the handle while hovered or dragged; off by default |
+| `showTooltip` | bool | shows the value while hovered or dragged; off by default |
 
 Every element also accepts the [common properties](/guide/common-properties/).
