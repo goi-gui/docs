@@ -139,8 +139,7 @@ design needs another.
 
 `leadingIcon` is the icon at the left end of a horizontal slider or the bottom
 end of a vertical one; `trailingIcon` is the right or top end. Either can be
-empty. `leadingIconColor` and `trailingIconColor` override the theme's glyph
-colour, which otherwise follows the part the icon sits on: the inactive track's
+empty. The glyph colour is the theme's: the inactive track's
 `onSecondaryContainer` or the filled track's `onPrimary`.
 
 The icons sit in the unfilled cap at their end. When a handle comes close
@@ -184,8 +183,6 @@ rangeSlider.Range()              // lo, hi
 | `orientation` | enum | `horizontal` (default) or `vertical` |
 | `leadingIcon` | string | Material Symbols name at the left or bottom end; empty means none |
 | `trailingIcon` | string | Material Symbols name at the right or top end; empty means none |
-| `leadingIconColor` | color | overrides the leading glyph colour; zero follows the theme |
-| `trailingIconColor` | color | overrides the trailing glyph colour; zero follows the theme |
 | `disabled` | bool | dims the element and blocks input |
 | `value` | number | current number; the low value of a range |
 | `end` | number | high value of a range slider |
