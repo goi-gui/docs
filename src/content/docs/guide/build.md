@@ -103,7 +103,9 @@ goi build --os js --arch wasm    # dist/js-wasm/<name>.wasm
 ```
 
 The wasm build swaps the window layer and the WebGPU backend and embeds the same
-design. See [Browser](/guide/browser/) for the page that loads it.
+design. See [Browser](/guide/browser/) for the page that loads it, and
+[`goi serve`](/guide/browser/#development-server) when the goal is a development
+server with hot reload rather than a build.
 
 ## Platform requirements
 
