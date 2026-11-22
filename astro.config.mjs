@@ -163,6 +163,7 @@ export default defineConfig({
 								{ label: "RadioButton", slug: "components/radiobutton" },
 								{ label: "Switch", slug: "components/switch" },
 								{ label: "Slider", slug: "components/slider" },
+								{ label: "VerticalSlider", slug: "components/verticalslider" },
 								{ label: "TextField", slug: "components/textfield" },
 								{ label: "SearchBar", slug: "components/searchbar" },
 								{ label: "TextArea", slug: "components/textarea" },

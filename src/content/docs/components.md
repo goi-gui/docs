@@ -60,6 +60,7 @@ plain drawing and content nodes (`Rectangle`, `Image`, `SVG`, `Text`, `Code`,
 - [RadioButton](/components/radiobutton/) — One option in a set where exactly one is chosen.
 - [Switch](/components/switch/) — A single on/off control with an optional label and optional glyph in the thumb.
 - [Slider](/components/slider/) — A continuous value control.
+- [VerticalSlider](/components/verticalslider/) — A continuous value control laid out as a vertical strip, with an optional icon.
 - [TextField](/components/textfield/) — An editable single-line field with a floating label.
 - [SearchBar](/components/searchbar/) — A text field shaped as a search input, with a leading search glyph.
 - [TextArea](/components/textarea/) — A multiline text field.
