@@ -46,6 +46,8 @@ decision: changing `value` is a repaint, not a layout pass.
 ## Behaviour
 
 - The bottom is `min` and the top is `max`.
+- The handle floats between the unfilled cap and the filled part, with a gap on
+  each side, so the three read as separate pieces.
 - A press jumps to that position; a drag follows the pointer on the vertical
   axis.
 - The arrow keys step a focused slider, Home and End jump to the ends, and
