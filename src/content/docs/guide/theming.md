@@ -95,7 +95,7 @@ brand.Colors.Surface = 0xFFFBFEFF
 brand.Colors.OnSurface = 0x1C1B1FFF
 
 app, _ := ui.NewApp()
-win, _ := app.LoadWindow("main.goi", ui.WithSize(900, 700))
+win, _ := app.LoadWindow("main.goi")
 win.DefineTheme(brand)
 ```
 

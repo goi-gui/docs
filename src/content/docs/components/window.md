@@ -148,10 +148,10 @@ click on whatever is underneath.
 ## From Go
 
 ```go
-// WithSize sets the fallback client size; WithAssets reads an embedded file
-// system and skips hot reload; WithHotReload(false) keeps the watcher off;
-// WithCanvas names the browser canvas.
-win, err := app.LoadWindow("app.goi", ui.WithSize(900, 700))
+// The design's width and height size the window; a file without them starts at
+// 480×320. RegisterAssets supplies an embedded design, and the nohotreload
+// build tag keeps the disk watcher off.
+win, err := app.LoadWindow("app.goi")
 if err != nil {
 	return err
 }

@@ -64,21 +64,19 @@ func main() {
 ```
 
 `RegisterAssets` is global and is preferred over the `ui` directory in
-`goi.yaml`. For one window, scope the same file system with
-`ui.WithAssets`:
+`goi.yaml`; `LoadWindow` takes only the entry path:
 
 ```go
-win, err := app.LoadWindow("ui/Main.goi", ui.WithAssets(assets))
+win, err := app.LoadWindow("ui/Main.goi")
 if err != nil {
 	log.Fatal(err)
 }
 defer win.Close()
 ```
 
-`WithAssets` reads the design from the file system and skips hot reload,
-because there is no directory to watch. `ui.WithHotReload(false)` turns the
-watcher off for a window loaded from disk when a debugger should not race a
-reload.
+An embedded design skips hot reload because there is no directory to watch. For
+a design loaded from disk, build with the `nohotreload` tag (or list it in
+`runFlags`) when a debugger should not race a reload.
 
 ## Cross-compiling
 

@@ -111,39 +111,24 @@ stays, which is the honest state to show.
 
 ## Choosing the canvas
 
-By default the app takes the page's first canvas. A page that holds more than one
-names the one it wants, by id:
-
-```goi
-// app.goi — the design is ordinary; only the Go call names the canvas.
-Window {
-	title: "goi"
-	Column { Text { text: "Hello" } }
-}
-```
+An app takes the first canvas on the page that another app has not already
+claimed. When the page has none, one is created and appended, so a page can be
+as small as the script. The Go call is just:
 
 ```go
-win, err := app.LoadWindow("app.goi", ui.WithCanvas("hero"))
+win, err := app.LoadWindow("app.goi")
 ```
 
-```html
-<canvas id="hero"></canvas>
-```
-
-A canvas with the id is used as it is; when the page has none, one with that id
-is created and appended, so a page can be as small as the script. The id is a
-page concern only: the same binary runs in whichever canvas it is told to, and a
-desktop build ignores the option.
-
-To show two apps on one page, give each canvas an id and run one app per canvas.
-Each needs its own WebAssembly instance, because an instance has one window:
+Canvas order is app order. To show two apps on one page, put two canvases in the
+document and start one Go instance per canvas; the first instance takes the
+first canvas, the second takes the next. Each needs its own WebAssembly
+instance, because an instance has one window:
 
 ```html
 <canvas id="hero"></canvas>
 <canvas id="sidebar"></canvas>
 <script src="wasm_exec.js"></script>
 <script>
-	// Each module is its own program with its own ui.WithCanvas call.
 	async function start(src) {
 		const go = new Go();
 		const result = await WebAssembly.instantiateStreaming(fetch(src), go.importObject);
