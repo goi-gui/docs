@@ -53,6 +53,8 @@ decision: changing `value` is a repaint, not a layout pass.
 - The arrow keys step a focused slider, Home and End jump to the ends, and
   Shift makes an arrow jump ten steps.
 - `step` snaps every move; `0` is continuous.
+- `radius` rounds the track's own ends; it defaults to 8dp. The handle keeps
+  its own pill shape.
 - `disabled` dims the track and blocks input.
 - The default size is 64 by 280 when the design sets neither `width` nor
   `height`.
