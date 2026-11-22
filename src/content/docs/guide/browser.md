@@ -275,6 +275,12 @@ held outside `Bind` survives, along with focus, text field contents and scroll
 position. An edit that adds a component needing an optional feature tag rebuilds
 the wasm instead, because the tag set is chosen at build time.
 
+The reload client is part of the framework, so the project's
+`github.com/goi-gui/goi` dependency has to be a version with this feature. A
+project on an older version still gets a working server: `goi serve` warns and
+falls back to rebuilding the wasm and reloading the page for design edits.
+Update the dependency to get the state-preserving path.
+
 A Go change cannot update the running wasm, so it rebuilds the file and reloads
 the page. The same happens for other assets, such as images or fonts, whose
 bytes the wasm embeds.
