@@ -91,7 +91,9 @@ is -1 when it is unknown or the process ended on a signal.
 
 The `Terminal` component has no pty dependency. An app that wants a shell adds
 one itself, usually [`creack/pty`](https://github.com/creack/pty), opens the
-process with `StartWithSize`, and passes the returned file to both setters.
+process with `StartWithSize`, and passes the returned file to both setters. The
+[`examples/terminal`](https://github.com/goi-gui/examples/tree/main/terminal)
+project is a complete shell window with resize and exit wiring.
 
 ## Reading the screen
 
