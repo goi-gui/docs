@@ -92,8 +92,23 @@ Button {
 ```
 
 It works for any property the component draws, not only `background`: `color`,
-`radius`, `border`, `shadow` and the component's own properties all take a state
-block. A disabled button can keep a muted pair without a second element:
+`radius`, `border`, `shadow`, `rotate`, `scale` and the component's own
+properties all take a state block.
+
+```goi
+Card {
+	scale: state {
+		default: 1
+		hover:   1.02
+	}
+	rotate: state {
+		hover: 2deg
+	}
+	transition: scale 200ms, rotate 200ms
+}
+```
+
+A disabled button can keep a muted pair without a second element:
 
 ```goi
 Button {
