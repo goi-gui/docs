@@ -3,7 +3,9 @@ title: "Slider"
 ---
 
 A continuous value control with three shapes: a standard slider, one that
-fills out from a center value, and a range with two handles.
+fills out from a center value, and a range with two handles. It runs
+horizontally by default and can be turned vertical, with an optional icon at
+each end.
 
 [All components](/components/)
 
@@ -23,6 +25,18 @@ fills out from a center value, and a range with two handles.
   <strong>range</strong><br />
   <img src="/img/components/slider-range-light.png" alt="Slider range in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
   <img src="/img/components/slider-range-dark.png" alt="Slider range in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>end icons</strong><br />
+  <img src="/img/components/slider-icons-light.png" alt="Slider with a leading and trailing icon in light mode" style="max-width:80%; height:auto; margin:0 1%;" />
+  <img src="/img/components/slider-icons-dark.png" alt="Slider with a leading and trailing icon in dark mode" style="max-width:80%; height:auto; margin:0 1%;" />
+</p>
+
+<p align="center">
+  <strong>vertical</strong><br />
+  <img src="/img/components/slider-vertical-light.png" alt="Vertical slider with an icon at each end in light mode" style="max-width:20%; height:auto; margin:0 1%;" />
+  <img src="/img/components/slider-vertical-dark.png" alt="Vertical slider with an icon at each end in dark mode" style="max-width:20%; height:auto; margin:0 1%;" />
 </p>
 
 <p align="center">
@@ -78,6 +92,25 @@ Slider {
 	min:         0
 	max:         1
 }
+
+Slider {
+	orientation:  vertical
+	value:        0.6
+	min:          0
+	max:          1
+	leadingIcon:  volume_mute
+	trailingIcon: volume_up
+}
+
+Slider {
+	variant:      range
+	value:        20
+	end:          80
+	min:          0
+	max:          100
+	leadingIcon:  brightness_low
+	trailingIcon: brightness_high
+}
 ```
 
 ## Shapes
@@ -93,6 +126,30 @@ Slider {
 
 `step` snaps every handle, and `disabled` dims the track and blocks input
 without changing the shape.
+
+## Orientation
+
+`orientation: horizontal` is the default. `orientation: vertical` swaps the
+axes: the track runs bottom to top, `min` is at the bottom and `max` at the top,
+and the arrow keys, Home and End follow the same value order. The natural size
+is 200×44 horizontally and 44×200 vertically; set `width` or `height` when the
+design needs another.
+
+## End icons
+
+`leadingIcon` is the icon at the left end of a horizontal slider or the bottom
+end of a vertical one; `trailingIcon` is the right or top end. Either can be
+empty. `leadingIconColor` and `trailingIconColor` override the theme's glyph
+colour, which otherwise follows the part the icon sits on: the inactive track's
+`onSecondaryContainer` or the filled track's `onPrimary`.
+
+The icons sit in the unfilled cap at their end. When a handle comes close
+enough that the cap can no longer hold the glyph plus its padding, the icon
+moves just inside the filled part at the same size, never squeezed. A range
+slider can show an icon at each end, and each one moves with its own handle.
+
+The common `radius` property rounds the track's outer ends; without it the
+track is a capsule, or an 8dp rounded strip when it carries icons.
 
 ## Value tooltip
 
@@ -124,6 +181,11 @@ rangeSlider.Range()              // lo, hi
 | Property | Type | Notes |
 |---|---|---|
 | `variant` | enum | `standard` (default), `centered`, `range` |
+| `orientation` | enum | `horizontal` (default) or `vertical` |
+| `leadingIcon` | string | Material Symbols name at the left or bottom end; empty means none |
+| `trailingIcon` | string | Material Symbols name at the right or top end; empty means none |
+| `leadingIconColor` | color | overrides the leading glyph colour; zero follows the theme |
+| `trailingIconColor` | color | overrides the trailing glyph colour; zero follows the theme |
 | `disabled` | bool | dims the element and blocks input |
 | `value` | number | current number; the low value of a range |
 | `end` | number | high value of a range slider |
