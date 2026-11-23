@@ -339,8 +339,10 @@ What changes for a live feed:
   0.
 - When the connection drops (a camera reboots, a network blips) the decoder is
   reopened after a second and the picture comes back, rather than the player
-  reporting an end. A stream that never opened at all reports its error under
-  `LoadErr` instead of retrying forever.
+  reporting an end. A fetch that hangs without closing the socket is caught the
+  same way: a decoder that has produced nothing for five seconds is reopened. A
+  stream that never opened at all reports its error under `LoadErr` instead of
+  retrying forever.
 - The picture is paced by the feed, not by a fixed clock: the player speeds up a
   little while it has a deep cushion and slows down when the cushion runs low,
   so it settles at the rate the source really delivers. Pacing at the nominal
