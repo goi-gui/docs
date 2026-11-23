@@ -12,9 +12,9 @@ startup failures are one missing row in that report.
 
 **`libSDL3.so.0: cannot open shared object file` (or `SDL3.dll` not found).**
 The runtime library is missing or not on the loader's path. Install the SDL3
-runtime package, put `SDL3.dll` next to the executable, or set
-`LD_LIBRARY_PATH`/`DYLD_LIBRARY_PATH` to its folder. `goi doctor` shows the
-library it finds.
+runtime package, put `SDL3.dll` next to the executable, point `GOI_SDL3_PATH` at
+the library file, or set `LD_LIBRARY_PATH`/`DYLD_LIBRARY_PATH` to its folder.
+`goi doctor` shows the library it finds.
 
 **`duplicated definition of symbol _cgo_init`.** A manual `go build` has cgo on
 or is missing `-tags nofakecgo`. Use `goi build`, which sets both correctly.

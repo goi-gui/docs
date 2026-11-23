@@ -132,6 +132,10 @@ SDL3 built from source and installed also works.
 brew install sdl3
 ```
 
+Homebrew's prefix (`/opt/homebrew/lib` or `/usr/local/lib`) is searched without
+help, so no `DYLD_LIBRARY_PATH` is needed. An SDL3 built somewhere else is found
+through `GOI_SDL3_PATH`, pointed at the library file.
+
 ### Windows
 
 The executable needs `SDL3.dll` next to it, from the SDL3 release archive or
