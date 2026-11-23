@@ -2,10 +2,10 @@
 title: WebView
 ---
 
-A native system web view embedded in the window. On Linux the platform draws
-it with **WebKitGTK** on a Wayland subsurface; the page receives the pointer and
-keyboard like any browser, and Go can load URLs, run JavaScript and receive
-messages from the page.
+A native system web view embedded in the window: **WebKitGTK** on Linux,
+**WebView2** on Windows and **WKWebView** on macOS. The engine draws the page and
+handles pointer and keyboard input itself, and Go can load URLs, run JavaScript
+and receive messages from the page.
 
 [All components](/components/)
 
@@ -71,10 +71,24 @@ if browser.GoBack() {
 browser.Eval("document.title")
 ```
 
-The bridge channel is named `goi`. A page sends a string with:
+The bridge channel is named `goi`. On Linux and macOS a page sends a string
+with:
 
 ```js
 window.webkit.messageHandlers.goi.postMessage("ready");
+```
+
+WebView2 has its own channel object, so a page that runs on Windows uses:
+
+```js
+window.chrome.webview.postMessage("ready");
+```
+
+A page that has to run everywhere can pick one at load time:
+
+```js
+(window.chrome?.webview?.postMessage ?? window.webkit.messageHandlers.goi.postMessage)
+	.call(window.chrome?.webview ?? window.webkit.messageHandlers.goi, "ready");
 ```
 
 ## Limits
@@ -87,9 +101,17 @@ The web view is a **native layer above the GPU surface**, not a painted node:
   `WebView` under those is hidden rather than drawn in the wrong place.
 - Layout, scrolling and pointer input are handled by the engine; a Go
   `onClick` on the view itself does not fire. Use the page for interaction.
-- The Linux backend needs a Wayland session and the WebKitGTK 4.1 runtime
-  (`libwebkit2gtk-4.1-0` on Debian, `webkit2gtk-4.1` on Arch). Windows and macOS
-  backends are not implemented yet; the placeholder reports that.
+- On Linux the view needs a Wayland session and the WebKitGTK 4.1 runtime
+  (`libwebkit2gtk-4.1-0` on Debian, `webkit2gtk-4.1` on Arch).
+- On Windows the view needs the Edge WebView2 runtime, which current Windows 10
+  and 11 install by default. No loader DLL has to ship with the app.
+- `devtools` enables the engine's inspector: the WebKit setting on Linux and
+  macOS, the WebView2 setting on Windows. Treat it as a development toggle.
+- When the view cannot be created, the placeholder stays and the error reaches
+  `App.OnError`, so a missing runtime is visible instead of a silent blank box.
+- The Windows and macOS backends are implemented and cross-compiled, but have
+  not been exercised on real hardware yet. Report a problem if one shows up;
+  Linux is the verified backend.
 
 ## Build
 
@@ -99,6 +121,6 @@ The component is an optional feature. Build with the `webview` tag, or `all`:
 goi build --tags webview
 ```
 
-The libraries are loaded at run time through purego, so the build stays
-cgo-free and needs no headers or `pkg-config`. A design that uses a `WebView`
-without the tag parses and shows the placeholder; the app still runs.
+The platform libraries are loaded at run time through purego, so the build
+stays cgo-free and needs no headers or `pkg-config`. A design that uses a
+`WebView` without the tag parses and shows the placeholder; the app still runs.
