@@ -129,6 +129,7 @@ export default defineConfig({
 								{ label: "Markdown", slug: "components/markdown" },
 								{ label: "Mermaid", slug: "components/mermaid" },
 								{ label: "Terminal", slug: "components/terminal" },
+								{ label: "WebView", slug: "components/webview" },
 							],
 							collapsed: true,
 						},

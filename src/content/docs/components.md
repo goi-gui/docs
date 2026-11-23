@@ -35,6 +35,7 @@ plain drawing and content nodes (`Rectangle`, `Image`, `SVG`, `Text`, `Code`,
 - [Markdown](/components/markdown/) — A markdown document, rendered as elements.
 - [Mermaid](/components/mermaid/) — A Mermaid diagram, drawn from its source.
 - [Terminal](/components/terminal/) — A character-cell terminal backed by an app-supplied tty.
+- [WebView](/components/webview/) — A native system web view (WebKitGTK on Linux Wayland).
 
 ## Graphics
 

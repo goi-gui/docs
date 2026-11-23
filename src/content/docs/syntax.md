@@ -393,6 +393,7 @@ See [Scale](/guide/scale/) for the worked example and the Go setter.
 | `SVG` | no | `src` (same three forms), `fit` (`contain`, `cover`, `fill`), `color` (replaces the document's `currentColor`), `crossfadeSrc`, `paused`, `loop`, `lazy`; see [SVG](/components/svg/) |
 | `Code` | no | `text`, `language`, `showCopy`, `variant`; see [Code](/components/code/) |
 | `Terminal` | no | `fontSize`, `scrollback`, `foreground`; see [Terminal](/components/terminal/) |
+| `WebView` | no | `src`, `html`, `baseURL`, `userAgent`, `zoom`, `transparent`, `devtools`; a native web view, see [WebView](/components/webview/) |
 | `Mermaid` | no | `data`; see [Mermaid](/components/mermaid/) |
 | `Map` | yes | `tiles`, `attribution`, `center`, `zoom`, `bbox`, `reverseTileColors`, `disablePan`, `disableZoom`; see [Map](/components/map/) |
 | `Geom` | no | `data`, `fillColor`, `lineColor`; see [Geom](/components/geom/) |

@@ -175,12 +175,15 @@ the one `goi run` uses.
 | `svg` | oksvg/rasterx for `SVG` elements |
 | `markdown` | goldmark for `Markdown` documents |
 | `terminal` | Maple Mono NF CN, about 20 MB, for the terminal and its CJK text |
+| `webview` | no embedded bytes; loads the system WebKitGTK at run time for `WebView` |
 
 Without a tag the design still parses: an `SVG` reports an error, `Markdown`
 draws nothing, `Code` draws plain text, a remote `Image` fails to fetch, and
 `Mermaid` reports that the build has no renderer. Text falls back to the font's
 monochrome glyphs when `emoji` is off. A `Terminal` still works without its
-tag, using Roboto Mono; `terminal` embeds the Maple face it uses by default.
+tag, using Roboto Mono; `terminal` embeds the Maple face it uses by default. A
+`WebView` without `webview` draws its placeholder; the tag adds no bytes because
+the Linux backend loads WebKitGTK through purego at run time.
 File dialogs and `Notify` are always available on the desktop; the browser stubs
 them.
 
