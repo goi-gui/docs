@@ -55,27 +55,26 @@ Names 1 and 2 are resolved against the project root, the rest against the
 ## SDL3
 
 The Go binary is static; SDL3 is the one runtime library a package ships, so the
-end user never installs it. `goi pack` finds it per target:
+end user never installs it. `goi pack` downloads a pinned SDL3 3.4.20 for the
+target once and keeps it in the user cache:
 
-- **Linux** uses the SDL3 installed on the build machine when the target matches
-  it, and otherwise downloads a pinned build of the same release: Homebrew's
-  tarball for amd64 or arm64. So `goi pack --arch arm64` works on
-  an amd64 machine, and even a matching host does not need SDL installed.
-- **Windows and macOS** download SDL3 3.4.20 once per target into the user
-  cache: `SDL3.dll` for amd64, arm64 or 386, and the universal
-  `libSDL3.0.dylib` for either Mac architecture. The macOS dmg is opened with
-  `hdiutil` on a Mac and 7-Zip elsewhere. The first pack for a target therefore
-  needs network, like the AppImage tool.
+- **Linux** gets Homebrew's build for amd64 or arm64, the only prebuilt Linux
+  tarball, since SDL publishes no Linux binary. It targets glibc 2.38 and later
+  (Ubuntu 24.04, Fedora 39, Debian 13) and does not inherit the build machine's
+  C library.
+- **Windows and macOS** get `SDL3.dll` for amd64, arm64 or 386, and the
+  universal `libSDL3.0.dylib` for either Mac architecture. The macOS dmg is
+  opened with `hdiutil` on a Mac and 7-Zip elsewhere.
 
-`--sdl PATH` bundles a specific library instead, and `--no-sdl` leaves it out;
-the target system then installs SDL3 itself. This download is the one exception:
-the tools `goi pack` runs are the ones installed on the machine. A package that bundles SDL3 also
-carries its zlib license notice next to the library.
+The first pack for a target therefore needs network, for SDL3 and for
+appimagetool's own runtime download. `--sdl PATH` bundles a specific library
+instead, and `--no-sdl` leaves it out; the target system then installs SDL3
+itself. SDL3 is the only thing `goi pack` downloads: the packagers it runs are
+the ones installed on the machine, and [`goi doctor`](/guide/cli/) reports
+them. A package that bundles SDL3 also carries its zlib license notice next to
+the library.
 
-The Linux library is built for glibc 2.38 and later (Ubuntu 24.04, Fedora 39,
-Debian 13), and does not inherit the build machine's C library. On Windows and
-macOS the library comes from SDL's own release. GPU drivers always stay with the
-system.
+GPU drivers always stay with the system.
 
 ## The Linux AppImage
 
