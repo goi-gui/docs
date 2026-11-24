@@ -10,6 +10,8 @@ the tags for a run and a build.
 # Application name and id, used by goi build and packaging.
 name: myapp
 id: com.example.myapp
+# Icon for goi pack; without it the usual asset names are tried.
+# icon: assets/icon.png
 
 # Build tags passed to goi run. nofakecgo and CGO_ENABLED=0 are always
 # used; all turns on every optional feature.
@@ -36,8 +38,16 @@ path; a Windows target gets `.exe` appended by the command.
 ## `id`
 
 The application's reverse-DNS identity, such as `com.example.myapp`. It is a
-stable identity for packaging and platform integration; the build commands do
-not derive paths from it.
+stable identity for platform integration; the build commands do not derive
+paths from it. [`goi pack`](/guide/pack/) needs it: the AppImage's desktop entry
+and icon are named after it.
+
+## `icon`
+
+The PNG [`goi pack`](/guide/pack/) puts in the AppImage and its desktop entry,
+relative to `goi.yaml`. Without the key, the command tries
+`assets/icon.png`, `assets/images/icon.png` and `assets/images/<name>.png` in
+that order. `goi build` and `goi run` do not read it.
 
 ## `runFlags`
 

@@ -35,6 +35,7 @@ export default defineConfig({
 						{ label: "goi init", slug: "guide/init" },
 						{ label: "goi run", slug: "guide/run" },
 						{ label: "goi build", slug: "guide/build" },
+						{ label: "goi pack", slug: "guide/pack" },
 						{ label: "goi.yaml", slug: "guide/goi-yaml" },
 						{ label: "Assets", slug: "guide/assets" },
 						{ label: "In the browser", slug: "guide/browser" },
