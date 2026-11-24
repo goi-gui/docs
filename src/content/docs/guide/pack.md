@@ -27,7 +27,7 @@ The AppImage holds:
 ```text
 AppRun                            starts usr/bin/<name>
 <id>.desktop                      the desktop entry, Exec and Icon point at <name> and <id>
-<id>.png                          the icon, also linked as .DirIcon
+<id>.png                          the icon, also copied as .DirIcon
 usr/bin/<name>                    the app
 usr/bin/libSDL3.so.0              the SDL3 runtime found on this machine
 ```
