@@ -993,6 +993,9 @@ mid-typing never reflows it.
   checked the same way: the name must be declared in `bridge`, and the argument
   count, argument types and `event` payload must match the declaration.
 - The parser recovers, so one typo does not hide the rest of the file.
+- Elements, blocks, switch arms and values may nest up to 1000 levels. A file
+  past that gets a `nested too deeply` diagnostic instead of exhausting the
+  parser's stack; real designs stay far below the limit.
 
 ## What is not supported
 

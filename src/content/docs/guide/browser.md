@@ -252,7 +252,11 @@ goi serve
 
 The page is `index.html` at the project root. Without one, the server writes a
 minimal page for the built wasm. `--port` and `--host` change the address; the
-default host is local only.
+default host is local only, and a non-loopback `--host` prints a warning because
+the server has no authentication. From the project root only page assets are
+served — HTML, CSS, JavaScript, fonts, images and media — so `go.mod`,
+`goi.yaml` and the Go sources stay private; design files reach the page through
+the hot-reload stream, not as file requests.
 
 Editing a `.goi` file or an i18n catalog updates the live page without a reload.
 The tree is rebuilt through the same path as a desktop hot reload, so Go state
