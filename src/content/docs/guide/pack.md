@@ -19,6 +19,7 @@ another target:
 
 ```sh
 goi pack                              # host OS and architecture
+goi pack --version 1.2.3              # named and stamped package
 goi pack --os windows                 # setup.exe, cross-built where NSIS runs
 goi pack --os darwin --arch arm64     # an .app assembled anywhere
 goi pack --arch arm64                 # host OS, arm64 binary
@@ -67,11 +68,10 @@ end user never installs it. `goi pack` finds it per target:
 the target system then installs SDL3 itself. A package that bundles SDL3 also
 carries its zlib license notice next to the library.
 
-A downloaded Linux library is built for glibc 2.38 and later (Ubuntu 24.04,
-Fedora 39, Debian 13). Building on an older distribution and letting it use its
-own SDL3 keeps that older baseline, which is the usual AppImage rule. On Windows
-and macOS the library comes from SDL's own release and does not inherit the
-build machine's C library. GPU drivers always stay with the system.
+The Linux library is built for glibc 2.38 and later (Ubuntu 24.04, Fedora 39,
+Debian 13), and does not inherit the build machine's C library. On Windows and
+macOS the library comes from SDL's own release. GPU drivers always stay with the
+system.
 
 ## The Linux AppImage
 
@@ -150,6 +150,7 @@ goi pack --sdl /usr/lib/libSDL3.so.0
 goi pack --no-sdl                     # system-provided SDL3
 goi pack --appimagetool ~/bin/appimagetool
 goi pack --makensis /opt/nsis/makensis
+goi pack --version 1.2.3
 goi pack --keep-appdir                # leave the staging directory for inspection
 ```
 
