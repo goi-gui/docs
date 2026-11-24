@@ -31,7 +31,7 @@ The design settings live in [`goi.yaml`](/guide/goi-yaml/).
 | [`goi run`](/guide/run/) | run the entrypoint package with hot reload and `runFlags` |
 | `goi serve` | build the browser target and serve it with hot reload; see [In the browser](/guide/browser/#development-server) |
 | [`goi build`](/guide/build/) | build `dist/<os>-<arch>/<name>` with `buildFlags` |
-| [`goi pack`](/guide/pack/) | build a Linux AppImage from that binary |
+| [`goi pack`](/guide/pack/) | package the built app as an AppImage, `.app` or Windows installer |
 | `goi setup` / `goi update` | install goi, `goipls` and `goifmt`; bump the dependency in a module |
 | `goi doctor` | show the toolchain, SDL3, Vulkan and the companion tools |
 | `goi version` | print the installed goi version |

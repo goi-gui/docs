@@ -39,15 +39,18 @@ path; a Windows target gets `.exe` appended by the command.
 
 The application's reverse-DNS identity, such as `com.example.myapp`. It is a
 stable identity for platform integration; the build commands do not derive
-paths from it. [`goi pack`](/guide/pack/) needs it: the AppImage's desktop entry
-and icon are named after it.
+paths from it. [`goi pack`](/guide/pack/) needs it: it names the AppImage's
+desktop entry and icon, the macOS bundle identifier and the Windows uninstall
+key.
 
 ## `icon`
 
-The PNG [`goi pack`](/guide/pack/) puts in the AppImage and its desktop entry,
-relative to `goi.yaml`. Without the key, the command tries
-`assets/icon.png`, `assets/images/icon.png` and `assets/images/<name>.png` in
-that order. `goi build` and `goi run` do not read it.
+The PNG every [`goi pack`](/guide/pack/) package uses as its icon, relative to
+`goi.yaml`. Each target converts it: a PNG for the AppImage, an `.icns` for the
+`.app` and an `.ico` for the Windows installer. Without the key, the command
+tries `assets/icon.png`, `assets/images/icon.png` and
+`assets/images/<name>.png` in that order. `goi build` and `goi run` do not read
+it.
 
 ## `runFlags`
 
