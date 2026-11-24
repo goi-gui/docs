@@ -9,6 +9,11 @@ and receive messages from the page.
 
 [All components](/components/)
 
+<p align="center">
+  <img src="/img/components/webview-light.png" alt="WebView in light mode" style="max-width:45%; height:auto; margin:0 1%;" />
+  <img src="/img/components/webview-dark.png" alt="WebView in dark mode" style="max-width:45%; height:auto; margin:0 1%;" />
+</p>
+
 ## In a `.goi` file
 
 ```goi
