@@ -71,6 +71,11 @@ if browser.GoBack() {
 browser.Eval("document.title")
 ```
 
+The bridge carries a string and nothing else. It is reachable from every frame
+of the page, including a third-party iframe, and the sender cannot be told
+apart: treat every message as untrusted input, or only load content you
+control.
+
 The bridge channel is named `goi`. On Linux and macOS a page sends a string
 with:
 
