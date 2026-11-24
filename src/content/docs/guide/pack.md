@@ -50,22 +50,26 @@ Names 1 and 2 are resolved against the project root, the rest against the
 
 ## SDL3
 
-The Go binary is static, so the SDL3 runtime is the one thing a target machine
-may lack. When the target matches this machine's operating system and
-architecture, `goi pack` copies the library `goi doctor` finds next to the
-binary, where the loader looks first.
+The Go binary is static; SDL3 is the one runtime library a package ships, so the
+end user never installs it. `goi pack` finds it per target:
 
-- `--sdl PATH` bundles a specific library (`libSDL3.so.0`, `libSDL3.0.dylib` or
-  `SDL3.dll`) instead.
-- `--no-sdl` leaves it out; the target system then has to install SDL3 itself.
-- A cross target (another OS or architecture) cannot use this machine's library.
-  The command warns and packs without it; pass `--sdl` with the target's
-  library to bundle it.
+- **Linux** takes the SDL3 installed on the build machine, where `goi doctor`
+  shows it. SDL publishes no Linux binary, so a Linux package is built on the
+  architecture it targets; a cross-architecture build needs `--sdl`.
+- **Windows and macOS** download SDL3 3.4.20 once per target into the user
+  cache: `SDL3.dll` for amd64, arm64 or 386, and the universal
+  `libSDL3.0.dylib` for either Mac architecture. The macOS dmg is opened with
+  `hdiutil` on a Mac and 7-Zip elsewhere. The first pack for a target therefore
+  needs network, like the AppImage tool.
 
-The library is compiled on the machine that ran `goi pack`, so it carries that
-system's C library and windowing dependencies. Package on the oldest
-distribution you support, which is the usual rule for AppImages and bundled
-dylibs alike. GPU drivers always stay with the system.
+`--sdl PATH` bundles a specific library instead, and `--no-sdl` leaves it out;
+the target system then installs SDL3 itself. A package that bundles SDL3 also
+carries its zlib license notice next to the library.
+
+On Windows and macOS the library comes from SDL's own release, so it does not
+inherit the build machine's C library. Linux uses the system library and does:
+package on the oldest distribution you support, the usual AppImage rule. GPU
+drivers always stay with the system.
 
 ## The Linux AppImage
 
