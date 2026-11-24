@@ -26,7 +26,9 @@ goi pack --arch arm64                 # host OS, arm64 binary
 ```
 
 The plain build [`goi build`](/guide/build/) writes stays in the same `dist`
-directory, so the binary can still be run directly.
+directory, so the binary can still be run directly. SDL3 is the only thing
+`goi pack` downloads; the external packagers come from the machine and
+[`goi doctor`](/guide/cli/) reports whether they are installed.
 
 ## Identity and icon
 
@@ -66,7 +68,8 @@ end user never installs it. `goi pack` finds it per target:
   needs network, like the AppImage tool.
 
 `--sdl PATH` bundles a specific library instead, and `--no-sdl` leaves it out;
-the target system then installs SDL3 itself. A package that bundles SDL3 also
+the target system then installs SDL3 itself. This download is the one exception:
+the tools `goi pack` runs are the ones installed on the machine. A package that bundles SDL3 also
 carries its zlib license notice next to the library.
 
 The Linux library is built for glibc 2.38 and later (Ubuntu 24.04, Fedora 39,
@@ -87,10 +90,10 @@ usr/bin/<name>                    the app
 usr/bin/libSDL3.so.0              the SDL3 runtime, when bundled
 ```
 
-appimagetool is taken from, in order: `--appimagetool`, `GOI_APPIMAGETOOL`,
-`PATH`, or a pinned download (`1.9.1`, checksum verified) into the user cache.
-The first pack therefore needs network access twice: for the tool, and for the
-AppImage runtime appimagetool fetches. Later packs reuse both.
+appimagetool is taken from `--appimagetool`, `GOI_APPIMAGETOOL` or `PATH`; `goi
+doctor` shows whether it is installed, and a missing one fails before the build.
+appimagetool fetches the AppImage runtime on its first run, so that first pack
+still needs network.
 
 A Linux AppImage is built on Linux: appimagetool is a Linux binary. Another
 host says so instead of writing a broken image.
@@ -133,11 +136,11 @@ for administrator rights:
 - a Start Menu folder and a desktop shortcut,
 - an uninstaller and an entry in Add or Remove Programs.
 
-`makensis` is taken from `--makensis`, `GOI_MAKENSIS` or `PATH`. When it is
-missing, `goi pack` downloads a pinned NSIS build: the Debian packages on Linux
-and the portable zip on Windows, both unpacked into the user cache. On macOS,
-install it with `port install nsis` or pass `--makensis`. NSIS runs on Linux,
-macOS and Windows, so a Windows installer can be cross-built.
+`makensis` is taken from `--makensis`, `GOI_MAKENSIS` or `PATH`, and `goi
+doctor` shows whether it is installed. A missing one fails before the build;
+install it with your package manager (`apt install nsis`, `port install nsis`,
+`winget install NSIS.NSIS`) or pass `--makensis`. NSIS runs on Linux, macOS and
+Windows, so a Windows installer can be cross-built.
 
 `goi pack` converts the icon to an `.ico` for the installer and the shortcuts.
 The executable itself still carries Go's default icon, because embedding a
