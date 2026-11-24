@@ -76,6 +76,53 @@ the library.
 
 GPU drivers always stay with the system.
 
+## Tools
+
+`goi pack` runs external tools for two targets, and both come from the machine.
+[`goi doctor`](/guide/cli/) lists them as `ok` or `missing` before a pack is
+attempted.
+
+### appimagetool (Linux AppImage)
+
+appimagetool is itself a Linux AppImage, so it only runs on Linux:
+
+```sh
+curl -L -o appimagetool \
+  https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage
+chmod +x appimagetool
+sudo mv appimagetool /usr/local/bin/     # or ~/.local/bin when it is on PATH
+```
+
+Use `appimagetool-aarch64.AppImage` on arm64. If it cannot start because FUSE
+is missing, run it with `APPIMAGE_EXTRACT_AND_RUN=1` (or install FUSE), or pass
+its path with `--appimagetool`.
+
+On macOS and Windows appimagetool cannot run: build a Linux package on a Linux
+machine or in a container, and on Windows in WSL2. The `.app` and the Windows
+installer do not need it.
+
+### NSIS (Windows installer)
+
+| Host | Install |
+| --- | --- |
+| Debian, Ubuntu | `sudo apt install nsis` |
+| Fedora | `sudo dnf install mingw32-nsis` |
+| openSUSE | `sudo zypper install nsis` |
+| Arch | `yay -S nsis` (AUR) |
+| macOS | `sudo port install nsis` (MacPorts; no Homebrew formula) |
+| Windows | `winget install NSIS.NSIS`, `choco install nsis`, or the [official installer](https://nsis.sourceforge.io/) |
+
+`makensis -VERSION` should answer. If it is not on `PATH`, pass its full path
+with `--makensis` (on Windows usually
+`C:\Program Files (x86)\NSIS\makensis.exe`). NSIS runs on all three hosts, so
+a Windows installer can be cross-built from Linux or a Mac.
+
+### 7-Zip (macOS SDL3 away from a Mac)
+
+Only when a macOS target is packed on another host: `goi pack` reads SDL's dmg
+with `hdiutil` on macOS and 7-Zip elsewhere (`7z`, `7zz` or `7za` on `PATH`).
+Install it with your package manager, or pass `--sdl` with the dylib.
+
 ## The Linux AppImage
 
 The image is an AppDir packed with
@@ -89,13 +136,11 @@ usr/bin/<name>                    the app
 usr/bin/libSDL3.so.0              the SDL3 runtime, when bundled
 ```
 
-appimagetool is taken from `--appimagetool`, `GOI_APPIMAGETOOL` or `PATH`; `goi
-doctor` shows whether it is installed, and a missing one fails before the build.
+appimagetool is taken from `--appimagetool`, `GOI_APPIMAGETOOL` or `PATH`; see
+[Tools](#tools) for installing it. A missing one fails before the build.
 appimagetool fetches the AppImage runtime on its first run, so that first pack
-still needs network.
-
-A Linux AppImage is built on Linux: appimagetool is a Linux binary. Another
-host says so instead of writing a broken image.
+also needs network. A Linux AppImage is built on Linux: appimagetool is a Linux
+binary, and another host says so instead of writing a broken image.
 
 Running it:
 
@@ -117,13 +162,46 @@ icon into place.
 <name>.app/Contents/Info.plist                      the bundle metadata
 ```
 
-The bundle is plain files, so it is assembled on any host. On macOS the command
-also signs it ad hoc (`codesign --force --sign -`), which is the minimum Apple
-silicon needs to launch it. Anywhere else the bundle is unsigned: copy it to a
-Mac and sign it there. Gatekeeper still quarantines downloads; distribution
-needs a Developer ID signature and notarization, which `goi pack` does not do.
+### Requirements
 
-`CFBundleShortVersionString` and `CFBundleVersion` are `1.0` and `1` for now.
+- **To build one**: any host with Go. `goi pack --os darwin` cross-compiles the
+  binary, assembles the plain bundle and downloads SDL3's universal dylib;
+  Xcode is not needed. The project still needs its `name`, `id` and icon from
+  [`goi.yaml`](/guide/goi-yaml/).
+- **To run one**: a macOS release the Go toolchain still supports (macOS 13
+  Ventura or later at the time of writing), on Apple silicon or Intel.
+- **To sign one**: `codesign` on macOS, which ships with the system.
+- **To distribute one**: an Apple Developer ID certificate and notarization,
+  which `goi pack` does not do.
+
+Packed on a Mac, `goi pack` signs the bundle ad hoc
+(`codesign --force --sign -`), which Apple silicon requires for a locally built
+app. Packed anywhere else, the bundle is unsigned.
+
+### Opening an unsigned app
+
+Gatekeeper blocks an unsigned or downloaded `.app` on first launch. For local
+use:
+
+- In Finder, right-click the app and choose **Open**, then **Open** in the
+  dialog.
+- Or open **System Settings → Privacy & Security**, scroll to **Security** and
+  click **Open Anyway**.
+- If the bundle came from a download, clear the quarantine flag first:
+  ```sh
+  xattr -dr com.apple.quarantine MyApp.app
+  open MyApp.app
+  ```
+- A cross-built bundle may have no signature at all; sign it on the Mac:
+  ```sh
+  codesign --force --deep --sign - MyApp.app
+  ```
+
+This only makes the app run on your Mac. Distribution still needs a Developer
+ID signature and notarization (`xcrun notarytool`), which `goi pack` does not do.
+
+With `--version`, the bundle carries that version in `CFBundleShortVersionString`
+and its numeric part in `CFBundleVersion`; without it they are `1.0` and `1`.
 
 ## The Windows installer
 
@@ -135,11 +213,10 @@ for administrator rights:
 - a Start Menu folder and a desktop shortcut,
 - an uninstaller and an entry in Add or Remove Programs.
 
-`makensis` is taken from `--makensis`, `GOI_MAKENSIS` or `PATH`, and `goi
-doctor` shows whether it is installed. A missing one fails before the build;
-install it with your package manager (`apt install nsis`, `port install nsis`,
-`winget install NSIS.NSIS`) or pass `--makensis`. NSIS runs on Linux, macOS and
-Windows, so a Windows installer can be cross-built.
+`makensis` is taken from `--makensis`, `GOI_MAKENSIS` or `PATH`; see
+[Tools](#tools) for installing NSIS on your host. A missing one fails before the
+build. NSIS runs on Linux, macOS and Windows, so a Windows installer can be
+cross-built.
 
 `goi pack` converts the icon to an `.ico` for the installer and the shortcuts.
 The executable itself still carries Go's default icon, because embedding a
@@ -164,5 +241,5 @@ goi pack --keep-appdir                # leave the staging directory for inspecti
 
 The design files, fonts and other assets are already embedded in the binary by
 [`goi build`](/guide/build/), so no package ships the `assets` directory. The
-packages are not signed beyond the macOS ad-hoc signature, carry no update
-information, and have no version metadata beyond the `.app` plist defaults.
+packages are not signed beyond the macOS ad-hoc signature and carry no update
+information.
