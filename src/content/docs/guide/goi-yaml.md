@@ -46,11 +46,12 @@ key.
 ## `icon`
 
 The PNG every [`goi pack`](/guide/pack/) package uses as its icon, relative to
-`goi.yaml`. Each target converts it: a PNG for the AppImage, an `.icns` for the
-`.app` and an `.ico` for the Windows installer. Without the key, the command
-tries `assets/icon.png`, `assets/images/icon.png` and
-`assets/images/<name>.png` in that order. `goi build` and `goi run` do not read
-it.
+`goi.yaml`. [`goi init`](/guide/init/) writes `icon: assets/icon.png` and that
+PNG, so a new project packs without any setup. Each target converts it: a PNG
+for the AppImage, an `.icns` for the `.app` and an `.ico` for the Windows
+installer. Without the key, the command tries `assets/icon.png`,
+`assets/images/icon.png` and `assets/images/<name>.png` in that order. `goi
+build` and `goi run` do not read it.
 
 ## `runFlags`
 

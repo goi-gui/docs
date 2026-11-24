@@ -33,7 +33,7 @@ The design settings live in [`goi.yaml`](/guide/goi-yaml/).
 | [`goi build`](/guide/build/) | build `dist/<os>-<arch>/<name>` with `buildFlags` |
 | [`goi pack`](/guide/pack/) | package the built app as an AppImage, `.app` or Windows installer |
 | `goi setup` / `goi update` | install goi, `goipls` and `goifmt`; bump the dependency in a module |
-| `goi doctor` | show the toolchain, SDL3, Vulkan and the companion tools |
+| `goi doctor` | show the toolchain, SDL3, Vulkan, the companion tools and the `goi pack` tools |
 | `goi version` | print the installed goi version |
 
 The CLI is a cobra tree: `goi --help`, `goi <command> --help` and shell

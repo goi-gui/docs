@@ -4,7 +4,8 @@ title: "goi init"
 
 `goi init` creates a project in the current directory: a Go module, a
 `cmd/main.go`, a [`goi.yaml`](/guide/goi-yaml/), a `.gitignore` and the `hello`
-example under `assets/` — the goi logo and a greeting. It also asks whether to
+example under `assets/` — the goi logo and a greeting. It also writes the
+`assets/icon.png` that [`goi pack`](/guide/pack/) uses as the application icon. It also asks whether to
 initialize a git repository (No by default) and, when the directory already has
 files, whether to overwrite the project files (No by default; `-w` skips the
 question).
@@ -20,6 +21,7 @@ It asks for the application name, id and Go module in the terminal, then writes:
 ```text
 hello/
 ├── assets/
+│   ├── icon.png
 │   ├── images/
 │   │   └── goi.svg
 │   └── ui/

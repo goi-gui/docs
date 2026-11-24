@@ -35,7 +35,8 @@ plain names (letters, digits, `.`, `_`, `-`): `id`, a reverse-DNS value, names
 the desktop entry and icon on Linux, the bundle identifier on macOS, and the
 uninstall registry key on Windows.
 
-The icon is one PNG, found in this order:
+[`goi init`](/guide/init/) writes `assets/icon.png` and the `icon:` key, so a
+new project packs without any setup. The icon is one PNG, found in this order:
 
 1. `--icon PATH`
 2. `icon:` in `goi.yaml`
@@ -132,10 +133,11 @@ for administrator rights:
 - a Start Menu folder and a desktop shortcut,
 - an uninstaller and an entry in Add or Remove Programs.
 
-`makensis` is taken from `--makensis`, `GOI_MAKENSIS` or `PATH`; NSIS runs on
-Linux, macOS and Windows, so a Windows installer can be cross-built. There is no
-downloaded copy: install it with your package manager (`apt install nsis`,
-`brew install nsis`, `winget install NSIS.NSIS`).
+`makensis` is taken from `--makensis`, `GOI_MAKENSIS` or `PATH`. When it is
+missing, `goi pack` downloads a pinned NSIS build: the Debian packages on Linux
+and the portable zip on Windows, both unpacked into the user cache. On macOS,
+install it with `port install nsis` or pass `--makensis`. NSIS runs on Linux,
+macOS and Windows, so a Windows installer can be cross-built.
 
 `goi pack` converts the icon to an `.ico` for the installer and the shortcuts.
 The executable itself still carries Go's default icon, because embedding a
