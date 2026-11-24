@@ -105,9 +105,10 @@ The web view is a **native layer above the GPU surface**, not a painted node:
   (`libwebkit2gtk-4.1-0` on Debian, `webkit2gtk-4.1` on Arch).
 - On Windows the view needs the Edge WebView2 runtime, which current Windows 10
   and 11 install by default. No loader DLL has to ship with the app.
-- On Linux, native popups a page opens (a `<select>` menu, a date picker) are
-  separate GTK windows and may not appear over the embedded view on Wayland;
-  a custom in-page control avoids that.
+- On Linux a `<select>` menu is drawn inside the view, over the control, and
+  its choice goes back to the page. Other native pickers (the calendar of a
+  date input, a colour chooser) are still separate GTK windows and may not
+  appear over the view on Wayland; a custom in-page control avoids that.
 - `devtools` enables the engine's inspector: the WebKit setting on Linux and
   macOS, the WebView2 setting on Windows. Treat it as a development toggle.
 - When the view cannot be created, the placeholder stays and the error reaches
