@@ -53,9 +53,10 @@ Names 1 and 2 are resolved against the project root, the rest against the
 The Go binary is static; SDL3 is the one runtime library a package ships, so the
 end user never installs it. `goi pack` finds it per target:
 
-- **Linux** takes the SDL3 installed on the build machine, where `goi doctor`
-  shows it. SDL publishes no Linux binary, so a Linux package is built on the
-  architecture it targets; a cross-architecture build needs `--sdl`.
+- **Linux** uses the SDL3 installed on the build machine when the target matches
+  it, and otherwise downloads a pinned build of the same release: Homebrew's
+  tarball for amd64 or arm64. So `goi pack --arch arm64` works on
+  an amd64 machine, and even a matching host does not need SDL installed.
 - **Windows and macOS** download SDL3 3.4.20 once per target into the user
   cache: `SDL3.dll` for amd64, arm64 or 386, and the universal
   `libSDL3.0.dylib` for either Mac architecture. The macOS dmg is opened with
@@ -66,10 +67,11 @@ end user never installs it. `goi pack` finds it per target:
 the target system then installs SDL3 itself. A package that bundles SDL3 also
 carries its zlib license notice next to the library.
 
-On Windows and macOS the library comes from SDL's own release, so it does not
-inherit the build machine's C library. Linux uses the system library and does:
-package on the oldest distribution you support, the usual AppImage rule. GPU
-drivers always stay with the system.
+A downloaded Linux library is built for glibc 2.38 and later (Ubuntu 24.04,
+Fedora 39, Debian 13). Building on an older distribution and letting it use its
+own SDL3 keeps that older baseline, which is the usual AppImage rule. On Windows
+and macOS the library comes from SDL's own release and does not inherit the
+build machine's C library. GPU drivers always stay with the system.
 
 ## The Linux AppImage
 
