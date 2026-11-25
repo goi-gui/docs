@@ -158,17 +158,27 @@ Window {
 }
 ```
 
-The lookup runs when a window loads and again on hot reload. It matches the
-family name without regard to case or extra spaces (`dejavu sans` is the same
-family) and registers every installed weight and italic file, so `fontWeight`
-and `fontStyle` choose the real outlines. A variable font is used through its
-`wght` axis.
+The lookup runs when a window loads, again on hot reload, and when Go calls
+`SetFontFamily` after the window is up. It matches the family name without
+regard to case or extra spaces (`dejavu sans` is the same family) and registers
+every installed weight and italic file, so `fontWeight` and `fontStyle` choose
+the real outlines. A variable font is used through its `wght` axis.
+
+A name the platform knows under another name resolves as well: on Linux
+fontconfig decides (`fc-match`), on Windows the FontSubstitutes registry key
+(`Helvetica` is drawn as `Arial`), and the generic families `sans-serif`,
+`serif`, `monospace`, `system-ui`, `cursive` and `fantasy` map to the usual face
+of the platform (`DejaVu Sans`, `Helvetica`, `Segoe UI` and so on). Besides
+`.ttf`, `.otf`, `.ttc` and `.otc`, old Mac resource-fork `.dfont` files and
+`.woff` web fonts are read.
 
 It reads the platform's font directories: on Linux `/usr/share/fonts`,
 `/usr/local/share/fonts`, `~/.local/share/fonts` and `~/.fonts`; on macOS the
 system and user Library font folders; on Windows the Windows Fonts folder and
 the per-user fonts folder. The scan is lazy and cached, so a design that names
-only Roboto or families it loaded never reads them.
+only Roboto or families it loaded never reads them. A name that was not found
+stays a miss until the app restarts; installing the font while it runs is not
+picked up.
 
 A system font is not embedded in the binary. Building or packaging on a machine
 without that family falls back to Roboto, so use `LoadFont` when the app must
@@ -218,7 +228,9 @@ text := w.MustByID[*ui.Text]("label")
 text.SetFontFamily("Nunito")
 ```
 
-`SetFontFamily("")` hands the element back to its parent's family.
+`SetFontFamily("")` hands the element back to its parent's family. Setting a
+family that is installed on the machine works too; the lookup happens the first
+time the new family is measured or drawn.
 
 ## Limits
 
