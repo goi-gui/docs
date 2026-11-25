@@ -38,7 +38,7 @@ needs no reload.
 | `radius` | number | corner radius on all four corners |
 | `radiusTop`, `radiusRight`, `radiusBottom`, `radiusLeft` | number | rounds both corners on that side; unset follows `radius` |
 | `radiusTopLeft`, `radiusTopRight`, `radiusBottomRight`, `radiusBottomLeft` | number | rounds one corner; unset follows the side, then `radius` |
-| `fontFamily` | string | a family the app registered with `LoadFont`, `LoadFontFamily` or `LoadVariableFont`, or built-in `Roboto`; inherited by children; see [Fonts](/guide/fonts/) |
+| `fontFamily` | string | a family installed on the machine, one the app registered with `LoadFont`, `LoadFontFamily` or `LoadVariableFont`, or built-in `Roboto`; inherited by children; see [Fonts](/guide/fonts/) |
 | `shadow` | shadow | CSS-style shadow: the box everywhere, the glyphs on `Text`; see [Shadows](/guide/shadows/) |
 | `visible` | bool | removes the element from layout, painting and hit-testing |
 | `ripple` | bool | press feedback on any element. Unwritten keeps the host's default: a component that ripples (buttons, icon buttons, FABs, chips, tabs, switches, menu and list rows) keeps it, a plain element has none. `true` adds one to a box or a picture — the element takes the press even without an `onClick` handler — and `false` removes it from a button. The disc is clipped to the element's own shape, so it never spills past a pill or a card; a press on a child that is not itself a control counts as a press on the rippling element |

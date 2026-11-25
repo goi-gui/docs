@@ -253,7 +253,9 @@ goi pack --keep-appdir                # leave the staging directory for inspecti
 
 ## What is not packed
 
-The design files, fonts and other assets are already embedded in the binary by
-[`goi build`](/guide/build/), so no package ships the `assets` directory. The
-packages are not signed beyond the macOS ad-hoc signature and carry no update
-information.
+The design files, fonts loaded through `LoadFont` and other assets are already
+embedded in the binary by [`goi build`](/guide/build/), so no package ships the
+`assets` directory. A `fontFamily` that names a font installed on the system is
+not embedded: the target machine must have that family, or the app falls back to
+Roboto. The packages are not signed beyond the macOS ad-hoc signature and carry
+no update information.

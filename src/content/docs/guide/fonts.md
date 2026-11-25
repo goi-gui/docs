@@ -2,10 +2,11 @@
 title: "Fonts"
 ---
 
-A design names a font family; Go registers the file. The built-in Roboto is
-always there, and anything else comes from `App.LoadFont`, `LoadFontFamily` or
-`LoadVariableFont`. Font files live in the same `assets` directory as the
-design, so `fonts/Nunito.ttf` means `assets/fonts/Nunito.ttf`.
+A design names a font family. A family installed on the machine is found
+automatically; the built-in Roboto is always there; and a font the app ships
+comes from `App.LoadFont`, `LoadFontFamily` or `LoadVariableFont`. Shipped font
+files live in the same `assets` directory as the design, so `fonts/Nunito.ttf`
+means `assets/fonts/Nunito.ttf`.
 
 ## Registering a family
 
@@ -138,6 +139,43 @@ returns an error rather than drawing blank text.
 Calling any of these after the window is up also works: the next frame draws
 with the new face.
 
+## System fonts
+
+`fontFamily` can name a font installed on the machine; no Go call is needed:
+
+```goi
+Window {
+	Text {
+		text:       "System"
+		fontFamily: "DejaVu Sans"
+	}
+
+	Text {
+		text:       "System Bold"
+		fontFamily: "DejaVu Sans"
+		fontWeight: 700
+	}
+}
+```
+
+The lookup runs when a window loads and again on hot reload. It matches the
+family name without regard to case or extra spaces (`dejavu sans` is the same
+family) and registers every installed weight and italic file, so `fontWeight`
+and `fontStyle` choose the real outlines. A variable font is used through its
+`wght` axis.
+
+It reads the platform's font directories: on Linux `/usr/share/fonts`,
+`/usr/local/share/fonts`, `~/.local/share/fonts` and `~/.fonts`; on macOS the
+system and user Library font folders; on Windows the Windows Fonts folder and
+the per-user fonts folder. The scan is lazy and cached, so a design that names
+only Roboto or families it loaded never reads them.
+
+A system font is not embedded in the binary. Building or packaging on a machine
+without that family falls back to Roboto, so use `LoadFont` when the app must
+ship the face. The browser build has no system fonts either. The app's own
+`LoadFont`, `LoadFontFamily` or `LoadVariableFont` for a name wins over the
+installed family, whether it runs before or after the window.
+
 ## Using it in a design
 
 On the window, for every element that inherits it:
@@ -165,9 +203,9 @@ one element to override what it would inherit.
 
 `fontFamily` is a common property, so it works on any element and a child
 inherits the nearest one that set it. `Roboto` is always available without a
-registration; a name that is neither Roboto nor registered falls back to Roboto
-and logs one warning per family, so a typo is visible rather than silent. An
-empty name simply inherits.
+registration and an installed family needs none either; a name that is neither
+Roboto, installed, nor registered falls back to Roboto and logs one warning per
+family, so a typo is visible rather than silent. An empty name simply inherits.
 
 Measurement follows the same face the painter draws, so a wrapped paragraph
 breaks where it is measured; a wide custom face changes a label's size, and
