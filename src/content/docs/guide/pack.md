@@ -207,7 +207,10 @@ This only makes the app run on your Mac. Distribution still needs a Developer
 ID signature and notarization (`xcrun notarytool`), which `goi pack` does not do.
 
 With `--version`, the bundle carries that version in `CFBundleShortVersionString`
-and its numeric part in `CFBundleVersion`; without it they are `1.0` and `1`.
+and its numeric part in `CFBundleVersion`. A leading `v` and a suffix such as
+`-beta` are dropped from those two fields, so `v1.2.3-beta` becomes `1.2.3`;
+the file names and the AppImage keep the version as given. Without `--version`
+they are `1.0` and `1`.
 
 ## The Windows installer
 
@@ -223,6 +226,11 @@ for administrator rights:
 [Tools](#tools) for installing NSIS on your host. A missing one fails before the
 build. NSIS runs on Linux, macOS and Windows, so a Windows installer can be
 cross-built.
+
+With `--version`, the installer and Add or Remove Programs show it as given,
+and the fixed version resource gets its numeric part padded to four numbers:
+`v1.2.3` becomes `1.2.3.0`, and a version with no digits becomes `0.0.0.0`.
+Without it no version resource is written.
 
 `goi pack` converts the icon to an `.ico` for the installer and the shortcuts.
 The executable itself still carries Go's default icon, because embedding a
