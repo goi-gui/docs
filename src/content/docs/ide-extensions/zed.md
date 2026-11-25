@@ -4,7 +4,8 @@ title: "Zed"
 
 [goi-gui/zed-goi](https://github.com/goi-gui/zed-goi) adds `.goi` support to
 [Zed](https://zed.dev): syntax highlighting, bracket matching, indentation, an
-outline, a file icon and the `goipls` language server.
+outline, a file icon and the `goipls` language server. VS Code and VSCodium use
+the [VS Code extension](/ide-extensions/vscode/) with the same server.
 
 ## What it gives you
 
@@ -158,5 +159,6 @@ inherits every other icon from Zed's default. Select it once in `settings.json`:
 ## Editor-agnostic
 
 `goipls` speaks the Language Server Protocol over stdio, so any editor that can
-start a stdio server can use it. Zed is the only extension that ships so far;
-elsewhere the server still works, you just wire it up yourself.
+start a stdio server can use it. The [VS Code extension](/ide-extensions/vscode/)
+ships with goi too; elsewhere the server still works, you just wire it up
+yourself.

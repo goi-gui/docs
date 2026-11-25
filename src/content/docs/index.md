@@ -186,7 +186,7 @@ another target; the release tags come from `buildFlags`. See
 - [Components](/components/) — every element, grouped by purpose, with a
   `.goi` example and its properties.
 - [Icons](/icons/) — every Material Symbols name the renderer can draw.
-- [Zed extension](/ide-extensions/zed/) — highlighting, completion and
-  diagnostics for `.goi` files.
+- [Zed extension](/ide-extensions/zed/) and [VS Code extension](/ide-extensions/vscode/) —
+  highlighting, completion and diagnostics for `.goi` files in either editor.
 - [Troubleshooting](/guide/troubleshooting/) — the common startup, layout and
   runtime failures.

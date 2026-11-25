@@ -275,6 +275,7 @@ export default defineConfig({
 					label: "Tooling",
 					items: [
 						{ label: "Zed", slug: "ide-extensions/zed" },
+						{ label: "VS Code", slug: "ide-extensions/vscode" },
 						{ label: "Troubleshooting", slug: "guide/troubleshooting" },
 					],
 					collapsed: false,
