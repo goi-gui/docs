@@ -68,8 +68,9 @@ target once and keeps it in the user cache:
 
 The first pack for a target therefore needs network, for SDL3 and for
 appimagetool's own runtime download. `--sdl PATH` bundles a specific library
-instead, and `--no-sdl` leaves it out; the target system then installs SDL3
-itself. SDL3 is the only thing `goi pack` downloads: the packagers it runs are
+instead, which must be built for the target OS and architecture: `goi pack`
+reads its header and rejects the wrong one. `--no-sdl` leaves SDL3 out; the
+target system then installs it itself. SDL3 is the only thing `goi pack` downloads: the packagers it runs are
 the ones installed on the machine, and [`goi doctor`](/guide/cli/) reports
 them. A package that bundles SDL3 also carries its zlib license notice next to
 the library.
@@ -195,6 +196,11 @@ use:
 - A cross-built bundle may have no signature at all; sign it on the Mac:
   ```sh
   codesign --force --deep --sign - MyApp.app
+  ```
+- A bundle moved through a filesystem that drops Unix modes (a Windows zip, for
+  example) may lose the executable bit; restore it:
+  ```sh
+  chmod +x MyApp.app/Contents/MacOS/<name>
   ```
 
 This only makes the app run on your Mac. Distribution still needs a Developer
