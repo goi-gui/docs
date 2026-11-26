@@ -4,8 +4,9 @@ title: "Image"
 
 Draws a decoded bitmap. `src` names a file in the design's asset container
 (`goi://`), a file on the machine, or an `http`/`https` URL; either way the
-element takes part in layout immediately. A GIF or APNG plays on its own. Go can
-also hand it a bitmap directly with `SetImage`, which needs no file at all.
+element takes part in layout immediately. PNG, JPEG, GIF and WebP all decode;
+a GIF or APNG plays on its own. Go can also hand it a bitmap directly with
+`SetImage`, which needs no file at all.
 
 [All components](/components/)
 
