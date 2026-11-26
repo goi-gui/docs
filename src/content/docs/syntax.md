@@ -250,6 +250,7 @@ declaration. A function call appears either as an event property's whole value
 | `"hsl(200 40% 50%)"` | color | CSS `hsl()`/`hsla()` |
 | `linear-gradient(90deg, red, blue 60%)` | color | CSS gradient fill, quoted or unquoted; stops may be `%`, `dp` or a bare length; `background` only, see [Colours and gradients](#colours-and-gradients) |
 | `theme.surfaceContainerHigh` | color role | a theme name, so it follows light/dark; any role in the M3 scheme |
+| `red / 50`, `#411f89 / 50`, `theme.primary / 50` | color with opacity | any colour form takes `/ 0-100` alpha; see [Colours](/guide/colours/#opacity) |
 | `customColor.myBrand` | custom color | a name the app defines with `Window.SetCustomColor`; an undefined one warns and falls back to `onSurface` |
 | `90deg`, `x 90deg`, `1 1 1 90deg` | rotate | the `rotate` property only: CSS form, see [Rotate](#rotate) |
 | `2`, `50%`, `2 0.5`, `200% 50% 200%` | scale | the `scale` property only: CSS form, see [Scale](#scale) |

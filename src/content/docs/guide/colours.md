@@ -50,6 +50,37 @@ Column {
 }
 ```
 
+## Opacity
+
+Every form above takes `/ 0-100` at the end, so one property can set a colour
+and its alpha in one line:
+
+```goi
+Rectangle {
+	background: red / 50
+}
+
+Text {
+	color: theme.primary / 75
+}
+
+Rectangle {
+	background: customColor.brand / 30
+}
+
+Rectangle {
+	background: #411f89 / 50
+}
+```
+
+`/ 50` is half opaque, `/ 0` is transparent and `/ 100` is opaque. It replaces
+the alpha a hex literal or a CSS function already carried, so `#411f8980 / 50`
+is the same as `#411f8980` with 50%. Values outside 0–100 are a diagnostic.
+
+A slash inside a CSS function (`rgb(42 123 155 / 50%)`) belongs to that
+function; the suffix goes after the whole colour. A shadow's colour takes the
+same suffix: `shadow: 0 4 12 2 #000 / 25`.
+
 ## In an expression
 
 A role keeps working when an expression picks it, so a conditional row can be
