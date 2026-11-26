@@ -55,6 +55,11 @@ painted in the scheme's `inverseSurface` with `bodySmall` text, like the Materia
 3 plain tooltip. It does not change layout, so showing and hiding it costs no
 reflow.
 
+The bubble is an overlay: a `Card`, `Stack`, scroll viewport or a later sibling
+cannot clip or cover it, because it is painted last with the window as its only
+clip. A tooltip whose anchor is scrolled out of view does not float over the
+page.
+
 ## From Go
 
 ```go
