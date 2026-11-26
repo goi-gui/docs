@@ -204,13 +204,15 @@ pair; a column with an icon and no label draws the glyph alone.
 `sortable: true` makes the header clickable and gives it a pointer cursor and an
 arrow, which points up for ascending and down for descending.
 
-## Resizing columns
+## Resizing columns and rows
 
-`resizable: true` turns every column's right border into a drag handle. The
-pointer becomes a horizontal resize cursor over it; dragging sets that column's
-width in pixels and the rest of the table reflows. A percentage width becomes a
-fixed pixel width after the first drag. A table without a header resizes from
-the first row's cell borders, and the scrollbar keeps its own area.
+`resizable: true` turns every column's right border into a horizontal drag
+handle and every row's bottom border into a vertical one. The pointer becomes a
+horizontal or vertical resize cursor over the border; dragging sets that
+column's width or that row's height in pixels and the rest of the table
+reflows. A percentage width or height becomes a fixed pixel value after the
+first drag, and survives a hot reload. A table without a header resizes columns
+from the first row's cell borders. The scrollbar keeps its own area.
 
 ## Scrolling
 
@@ -320,7 +322,7 @@ rebuilding the loop is the usual way to replace every row.
 | `stickyHeader` | bool | freeze the header while the rows scroll under it; needs `scroll: true`, see [Scrolling](#scrolling) |
 | `rowHeight` | number | row height in dp; 48 by default, a row's own `height` wins |
 | `headerHeight` | number | header height in dp; 40 by default |
-| `resizable` | bool | drag a column's right border to change its width; off by default |
+| `resizable` | bool | drag a column's right border or a row's bottom border to resize it; off by default |
 | `sortColumn` | number | sorted column index, `-1` (default) for declaration order |
 | `sortAscending` | bool | `true` by default |
 | `selectable` | enum | `none` (default), `single`, `multiple`; see [Selection](#selection) |
