@@ -92,11 +92,44 @@ page.
 | `crossAxisAlign` | enum | `start`, `center`, `end`, `stretch`; places a child across the flow |
 | `mainAxisAlign` | enum | `start`, `center`, `end`, `spaceBetween`, `spaceAround`, `spaceEvenly`; places the run along the flow |
 
+## Showing and hiding
+
+The panel starts visible. A `Popover` has `toggle()` and `show(bool)` methods,
+so a design can open and close it without a Go handler:
+
+```goi
+Popover {
+	id: menu
+
+	Button {
+		label:   "Menu"
+		onClick: menu.toggle()
+	}
+
+	$popover {
+		Card {
+			label: "Panel"
+		}
+	}
+}
+
+Button {
+	label:   "Close menu"
+	onClick: menu.show(false)
+}
+```
+
+The panel's `visible` cell is the state; layout, paint and hit-testing all
+follow it, and `onClickOutside` only fires while the panel is shown. A popover
+with no `$popover` slot ignores both methods.
+
 ## From Go
 
 ```go
 pop := w.MustByID[*ui.Popover]("pop")
 pop.Align.Set("end")
+pop.Show(true)   // or pop.Show(false)
+pop.Toggle()     // flips and reports the new state
 ```
 
 Every element also accepts the [common properties](/guide/common-properties/).
