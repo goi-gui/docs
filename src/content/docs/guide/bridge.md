@@ -203,6 +203,13 @@ variable declared inside it resets.
 Every design sees every declaration: a fragment can own its own `bridge` block,
 and the declarations merge into the one design the window loads.
 
+The entry file and a fragment may declare the same name. If the types match it
+is one declaration, so `SetData` and `SetHandler` reach every page that reads
+it; handler parameter names may differ, but their types and arity must match. A
+repeated name with a different type stops the load with a diagnostic naming
+both types. A `type` declared in two files merges the same way when its fields
+match.
+
 ## Rows without a handler per row
 
 `ui.OnEach` hooks every row a loop builds, including rows rebuilt after a list
