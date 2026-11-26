@@ -145,6 +145,25 @@ A `custom` window is frameless, so the design owns the whole frame: the outer
 platform, so a press on a resize edge or on the drag region never turns into a
 click on whatever is underneath.
 
+## From a design
+
+An event can drive the window without a bridge handler:
+
+```goi
+Button { label: "Close" onClick: window.close() }
+Button { label: "Minimize" onClick: window.minimize() }
+Button { label: "Maximize" onClick: window.maximize(true) }
+Button { label: "Restore" onClick: window.maximize(false) }
+Button { label: "Toggle" onClick: window.toggleMaximize() }
+Button { label: "Fullscreen" onClick: window.fullscreen(true) }
+Button { label: "Windowed" onClick: window.fullscreen(false) }
+```
+
+The names are valid only in an event property (`onClick`, `onSubmit`, ...); the
+design language has no scripting. `window.maximize` and `window.fullscreen`
+take one bool, `window.toggleMaximize`, `window.minimize` and `window.close`
+take none. The same controls are exported as `Window` methods from Go.
+
 ## From Go
 
 ```go

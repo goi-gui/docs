@@ -204,15 +204,18 @@ pair; a column with an icon and no label draws the glyph alone.
 `sortable: true` makes the header clickable and gives it a pointer cursor and an
 arrow, which points up for ascending and down for descending.
 
-## Resizing columns and rows
+## Resizing columns
 
 `resizable: true` turns every column's right border into a horizontal drag
-handle and every row's bottom border into a vertical one. The pointer becomes a
-horizontal or vertical resize cursor over the border; dragging sets that
-column's width or that row's height in pixels and the rest of the table
-reflows. A percentage width or height becomes a fixed pixel value after the
-first drag, and survives a hot reload. A table without a header resizes columns
-from the first row's cell borders. The scrollbar keeps its own area.
+handle. The pointer becomes a horizontal resize cursor over it; dragging sets
+that column's width in pixels and the rest of the table reflows. A percentage
+width becomes a fixed pixel width after the first drag, and survives a hot
+reload. A table without a header resizes from the first row's cell borders. The
+scrollbar keeps its own area.
+
+Rows size themselves from their tallest cell content; they are not drag
+targets. `rowHeight` is a minimum when written, and a row's own `height` is a
+minimum too, so a larger cell still grows the row.
 
 ## Scrolling
 
@@ -320,9 +323,9 @@ rebuilding the loop is the usual way to replace every row.
 | `striped` | bool | alternate row tint; off by default |
 | `showHeader` | bool | `true` by default |
 | `stickyHeader` | bool | freeze the header while the rows scroll under it; needs `scroll: true`, see [Scrolling](#scrolling) |
-| `rowHeight` | number | row height in dp; 48 by default, a row's own `height` wins |
+| `rowHeight` | number | minimum row height in dp when written; rows otherwise follow their content |
 | `headerHeight` | number | header height in dp; 40 by default |
-| `resizable` | bool | drag a column's right border or a row's bottom border to resize it; off by default |
+| `resizable` | bool | drag a column's right border to change its width; off by default |
 | `sortColumn` | number | sorted column index, `-1` (default) for declaration order |
 | `sortAscending` | bool | `true` by default |
 | `selectable` | enum | `none` (default), `single`, `multiple`; see [Selection](#selection) |
@@ -349,6 +352,9 @@ rebuilding the loop is the usual way to replace every row.
 | `selected` | bool | this row's selection flag; in `multiple` mode it is the state a design can seed |
 | `disabled` | bool | dims the row's text |
 | `background` | colour | the row's own fill, drawn over the table's stripes and selection band |
+
+A row's height follows its tallest cell; a row `height` is a floor, not a fixed
+band.
 
 A row's `background` is the common colour property, but it is worth naming here
 because a table paints its own bands underneath: a row that sets it keeps that
