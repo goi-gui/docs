@@ -163,17 +163,18 @@ win.Bind(func(w *ui.Window) error {
 // Window controls, usable from any handler in Bind.
 w.Minimize()          // w.SetMinimized(true)
 w.ToggleMaximize()
-w.SetMaximized(true)
+w.Maximize(true)      // w.SetMaximized(true); false restores
 if w.Maximized() {
 	// the window is maximized, whether Go or the user asked
 }
+w.Fullscreen(true)    // w.SetFullscreen(true); false leaves it
+full := w.Fullscreen() // the no-argument form reads the live state
 w.Close()
 
 // Every switch has a getter and a setter.
 w.SetResizable(false)
 w.SetMinimizable(false)
 w.SetMaximizable(false)
-w.SetFullscreen(true)
 resizable := w.Resizable()
 fmt.Println(w.Size())  // client size in logical pixels
 fmt.Println(w.Title()) // the title the design declared
