@@ -214,8 +214,9 @@ reload. A table without a header resizes from the first row's cell borders. The
 scrollbar keeps its own area.
 
 Rows size themselves from their tallest cell content; they are not drag
-targets. `rowHeight` is a minimum when written, and a row's own `height` is a
-minimum too, so a larger cell still grows the row.
+targets. `rowHeight` is the minimum (48 by default), and a row's own `height`
+overrides that floor, so a larger cell still grows the row. Set `rowHeight: 0`
+to let the content alone decide the height.
 
 ## Scrolling
 
@@ -323,7 +324,7 @@ rebuilding the loop is the usual way to replace every row.
 | `striped` | bool | alternate row tint; off by default |
 | `showHeader` | bool | `true` by default |
 | `stickyHeader` | bool | freeze the header while the rows scroll under it; needs `scroll: true`, see [Scrolling](#scrolling) |
-| `rowHeight` | number | minimum row height in dp when written; rows otherwise follow their content |
+| `rowHeight` | number | minimum row height in dp; 48 by default, and content taller than it grows the row |
 | `headerHeight` | number | header height in dp; 40 by default |
 | `resizable` | bool | drag a column's right border to change its width; off by default |
 | `sortColumn` | number | sorted column index, `-1` (default) for declaration order |
@@ -353,8 +354,8 @@ rebuilding the loop is the usual way to replace every row.
 | `disabled` | bool | dims the row's text |
 | `background` | colour | the row's own fill, drawn over the table's stripes and selection band |
 
-A row's height follows its tallest cell; a row `height` is a floor, not a fixed
-band.
+A row's height follows its tallest cell; `rowHeight` and a row `height` are
+floors, not fixed bands.
 
 A row's `background` is the common colour property, but it is worth naming here
 because a table paints its own bands underneath: a row that sets it keeps that
