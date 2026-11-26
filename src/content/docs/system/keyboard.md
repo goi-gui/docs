@@ -92,6 +92,8 @@ Text fields and other focusable elements share one focus per window:
 - Ctrl+C, Ctrl+X and Ctrl+V copy, cut and paste.
 - Backspace and Delete remove around the caret; Ctrl+Backspace/Delete remove a
   whole word.
+- The caret blinks while a field has focus. Typing or moving it shows the caret
+  again for the next blink.
 - Escape clears a static text selection.
 
 These run before and independently of `OnKey`, which is why `OnKey` is safe for
