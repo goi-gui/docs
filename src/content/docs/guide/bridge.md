@@ -172,7 +172,8 @@ ui.SetHandler(w, "onOpen", func(id string, limit uint) {
   accept, reports through `App.OnError` instead of killing the frame.
 
 `SetHandler` belongs in `Bind`, which runs again after every hot reload, so
-re-registering there is enough:
+re-registering there is enough. A handler registered outside `Bind` is carried
+across a reload too, and so are the values `SetData` stored:
 
 ```go
 win.Bind(func(w *ui.Window) error {

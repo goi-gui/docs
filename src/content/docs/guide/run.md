@@ -90,6 +90,10 @@ Hot reload is automatic: `goi run` watches the `assets` directory, so editing a
 `.goi` file rebuilds the tree, carries over the state the framework owns and runs
 `Bind` again. Application state must therefore live outside `Bind`.
 
+Values set with `ui.SetData` and handlers registered with `ui.SetHandler` are
+carried into the new tree, so a page keeps its data and keeps responding while
+you edit it. `Bind` still runs afterwards and may update or replace them.
+
 No Go code is involved, and there is no switch to set. `goi build` copies the
 design into the binary and skips the watcher, so development reloads and a
 shipped app stay in one project without separate builds.
