@@ -145,6 +145,9 @@ The model is CSS's, with the parts this framework does not have dropped.
   capped, because past that the text is unreadable anyway.
 - The colour axis is the theme: a role name follows the scheme, which CSS has no
   notion of.
-- A shadow never affects layout. A parent that clips its children is the only
-  thing that can cut it off, so a shadow on a scrolled row is trimmed at the
-  viewport edge, exactly as CSS would trim it.
+- A shadow never affects layout. Only an explicit `ClipRRect`, a `CarouselItem`
+  or a scrolling viewport that actually overflows cuts it off; an ordinary
+  component surface clips its content, not the shadows around it, so a search
+  bar's elevation is not trimmed by the card that holds it. A shadow on a
+  scrolled row is still trimmed at the viewport edge, exactly as CSS would trim
+  it.
