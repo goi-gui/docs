@@ -119,7 +119,11 @@ selection, and `ClearSelection` drops it.
 `Feed`/`FeedString` parse bytes without a reader, `WriteInput` sends text as if
 typed, `ScrollBy` moves the view and `ScrollLines` reports how much history is
 above it. `Grid` is the measured column and row count, and `Fit` resizes the
-grid when an app paints outside the normal flow.
+grid when an app paints outside the normal flow. `Clear` empties the visible
+screen and its scrollback, homes the cursor and drops the selection, leaving the
+reader, writer, colours and terminal modes alone. On the alternate screen it
+clears that screen; the main screen returns on exit, the way a terminal command
+works.
 
 ## Behaviour
 
