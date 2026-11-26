@@ -172,6 +172,7 @@ encryption, and a field that must never be read back is a job for the backend.
 | `mask` | string | input mask: `#` a digit, `@` a letter, `*` either, `\` makes the next character literal, everything else literal |
 | `color` | color | value, label and placeholder colour; unset keeps onSurface |
 | `disabled` | bool | dims the element and blocks input |
+| `autoFocus` | bool | focuses the field as soon as it is shown; off by default |
 | `obscureText` | bool | paints one dot per character, password-style; off by default |
 
 A field's `type` filters what reaches its value, whether it arrives as a

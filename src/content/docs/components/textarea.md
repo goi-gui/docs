@@ -48,6 +48,7 @@ TextArea {
 | `supporting` | string | helper line under the field |
 | `variant` | enum | `filled` (default) or `outlined` |
 | `disabled` | bool | mutes the field and stops edits |
+| `autoFocus` | bool | focuses the field as soon as it is shown; off by default |
 
 ## Filled and outlined
 

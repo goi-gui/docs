@@ -58,6 +58,7 @@ A `$leading` body replaces the built-in search glyph; the query keeps the same
 | `filledIcon` | bool | draws every icon of the element in the filled Material Symbols instance; `false` (default) keeps the outlined one |
 | `filledTrailingIcon` | bool | fills only the trailing icon; `filledIcon` fills both slots |
 | `disabled` | bool | dims the element and blocks input |
+| `autoFocus` | bool | focuses the field as soon as it is shown; off by default |
 
 ## From Go
 
