@@ -173,7 +173,9 @@ ui.SetHandler(w, "onOpen", func(id string, limit uint) {
 
 `SetHandler` belongs in `Bind`, which runs again after every hot reload, so
 re-registering there is enough. A handler registered outside `Bind` is carried
-across a reload too, and so are the values `SetData` stored:
+across a reload too, and so are the values `SetData` stored. A carried value
+whose bridge declaration changed type is reset to its zero value with a
+warning:
 
 ```go
 win.Bind(func(w *ui.Window) error {

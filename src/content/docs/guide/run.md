@@ -92,7 +92,9 @@ Hot reload is automatic: `goi run` watches the `assets` directory, so editing a
 
 Values set with `ui.SetData` and handlers registered with `ui.SetHandler` are
 carried into the new tree, so a page keeps its data and keeps responding while
-you edit it. `Bind` still runs afterwards and may update or replace them.
+you edit it. `Bind` still runs afterwards and may update or replace them. If an
+edit changes a bridge declaration's type, the carried value no longer fits:
+it is reset to its zero value and a warning says which variable it was.
 
 No Go code is involved, and there is no switch to set. `goi build` copies the
 design into the binary and skips the watcher, so development reloads and a
