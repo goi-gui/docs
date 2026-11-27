@@ -8,8 +8,6 @@ derived value, a shared constant.
 
 ```goi
 setup {
-	import "strings"
-
 	var name = "Kaan"
 
 	func greet(n string) string {
@@ -25,6 +23,12 @@ Window {
 The body is Go source. It may contain `import`, `const`, `var`, `type` and
 `func` declarations. A package-level `:=` is not valid Go: write `var name =`
 instead.
+
+Imports are managed for you. Using `strings.TrimSpace` imports `strings`, using
+`fmt.Println` imports `fmt`, and an import the body does not use is dropped, so
+an unused import is not an error. A name that two standard packages share
+(`rand`, `template`, `json`, `pprof`, `scanner`) resolves to the common one;
+import the other spelling explicitly when you need it.
 
 ## Scope
 
@@ -45,9 +49,9 @@ instead.
   the rest of the standard library compile once for the whole design. A file is
   compiled the first time something reads it: a hundred fragments of which ten
   are on the page cost ten, not a hundred.
-- A file's `import` list decides what the interpreter loads: a setup block with
-  no imports registers no standard-library package. Loading the whole standard
-  library for every file would cost about 1.3 MB per file for nothing.
+- Only the packages the body uses are loaded, including the ones imported for
+  you: a setup block with no package reference registers none. Loading the whole
+  standard library for every file would cost about 1.3 MB per file for nothing.
 - A fragment previewed on its own runs its own setup, the same way `goicheck`
   and the editor preview do.
 
