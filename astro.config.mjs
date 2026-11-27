@@ -57,6 +57,7 @@ export default defineConfig({
 						},
 						{ label: "Loops", slug: "guide/loops" },
 						{ label: "Fragments", slug: "guide/fragments" },
+						{ label: "Setup", slug: "guide/setup" },
 						{ label: "Translations", slug: "guide/i18n" },
 						{ label: "Reserved names", slug: "guide/reserved" },
 					],

@@ -3,8 +3,8 @@ title: ".goi syntax"
 ---
 
 A `.goi` file describes a design. Go code attaches behaviour; the file holds no
-logic. A design may be one file or several: a file can import fragments and pass
-them values.
+logic beyond an optional [setup block](/guide/setup/) for pure helpers. A design
+may be one file or several: a file can import fragments and pass them values.
 
 ```goi
 // line comment
@@ -183,10 +183,35 @@ A design declares its `bridge` values, handlers and `type` rows before the root
 element. [Bridge](/guide/bridge/) covers the declarations, `SetData`,
 `SetHandler` and the type table.
 
+## Setup
+
+A file may declare a `setup` block before its root element. The body is Go
+source, and its names are visible only to the elements written in that same
+file. It is meant for pure helpers, not event handling:
+
+```goi
+setup {
+	var name = "Kaan"
+
+	func greet(n string) string {
+		return "Hi, " + n
+	}
+}
+
+Window {
+	Text { text: greet(name) }
+}
+```
+
+`var`, `const`, `type`, `func` and `import` are accepted; a package-level `:=`
+is not valid Go. A setup function cannot be an event handler. The
+[Setup guide](/guide/setup/) covers scope, hot reload and the interpreter.
+
 ## Grammar
 
 ```text
-File      = { Import | Props | Bridge | Shape } Element EOF
+File      = { Import | Props | Bridge | Shape | Setup } Element EOF
+Setup     = "setup" "{" GoSource "}"
 Import    = "import" Ident String [";"]
 Props     = "props" "{" { Decl } "}"
 Bridge    = ("bridge" | "data") "{" { Decl } "}"
@@ -1001,8 +1026,9 @@ mid-typing never reflows it.
 ## What is not supported
 
 No bindings and no handler bodies — a design declares a handler's name and
-parameters, but the body is always Go. A list from Go is a `bridge` variable the
-app sets with `ui.SetData`.
+parameters, but the body is always Go. A `setup` function is a value helper, not
+an event handler. A list from Go is a `bridge` variable the app sets with
+`ui.SetData`.
 
 Theming is not part of the language: `theme` names a scheme and every colour a
 component draws comes from it. See [Theming](/guide/theming/) for the built-in

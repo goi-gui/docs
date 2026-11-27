@@ -160,7 +160,7 @@ Button { label: "Windowed" onClick: window.fullscreen(false) }
 ```
 
 The names are valid only in an event property (`onClick`, `onSubmit`, ...); the
-design language has no scripting. `window.maximize` and `window.fullscreen`
+design language has no event scripting. `window.maximize` and `window.fullscreen`
 take one bool, `window.toggleMaximize`, `window.minimize` and `window.close`
 take none. The same controls are exported as `Window` methods from Go.
 
