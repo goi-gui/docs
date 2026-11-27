@@ -170,6 +170,28 @@ runs. A handler call uses the Go function registered with `ui.SetHandler`, and
 its return value is available in setup. The handler still belongs to Go: setup
 only calls it.
 
+A setup function may also assign a bridge value:
+
+```goi
+bridge {
+	status string
+	loading bool
+}
+
+setup {
+	func loaded() {
+		bridge.loading = false
+		bridge.status = "ready"
+	}
+}
+```
+
+The assignment reaches the design's data when the setup call returns, so
+expressions, conditions and loops that read the bridge update on the next pass.
+Setup still cannot write a design node directly. Bridge values are shared by
+the file, so one instance's assignment is visible to every instance of that
+fragment, the same as `ui.SetData`.
+
 A list keeps the type the bridge declared. Rows `ui.SetData` stores may be
 structs (fields matched by their `goi` tag, then name, ignoring case) or maps;
 setup sees the shape from the design:
