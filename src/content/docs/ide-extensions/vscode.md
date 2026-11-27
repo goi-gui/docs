@@ -11,7 +11,7 @@ source is [goi-gui/vscode-goi](https://github.com/goi-gui/vscode-goi).
 
 | Feature | Source |
 |---|---|
-| Highlighting, strings, colours, gradients | `syntaxes/goi.tmLanguage.json` |
+| Highlighting, strings, colours, gradients, Go `setup` bodies | `syntaxes/goi.tmLanguage.json` |
 | Bracket matching and auto-closing | `language-configuration.json` |
 | Indent after `{` | `language-configuration.json` |
 | Outline (`Window › Column › Card › …`) | `goipls` document symbols |

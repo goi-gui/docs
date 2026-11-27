@@ -11,7 +11,7 @@ the [VS Code extension](/ide-extensions/vscode/) with the same server.
 
 | Feature | Source |
 |---|---|
-| Highlighting | `languages/goi/highlights.scm` |
+| Highlighting, with Go injected into `setup` blocks | `languages/goi/highlights.scm`, `languages/goi/injections.scm` |
 | Bracket matching (and rainbow brackets) | `languages/goi/brackets.scm` |
 | Indent after `{` | `languages/goi/indents.scm` |
 | Outline panel (`Window › Column › Card › …`) | `languages/goi/outline.scm` |
