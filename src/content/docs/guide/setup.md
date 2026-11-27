@@ -40,6 +40,9 @@ instead.
   functions) fall back to a per-instance interpreter, copy-on-write: instances
   that only read share one interpreter until a setup function reads or writes a
   setup variable.
+- A file's `import` list decides what the interpreter loads: a setup block with
+  no imports registers no standard-library package. Loading the whole standard
+  library for every file would cost about 1.3 MB per file for nothing.
 - A fragment previewed on its own runs its own setup, the same way `goicheck`
   and the editor preview do.
 
