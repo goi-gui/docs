@@ -17,6 +17,7 @@ the [VS Code extension](/ide-extensions/vscode/) with the same server.
 | Outline panel (`Window › Column › Card › …`) | `languages/goi/outline.scm` |
 | Language name, `.goi` suffix, `//` comments | `languages/goi/config.toml` |
 | Diagnostics, completion, hover, go-to-definition | `goipls` |
+| Setup names in values and Go completion/type errors inside `setup` | `goipls` |
 | Icon name completion (Material Symbols) | `goipls` |
 | `app.` / `window.` completion | `goipls` |
 | Auto-import a sibling fragment | `goipls` completion + quick fix |

@@ -114,10 +114,12 @@ screen. The error names the `.goi` file and line.
 
 ## Tools
 
-The language server parses each setup body with Go's parser, so a syntax error
-gets a squiggle on the `.goi` line. Both editor extensions highlight the body as
-Go: VS Code includes its Go grammar, and Zed injects the Go parser into the
-block. Type errors and runtime failures are caught when the app loads.
+The language server parses and type-checks each setup body with Go's own parser
+and checker. A syntax or type error gets a squiggle on the `.goi` line, setup
+values and functions complete in property values, and Go names, local variables
+and imported package members complete inside the body. Both editor extensions
+highlight the body as Go: VS Code includes its Go grammar, and Zed injects the
+Go parser into the block.
 
 `goicheck` evaluates setup blocks, so `goicheck -layout` catches a block that
 does not parse or a function that fails while the page is being checked.
