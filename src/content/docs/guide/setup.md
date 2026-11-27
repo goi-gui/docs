@@ -87,6 +87,31 @@ Setup functions are evaluated while the design is running. Keep them pure and
 cheap: a property that reads a setup function is evaluated again on every
 expression pass. They should not touch nodes, start goroutines or block.
 
+Setup values also drive control blocks, with the type their declaration gives
+them:
+
+```goi
+setup {
+	var show bool
+	var mode = "compact"
+	var items = []string{"one", "two"}
+}
+
+Window { Column {
+	if show { Text { text: "shown" } }
+	switch mode {
+		case "compact":
+			Text { text: "compact" }
+		default:
+			Text { text: "full" }
+	}
+	for _, item := range items { Text { text: item } }
+} }
+```
+
+A bool is an `if` condition, a string or number can be a `switch` subject, and a
+slice, map or number can be ranged over.
+
 ## Props access
 
 A fragment's `props` block is readable from its setup as `props.name`, with the
