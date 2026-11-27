@@ -87,6 +87,29 @@ Setup functions are evaluated while the design is running. Keep them pure and
 cheap: a property that reads a setup function is evaluated again on every
 expression pass. They should not touch nodes, start goroutines or block.
 
+## Props access
+
+A fragment's `props` block is readable from its setup as `props.name`, with the
+type the prop declared:
+
+```goi
+props {
+	title string
+	count int
+}
+
+setup {
+	func label() string {
+		return fmt.Sprintf("%s:%d", props.title, props.count)
+	}
+}
+```
+
+Each fragment instance sees the values its caller passed; a prop the instance
+leaves out is its type's zero value. A prop passed as a bridge value is read
+again when setup runs, so it follows `ui.SetData`. The entry file has no props
+unless it is previewed as a fragment.
+
 ## Bridge access
 
 Setup code can read the design's bridge values and call its handlers. The
