@@ -117,8 +117,8 @@ its return value is available in setup. The handler still belongs to Go: setup
 only calls it.
 
 A list keeps the type the bridge declared. Rows `ui.SetData` stores may be
-structs (fields matched by their `goi` tag, then name) or maps; setup sees the
-shape from the design:
+structs (fields matched by their `goi` tag, then name, ignoring case) or maps;
+setup sees the shape from the design:
 
 ```goi
 bridge {
