@@ -24,6 +24,12 @@ The body is Go source. It may contain `import`, `const`, `var`, `type` and
 `func` declarations. A package-level `:=` is not valid Go: write `var name =`
 instead.
 
+Setup code is interpreted, not compiled by the Go toolchain in your app. goi
+uses [Yaegi](https://github.com/traefik/yaegi) for this, version v0.16.3. That
+Yaegi release supports **Go 1.21 and Go 1.22**, so keep setup code and its
+imports within the Go 1.22 language and standard library, even when the app
+itself builds with a newer Go version.
+
 Imports are managed for you. Using `strings.TrimSpace` imports `strings`, using
 `fmt.Println` imports `fmt`, and an import the body does not use is dropped, so
 an unused import is not an error. A name that two standard packages share
@@ -285,5 +291,7 @@ setup block and adds the `setup` tag; `all` includes it too. Without the tag a
 core build reports that the design uses setup instead of treating its names as
 literals.
 
-Setup code is interpreted, not compiled into the app. `goi build` embeds the
-interpreter with the design, so a packaged app needs no Go toolchain at runtime.
+Setup code is interpreted by Yaegi v0.16.3, not compiled into the app. `goi
+build` embeds the interpreter with the design, so a packaged app needs no Go
+toolchain at runtime. Yaegi supports Go 1.21 and Go 1.22, which is the language
+and standard library available to a setup block.
