@@ -88,6 +88,7 @@ The values are the optional feature tags:
 | `svg` | `SVG` elements |
 | `markdown` | `Markdown` documents |
 | `terminal` | the Maple Mono NF CN face for a terminal |
+| `setup` | page-scoped Go helpers and their interpreter |
 | `all` | every one of the above |
 
 A tag can also be a space- or comma-separated group inside one entry
@@ -96,8 +97,8 @@ A tag can also be a space- or comma-separated group inside one entry
 ### `auto`
 
 `auto` scans every `.goi` file under `assets` and adds the feature tags the
-design actually uses. It only manages the feature tags below, so flags of your
-own stay where they are:
+design actually uses, including `setup` when a file declares a setup block. It
+only manages the feature tags below, so flags of your own stay where they are:
 
 ```yaml
 runFlags: [auto, abc, myflag]

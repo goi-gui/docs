@@ -124,5 +124,10 @@ Go parser into the block.
 `goicheck` evaluates setup blocks, so `goicheck -layout` catches a block that
 does not parse or a function that fails while the page is being checked.
 
+Setup support is a build feature. `auto` in `runFlags` or `buildFlags` detects a
+setup block and adds the `setup` tag; `all` includes it too. Without the tag a
+core build reports that the design uses setup instead of treating its names as
+literals.
+
 Setup code is interpreted, not compiled into the app. `goi build` embeds the
 interpreter with the design, so a packaged app needs no Go toolchain at runtime.

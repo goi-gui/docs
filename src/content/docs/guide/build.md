@@ -176,6 +176,7 @@ the one `goi run` uses.
 | `markdown` | goldmark for `Markdown` documents |
 | `terminal` | Maple Mono NF CN, about 20 MB, for the terminal and its CJK text |
 | `webview` | no embedded bytes; loads the system web view (WebKitGTK, WebView2, WKWebView) at run time |
+| `setup` | Yaegi and its Go standard-library symbols, about 11.3 MB stripped (17 MB unstripped) |
 
 Without a tag the design still parses: an `SVG` reports an error, `Markdown`
 draws nothing, `Code` draws plain text, a remote `Image` fails to fetch, and
