@@ -172,6 +172,35 @@ The functions run on the UI goroutine. Keep them short, and read their state
 through an ordinary property expression; the next expression pass picks up the
 new value.
 
+## Lifecycle
+
+Two names are reserved for the framework. `onMount` runs once for each instance
+after the page's first frame is painted, and `onUnmount` runs once when that
+instance goes away (the window closes or a hot reload replaces the design):
+
+```goi
+setup {
+	var loading = true
+
+	func onMount() {
+		loading = true
+	}
+
+	func onUnmount() {
+		// release anything this instance opened
+	}
+}
+```
+
+Both hooks run on the UI goroutine. Loading and the first paint never wait for
+them, so the window appears even when a hook does some work. They are not
+design functions: an element cannot call `onMount()` or `onUnmount()`.
+
+Keep a hook short. A slow hook delays the frame after the first paint. For real
+background work, call a Go bridge handler and let Go run it in a goroutine; the
+handler posts the result back with `ui.SetData`. Setup state is not safe to
+touch from another goroutine.
+
 ## What setup cannot do
 
 - Importing application packages is not supported yet: the interpreter has the
