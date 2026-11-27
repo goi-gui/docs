@@ -2,7 +2,8 @@
 title: "Bridge"
 ---
 
-A `.goi` file holds no app logic. It declares the values it reads and the
+A handler may also be written as a method, `getName() string`, and may
+return one value; setup code can call it. A `.goi` file holds no app logic. It declares the values it reads and the
 handlers it calls in a `bridge` block; Go supplies both. That block is the only
 connection between the design and the program. A file may also keep value
 helpers and small local actions in a [setup block](/guide/setup/).
@@ -13,6 +14,7 @@ bridge {
 	Tickets []Ticket
 	onInc   func()
 	onOpen  func(id string)
+	getName() string
 }
 
 type Ticket {

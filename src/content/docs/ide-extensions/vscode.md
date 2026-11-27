@@ -17,7 +17,7 @@ source is [goi-gui/vscode-goi](https://github.com/goi-gui/vscode-goi).
 | Outline (`Window › Column › Card › …`) | `goipls` document symbols |
 | Language name, `.goi` suffix, `//` and `/* */` comments | `language-configuration.json` |
 | Diagnostics, completion, hover, go-to-definition | `goipls` |
-| Setup names in values and Go completion/type errors inside `setup` | `goipls` |
+| Setup names, bridge access and Go completion/type errors inside `setup` | `goipls` |
 | Formatting, also on save | `goipls` |
 | Icon-name completion (Material Symbols) | `goipls` |
 | `app.` / `window.` / `bridge.` / `props.` completion | `goipls` |

@@ -68,6 +68,35 @@ Setup functions are evaluated while the design is running. Keep them pure and
 cheap: a property that reads a setup function is evaluated again on every
 expression pass. They should not touch nodes, start goroutines or block.
 
+## Bridge access
+
+Setup code can read the design's bridge values and call its handlers. The
+bridge block may declare a handler with the `func` spelling or as a method, and
+a handler may return one value:
+
+```goi
+bridge {
+	content string
+	getFileName() string
+	onSave(fileName string)
+}
+
+setup {
+	import "fmt"
+
+	func save() {
+		name := bridge.getFileName()
+		bridge.onSave(name)
+		fmt.Println(bridge.content)
+	}
+}
+```
+
+`bridge.content` follows `ui.SetData`; the fields are refreshed when setup code
+runs. A handler call uses the Go function registered with `ui.SetHandler`, and
+its return value is available in setup. The handler still belongs to Go: setup
+only calls it.
+
 ## Events
 
 A setup function may be an event handler. The design calls it by name, and its

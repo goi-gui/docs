@@ -187,7 +187,8 @@ element. [Bridge](/guide/bridge/) covers the declarations, `SetData`,
 
 A file may declare a `setup` block before its root element. The body is Go
 source, and its names are visible only to the elements written in that same
-file. It is meant for pure helpers, not event handling:
+file. It is meant for helpers and small local actions, not app logic; it can
+read `bridge.` values and call bridge handlers:
 
 ```goi
 setup {
@@ -217,8 +218,9 @@ Props     = "props" "{" { Decl } "}"
 Bridge    = ("bridge" | "data") "{" { Decl } "}"
 Shape     = ("type" | "data") Ident "{" { Decl } "}"
 Decl      = Ident Type [";"]
+          | Ident "(" [ Ident Type { "," Ident Type } ] ")" [Type] [";"]
 Type      = Primitive | "[]" Type | "map" "[" Ident "]" Type
-          | "func" "(" [ Ident Type { "," Ident Type } ] ")"
+          | "func" "(" [ Ident Type { "," Ident Type } ] ")" [Type]
 Primitive = "bool" | "string" | "color" | Go numeric types | Ident
 Element   = Ident "{" { Member } "}"
 Member    = Property | Element | If | For | Switch
