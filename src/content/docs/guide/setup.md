@@ -112,6 +112,36 @@ runs. A handler call uses the Go function registered with `ui.SetHandler`, and
 its return value is available in setup. The handler still belongs to Go: setup
 only calls it.
 
+A list keeps the type the bridge declared. Rows `ui.SetData` stores may be
+structs (fields matched by their `goi` tag, then name) or maps; setup sees the
+shape from the design:
+
+```goi
+bridge {
+	tickets []ticket
+}
+
+type ticket {
+	title  string
+	unread bool
+}
+
+setup {
+	func unread() int {
+		n := 0
+		for _, t := range bridge.tickets {
+			if t.unread {
+				n++
+			}
+		}
+		return n
+	}
+}
+```
+
+`[]string`, `[]float64` and `map[string]int` arrive typed the same way, so a
+setup function can take `[]ticket` or return `[]string` without a cast.
+
 ## Events
 
 A setup function may be an event handler. The design calls it by name, and its
