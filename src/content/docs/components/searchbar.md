@@ -47,6 +47,24 @@ A `$leading` body replaces the built-in search glyph; the query keeps the same
 52dp start, so the text does not jump. An explicit `trailingIcon` wins over
 `$trailing`, so one design can use either without a condition.
 
+A trailing clear button can empty the bar without a Go handler:
+
+```goi
+SearchBar {
+	id: "search"
+
+	$trailing {
+		IconButton {
+			icon:    close
+			onClick: search.clear()
+		}
+	}
+}
+```
+
+`clear()` puts the caret at the start and keeps the focus. From Go, call
+`search.Clear()`.
+
 ## Properties
 
 | Property | Type | Notes |

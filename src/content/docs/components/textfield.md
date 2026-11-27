@@ -154,6 +154,29 @@ reveal.OnClick(func(ui.ClickEvent) {
 `obscureText` is off by default. It hides the value on screen only; it is not
 encryption, and a field that must never be read back is a job for the backend.
 
+## Clearing the value
+
+`clear()` empties the field and puts the caret at the start; focus stays where it
+was. A trailing clear button needs no Go handler:
+
+```goi
+TextField {
+	id:          query
+	label:       "Search"
+	placeholder: "Type to filter"
+
+	$trailing {
+		IconButton {
+			icon:    close
+			onClick: query.clear()
+		}
+	}
+}
+```
+
+From Go, `field.Clear()` does the same. A `SearchBar` and a `TextArea` accept the
+method too.
+
 ## Properties
 
 | Property | Type | Notes |

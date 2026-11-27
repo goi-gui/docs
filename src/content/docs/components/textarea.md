@@ -72,6 +72,20 @@ Paste keeps newlines; a single-line TextField still strips them.
 The field wraps at its own width, so a long line becomes several visual lines
 and the caret scrolls vertically to stay visible.
 
+`clear()` empties the area and puts the caret at the start; focus stays. A design
+can wire it to a button, and Go calls `area.Clear()`:
+
+```goi
+TextArea {
+	id: "notes"
+}
+
+Button {
+	label:   "Clear"
+	onClick: notes.clear()
+}
+```
+
 ## From Go
 
 ```go
@@ -79,7 +93,7 @@ area := w.MustByID[*ui.TextArea]("notes")
 area.OnEdit(func(s string) {
 	fmt.Println("value:", s)
 })
-area.SetText("loaded from disk")
+area.Text.Set("loaded from disk")
 area.Caret = len(area.Text.Get())
 ```
 
