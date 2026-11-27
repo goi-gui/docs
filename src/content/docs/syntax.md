@@ -204,8 +204,8 @@ Window {
 ```
 
 `var`, `const`, `type`, `func` and `import` are accepted; a package-level `:=`
-is not valid Go. A setup function cannot be an event handler. The
-[Setup guide](/guide/setup/) covers scope, hot reload and the interpreter.
+is not valid Go. A setup function may also be called from an event property.
+The [Setup guide](/guide/setup/) covers scope, hot reload and the interpreter.
 
 ## Grammar
 
@@ -1026,9 +1026,8 @@ mid-typing never reflows it.
 ## What is not supported
 
 No bindings and no handler bodies — a design declares a handler's name and
-parameters, but the body is always Go. A `setup` function is a value helper, not
-an event handler. A list from Go is a `bridge` variable the app sets with
-`ui.SetData`.
+parameters, but the body is always Go. A list from Go is a `bridge` variable the
+app sets with `ui.SetData`.
 
 Theming is not part of the language: `theme` names a scheme and every colour a
 component draws comes from it. See [Theming](/guide/theming/) for the built-in

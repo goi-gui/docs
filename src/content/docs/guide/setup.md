@@ -68,10 +68,34 @@ Setup functions are evaluated while the design is running. Keep them pure and
 cheap: a property that reads a setup function is evaluated again on every
 expression pass. They should not touch nodes, start goroutines or block.
 
+## Events
+
+A setup function may be an event handler. The design calls it by name, and its
+return value is ignored:
+
+```goi
+setup {
+	var count = 0
+
+	func increase() { count++ }
+	func decrease() { count-- }
+}
+
+Window {
+	Column {
+		Text { text: formatf("Count: %d", count) }
+		Button { label: "+" onClick: increase() }
+		Button { label: "-" onClick: decrease() }
+	}
+}
+```
+
+The functions run on the UI goroutine. Keep them short, and read their state
+through an ordinary property expression; the next expression pass picks up the
+new value.
+
 ## What setup cannot do
 
-- A setup function is not an event handler. `onClick: reset()` is rejected;
-  call a `bridge` handler instead and let Go drive the action.
 - Importing application packages is not supported yet: the interpreter has the
   Go standard library, not the app's module.
 - Setup is not a sandbox. The standard library can read files and open network

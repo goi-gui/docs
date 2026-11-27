@@ -40,9 +40,10 @@ TextField {
 }
 ```
 
-A component page lists the events it emits. A fragment can also declare a
-handler prop and call it, with the instance deciding which bridge handler that
-is:
+A component page lists the events it emits. A file's [setup functions](/guide/setup/#events)
+can be called from an event too, without a bridge handler. A fragment can also
+declare a handler prop and call it, with the instance deciding which bridge
+handler that is:
 
 ```goi
 // Toolbar.goi

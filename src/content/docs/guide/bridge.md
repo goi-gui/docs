@@ -4,9 +4,8 @@ title: "Bridge"
 
 A `.goi` file holds no app logic. It declares the values it reads and the
 handlers it calls in a `bridge` block; Go supplies both. That block is the only
-connection between the design and the program. A file may also keep pure value
-helpers in a [setup block](/guide/setup/), which cannot run events or change app
-state.
+connection between the design and the program. A file may also keep value
+helpers and small local actions in a [setup block](/guide/setup/).
 
 ```goi
 bridge {
