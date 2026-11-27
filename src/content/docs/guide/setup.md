@@ -34,10 +34,12 @@ instead.
 - Every fragment **instance** gets its own copy of the fragment's setup state.
   Two `Counter {}` calls in one page therefore have two independent `count`
   values, not one shared value.
-- That copy is lazy: instances that only read setup values share one
-  interpreter, and pure functions run on it too. The first function that reads
-  or writes a setup variable gives that instance a private interpreter. A
-  counter does not pay for a private interpreter until its `inc()` runs.
+- The file is interpreted once, not once per instance. Each instance carries
+  only its variables; a hundred counters cost a few kilobytes, not a hundred
+  interpreters. Files the shared program cannot compile (methods, variadic
+  functions) fall back to a per-instance interpreter, copy-on-write: instances
+  that only read share one interpreter until a setup function reads or writes a
+  setup variable.
 - A fragment previewed on its own runs its own setup, the same way `goicheck`
   and the editor preview do.
 
