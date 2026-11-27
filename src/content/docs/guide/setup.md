@@ -31,8 +31,9 @@ instead.
 - Every file has its own scope. A name in `Main.goi` is not visible in an
   imported fragment, and a fragment's names are not visible in the page that
   imports it.
-- The scope belongs to the **source file**, not to one fragment instance. If the
-  same fragment is used twice, both instances read the same declarations.
+- Every fragment **instance** gets its own copy of the fragment's setup state.
+  Two `Counter {}` calls in one page therefore have two independent `count`
+  values, not one shared value.
 - A fragment previewed on its own runs its own setup, the same way `goicheck`
   and the editor preview do.
 
