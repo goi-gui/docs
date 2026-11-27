@@ -36,10 +36,11 @@ instead.
   values, not one shared value.
 - The file is interpreted once, not once per instance. Each instance carries
   only its variables; a hundred counters cost a few kilobytes, not a hundred
-  interpreters. Files the shared program cannot compile (methods, variadic
-  functions) fall back to a per-instance interpreter, copy-on-write: instances
-  that only read share one interpreter until a setup function reads or writes a
-  setup variable.
+  interpreters. Methods and variadic functions compile too. A file the shared
+  program cannot express — a method that reads a setup variable, or a parameter
+  that is not a primitive — falls back to a per-instance interpreter,
+  copy-on-write: instances that only read share one interpreter until a setup
+  function reads or writes a setup variable.
 - All setup files share one interpreter, each as its own package, so `fmt` and
   the rest of the standard library compile once for the whole design. A file is
   compiled the first time something reads it: a hundred fragments of which ten
