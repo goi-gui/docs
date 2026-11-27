@@ -40,6 +40,10 @@ instead.
   functions) fall back to a per-instance interpreter, copy-on-write: instances
   that only read share one interpreter until a setup function reads or writes a
   setup variable.
+- All setup files share one interpreter, each as its own package, so `fmt` and
+  the rest of the standard library compile once for the whole design. A file is
+  compiled the first time something reads it: a hundred fragments of which ten
+  are on the page cost ten, not a hundred.
 - A file's `import` list decides what the interpreter loads: a setup block with
   no imports registers no standard-library package. Loading the whole standard
   library for every file would cost about 1.3 MB per file for nothing.
