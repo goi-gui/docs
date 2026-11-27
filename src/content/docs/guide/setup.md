@@ -222,9 +222,10 @@ new value.
 
 ## Lifecycle
 
-Two names are reserved for the framework. `onMount` runs once for each instance
-after the page's first frame is painted, and `onUnmount` runs once when that
-instance goes away (the window closes or a hot reload replaces the design):
+Two names are reserved for the framework. `onMount` runs once for each visible
+instance after the page's first frame is painted, and again whenever a condition
+shows it after it was hidden. `onUnmount` runs when a condition hides it, when
+the window closes, or when a hot reload replaces the design:
 
 ```goi
 setup {
