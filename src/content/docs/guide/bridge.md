@@ -100,10 +100,15 @@ for _, installed := range bridge.Device.InstalledApps {
 }
 ```
 
-The language server completes the fields after `bridge.Device.` from the
-declared type, and the checker rejects a field the type does not declare. Only
-`bridge` and `data` values walk field by field; a prop is passed as its own
-value, so a fragment that needs a field declares a prop for it.
+A prop works the same way inside a fragment: `props.Device.Name` reads a field
+of a `Device` the instance passed, and `props.Device.InstalledApps` ranges like
+any other list. The expansion replaces the prop with the caller's value followed
+by the same fields, so `device: bridge.selectedDevice` plus
+`props.device.Name` reads `bridge.selectedDevice.Name`.
+
+The language server completes the fields after `bridge.Device.` and
+`props.device.` from the declared type, and the checker rejects a field the type
+does not declare.
 
 ### Rebuilding
 
