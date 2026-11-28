@@ -85,6 +85,26 @@ type User struct {
 Numbers are converted, so an `int` field can feed a `number` position. A `nil`
 slice is an empty list, which is what the first frame has before a fetch returns.
 
+### Nested fields
+
+A bridge value may hold one declared type, and an expression walks into it with
+another dot: `bridge.Device.Name`. A field that is itself a declared type keeps
+going (`bridge.Device.Settings.Theme`), and a list field is walked like any
+other bridge list:
+
+```goi
+Text { text: bridge.Device.Name }
+
+for _, installed := range bridge.Device.InstalledApps {
+	Text { text: installed.Name }
+}
+```
+
+The language server completes the fields after `bridge.Device.` from the
+declared type, and the checker rejects a field the type does not declare. Only
+`bridge` and `data` values walk field by field; a prop is passed as its own
+value, so a fragment that needs a field declares a prop for it.
+
 ### Rebuilding
 
 Setting a list with `ui.SetData` rebuilds only the loops that walk it. Setting a

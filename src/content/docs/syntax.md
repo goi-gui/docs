@@ -755,7 +755,8 @@ See [Fonts](/guide/fonts/) for registering files, weights and variable fonts.
 Every property accepts an expression, not just the numeric ones: a color, a
 string, a bool or an enum can be conditional too. A reference reads another
 element's property by id (`id.property`), so the value follows that element
-automatically. Operators are `+ - * / %`, comparisons `== != < <= > >=`, `&& ||
+automatically. A reference may also walk a shape a bridge variable holds:
+`bridge.device.Name`, with a list field ranged like any other bridge list. Operators are `+ - * / %`, comparisons `== != < <= > >=`, `&& ||
 !`, a conditional `cond ? a : b` and parentheses, with the usual precedence.
 `%` is modulo between two values, so `if i % 2 == 0` works. A percentage is a
 number followed by `%`: `50%` and `50 %` both work. When another value follows
